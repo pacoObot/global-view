@@ -287,9 +287,14 @@ function initApp() {
     setupEventListeners();
     initHeroSlider();
     
-    // Auto load language
-    const currentLang = localStorage.getItem('gvcps_lang') || 'pt';
+    // Auto load language (detecting browser/mobile language if not set)
+    const browserLang = navigator.language || navigator.userLanguage || 'pt';
+    const detectedLang = browserLang.startsWith('en') ? 'en' : 'pt';
+    const currentLang = localStorage.getItem('gvcps_lang') || detectedLang;
     setLanguage(currentLang);
+    
+    // Initialize accessibility options
+    initAccessibility();
     
     // Auto load current view from hash or homepage
     const initialView = window.location.hash ? window.location.hash.substring(1) : 'home';
@@ -299,6 +304,15 @@ function initApp() {
 function saveState() {
     localStorage.setItem(STATE_KEY, JSON.stringify(appState));
 }
+
+// Toggle Mobile Navigation Menu Drawer
+function toggleMobileMenu() {
+    const drawer = document.getElementById('mobile-drawer');
+    if (drawer) {
+        drawer.classList.toggle('open');
+    }
+}
+window.toggleMobileMenu = toggleMobileMenu;
 
 // Navigation Router
 function setupRouting() {
@@ -319,13 +333,19 @@ function navigate(viewPath) {
         });
     }
 
+    // Close mobile drawer if open
+    const drawer = document.getElementById('mobile-drawer');
+    if (drawer) {
+        drawer.classList.remove('open');
+    }
+
     // Hide all view sections
     document.querySelectorAll('.view-section').forEach(el => {
         el.classList.remove('active');
     });
     
-    // Header navigation active highlight
-    document.querySelectorAll('nav.main-nav a').forEach(a => {
+    // Header navigation active highlight (desktop & mobile)
+    document.querySelectorAll('nav.main-nav a, .mobile-nav-link').forEach(a => {
         a.classList.remove('active');
         if (a.getAttribute('href') === `#${viewName}`) {
             a.classList.add('active');
@@ -452,7 +472,7 @@ function setupRoleSwitcher() {
 function updateSwitcherUI() {
     const role = appState.currentUser.role;
     const label = document.getElementById('selectedRoleLabel');
-    const memberNav = document.getElementById('memberPortalLink');
+    const memberNavs = document.querySelectorAll('.member-portal-link');
     const btnLogin = document.getElementById('btnHeaderLogin');
     const userMenu = document.getElementById('loggedInUserMenu');
     
@@ -472,17 +492,19 @@ function updateSwitcherUI() {
     }
     if (label) label.textContent = text;
     
-    // Toggle member portal link in main header
+    // Toggle member portal links in header and mobile menu
     if (role !== 'visitor') {
-        if (memberNav) {
-            memberNav.href = `#${role}-portal`;
-            memberNav.textContent = `Painel ${role === 'buyer' ? 'Comprador' : (role === 'supplier' ? 'Fornecedor' : (role === 'consultant' ? 'Consultor' : 'Admin'))}`;
-            memberNav.style.display = 'inline-block';
-        }
+        memberNavs.forEach(nav => {
+            nav.href = `#${role}-portal`;
+            nav.textContent = `Painel ${role === 'buyer' ? 'Comprador' : (role === 'supplier' ? 'Fornecedor' : (role === 'consultant' ? 'Consultor' : 'Admin'))}`;
+            nav.style.display = 'inline-block';
+        });
         if (btnLogin) btnLogin.style.display = 'none';
         if (userMenu) userMenu.style.display = 'block';
     } else {
-        if (memberNav) memberNav.style.display = 'none';
+        memberNavs.forEach(nav => {
+            nav.style.display = 'none';
+        });
         if (btnLogin) btnLogin.style.display = 'flex';
         if (userMenu) userMenu.style.display = 'none';
     }
@@ -641,6 +663,115 @@ function setLanguage(lang) {
         }
     }
 }
+
+// ACCESSIBILITY CONTROL PANEL HANDLERS
+function initAccessibility() {
+    // 1. Dark Mode
+    const darkMode = localStorage.getItem('gvcps_dark_mode') === 'true';
+    if (darkMode) {
+        document.body.classList.add('dark-theme');
+        const btn = document.getElementById('acc-dark-btn');
+        if (btn) btn.classList.add('active');
+    }
+    
+    // 2. High Contrast
+    const contrast = localStorage.getItem('gvcps_high_contrast') === 'true';
+    if (contrast) {
+        document.body.classList.add('accessibility-high-contrast');
+        const btn = document.getElementById('acc-contrast-btn');
+        if (btn) btn.classList.add('active');
+    }
+    
+    // 3. Highlight Links
+    const highlightLinks = localStorage.getItem('gvcps_highlight_links') === 'true';
+    if (highlightLinks) {
+        document.body.classList.add('accessibility-highlight-links');
+        const btn = document.getElementById('acc-links-btn');
+        if (btn) btn.classList.add('active');
+    }
+    
+    // 4. Text Size scale
+    const scale = localStorage.getItem('gvcps_font_scale') || '1';
+    if (scale !== '1') {
+        document.body.style.setProperty('--accessibility-scale', scale);
+        document.body.style.fontSize = scale + 'em';
+    }
+}
+
+function toggleAccessibilityMenu() {
+    const panel = document.getElementById('accessibility-panel');
+    if (!panel) return;
+    
+    const isHidden = panel.style.display === 'none';
+    if (isHidden) {
+        // Close chat window if open
+        const chatWindow = document.getElementById('chat-window');
+        if (chatWindow) {
+            chatWindow.style.display = 'none';
+            chatWindow.classList.add('hidden');
+        }
+        panel.style.display = 'flex';
+        panel.classList.remove('hidden');
+    } else {
+        panel.style.display = 'none';
+        panel.classList.add('hidden');
+    }
+}
+
+function toggleDarkMode() {
+    const isDark = document.body.classList.toggle('dark-theme');
+    localStorage.setItem('gvcps_dark_mode', isDark);
+    
+    const btn = document.getElementById('acc-dark-btn');
+    if (btn) {
+        if (isDark) btn.classList.add('active');
+        else btn.classList.remove('active');
+    }
+}
+
+function toggleContrast() {
+    const isContrast = document.body.classList.toggle('accessibility-high-contrast');
+    localStorage.setItem('gvcps_high_contrast', isContrast);
+    
+    const btn = document.getElementById('acc-contrast-btn');
+    if (btn) {
+        if (isContrast) btn.classList.add('active');
+        else btn.classList.remove('active');
+    }
+}
+
+function toggleLinkHighlight() {
+    const isHighlight = document.body.classList.toggle('accessibility-highlight-links');
+    localStorage.setItem('gvcps_highlight_links', isHighlight);
+    
+    const btn = document.getElementById('acc-links-btn');
+    if (btn) {
+        if (isHighlight) btn.classList.add('active');
+        else btn.classList.remove('active');
+    }
+}
+
+function changeTextSize(action) {
+    let currentScale = parseFloat(document.body.style.getPropertyValue('--accessibility-scale') || '1');
+    if (action === 'increase') {
+        currentScale = Math.min(1.4, currentScale + 0.1);
+    } else if (action === 'decrease') {
+        currentScale = Math.max(0.8, currentScale - 0.1);
+    } else {
+        currentScale = 1.0;
+    }
+    
+    document.body.style.setProperty('--accessibility-scale', currentScale);
+    document.body.style.fontSize = currentScale + 'em';
+    localStorage.setItem('gvcps_font_scale', currentScale);
+}
+
+// Expose functions globally
+window.toggleAccessibilityMenu = toggleAccessibilityMenu;
+window.toggleDarkMode = toggleDarkMode;
+window.toggleContrast = toggleContrast;
+window.toggleLinkHighlight = toggleLinkHighlight;
+window.changeTextSize = changeTextSize;
 
 function applyTranslations(lang) {
     document.querySelectorAll('[data-translate-pt]').forEach(el => {
@@ -1997,6 +2128,12 @@ function setupChatWidget() {
         e.stopPropagation();
         const isHidden = chatWindow.classList.contains('hidden');
         if (isHidden) {
+            // Close accessibility panel if open
+            const accPanel = document.getElementById('accessibility-panel');
+            if (accPanel) {
+                accPanel.style.display = 'none';
+                accPanel.classList.add('hidden');
+            }
             chatWindow.classList.remove('hidden');
             chatWindow.style.display = 'flex';
             chatIcon.textContent = 'keyboard_arrow_down';

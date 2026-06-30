@@ -2169,6 +2169,137 @@ footer.app-footer {
     to { opacity: 1; }
 }
 
+/* Mobile Drawer & Button Styles */
+.mobile-menu-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: var(--radius-xl);
+    transition: background-color 0.2s;
+}
+
+.mobile-menu-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-drawer.open {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.mobile-drawer-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+}
+
+.mobile-drawer-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 290px;
+    height: 100%;
+    background-color: var(--surface);
+    color: var(--on-surface);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-drawer.open .mobile-drawer-content {
+    transform: translateX(0);
+}
+
+.mobile-drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--surface-variant);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+}
+
+.mobile-drawer-header .logo-container {
+    color: var(--primary) !important;
+}
+
+.mobile-drawer-header .logo-text {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.mobile-drawer-close {
+    background: transparent;
+    border: none;
+    color: var(--on-surface-variant);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.mobile-drawer-close:hover {
+    background-color: var(--surface-variant);
+}
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mobile-nav-link {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--on-surface-variant);
+    text-decoration: none;
+    padding: 12px 16px;
+    border-radius: var(--radius-xl);
+    transition: background-color 0.2s, color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.mobile-nav-link:hover, .mobile-nav-link.active {
+    background-color: var(--surface-container-high);
+    color: var(--secondary);
+}
+
+.mobile-nav-link.active {
+    font-weight: 700;
+    color: var(--primary);
+    background-color: var(--surface-container);
+}
+
 /* Responsive Rules */
 @media (max-width: 1024px) {
     .hero-grid, .about-grid, .contact-card-box, .category-manager-grid {
@@ -2230,7 +2361,11 @@ footer.app-footer {
 
 @media (max-width: 768px) {
     nav.main-nav {
-        display: none; /* Mobile navigation toggle can be added, or keep simple header */
+        display: none;
+    }
+    
+    .mobile-menu-toggle {
+        display: flex;
     }
     
     .opportunities-grid, .home-wall-grid, .stats-row, .footer-grid {
@@ -2265,6 +2400,24 @@ footer.app-footer {
     
     .contact-info-panel, .contact-form-panel {
         padding: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    #selectedRoleLabel {
+        display: none;
+    }
+    
+    #btnHeaderLogin .btn-text {
+        display: none;
+    }
+    
+    #btnHeaderLogin {
+        padding: 8px 12px !important;
+    }
+    
+    .header-actions {
+        gap: 8px !important;
     }
 }
 
@@ -2391,6 +2544,119 @@ input:checked + .slider:before {
 }
 .cat-border-full {
     border: 1px solid var(--cat-color) !important;
+}
+
+/* Accessibility Features & Styles */
+
+/* 1. Dark Theme */
+body.dark-theme {
+    --background: #0b1114;
+    --surface: #10181b;
+    --surface-low: #162024;
+    --surface-container: #1b282d;
+    --surface-container-high: #213036;
+    --surface-container-highest: #283940;
+    
+    --on-surface: #e1e7ea;
+    --on-surface-variant: #b0bfc6;
+    --outline: #7c8d95;
+    --outline-variant: #3b4d54;
+    
+    --primary: #94d0ec;
+    --primary-light: #59a6c9;
+    --primary-container: #1b282d;
+    --on-primary: #00374a;
+    
+    --secondary: #6ee6a6;
+    --secondary-light: #44bf7e;
+    --on-secondary-container: #6ee6a6;
+    
+    color: var(--on-surface);
+}
+
+body.dark-theme .app-header {
+    background-color: #0b1114 !important;
+    border-bottom: 1px solid var(--outline-variant);
+}
+
+body.dark-theme input, body.dark-theme select, body.dark-theme textarea {
+    background-color: var(--surface-low) !important;
+    color: var(--on-surface) !important;
+    border-color: var(--outline-variant) !important;
+}
+
+body.dark-theme .btn-ghost {
+    color: var(--on-surface) !important;
+}
+
+/* 2. High Contrast Theme */
+body.accessibility-high-contrast {
+    --background: #ffffff !important;
+    --surface: #ffffff !important;
+    --surface-low: #f5f5f5 !important;
+    --surface-container: #e0e0e0 !important;
+    --surface-container-high: #d0d0d0 !important;
+    --surface-container-highest: #c0c0c0 !important;
+    
+    --on-surface: #000000 !important;
+    --on-surface-variant: #000000 !important;
+    --outline: #000000 !important;
+    --outline-variant: #000000 !important;
+    
+    --primary: #000000 !important;
+    --primary-light: #000000 !important;
+    --on-primary: #ffffff !important;
+    
+    --secondary: #006000 !important;
+    --on-secondary: #ffffff !important;
+    
+    filter: contrast(1.2) !important;
+}
+
+body.accessibility-high-contrast.dark-theme {
+    --background: #000000 !important;
+    --surface: #000000 !important;
+    --surface-low: #121212 !important;
+    --surface-container: #222222 !important;
+    --surface-container-high: #333333 !important;
+    --surface-container-highest: #444444 !important;
+    
+    --on-surface: #ffffff !important;
+    --on-surface-variant: #ffffff !important;
+    --outline: #ffffff !important;
+    --outline-variant: #ffffff !important;
+    
+    --primary: #ffffff !important;
+    --primary-light: #ffffff !important;
+    --on-primary: #000000 !important;
+    
+    --secondary: #00ff00 !important;
+    --on-secondary: #000000 !important;
+}
+
+/* 3. Link Highlights */
+body.accessibility-highlight-links a {
+    text-decoration: underline !important;
+    font-weight: bold !important;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px !important;
+    text-decoration-color: var(--secondary) !important;
+}
+
+/* 4. Panel Button States */
+.acc-option-btn.active {
+    background-color: var(--secondary) !important;
+    color: white !important;
+    border-color: var(--secondary) !important;
+}
+
+.acc-option-btn.active .material-symbols-outlined {
+    color: white !important;
+}
+
+/* Font Scale Container Wrapper (applied to body) */
+body {
+    transition: font-size 0.2s ease;
 }
 
 

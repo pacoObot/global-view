@@ -12,53 +12,53 @@
             theme: {
                 extend: {
                     "colors": {
-                        "on-surface": "#191c1e",
+                        "on-surface": "var(--on-surface)",
                         "on-tertiary-container": "#8cbed9",
-                        "surface-variant": "#e0e3e5",
-                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "var(--outline-variant)",
+                        "surface-container-lowest": "var(--surface)",
                         "primary-fixed-dim": "#9fcde6",
                         "tertiary-container": "#154e65",
-                        "secondary-container": "#97f3b5",
+                        "secondary-container": "var(--secondary-container)",
                         "on-secondary-fixed": "#00210f",
-                        "surface-container-high": "#e6e8ea",
-                        "on-surface-variant": "#41484c",
+                        "surface-container-high": "var(--surface-container-high)",
+                        "on-surface-variant": "var(--on-surface-variant)",
                         "on-primary-fixed": "#001e2b",
                         "inverse-primary": "#9fcde6",
-                        "on-primary": "#ffffff",
+                        "on-primary": "var(--on-primary)",
                         "on-secondary-fixed-variant": "#00522d",
                         "on-primary-fixed-variant": "#1a4c61",
-                        "primary-container": "#1d4e63",
+                        "primary-container": "var(--primary-container)",
                         "inverse-surface": "#2d3133",
                         "on-primary-container": "#91bed7",
-                        "background": "#f7f9fb",
+                        "background": "var(--background)",
                         "on-tertiary-fixed": "#001e2b",
                         "secondary-fixed": "#9af6b8",
                         "tertiary-fixed-dim": "#9bcde9",
-                        "surface-container-low": "#f2f4f6",
-                        "surface-container-highest": "#e0e3e5",
-                        "primary": "#00374a",
+                        "surface-container-low": "var(--surface-low)",
+                        "surface-container-highest": "var(--surface-container-highest)",
+                        "primary": "var(--primary)",
                         "surface-tint": "#36647a",
-                        "surface": "#f7f9fb",
-                        "on-secondary-container": "#047240",
+                        "surface": "var(--surface)",
+                        "on-secondary-container": "var(--on-secondary-container)",
                         "tertiary-fixed": "#c0e8ff",
                         "surface-dim": "#d8dadc",
-                        "error": "#ba1a1a",
+                        "error": "var(--error)",
                         "error-container": "#ffdad6",
                         "on-tertiary-fixed-variant": "#124c63",
-                        "outline-variant": "#c1c7cc",
+                        "outline-variant": "var(--outline-variant)",
                         "secondary-fixed-dim": "#7ed99e",
                         "on-error-container": "#93000a",
-                        "tertiary": "#00374a",
+                        "tertiary": "var(--primary)",
                         "inverse-on-surface": "#eff1f3",
-                        "secondary": "#006d3d",
+                        "secondary": "var(--secondary)",
                         "on-error": "#ffffff",
                         "primary-fixed": "#c0e8ff",
-                        "surface-container": "#eceef0",
+                        "surface-container": "var(--surface-container)",
                         "on-tertiary": "#ffffff",
-                        "on-secondary": "#ffffff",
-                        "surface-bright": "#f7f9fb",
-                        "on-background": "#191c1e",
-                        "outline": "#71787d",
+                        "on-secondary": "var(--on-primary)",
+                        "surface-bright": "var(--surface)",
+                        "on-background": "var(--on-surface)",
+                        "outline": "var(--outline)",
                         "electric-amber": "#F59E0B"
                     },
                     "borderRadius": {
@@ -117,30 +117,22 @@
                 <a href="#services" data-translate-pt="Serviços" data-translate-en="Services">Serviços</a>
                 <a href="#wall" data-translate-pt="Mural" data-translate-en="Opportunity Wall">Mural</a>
                 <a href="#contact" data-translate-pt="Comunicação" data-translate-en="Communication">Comunicação</a>
-                <a href="#member-portal" id="memberPortalLink" style="display: none;">Painel</a>
+                <a href="#member-portal" class="member-portal-link" style="display: none;">Painel</a>
             </nav>
             
             <!-- Actions & Auth Simulator -->
             <div class="header-actions" style="display: flex; gap: 16px; align-items: center;">
-                <!-- Language Selector Toggle -->
-                <div class="lang-selector-container" style="display: flex; align-items: center; border: 1px solid var(--outline-variant); border-radius: var(--radius-xl); overflow: hidden; background: white; height: 32px; box-shadow: var(--shadow-sm);">
-                    <button id="btn-lang-pt" onclick="setLanguage('pt')" style="border: none; background: var(--secondary); color: white; padding: 0 10px; height: 100%; font-size: 11px; font-weight: bold; cursor: pointer; transition: all 0.2s;">PT</button>
-                    <button id="btn-lang-en" onclick="setLanguage('en')" style="border: none; background: transparent; color: var(--on-surface-variant); padding: 0 10px; height: 100%; font-size: 11px; font-weight: bold; cursor: pointer; transition: all 0.2s;">EN</button>
-                </div>
-
-                <!-- Simulated WhatsApp Omnichannel Status Indicator -->
-                <div class="whatsapp-status-badge" style="display: flex; align-items: center; gap: 6px; background-color: rgba(37, 211, 102, 0.1); border: 1px solid rgba(37, 211, 102, 0.3); padding: 6px 12px; border-radius: var(--radius-full); font-size: 11px; color: #25D366;" title="WhatsApp Integrado & Ativo">
-                    <span class="relative flex h-2.5 w-2.5">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#25D366]"></span>
-                    </span>
-                    <span class="font-bold" data-translate-pt="WhatsApp Ativo" data-translate-en="WhatsApp Active">WhatsApp Ativo</span>
-                </div>
-                
                 <div id="authHeaderArea">
                     <button class="btn" id="btnHeaderLogin" onclick="openLoginModal()" style="background-color: var(--secondary); color: white; padding: 8px 20px; font-size: 13px; border-radius: var(--radius-xl); border: none; cursor: pointer; display: flex; align-items: center; gap: 6px; font-weight: 600;">
-                        <span class="material-symbols-outlined" style="font-size: 18px;">login</span><span data-translate-pt="Entrar" data-translate-en="Login">Entrar</span>
+                        <span class="material-symbols-outlined" style="font-size: 18px;">login</span><span class="btn-text" data-translate-pt="Entrar" data-translate-en="Login">Entrar</span>
                     </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-toggle" class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Menu">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
                     
                     <div class="role-switcher-container" id="loggedInUserMenu" style="display: none;">
                         <button class="role-switcher-btn" id="roleSwitcherBtn">
@@ -2059,6 +2051,69 @@
         <button id="chat-fab" class="btn btn-primary" style="width: 56px; height: 56px; border-radius: var(--radius-full); padding: 0; box-shadow: var(--shadow-lg);">
             <span class="material-symbols-outlined" id="chat-icon" style="font-size: 28px;">chat</span>
         </button>
+
+        <!-- Accessibility Panel -->
+        <div id="accessibility-panel" class="hidden" style="display: none; width: 280px; background-color: var(--surface); border: 1px solid var(--outline-variant); border-radius: var(--radius-2xl); box-shadow: var(--shadow-lg); flex-direction: column; overflow: hidden; margin-bottom: 4px;">
+            <!-- Panel Header -->
+            <div style="background-color: var(--primary); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; color: white;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="material-symbols-outlined" style="font-size: 20px;">accessibility</span>
+                    <h4 class="font-bold" style="font-size:13px; font-family: var(--font-heading);" data-translate-pt="Acessibilidade" data-translate-en="Accessibility">Acessibilidade</h4>
+                </div>
+                <button onclick="toggleAccessibilityMenu()" style="background: none; border: none; color: white; cursor: pointer; display: flex; align-items: center;">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">close</span>
+                </button>
+            </div>
+            
+            <!-- Panel Options -->
+            <div style="padding: 16px; display: flex; flex-direction: column; gap: 14px; background-color: var(--surface-low);">
+                <!-- Language Toggle Section -->
+                <div>
+                    <span style="font-size: 10px; font-weight: bold; color: var(--outline); text-transform: uppercase; display: block; margin-bottom: 6px;" data-translate-pt="Idioma" data-translate-en="Language">Idioma</span>
+                    <div style="display: flex; gap: 8px;">
+                        <button id="btn-lang-pt" onclick="setLanguage('pt')" style="flex: 1; padding: 8px; border: none; background: var(--secondary); color: white; font-weight: bold; font-size: 12px; border-radius: var(--radius-lg); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                            <span>🇵🇹</span> PT
+                        </button>
+                        <button id="btn-lang-en" onclick="setLanguage('en')" style="flex: 1; padding: 8px; border: 1px solid var(--outline-variant); background: transparent; color: var(--on-surface-variant); font-weight: bold; font-size: 12px; border-radius: var(--radius-lg); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                            <span>🇬🇧</span> EN
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Contrast & Dark Mode Section -->
+                <div style="display: flex; gap: 8px;">
+                    <button onclick="toggleDarkMode()" id="acc-dark-btn" class="acc-option-btn" style="flex: 1; padding: 10px 8px; border: 1px solid var(--outline-variant); background: var(--surface); color: var(--on-surface); font-size: 11px; font-weight: 600; border-radius: var(--radius-lg); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: all 0.2s;">
+                        <span class="material-symbols-outlined" style="font-size: 20px;">dark_mode</span>
+                        <span data-translate-pt="Modo Escuro" data-translate-en="Dark Mode">Modo Escuro</span>
+                    </button>
+                    <button onclick="toggleContrast()" id="acc-contrast-btn" class="acc-option-btn" style="flex: 1; padding: 10px 8px; border: 1px solid var(--outline-variant); background: var(--surface); color: var(--on-surface); font-size: 11px; font-weight: 600; border-radius: var(--radius-lg); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: all 0.2s;">
+                        <span class="material-symbols-outlined" style="font-size: 20px;">contrast</span>
+                        <span data-translate-pt="Alto Contraste" data-translate-en="High Contrast">Alto Contraste</span>
+                    </button>
+                </div>
+
+                <!-- Link Highlight Section -->
+                <button onclick="toggleLinkHighlight()" id="acc-links-btn" class="acc-option-btn" style="width: 100%; padding: 10px 8px; border: 1px solid var(--outline-variant); background: var(--surface); color: var(--on-surface); font-size: 12px; font-weight: 600; border-radius: var(--radius-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s;">
+                    <span class="material-symbols-outlined" style="font-size: 20px;">link</span>
+                    <span data-translate-pt="Destacar Links" data-translate-en="Highlight Links">Destacar Links</span>
+                </button>
+
+                <!-- Text Zoom Section -->
+                <div>
+                    <span style="font-size: 10px; font-weight: bold; color: var(--outline); text-transform: uppercase; display: block; margin-bottom: 6px;" data-translate-pt="Tamanho do Texto" data-translate-en="Text Size">Tamanho do Texto</span>
+                    <div style="display: flex; gap: 6px; align-items: center;">
+                        <button onclick="changeTextSize('decrease')" class="acc-zoom-btn" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--outline-variant); background: var(--surface); border-radius: var(--radius-lg); cursor: pointer; color: var(--on-surface); font-size: 16px; font-weight: bold; transition: all 0.2s;">A-</button>
+                        <button onclick="changeTextSize('reset')" class="acc-zoom-btn" style="flex: 1; height: 36px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--outline-variant); background: var(--surface); border-radius: var(--radius-lg); cursor: pointer; color: var(--on-surface); font-size: 11px; font-weight: bold; transition: all 0.2s;" data-translate-pt="Normal" data-translate-en="Normal">Normal</button>
+                        <button onclick="changeTextSize('increase')" class="acc-zoom-btn" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--outline-variant); background: var(--surface); border-radius: var(--radius-lg); cursor: pointer; color: var(--on-surface); font-size: 16px; font-weight: bold; transition: all 0.2s;">A+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Accessibility FAB -->
+        <button id="accessibility-fab" onclick="toggleAccessibilityMenu()" class="btn" style="width: 48px; height: 48px; border-radius: var(--radius-full); padding: 0; box-shadow: var(--shadow-md); display: flex; align-items: center; justify-content: center; background-color: var(--secondary); color: white; border: none; cursor: pointer; transition: all 0.2s;">
+            <span class="material-symbols-outlined" style="font-size: 24px;">accessibility</span>
+        </button>
     </div>
 
     <!-- GLOBAL PUBLIC FOOTER -->
@@ -2103,6 +2158,30 @@
             </div>
         </div>
     </footer>
+
+    <!-- MOBILE NAVIGATION DRAWER -->
+    <div id="mobile-drawer" class="mobile-drawer">
+        <div class="mobile-drawer-overlay" onclick="toggleMobileMenu()"></div>
+        <div class="mobile-drawer-content">
+            <div class="mobile-drawer-header">
+                <div class="logo-container" onclick="toggleMobileMenu(); window.location.hash='home'">
+                    <img src="assets/images/logo.png" alt="GV-CPS Logo" class="logo-img" onerror="this.onerror=null; this.src='https://placehold.co/40x40/00374a/ffffff?text=GV';">
+                    <span class="logo-text">GV-CPS</span>
+                </div>
+                <button class="mobile-drawer-close" onclick="toggleMobileMenu()" aria-label="Fechar Menu">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <nav class="mobile-nav">
+                <a href="#home" onclick="toggleMobileMenu()" class="mobile-nav-link active" data-translate-pt="Início" data-translate-en="Home">Início</a>
+                <a href="#about" onclick="toggleMobileMenu()" class="mobile-nav-link" data-translate-pt="Sobre Nós" data-translate-en="About Us">Sobre Nós</a>
+                <a href="#services" onclick="toggleMobileMenu()" class="mobile-nav-link" data-translate-pt="Serviços" data-translate-en="Services">Serviços</a>
+                <a href="#wall" onclick="toggleMobileMenu()" class="mobile-nav-link" data-translate-pt="Mural" data-translate-en="Opportunity Wall">Mural</a>
+                <a href="#contact" onclick="toggleMobileMenu()" class="mobile-nav-link" data-translate-pt="Comunicação" data-translate-en="Communication">Comunicação</a>
+                <a href="#member-portal" onclick="toggleMobileMenu()" class="mobile-nav-link member-portal-link" style="display: none;">Painel</a>
+            </nav>
+        </div>
+    </div>
 
     <script src="app.js"></script>
 </body>
