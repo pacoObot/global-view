@@ -231,11 +231,11 @@ function setSlide(index) {
 
         if (bg) {
             if (i === index) {
-                bg.classList.remove('opacity-0');
-                bg.classList.add('opacity-35');
+                bg.classList.remove('inactive');
+                bg.classList.add('active');
             } else {
-                bg.classList.remove('opacity-35');
-                bg.classList.add('opacity-0');
+                bg.classList.remove('active');
+                bg.classList.add('inactive');
             }
         }
     }

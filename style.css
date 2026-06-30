@@ -2332,3 +2332,22 @@ input:checked + .slider:before {
     transform: translateX(20px);
 }
 
+/* Premium Dynamic Hero Slider Transitions */
+.slide-fade {
+    transition: opacity 1.2s ease-in-out, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-slider-bg-img {
+    transition: opacity 2.5s ease-in-out, transform 7.5s ease-out;
+}
+
+.hero-slider-bg-img.active {
+    opacity: 0.35 !important;
+    transform: scale(1.06) !important;
+}
+
+.hero-slider-bg-img.inactive {
+    opacity: 0 !important;
+    transform: scale(1.0) !important;
+}
+
