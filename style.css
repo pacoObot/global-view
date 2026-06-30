@@ -2342,7 +2342,7 @@ input:checked + .slider:before {
 }
 
 .hero-slider-bg-img.active {
-    opacity: 0.22 !important;
+    opacity: 0.45 !important;
     transform: scale(1.06) !important;
 }
 
