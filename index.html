@@ -818,24 +818,36 @@
             </div>
         </section>
 
-        <!-- 2. OPPORTUNITY WALL VIEW (PRIVADO) -->
+        <!-- 2. OPPORTUNITY WALL VIEW (PUBLIC) -->
         <section id="view-wall" class="view-section">
-            <div class="pt-24 pb-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-                <!-- Hero & Actions Section -->
-                <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-8">
-                    <div class="max-w-2xl">
-                        <h1 class="font-headline-lg text-headline-lg mb-4 text-primary">Opportunity Wall</h1>
-                        <p class="text-on-surface-variant font-body-lg text-body-lg">Explore as necessidades e ofertas globais filtradas pela excelência GV-CPS. Conecte-se a mercados estratégicos com segurança e transparência.</p>
+            <!-- Mini Hero Header -->
+            <div class="relative bg-slate-900 text-white overflow-hidden py-16 mb-12">
+                <!-- Background Image & Overlay -->
+                <div class="absolute inset-0 z-0 opacity-40">
+                    <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1920&q=80" alt="Mural Hero" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900 to-transparent"></div>
+                </div>
+                
+                <div class="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                    <div class="max-w-2xl text-left">
+                        <span class="inline-block bg-secondary/20 text-[#25D366] px-3 py-1 rounded-full text-xs font-bold mb-3 border border-secondary/30" data-translate-pt="Transações em Tempo Real" data-translate-en="Real-Time Transactions">
+                            Transações em Tempo Real
+                        </span>
+                        <h1 class="font-headline-xl text-white mb-4" data-translate-pt="Mural B2B de Oportunidades" data-translate-en="B2B Opportunity Wall">Mural B2B de Oportunidades</h1>
+                        <p class="text-white/80 font-body-lg" data-translate-pt="Explore as necessidades e ofertas globais filtradas pela excelência GV-CPS. Conecte-se a mercados estratégicos com segurança e total sigilo de contactos." data-translate-en="Explore global demands and offers filtered by GV-CPS excellence. Connect with strategic markets securely and with complete contact confidentiality.">Explore as necessidades e ofertas globais filtradas pela excelência GV-CPS. Conecte-se a mercados estratégicos com segurança e total sigilo de contactos.</p>
                     </div>
                     <div class="flex flex-wrap gap-4">
-                        <a href="#publish-need" class="flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-xl font-label-lg text-label-lg hover:scale-105 transition-transform no-underline">
-                            <span class="material-symbols-outlined">add_box</span> Publicar Necessidade
+                        <a href="#publish-need" class="flex items-center gap-2 bg-secondary text-on-secondary px-6 py-3.5 rounded-xl font-label-lg font-bold hover:scale-105 transition-transform no-underline">
+                            <span class="material-symbols-outlined">add_box</span> <span data-translate-pt="Publicar Necessidade" data-translate-en="Publish Demand">Publicar Necessidade</span>
                         </a>
-                        <a href="#publish-offer" class="flex items-center gap-2 border-2 border-primary text-primary px-6 py-3 rounded-xl font-label-lg text-label-lg hover:bg-primary hover:text-on-primary transition-all no-underline">
-                            <span class="material-symbols-outlined">upload_file</span> Publicar Oferta
+                        <a href="#publish-offer" class="flex items-center gap-2 bg-white/10 border border-white/20 text-white px-6 py-3.5 rounded-xl font-label-lg font-bold hover:bg-white/20 transition-all no-underline">
+                            <span class="material-symbols-outlined">upload_file</span> <span data-translate-pt="Publicar Oferta" data-translate-en="Publish Offer">Publicar Oferta</span>
                         </a>
                     </div>
                 </div>
+            </div>
+
+            <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop pb-24">
 
                 <!-- Filter Bar -->
                 <div class="glass-panel rounded-2xl p-6 mb-12 shadow-sm flex flex-col md:flex-row gap-gutter items-center">
