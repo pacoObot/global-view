@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html lang="pt"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GV-CPS | Opportunity Wall</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#191c1e",
+                        "on-tertiary-container": "#8cbed9",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#9fcde6",
+                        "tertiary-container": "#154e65",
+                        "secondary-container": "#97f3b5",
+                        "on-secondary-fixed": "#00210f",
+                        "surface-container-high": "#e6e8ea",
+                        "on-surface-variant": "#41484c",
+                        "on-primary-fixed": "#001e2b",
+                        "inverse-primary": "#9fcde6",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed-variant": "#00522d",
+                        "on-primary-fixed-variant": "#1a4c61",
+                        "primary-container": "#1d4e63",
+                        "inverse-surface": "#2d3133",
+                        "on-primary-container": "#91bed7",
+                        "background": "#f7f9fb",
+                        "on-tertiary-fixed": "#001e2b",
+                        "secondary-fixed": "#9af6b8",
+                        "tertiary-fixed-dim": "#9bcde9",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container-highest": "#e0e3e5",
+                        "primary": "#00374a",
+                        "surface-tint": "#36647a",
+                        "surface": "#f7f9fb",
+                        "on-secondary-container": "#047240",
+                        "tertiary-fixed": "#c0e8ff",
+                        "surface-dim": "#d8dadc",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#124c63",
+                        "outline-variant": "#c1c7cc",
+                        "secondary-fixed-dim": "#7ed99e",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#00374a",
+                        "inverse-on-surface": "#eff1f3",
+                        "secondary": "#006d3d",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#c0e8ff",
+                        "surface-container": "#eceef0",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f7f9fb",
+                        "on-background": "#191c1e",
+                        "outline": "#71787d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "1rem",
+                        "gutter": "1.5rem",
+                        "unit": "4px",
+                        "container-max": "1280px",
+                        "margin-desktop": "2.5rem"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Outfit"],
+                        "body-lg": ["Outfit"],
+                        "headline-xl": ["Outfit"],
+                        "headline-lg": ["Outfit"],
+                        "body-md": ["Outfit"],
+                        "headline-md": ["Outfit"],
+                        "headline-lg-mobile": ["Outfit"],
+                        "label-lg": ["Outfit"],
+                        "headline-sm": ["Outfit"],
+                        "label-sm": ["Outfit"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                        "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .opportunity-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(0, 55, 74, 0.12);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(193, 199, 204, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 bg-primary shadow-md">
+<div class="max-w-container-max mx-auto w-full flex justify-between items-center">
+<div class="font-headline-sm text-headline-sm font-bold text-on-primary">GV-CPS</div>
+<nav class="hidden md:flex space-x-8">
+<a class="text-secondary border-b-2 border-secondary pb-1 font-label-lg text-label-lg" href="#">Opportunity Wall</a>
+<a class="text-on-primary/80 hover:text-on-primary transition-colors font-label-lg text-label-lg" href="#">About</a>
+<a class="text-on-primary/80 hover:text-on-primary transition-colors font-label-lg text-label-lg" href="#">Services</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="bg-secondary text-on-secondary px-6 py-2 rounded-lg font-label-lg text-label-lg hover:opacity-90 transition-opacity">Login</button>
+</div>
+</div>
+</header>
+<main class="pt-32 pb-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<!-- Hero & Actions Section -->
+<div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-8">
+<div class="max-w-2xl">
+<h1 class="font-headline-lg text-headline-lg mb-4 text-primary">Opportunity Wall</h1>
+<p class="text-on-surface-variant font-body-lg text-body-lg">Explore as necessidades e ofertas globais filtradas pela excelência GV-CPS. Conecte-se a mercados estratégicos com segurança e transparência.</p>
+</div>
+<div class="flex flex-wrap gap-4">
+<button class="flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-xl font-label-lg text-label-lg hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">add_box</span> Publicar Necessidade
+                </button>
+<button class="flex items-center gap-2 border-2 border-primary text-primary px-6 py-3 rounded-xl font-label-lg text-label-lg hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined">upload_file</span> Publicar Oferta
+                </button>
+</div>
+</div>
+<!-- Filter Bar -->
+<div class="glass-panel rounded-2xl p-6 mb-12 shadow-sm flex flex-col md:flex-row gap-gutter items-center">
+<div class="w-full md:w-1/3">
+<label class="block font-label-lg text-label-lg mb-2">Categoria</label>
+<select class="w-full bg-white border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:outline-none transition-all" id="filter-category">
+<option value="all">Todas as Categorias</option>
+<option value="commodities">Commodities</option>
+<option value="logistics">Logística &amp; Supply Chain</option>
+<option value="tech">Tecnologia &amp; Inovação</option>
+<option value="energy">Energia &amp; Infraestrutura</option>
+<option value="consulting">Consultoria</option>
+</select>
+</div>
+<div class="w-full md:w-1/3">
+<label class="block font-label-lg text-label-lg mb-2">País / Região</label>
+<select class="w-full bg-white border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:outline-none transition-all" id="filter-country">
+<option value="all">Global</option>
+<option value="mz">Moçambique</option>
+<option value="pt">Portugal</option>
+<option value="br">Brasil</option>
+<option value="ae">Emirados Árabes</option>
+</select>
+</div>
+<div class="w-full md:w-1/4">
+<label class="block font-label-lg text-label-lg mb-2">Ordenar por</label>
+<select class="w-full bg-white border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:outline-none transition-all" id="sort-by">
+<option value="latest">Mais Recentes</option>
+<option value="scope">Maior Volume</option>
+</select>
+</div>
+<div class="pt-6">
+<button class="bg-primary text-on-primary p-3 rounded-lg hover:opacity-90">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+</div>
+<!-- Grid of Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter" id="opportunities-grid">
+<!-- Cards will be injected by JS -->
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full bg-primary text-on-primary border-t border-outline-variant">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-16 grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="col-span-1 md:col-span-1">
+<div class="font-headline-sm text-headline-sm font-bold mb-4">GV-CPS</div>
+<p class="text-on-primary/70 text-body-md font-body-md">Soluções globais para conexões de alto impacto.</p>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg mb-6">Explorar</h4>
+<ul class="space-y-4">
+<li><a class="text-on-primary/70 hover:text-secondary transition-colors text-label-sm font-label-sm" href="#">Opportunity Wall</a></li>
+<li><a class="text-on-primary/70 hover:text-secondary transition-colors text-label-sm font-label-sm" href="#">Services</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg mb-6">Empresa</h4>
+<ul class="space-y-4">
+<li><a class="text-on-primary/70 hover:text-secondary transition-colors text-label-sm font-label-sm" href="#">About</a></li>
+<li><a class="text-on-primary/70 hover:text-secondary transition-colors text-label-sm font-label-sm" href="#">Contact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg mb-6">Legal</h4>
+<ul class="space-y-4">
+<li><a class="text-on-primary/70 hover:text-secondary transition-colors text-label-sm font-label-sm" href="#">Terms of Service</a></li>
+<li><a class="text-on-primary/70 hover:text-secondary transition-colors text-label-sm font-label-sm" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 border-t border-on-primary/10 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-on-primary/50 text-label-sm font-label-sm">© 2026 GV-CPS. All rights reserved. Office: Maputo, Mozambique.</p>
+</div>
+</footer>
+<script>
+        const mockData = [
+            {
+                id: 1,
+                title: "Fornecimento de Açúcar ICUMSA 45",
+                category: "commodities",
+                categoryLabel: "Commodities/Agro",
+                quantity: "12,500 MT",
+                country: "Brasil",
+                countryCode: "br",
+                flag: "🇧🇷",
+                logistics: true,
+                date: "20 Out 2025",
+                imagePrompt: "A professional cinematic shot of a massive cargo ship loaded with white industrial bags, golden hour lighting, deep blue ocean, modern global trade aesthetic."
+            },
+            {
+                id: 2,
+                title: "Expansão de Rede de Data Center",
+                category: "tech",
+                categoryLabel: "Tecnologia",
+                quantity: "Project-based",
+                country: "Moçambique",
+                countryCode: "mz",
+                flag: "🇲🇿",
+                logistics: false,
+                date: "18 Out 2025",
+                imagePrompt: "High-tech server room with glowing blue LED lights, sleek futuristic cooling systems, minimalist architectural photography style, corporate prestige."
+            },
+            {
+                id: 3,
+                title: "Aquisição de Minério de Ferro 62%",
+                category: "commodities",
+                categoryLabel: "Commodities",
+                quantity: "50,000 MT/Mês",
+                country: "Emirados Árabes",
+                countryCode: "ae",
+                flag: "🇦🇪",
+                logistics: true,
+                date: "15 Out 2025",
+                imagePrompt: "A wide-angle aerial view of a sophisticated industrial mining facility with orderly stockpiles of raw minerals under a clear desert sun, clean industrial photography."
+            },
+            {
+                id: 4,
+                title: "Serviços de Consultoria Marítima",
+                category: "consulting",
+                categoryLabel: "Consultoria",
+                quantity: "12 Meses",
+                country: "Portugal",
+                countryCode: "pt",
+                flag: "🇵🇹",
+                logistics: true,
+                date: "12 Out 2025",
+                imagePrompt: "An elegant glass-walled boardroom overlooking a modern bustling container port at sunset, professional luxury consulting environment, soft natural light."
+            },
+            {
+                id: 5,
+                title: "Instalação de Painéis Solares 50MW",
+                category: "energy",
+                categoryLabel: "Energia",
+                quantity: "Nível Industrial",
+                country: "Moçambique",
+                countryCode: "mz",
+                flag: "🇲🇿",
+                logistics: true,
+                date: "10 Out 2025",
+                imagePrompt: "Vast field of shimmering blue solar panels stretching towards the horizon in a bright savanna landscape, clean energy, high-contrast morning light."
+            },
+            {
+                id: 6,
+                title: "Logística Integrada de Grãos",
+                category: "logistics",
+                categoryLabel: "Logística",
+                quantity: "Fluxo Contínuo",
+                country: "Moçambique",
+                countryCode: "mz",
+                flag: "🇲🇿",
+                logistics: true,
+                date: "05 Out 2025",
+                imagePrompt: "Close-up of premium raw cashews in a modern wooden tray, soft focus background of a high-end processing facility, warm natural tones, commercial food photography."
+            }
+        ];
+
+        function getCategoryColors(category) {
+            switch(category) {
+                case 'commodities':
+                case 'energy':
+                    return { bg: 'bg-secondary/10', text: 'text-secondary', border: 'border-secondary/20' };
+                case 'tech':
+                    return { bg: 'bg-primary-fixed/30', text: 'text-primary', border: 'border-primary/20' };
+                case 'logistics':
+                    return { bg: 'bg-primary/10', text: 'text-primary', border: 'border-primary/20' };
+                case 'consulting':
+                    return { bg: 'bg-on-tertiary-fixed-variant/10', text: 'text-on-tertiary-fixed-variant', border: 'border-on-tertiary-fixed-variant/20' };
+                default:
+                    return { bg: 'bg-surface-container', text: 'text-on-surface-variant', border: 'border-outline-variant' };
+            }
+        }
+
+        function renderCards(data) {
+            const grid = document.getElementById('opportunities-grid');
+            grid.innerHTML = '';
+
+            data.forEach(item => {
+                const colors = getCategoryColors(item.category);
+                const card = document.createElement('div');
+                card.className = 'opportunity-card bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant transition-all duration-300 flex flex-col h-full';
+                
+                card.innerHTML = `
+                    <div class="relative h-48 w-full overflow-hidden">
+                        <img class="w-full h-full object-cover" 
+                             src="https://images.unsplash.com/photo-${item.id === 1 ? '1586528116311-ad8dd3c8310d' : (item.id === 2 ? '1558494949-ef010cbdcc51' : (item.id === 3 ? '1587919946444-650059e7428f' : (item.id === 4 ? '1519085360753-af0119f7cbe7' : (item.id === 5 ? '1508514177221-18d162b85567' : '1586528116311-ad8dd3c8310d'))))}?auto=format&fit=crop&w=800&q=80" 
+                             data-alt="${item.imagePrompt}">
+                        <div class="absolute top-4 left-4">
+                            <span class="${colors.bg} ${colors.text} ${colors.border} border px-3 py-1 rounded-full text-label-sm font-label-lg backdrop-blur-sm">
+                                ${item.categoryLabel}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="font-headline-sm text-headline-sm text-primary mb-4 h-16 line-clamp-2">${item.title}</h3>
+                        
+                        <div class="space-y-3 mb-6 flex-grow">
+                            <div class="flex items-center gap-2 text-on-surface-variant">
+                                <span class="material-symbols-outlined text-[18px]">inventory_2</span>
+                                <span class="font-label-lg text-label-lg">Volume: ${item.quantity}</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-on-surface-variant">
+                                <span class="material-symbols-outlined text-[18px]">public</span>
+                                <span class="font-label-lg text-label-lg flex items-center gap-1.5">País: ${item.country} <span class="text-[1.1rem] leading-none">${item.flag}</span></span>
+                            </div>
+                            <div class="flex items-center gap-2 text-on-surface-variant">
+                                <span class="material-symbols-outlined text-[18px]">${item.logistics ? 'local_shipping' : 'block'}</span>
+                                <span class="font-label-lg text-label-lg">Logística: ${item.logistics ? 'Incluída' : 'Não Incluída'}</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-on-surface-variant/60">
+                                <span class="material-symbols-outlined text-[18px]">calendar_today</span>
+                                <span class="font-label-sm text-label-sm">Publicado em ${item.date}</span>
+                            </div>
+                        </div>
+
+                        <button class="w-full bg-primary text-on-primary py-4 px-6 rounded-lg font-label-lg text-label-lg font-bold hover:opacity-90 active:scale-95 transition-all uppercase tracking-wider">
+                            Tenho Interesse
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        document.getElementById('filter-category').addEventListener('change', (e) => {
+            const val = e.target.value;
+            const filtered = val === 'all' ? mockData : mockData.filter(i => i.category === val);
+            renderCards(filtered);
+        });
+
+        // Initial render
+        renderCards(mockData);
+    </script>
+</body></html>

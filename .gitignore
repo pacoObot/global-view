@@ -1,0 +1,11 @@
+# System / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.log
+*.tmp
+node_modules/
+dist/
+build/

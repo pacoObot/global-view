@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GV-CPS | Soluções Globais em Moçambique</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons for Premium UI Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#021F2D',    // Navy Blue do topo/rodapé do print
+                            teal: '#0A3B52',    // Teal das seções
+                            green: '#00A859',   // Verde das tags e botões
+                            lightGreen: '#E6F6EE', // Fundo verde leve
+                            grayBg: '#F4F7F6',  // Cinza das seções de fluxo
+                            cardBg: '#092F42'   // Azul escuro de cards
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #021F2D;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00A859;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-800 overflow-x-hidden">
+
+    <!-- TOP HEADER / NAVIGATION -->
+    <header class="bg-brand-dark text-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="bg-brand-green p-2.5 rounded-lg flex items-center justify-center shadow-lg shadow-brand-green/20">
+                        <i data-lucide="globe-2" class="w-6 h-6 text-white animate-pulse"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-bold tracking-tight">GV-CPS</span>
+                        <span class="block text-[9px] text-brand-green tracking-widest uppercase font-semibold">Mozambique Gateway</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav Links -->
+                <nav class="hidden md:flex space-x-8 text-sm font-medium">
+                    <a href="#setores" class="hover:text-brand-green transition-colors py-2">Setores</a>
+                    <a href="#como-funciona" class="hover:text-brand-green transition-colors py-2">Como Funciona</a>
+                    <a href="#consultoria" class="hover:text-brand-green transition-colors py-2">Consultoria Técnica</a>
+                    <button onclick="openMuralModal()" class="text-brand-green hover:text-white transition-colors py-2 flex items-center gap-1.5 font-semibold">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-green"></span>
+                        </span>
+                        Mural de Oportunidades
+                    </button>
+                </nav>
+
+                <!-- Search and Action -->
+                <div class="hidden lg:flex items-center space-x-4">
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                            <i data-lucide="search" class="w-4 h-4"></i>
+                        </span>
+                        <input type="text" id="headerSearch" onkeyup="handleQuickSearch(event)" placeholder="Pesquise oportunidades..." 
+                            class="bg-brand-teal/50 border border-brand-teal text-sm rounded-lg focus:ring-brand-green focus:border-brand-green block w-64 pl-10 p-2 text-white placeholder-slate-400 focus:outline-none transition-all">
+                    </div>
+                    <button onclick="openModal('loginModal')" class="border border-brand-green px-5 py-2 text-sm rounded-lg text-brand-green font-medium hover:bg-brand-green hover:text-white transition-all">
+                        Login
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="p-2 text-slate-400 hover:text-white focus:outline-none">
+                        <i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Container -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-dark border-t border-brand-teal/40 px-4 pt-2 pb-6 space-y-3">
+            <a href="#setores" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-white py-2 text-base font-medium">Setores</a>
+            <a href="#como-funciona" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-white py-2 text-base font-medium">Como Funciona</a>
+            <a href="#consultoria" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-white py-2 text-base font-medium">Consultoria Técnica</a>
+            <button onclick="toggleMobileMenu(); openMuralModal();" class="w-full text-left bg-brand-teal/40 text-brand-green p-3 rounded-lg flex items-center gap-2 text-base font-semibold">
+                <i data-lucide="layout-grid" class="w-5 h-5"></i> Mural de Oportunidades
+            </button>
+            <div class="pt-4 border-t border-brand-teal/40 flex flex-col gap-3">
+                <input type="text" id="headerSearchMobile" placeholder="Pesquise oportunidades..." 
+                    class="bg-brand-teal/50 border border-brand-teal text-sm rounded-lg p-3 text-white placeholder-slate-400 focus:outline-none">
+                <button onclick="openModal('loginModal')" class="w-full bg-brand-green text-white p-3 rounded-lg font-medium text-center">
+                    Login
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative bg-brand-dark min-h-[620px] flex items-center overflow-hidden">
+        <!-- Background Img with Dark overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1920&q=80" 
+                 alt="[Porto de Maputo Moçambique]" class="w-full h-full object-cover opacity-35 object-center">
+            <div class="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/90 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-white">
+            <div class="lg:w-2/3">
+                
+                <!-- Subtitle Indicator -->
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-brand-green/20 text-brand-green mb-6 border border-brand-green/30 tracking-wider uppercase">
+                    <span class="w-2 h-2 rounded-full bg-brand-green animate-ping"></span>
+                    A Sua Janela para o Mercado Global
+                </span>
+
+                <!-- Title -->
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight mb-6">
+                    Oportunidades Globais <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-green to-teal-300">em Moçambique</span>
+                </h1>
+
+                <!-- Paragraph -->
+                <p class="text-lg text-slate-300 max-w-xl mb-10 leading-relaxed">
+                    Consultoria especializada e marketplace B2B para conectar compradores internacionais e fornecedores locais de excelência com total transparência, segurança regulatória e robustez logística.
+                </p>
+
+                <!-- Actions -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button onclick="openModal('demandaModal')" class="bg-brand-green hover:bg-emerald-600 px-8 py-4 rounded-xl text-white font-semibold transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-green/20">
+                        <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                        Publicar Necessidade
+                    </button>
+                    <button onclick="openMuralModal()" class="bg-brand-teal/70 hover:bg-brand-teal border border-teal-500/30 px-8 py-4 rounded-xl text-white font-semibold transition-all flex items-center justify-center gap-2">
+                        <i data-lucide="layout-grid" class="w-5 h-5 text-brand-green"></i>
+                        Ver Mural de Oportunidades
+                    </button>
+                </div>
+
+                <!-- Stats indicators floating bottom -->
+                <div class="grid grid-cols-3 gap-6 pt-12 mt-12 border-t border-slate-700/50 max-w-lg">
+                    <div>
+                        <span class="block text-2xl sm:text-3xl font-bold text-white">USD 4.2B+</span>
+                        <span class="text-xs text-slate-400">Transacionados em Moçambique</span>
+                    </div>
+                    <div>
+                        <span class="block text-2xl sm:text-3xl font-bold text-white">450+</span>
+                        <span class="text-xs text-slate-400">Fornecedores Certificados</span>
+                    </div>
+                    <div>
+                        <span class="block text-2xl sm:text-3xl font-bold text-white">100%</span>
+                        <span class="text-xs text-slate-400">Conteúdo Local Auditado</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- STRATEGIC SECTORS -->
+    <section id="setores" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-green font-bold text-xs uppercase tracking-widest block mb-3">Setores Estratégicos</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-dark tracking-tight">Explorar por Categoria</h2>
+                <div class="h-1.5 w-16 bg-brand-green mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Bento/Grid of sectors -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                
+                <!-- Agribusiness (Card Grande Largo) -->
+                <div class="md:col-span-8 group relative rounded-2xl overflow-hidden min-h-[300px] flex flex-col justify-end p-8 text-white transition-all transform hover:-translate-y-1 hover:shadow-xl">
+                    <div class="absolute inset-0">
+                        <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1000&q=80" 
+                             alt="[Agronegócio em Moçambique]" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
+                    </div>
+                    <div class="relative z-10">
+                        <span class="inline-flex items-center gap-1 bg-emerald-600 text-white text-xs font-semibold px-2.5 py-1 rounded-md mb-3">
+                            <i data-lucide="leaf" class="w-3.5 h-3.5"></i> Agronegócio
+                        </span>
+                        <h3 class="text-2xl font-bold mb-2">Desenvolvimento Agrário</h3>
+                        <p class="text-slate-300 text-sm max-w-xl">
+                            Oportunidades em produção em larga escala, processamento moderno de oleaginosas, cereais, caju e exportação certificada para a Europa e Ásia.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Oil & Gas (Card Pequeno) -->
+                <div class="md:col-span-4 group relative rounded-2xl overflow-hidden min-h-[300px] flex flex-col justify-end p-8 text-white transition-all transform hover:-translate-y-1 hover:shadow-xl">
+                    <div class="absolute inset-0">
+                        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80" 
+                             alt="[Oil and Gas Refinery]" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
+                    </div>
+                    <div class="relative z-10">
+                        <span class="inline-flex items-center gap-1 bg-amber-600 text-white text-xs font-semibold px-2.5 py-1 rounded-md mb-3">
+                            <i data-lucide="flame" class="w-3.5 h-3.5"></i> Oil & Gas
+                        </span>
+                        <h3 class="text-2xl font-bold mb-2">Energia e Recursos</h3>
+                        <p class="text-slate-300 text-sm">
+                            Atuação direta no ecossistema de fornecedores industriais do Rovuma Basin e projetos de LNG em Cabo Delgado.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Technology (Card Pequeno) -->
+                <div class="md:col-span-4 group relative rounded-2xl overflow-hidden min-h-[300px] flex flex-col justify-end p-8 text-white transition-all transform hover:-translate-y-1 hover:shadow-xl">
+                    <div class="absolute inset-0">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80" 
+                             alt="[Tecnologia e Redes]" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
+                    </div>
+                    <div class="relative z-10">
+                        <span class="inline-flex items-center gap-1 bg-blue-600 text-white text-xs font-semibold px-2.5 py-1 rounded-md mb-3">
+                            <i data-lucide="cpu" class="w-3.5 h-3.5"></i> Tecnologia
+                        </span>
+                        <h3 class="text-2xl font-bold mb-2">Inovação e TI</h3>
+                        <p class="text-slate-300 text-sm">
+                            Implementação de processos críticos, infraestrutura corporativa inteligente, cibersegurança e automação integrada.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Global Trading (Card Grande Largo) -->
+                <div class="md:col-span-8 group relative rounded-2xl overflow-hidden min-h-[300px] flex flex-col justify-end p-8 text-white transition-all transform hover:-translate-y-1 hover:shadow-xl">
+                    <div class="absolute inset-0">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80" 
+                             alt="[Escritório Corporativo Moderno]" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
+                    </div>
+                    <div class="relative z-10">
+                        <span class="inline-flex items-center gap-1 bg-indigo-600 text-white text-xs font-semibold px-2.5 py-1 rounded-md mb-3">
+                            <i data-lucide="arrow-left-right" class="w-3.5 h-3.5"></i> Trading Global
+                        </span>
+                        <h3 class="text-2xl font-bold mb-2">Comércio & Logística</h3>
+                        <p class="text-slate-300 text-sm max-w-xl">
+                            Facilitamos e dinamizamos o escoamento aduaneiro de commodities minerais, agrícolas e serviços especializados com robusto conformidade aduaneira local.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="como-funciona" class="py-24 bg-brand-grayBg border-y border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-4">
+                <div>
+                    <span class="text-brand-green font-bold text-xs uppercase tracking-widest block mb-3">Como Funciona a GV-CPS</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-dark tracking-tight">Caminho Simplificado e Seguro</h2>
+                </div>
+                <button onclick="openMuralModal()" class="text-brand-green hover:text-emerald-700 font-semibold flex items-center gap-1 text-sm group">
+                    Explorar as demandas ativas no país 
+                    <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Step 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 relative group hover:shadow-md transition-all">
+                    <span class="absolute top-6 right-8 text-6xl font-black text-slate-100 select-none group-hover:text-emerald-50 transition-colors">01</span>
+                    <div class="bg-brand-lightGreen p-4 rounded-xl w-fit text-brand-green mb-6">
+                        <i data-lucide="file-text" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-dark mb-3">Poste sua Demanda</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Publique de maneira rápida e organizada o que sua corporação busca comprar ou os serviços especializados que pode fornecer ao ecossistema industrial.
+                    </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 relative group hover:shadow-md transition-all">
+                    <span class="absolute top-6 right-8 text-6xl font-black text-slate-100 select-none group-hover:text-emerald-50 transition-colors">02</span>
+                    <div class="bg-brand-lightGreen p-4 rounded-xl w-fit text-brand-green mb-6">
+                        <i data-lucide="shield-check" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-dark mb-3">Conexão Curada</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Nossos consultores sêniores auditam, filtram e validam as propostas. O sistema conecta automaticamente perfis compatíveis com alto índice de sucesso.
+                    </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 relative group hover:shadow-md transition-all">
+                    <span class="absolute top-6 right-8 text-6xl font-black text-slate-100 select-none group-hover:text-emerald-50 transition-colors">03</span>
+                    <div class="bg-brand-lightGreen p-4 rounded-xl w-fit text-brand-green mb-6">
+                        <i data-lucide="handshake" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-dark mb-3">Fecho de Negócio</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Apoio no fechamento contratual, assessoria jurídica, logística de frete internacional e desembaraço de mercadorias com padrões aduaneiros moçambicanos.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- VALUE PROP & CONSULTING DETAILS -->
+    <section id="consultoria" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                
+                <!-- Left Image/Stats Box -->
+                <div class="lg:col-span-5 relative">
+                    <div class="rounded-2xl overflow-hidden shadow-2xl relative">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80" 
+                             alt="[Equipa de Consultoria Técnica]" class="w-full object-cover h-[500px]">
+                        <!-- Dark translucent cover -->
+                        <div class="absolute inset-0 bg-brand-dark/25"></div>
+                    </div>
+                    
+                    <!-- Floating Indicator Card -->
+                    <div class="absolute -bottom-6 -right-6 bg-brand-dark text-white p-6 rounded-2xl shadow-2xl border border-brand-teal max-w-[220px]">
+                        <span class="block text-4xl font-extrabold text-brand-green mb-1">15+</span>
+                        <p class="text-xs text-slate-300 font-medium leading-relaxed">
+                            Anos de expertise técnica integrada na cadeia de valor africana.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Copy and Features -->
+                <div class="lg:col-span-7">
+                    <span class="text-brand-green font-bold text-xs uppercase tracking-widest block mb-3">Consultoria de Elite para Operações Complexas</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-dark leading-tight mb-6">
+                        Muito além de uma plataforma digital: o seu parceiro local estratégico.
+                    </h2>
+                    <p class="text-slate-600 text-base mb-8 leading-relaxed">
+                        A GV-CPS combina profunda inteligência de mercado em Moçambique com as mais refinadas metodologias internacionais de procurement empresarial.
+                    </p>
+
+                    <!-- Features bullets list -->
+                    <div class="space-y-6">
+                        
+                        <!-- Item 1 -->
+                        <div class="flex gap-4">
+                            <div class="flex-none bg-brand-lightGreen text-brand-green p-2 rounded-lg h-fit">
+                                <i data-lucide="layers" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-base font-bold text-brand-dark mb-1">Especialistas em Conteúdo Local</h4>
+                                <p class="text-slate-600 text-sm">
+                                    Assessoria total para enquadrar suas transações comerciais nas complexas normas de conteúdo local exigidas pelo setor de óleo e gás.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="flex gap-4">
+                            <div class="flex-none bg-brand-lightGreen text-brand-green p-2 rounded-lg h-fit">
+                                <i data-lucide="anchor" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-base font-bold text-brand-dark mb-1">Trabalho e Presença Aduaneira Direta</h4>
+                                <p class="text-slate-600 text-sm">
+                                    Garantimos conformidade em alfândegas, portos estratégicos (Maputo, Beira e Nacala) e desembaraço de equipamentos industriais pesados.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Item 3 -->
+                        <div class="flex gap-4">
+                            <div class="flex-none bg-brand-lightGreen text-brand-green p-2 rounded-lg h-fit">
+                                <i data-lucide="shield" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-base font-bold text-brand-dark mb-1">Tecnologia Corporativa e Proteção de Dados</h4>
+                                <p class="text-slate-600 text-sm">
+                                    Utilizamos ferramentas de nuvem seguras de nível bancário para garantir sigilo total e transações encriptadas entre as partes envolvidas.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="mt-10">
+                        <button onclick="toggleAdvisor()" class="bg-brand-dark text-white hover:bg-brand-teal px-8 py-4 rounded-xl font-semibold transition-all flex items-center gap-2">
+                            <i data-lucide="message-square" class="w-5 h-5 text-brand-green"></i>
+                            Falar com um Consultor de IA
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SOCIAL PROOF / TRUST / TESTIMONIALS -->
+    <section class="py-24 bg-gradient-to-b from-brand-dark to-[#01141D] text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-brand-green font-bold text-xs uppercase tracking-widest block mb-3">Conexões Robustas</span>
+                <h2 class="text-3xl font-bold tracking-tight">Confiança Consolidada em Moçambique</h2>
+                <div class="h-1 bg-brand-green w-12 mx-auto mt-3 rounded-full"></div>
+            </div>
+
+            <!-- Client logos bar simulated -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center opacity-70 mb-16 border-b border-brand-teal/30 pb-12">
+                <div class="text-lg font-extrabold tracking-widest text-slate-400 hover:text-white transition-colors">MOZ ENERGY</div>
+                <div class="text-lg font-extrabold tracking-widest text-slate-400 hover:text-white transition-colors">AGRO-PRO MZ</div>
+                <div class="text-lg font-extrabold tracking-widest text-slate-400 hover:text-white transition-colors">LOGISTICS MZ</div>
+                <div class="text-lg font-extrabold tracking-widest text-slate-400 hover:text-white transition-colors">GLOBAL TECH</div>
+            </div>
+
+            <!-- Testimonials Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Card 1 -->
+                <div class="bg-brand-cardBg/40 border border-brand-teal/40 rounded-2xl p-8 relative">
+                    <div class="flex text-amber-500 gap-1 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed italic mb-6">
+                        "A GV-CPS transformou inteiramente nossa dinâmica de busca por fornecedores de serviços industriais de soldagem e usinagem para as bacias extrativas em Cabo Delgado. O processo de curadoria garantiu que todos os selecionados detivessem as exigidas acreditações ISO locais e globais."
+                    </p>
+                    <div>
+                        <span class="block font-bold text-white text-base">António Longo</span>
+                        <span class="block text-xs text-brand-green font-medium">Diretor de Procurement, MOZ ENERGY</span>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-brand-cardBg/40 border border-brand-teal/40 rounded-2xl p-8 relative">
+                    <div class="flex text-amber-500 gap-1 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed italic mb-6">
+                        "Encontrar um canal de comércio exterior fluído e transparente para commodities agrícolas é um desafio constante na África Oriental. A assessoria da equipa da GV-CPS na intermediação jurídica reduziu nossos tempos de ciclo aduaneiro de escoamento no Porto da Beira em quase 40%."
+                    </p>
+                    <div>
+                        <span class="block font-bold text-white text-base">Sarah Justino</span>
+                        <span class="block text-xs text-brand-green font-medium">COO, GLOBAL TECH SOLUTIONS</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-brand-dark text-slate-400 pt-16 pb-8 border-t border-brand-teal/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-12">
+                
+                <!-- Col 1 -->
+                <div class="md:col-span-4">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="bg-brand-green p-2 rounded-lg flex items-center justify-center">
+                            <i data-lucide="globe-2" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold tracking-tight text-white">GV-CPS</span>
+                    </div>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-6">
+                        Empoderando o desenvolvimento industrial e comercial global através de conexões inteligentes e soluções estratégicas de conformidade aduaneira e logística em Moçambique.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="hover:text-brand-green"><i data-lucide="globe" class="w-5 h-5"></i></a>
+                        <a href="#" class="hover:text-brand-green"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                        <a href="#" class="hover:text-brand-green"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2 -->
+                <div class="md:col-span-2">
+                    <h5 class="text-white text-sm font-bold uppercase tracking-wider mb-6">Links Rápidos</h5>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Oportunidades</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Quem Somos</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Serviços</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Carreiras</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3 -->
+                <div class="md:col-span-2">
+                    <h5 class="text-white text-sm font-bold uppercase tracking-wider mb-6">Legal</h5>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Termos de Serviço</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacidade</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Política de Cookies</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4 -->
+                <div class="md:col-span-4">
+                    <h5 class="text-white text-sm font-bold uppercase tracking-wider mb-6">Newsletter</h5>
+                    <p class="text-sm text-slate-400 mb-4">
+                        Receba atualizações semanais de procurement e novas janelas de investimento direto em Moçambique.
+                    </p>
+                    <form onsubmit="handleNewsletterSubmit(event)" class="flex gap-2">
+                        <input type="email" required placeholder="E-mail corporativo" class="bg-brand-teal/30 border border-brand-teal/60 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-brand-green w-full placeholder-slate-400">
+                        <button type="submit" class="bg-brand-green text-white px-4 rounded-lg hover:bg-emerald-600 transition-colors">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="pt-8 border-t border-brand-teal/20 text-center text-xs text-slate-500">
+                <p>© 2026 GV-CPS. Todos os direitos reservados. Maputo, Moçambique.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE FLOATING AI CHAT ADVISOR WIDGET -->
+    <div id="aiAdvisor" class="fixed bottom-6 right-6 z-50 flex flex-col w-96 max-w-[calc(100vw-32px)] bg-brand-dark text-white rounded-2xl shadow-2xl border border-brand-teal/80 transition-all duration-300 transform translate-y-2 opacity-0 pointer-events-none">
+        
+        <!-- Header -->
+        <div class="flex items-center justify-between p-4 border-b border-brand-teal bg-brand-teal/40 rounded-t-2xl">
+            <div class="flex items-center gap-3">
+                <div class="bg-brand-green p-2 rounded-lg relative">
+                    <i data-lucide="bot" class="w-5 h-5 text-white"></i>
+                    <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 border border-brand-dark rounded-full"></span>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold">Consultor Virtual GV-CPS</h4>
+                    <span class="text-[10px] text-brand-green tracking-wide block">Especialista em Moçambique • IA</span>
+                </div>
+            </div>
+            <button onclick="toggleAdvisor()" class="p-1 hover:bg-brand-teal/80 rounded-lg text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <!-- Chat History -->
+        <div id="chatHistory" class="flex-1 h-80 overflow-y-auto p-4 space-y-4 text-xs">
+            <!-- Welcome message -->
+            <div class="flex gap-2">
+                <div class="bg-brand-teal p-1.5 rounded-lg h-fit text-brand-green">
+                    <i data-lucide="bot" class="w-4 h-4"></i>
+                </div>
+                <div class="bg-brand-teal/30 p-3 rounded-2xl rounded-tl-none border border-brand-teal max-w-[80%] leading-relaxed text-slate-200">
+                    Olá! Sou o seu Consultor Virtual da **GV-CPS**. Posso orientar você sobre conteúdo local, regimes fiscais, processos do Porto de Maputo ou como funciona o nosso marketplace. Como posso ajudar seu negócio hoje?
+                </div>
+            </div>
+        </div>
+
+        <!-- Predefined helper questions -->
+        <div class="px-4 pb-2 pt-1 flex flex-wrap gap-1.5 border-t border-brand-teal/40">
+            <button onclick="sendQuickQuestion('Como funciona o Conteúdo Local em Moçambique?')" class="text-[10px] bg-brand-teal/40 text-brand-green hover:bg-brand-teal/80 px-2 py-1 rounded border border-brand-teal transition-all">Conteúdo Local?</button>
+            <button onclick="sendQuickQuestion('Quais documentos são necessários para exportação?')" class="text-[10px] bg-brand-teal/40 text-brand-green hover:bg-brand-teal/80 px-2 py-1 rounded border border-brand-teal transition-all">Documentos de exportação?</button>
+            <button onclick="sendQuickQuestion('Quais são as oportunidades ativas no agro?')" class="text-[10px] bg-brand-teal/40 text-brand-green hover:bg-brand-teal/80 px-2 py-1 rounded border border-brand-teal transition-all">Oportunidades em Agro?</button>
+        </div>
+
+        <!-- Input Box -->
+        <div class="p-3 border-t border-brand-teal flex gap-2">
+            <input type="text" id="aiInput" onkeydown="handleChatKeyDown(event)" placeholder="Digite sua pergunta sobre negócios..." class="bg-brand-teal/20 border border-brand-teal/60 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-brand-green flex-1">
+            <button onclick="sendChat()" class="bg-brand-green hover:bg-emerald-600 text-white p-2.5 rounded-xl transition-colors">
+                <i data-lucide="send" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- AI Advisor Floating toggle button -->
+    <button onclick="toggleAdvisor()" class="fixed bottom-6 right-6 z-40 bg-brand-green text-white p-4 rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center border border-emerald-400/20">
+        <i data-lucide="message-square" class="w-6 h-6"></i>
+    </button>
+
+
+    <!-- MODAL: MURAL DE OPORTUNIDADES -->
+    <div id="muralModal" class="fixed inset-0 bg-brand-dark/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-5xl h-[80vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+            
+            <!-- Modal Header -->
+            <div class="bg-brand-dark text-white p-6 border-b border-brand-teal flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="bg-brand-green p-2 rounded-lg">
+                        <i data-lucide="layout-grid" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold">Mural de Oportunidades Ativas</h3>
+                        <p class="text-xs text-slate-400">Demandas de compra e venda autenticadas por nossa equipa de consultoria</p>
+                    </div>
+                </div>
+                <button onclick="closeMuralModal()" class="text-slate-400 hover:text-white transition-colors p-1.5 hover:bg-slate-800 rounded-lg">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Modal Sub-filters & Search -->
+            <div class="p-6 bg-brand-grayBg border-b border-slate-200 flex flex-col md:flex-row gap-4 items-center justify-between">
+                <!-- Search -->
+                <div class="relative w-full md:w-80">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <i data-lucide="search" class="w-4 h-4"></i>
+                    </span>
+                    <input type="text" id="muralSearch" onkeyup="filterMural()" placeholder="Buscar oportunidades..." class="bg-white border border-slate-300 text-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-green focus:border-brand-green block w-full pl-10 p-2 text-slate-700">
+                </div>
+                <!-- Categories buttons -->
+                <div class="flex flex-wrap gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
+                    <button onclick="filterCategory('all')" id="btn-all" class="category-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-brand-dark text-white border border-brand-dark transition-all">Todas</button>
+                    <button onclick="filterCategory('Agribusiness')" id="btn-Agribusiness" class="category-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white text-slate-600 border border-slate-300 hover:bg-slate-100 transition-all">Agronegócio</button>
+                    <button onclick="filterCategory('Oil & Gas')" id="btn-OilGas" class="category-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white text-slate-600 border border-slate-300 hover:bg-slate-100 transition-all">Oil & Gas</button>
+                    <button onclick="filterCategory('Tecnologia')" id="btn-Tecnologia" class="category-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white text-slate-600 border border-slate-300 hover:bg-slate-100 transition-all">Tecnologia</button>
+                    <button onclick="filterCategory('Trading')" id="btn-Trading" class="category-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white text-slate-600 border border-slate-300 hover:bg-slate-100 transition-all">Trading Global</button>
+                </div>
+            </div>
+
+            <!-- Modal content / list of opportunities -->
+            <div class="flex-1 overflow-y-auto p-6 bg-slate-50">
+                
+                <div id="muralGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Dynamic populated -->
+                </div>
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-6 border-t border-slate-200 bg-white flex justify-between items-center flex-col sm:flex-row gap-4">
+                <span class="text-xs text-slate-500">Tem um requerimento de compra ou fornecimento não listado?</span>
+                <button onclick="closeMuralModal(); openModal('demandaModal')" class="bg-brand-green hover:bg-emerald-600 text-white px-6 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 transition-all">
+                    <i data-lucide="plus" class="w-4 h-4"></i> Publicar Necessidade Agora
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- MODAL: POSTAR DEMANDA -->
+    <div id="demandaModal" class="fixed inset-0 bg-brand-dark/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+            <div class="bg-brand-dark text-white p-6 border-b border-brand-teal flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="file-plus-2" class="w-5 h-5 text-brand-green"></i>
+                    <h3 class="text-lg font-bold">Publicar Nova Necessidade</h3>
+                </div>
+                <button onclick="closeModal('demandaModal')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <form onsubmit="handlePostDemand(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Empresa / Proponente *</label>
+                    <input type="text" id="demandCompany" required placeholder="Ex: Maputo Logística Lda" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-brand-green focus:border-brand-green">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Setor Principal *</label>
+                        <select id="demandSector" required class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-brand-green focus:border-brand-green bg-white">
+                            <option value="Agribusiness">Agronegócio</option>
+                            <option value="Oil & Gas">Oil & Gas</option>
+                            <option value="Tecnologia">Tecnologia</option>
+                            <option value="Trading">Trading Global</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Tipo de Transação *</label>
+                        <select id="demandType" required class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-brand-green focus:border-brand-green bg-white">
+                            <option value="Compra / Procura">Compra / Procura</option>
+                            <option value="Venda / Oferta">Venda / Fornecimento</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Título da Demanda *</label>
+                    <input type="text" id="demandTitle" required placeholder="Ex: Aquisição de 500t de Fertilizante NPK" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-brand-green focus:border-brand-green">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Descrição Detalhada *</label>
+                    <textarea id="demandDesc" rows="4" required placeholder="Descreva os requisitos técnicos, quantidades, prazos e padrões de conformidade esperados para esta transação..." class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-brand-green focus:border-brand-green"></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Valor Estimado / Orçamento</label>
+                        <input type="text" id="demandValue" placeholder="Ex: USD 45,000" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-brand-green focus:border-brand-green">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Local de Entrega / Origem</label>
+                        <input type="text" id="demandLocation" placeholder="Ex: Porto de Nacala" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-brand-green focus:border-brand-green">
+                    </div>
+                </div>
+                <div class="pt-4 border-t border-slate-200 flex justify-end gap-3">
+                    <button type="button" onclick="closeModal('demandaModal')" class="border border-slate-300 px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-slate-100">Cancelar</button>
+                    <button type="submit" class="bg-brand-green hover:bg-emerald-600 text-white px-6 py-2.5 rounded-xl font-bold text-sm">Publicar Requisito</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- MODAL: LOGIN -->
+    <div id="loginModal" class="fixed inset-0 bg-brand-dark/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+            <div class="bg-brand-dark text-white p-6 border-b border-brand-teal flex justify-between items-center">
+                <span class="font-bold text-sm tracking-wide">Área de Credenciamento</span>
+                <button onclick="closeModal('loginModal')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+            <form onsubmit="handleLoginSubmit(event)" class="p-6 space-y-4">
+                <div class="text-center mb-4">
+                    <span class="text-2xl font-black text-brand-dark">GV-CPS</span>
+                    <p class="text-xs text-slate-500 mt-1">Insira suas credenciais corporativas seguras</p>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">E-mail Corporativo</label>
+                    <input type="email" required placeholder="nome@empresa.co.mz" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-brand-green">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Senha de Acesso</label>
+                    <input type="password" required placeholder="••••••••" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-brand-green">
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                    <label class="flex items-center gap-1.5 text-slate-600">
+                        <input type="checkbox" class="rounded border-slate-300 text-brand-green"> Lembrar-me
+                    </label>
+                    <a href="#" class="text-brand-green hover:underline">Esqueci a senha</a>
+                </div>
+                <button type="submit" class="w-full bg-brand-dark hover:bg-brand-teal text-white p-3 rounded-xl font-bold text-sm transition-colors">
+                    Entrar no Painel
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- DYNAMIC FEEDBACK TOAST NOTIFICATION -->
+    <div id="feedbackToast" class="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 bg-slate-900 text-white px-6 py-3 rounded-xl shadow-2xl border border-slate-700 flex items-center gap-3 text-sm opacity-0 pointer-events-none transition-all duration-300">
+        <i data-lucide="info" class="w-5 h-5 text-brand-green" id="toastIcon"></i>
+        <span id="toastMessage">Operação realizada com sucesso.</span>
+    </div>
+
+
+    <!-- BUSINESS CASE STUDY DETAILS INTERACTIVE SLIDEOVER -->
+    <div id="detailsDrawer" class="fixed inset-y-0 right-0 w-full max-w-lg bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out border-l border-slate-200 flex flex-col">
+        <!-- Close & Head -->
+        <div class="p-6 bg-brand-dark text-white border-b border-brand-teal flex justify-between items-center">
+            <h4 class="font-bold text-lg" id="drawerTitle">Oportunidade Detalhada</h4>
+            <button onclick="closeDetailsDrawer()" class="p-1.5 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <!-- Content -->
+        <div class="flex-1 overflow-y-auto p-6 space-y-6">
+            <div id="drawerBadgeContainer"></div>
+            <div class="space-y-2">
+                <span class="text-xs text-slate-500 uppercase font-bold tracking-wider block">Entidade Solicitante / Proponente</span>
+                <h3 class="text-2xl font-extrabold text-brand-dark" id="drawerHeading">Maputo Power Grid S.A.</h3>
+            </div>
+            
+            <div class="bg-brand-lightGreen/50 border border-brand-green/20 rounded-xl p-4 flex gap-4 text-slate-700 text-sm">
+                <div>
+                    <span class="block text-xs text-slate-500 uppercase font-bold">Localidade / Origem</span>
+                    <span class="font-semibold block" id="drawerLoc">Maputo</span>
+                </div>
+                <div class="border-l border-brand-green/30 pl-4">
+                    <span class="block text-xs text-slate-500 uppercase font-bold">Valor Estimado</span>
+                    <span class="font-semibold text-brand-green block" id="drawerValue">USD 120,000</span>
+                </div>
+            </div>
+
+            <div class="space-y-2 text-sm text-slate-600 leading-relaxed">
+                <span class="text-xs text-slate-500 uppercase font-bold tracking-wider block">Descrição Completa</span>
+                <p id="drawerDescription">...</p>
+            </div>
+
+            <!-- Fake Application Form directly inside -->
+            <div class="border-t border-slate-200 pt-6">
+                <h5 class="text-base font-bold text-brand-dark mb-4">Manifestar Interesse Comercial</h5>
+                <form onsubmit="handleApplySubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Seu Nome / Representante *</label>
+                        <input type="text" required placeholder="Ex: Dr. Elias Tembe" class="w-full border border-slate-300 rounded-lg p-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-brand-green">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Sua Empresa Fornecedora *</label>
+                        <input type="text" required placeholder="Ex: Nacala Engineering" class="w-full border border-slate-300 rounded-lg p-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-brand-green">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Por que sua empresa atende a essa demanda?</label>
+                        <textarea rows="3" placeholder="Insira referências de trabalhos anteriores no mesmo setor..." class="w-full border border-slate-300 rounded-lg p-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-brand-green"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-brand-green hover:bg-emerald-600 text-white p-3 rounded-xl font-bold text-sm transition-all shadow-lg shadow-brand-green/10">
+                        Submeter Proposta de Candidatura
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // MOCK OPPORTUNITIES INITIAL POOL
+        let opportunities = [
+            {
+                id: 1,
+                company: "Mozambique LNG Partners",
+                sector: "Oil & Gas",
+                type: "Compra / Procura",
+                title: "Aquisição de EPI e Equipamento Contra Incêndio",
+                desc: "Necessitamos de fornecimento em escala de luvas de proteção térmica, capacetes industriais de alta densidade e macacões ignífugos com conformidade SOLAS para operações em Cabo Delgado.",
+                value: "USD 85,000",
+                location: "Cabo Delgado",
+                date: "Há 2 dias"
+            },
+            {
+                id: 2,
+                company: "Limpopo Agro-Logistics",
+                sector: "Agribusiness",
+                type: "Venda / Oferta",
+                title: "Exportação de Castanha de Caju Certificada de Época",
+                desc: "Temos disponibilidade de 120 toneladas de castanha de caju crua com teor de umidade inferior a 8% e alta taxa de rendimento de miolo (KOR 48+). Pronto para despacho portuário.",
+                value: "USD 150,000",
+                location: "Porto de Maputo",
+                date: "Há 1 dia"
+            },
+            {
+                id: 3,
+                company: "Nacala Infrastructure Group",
+                sector: "Tecnologia",
+                type: "Compra / Procura",
+                title: "Instalação de Datacenter de Backup Redundante",
+                desc: "Busca-se parceiro tecnológico capaz de implementar infraestrutura local de servidores redundantes em Nacala. Requisitos incluem refrigeração dedicada, no-breaks industriais e suporte contra intrusões de dados.",
+                value: "USD 220,000",
+                location: "Nacala",
+                date: "Há 4 dias"
+            },
+            {
+                id: 4,
+                company: "Beira Import-Export S.A.",
+                sector: "Trading",
+                type: "Compra / Procura",
+                title: "Serviço de Desembaraço Aduaneiro e Logística Ferroviária",
+                desc: "Procura-se despachante licenciado experiente na ferrovia de Sena para intermediar a importação de bobinas de aço pesado originadas do Porto da Beira com trâmite simplificado.",
+                value: "USD 45,000",
+                location: "Beira",
+                date: "Há 5 dias"
+            },
+            {
+                id: 5,
+                company: "Zambézia AgroIndustrial",
+                sector: "Agribusiness",
+                type: "Compra / Procura",
+                title: "Fornecimento de Adubo NPK de Alta Concentração",
+                desc: "Interesse em adquirir 350 toneladas métricas de fertilizante tipo NPK formulado para cultura de cana-de-açúcar. Entrega requerida em Quelimane.",
+                value: "USD 95,000",
+                location: "Quelimane",
+                date: "Há 3 dias"
+            }
+        ];
+
+        let selectedCategory = 'all';
+
+        // Initialize Lucide Icons & Opportunities Grid
+        window.onload = function() {
+            lucide.createIcons();
+            renderMural();
+        };
+
+        // Mobile Menu Trigger
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.setAttribute('data-lucide', 'x');
+            } else {
+                menu.classList.add('hidden');
+                icon.setAttribute('data-lucide', 'menu');
+            }
+            lucide.createIcons();
+        }
+
+        // Modals utility
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        // Opportunities Mural Modal
+        function openMuralModal() {
+            openModal('muralModal');
+            renderMural();
+        }
+        function closeMuralModal() {
+            closeModal('muralModal');
+        }
+
+        // Render Oportunities Grid
+        function renderMural() {
+            const container = document.getElementById('muralGrid');
+            container.innerHTML = '';
+
+            const searchTerm = document.getElementById('muralSearch').value.toLowerCase();
+
+            const filtered = opportunities.filter(op => {
+                const matchesCategory = selectedCategory === 'all' || op.sector === selectedCategory;
+                const matchesSearch = op.title.toLowerCase().includes(searchTerm) || 
+                                      op.desc.toLowerCase().includes(searchTerm) ||
+                                      op.company.toLowerCase().includes(searchTerm) ||
+                                      op.location.toLowerCase().includes(searchTerm);
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-2 py-12 text-center text-slate-400">
+                        <i data-lucide="package-open" class="w-12 h-12 mx-auto mb-3 text-slate-300"></i>
+                        <p class="font-medium text-sm">Nenhuma oportunidade ativa atende a este filtro.</p>
+                        <button onclick="resetFilters()" class="text-brand-green hover:underline text-xs mt-2 font-bold">Limpar Filtros</button>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            filtered.forEach(op => {
+                const isBuy = op.type.includes('Compra');
+                const badgeColor = isBuy ? 'bg-orange-100 text-orange-800 border-orange-200' : 'bg-emerald-100 text-emerald-800 border-emerald-200';
+                const sectorIcon = op.sector === 'Agribusiness' ? 'leaf' : 
+                                   op.sector === 'Oil & Gas' ? 'flame' : 
+                                   op.sector === 'Tecnologia' ? 'cpu' : 'arrow-left-right';
+
+                const card = document.createElement('div');
+                card.className = "bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between";
+                card.innerHTML = `
+                    <div>
+                        <!-- Header Card -->
+                        <div class="flex justify-between items-start gap-2 mb-3">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${badgeColor}">
+                                ${op.type}
+                            </span>
+                            <span class="text-[10px] text-slate-400 font-semibold">${op.date}</span>
+                        </div>
+                        <h4 class="text-base font-bold text-brand-dark hover:text-brand-green cursor-pointer transition-colors" onclick="openDetails(${op.id})">
+                            ${op.title}
+                        </h4>
+                        <p class="text-xs text-slate-500 font-medium mt-1 mb-3">${op.company}</p>
+                        <p class="text-xs text-slate-600 line-clamp-2 leading-relaxed mb-4">${op.desc}</p>
+                    </div>
+
+                    <!-- Bottom attributes -->
+                    <div class="border-t border-slate-100 pt-4 flex items-center justify-between mt-auto">
+                        <div class="flex items-center gap-4 text-[11px] text-slate-500">
+                            <span class="flex items-center gap-1">
+                                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-400"></i> ${op.location}
+                            </span>
+                            <span class="flex items-center gap-1 font-bold text-brand-green">
+                                <i data-lucide="dollar-sign" class="w-3.5 h-3.5"></i> ${op.value}
+                            </span>
+                        </div>
+                        <button onclick="openDetails(${op.id})" class="text-xs bg-brand-teal/10 hover:bg-brand-teal hover:text-white border border-brand-teal/20 text-brand-teal font-bold px-3 py-1.5 rounded-lg transition-all">
+                            Ver Detalhes
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        // Category filter trigger
+        function filterCategory(cat) {
+            selectedCategory = cat;
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.className = "category-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white text-slate-600 border border-slate-300 hover:bg-slate-100 transition-all";
+            });
+
+            // Active button style
+            let btnId = 'btn-all';
+            if (cat === 'Agribusiness') btnId = 'btn-Agribusiness';
+            if (cat === 'Oil & Gas') btnId = 'btn-OilGas';
+            if (cat === 'Tecnologia') btnId = 'btn-Tecnologia';
+            if (cat === 'Trading') btnId = 'btn-Trading';
+
+            document.getElementById(btnId).className = "category-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-brand-dark text-white border border-brand-dark transition-all";
+
+            renderMural();
+        }
+
+        function filterMural() {
+            renderMural();
+        }
+
+        function resetFilters() {
+            document.getElementById('muralSearch').value = '';
+            filterCategory('all');
+        }
+
+        // Quick Search in Header
+        function handleQuickSearch(e) {
+            if (e.key === 'Enter') {
+                const input = document.getElementById('headerSearch').value;
+                document.getElementById('muralSearch').value = input;
+                openMuralModal();
+            }
+        }
+
+        // Slideover details drawer opening
+        function openDetails(id) {
+            const op = opportunities.find(o => o.id === id);
+            if (!op) return;
+
+            document.getElementById('drawerHeading').innerText = op.company;
+            document.getElementById('drawerTitle').innerText = op.title;
+            document.getElementById('drawerLoc').innerText = op.location;
+            document.getElementById('drawerValue').innerText = op.value;
+            document.getElementById('drawerDescription').innerText = op.desc;
+
+            const isBuy = op.type.includes('Compra');
+            const badgeColor = isBuy ? 'bg-orange-100 text-orange-800' : 'bg-emerald-100 text-emerald-800';
+            document.getElementById('drawerBadgeContainer').innerHTML = `
+                <span class="inline-flex px-3 py-1 rounded-full text-xs font-bold ${badgeColor}">
+                    ${op.type} • Setor: ${op.sector}
+                </span>
+            `;
+
+            document.getElementById('detailsDrawer').classList.remove('translate-x-full');
+        }
+
+        function closeDetailsDrawer() {
+            document.getElementById('detailsDrawer').classList.add('translate-x-full');
+        }
+
+        // Submit apply form
+        function handleApplySubmit(e) {
+            e.preventDefault();
+            showToast("Sua manifestação de interesse foi enviada com sucesso! Um consultor entrará em contato.");
+            closeDetailsDrawer();
+            e.target.reset();
+        }
+
+        // Handle Posting new demand live
+        function handlePostDemand(e) {
+            e.preventDefault();
+            const company = document.getElementById('demandCompany').value;
+            const sector = document.getElementById('demandSector').value;
+            const type = document.getElementById('demandType').value;
+            const title = document.getElementById('demandTitle').value;
+            const desc = document.getElementById('demandDesc').value;
+            const val = document.getElementById('demandValue').value || "A negociar";
+            const loc = document.getElementById('demandLocation').value || "Moçambique";
+
+            const newOp = {
+                id: opportunities.length + 1,
+                company: company,
+                sector: sector,
+                type: type,
+                title: title,
+                desc: desc,
+                value: val,
+                location: loc,
+                date: "Agora mesmo"
+            };
+
+            opportunities.unshift(newOp);
+            closeModal('demandaModal');
+            showToast("Sucesso! Sua necessidade comercial foi publicada e está disponível no mural.");
+            e.target.reset();
+            openMuralModal();
+        }
+
+        // Show Toast
+        function showToast(msg) {
+            const toast = document.getElementById('feedbackToast');
+            document.getElementById('toastMessage').innerText = msg;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.classList.add('opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 5000);
+        }
+
+        function handleLoginSubmit(e) {
+            e.preventDefault();
+            closeModal('loginModal');
+            showToast("Bem-vindo de volta! Painel da Empresa logado com êxito.");
+        }
+
+        function handleNewsletterSubmit(e) {
+            e.preventDefault();
+            showToast("Inscrição efetuada! Você receberá as melhores oportunidades semanais.");
+            e.target.reset();
+        }
+
+        // INTERACTIVE CHAT ADVISOR LOGIC USING GEMINI
+        const apiKey = ""; // Runtime fallback
+        
+        function toggleAdvisor() {
+            const adv = document.getElementById('aiAdvisor');
+            if (adv.classList.contains('pointer-events-none')) {
+                adv.classList.remove('pointer-events-none', 'opacity-0', 'translate-y-2');
+                adv.classList.add('opacity-100', 'translate-y-0');
+            } else {
+                adv.classList.add('pointer-events-none', 'opacity-0', 'translate-y-2');
+                adv.classList.remove('opacity-100', 'translate-y-0');
+            }
+        }
+
+        function handleChatKeyDown(e) {
+            if (e.key === 'Enter') {
+                sendChat();
+            }
+        }
+
+        function sendQuickQuestion(txt) {
+            document.getElementById('aiInput').value = txt;
+            sendChat();
+        }
+
+        async function sendChat() {
+            const inputEl = document.getElementById('aiInput');
+            const query = inputEl.value.trim();
+            if (!query) return;
+
+            // Display user message
+            appendChatMessage(query, true);
+            inputEl.value = '';
+
+            // Display loading placeholder
+            const loadId = appendChatMessage("Digitando resposta técnica...", false, true);
+
+            // Fetch Gemini response
+            try {
+                const responseText = await callGeminiAPI(query);
+                removeLoadingPlaceholder(loadId);
+                appendChatMessage(responseText, false);
+            } catch (err) {
+                removeLoadingPlaceholder(loadId);
+                appendChatMessage("Desculpe, ocorreu um pequeno contratempo técnico. Por favor, tente novamente ou fale com um consultor humano pelo e-mail info@gv-cps.co.mz.", false);
+            }
+        }
+
+        function appendChatMessage(text, isUser = false, isLoading = false) {
+            const history = document.getElementById('chatHistory');
+            const msgRow = document.createElement('div');
+            msgRow.className = "flex gap-2 " + (isUser ? "justify-end" : "");
+            
+            const randomId = "msg-" + Math.random().toString(36).substr(2, 9);
+            msgRow.setAttribute('id', randomId);
+
+            const iconHtml = isUser ? `
+                <div class="bg-brand-green/20 text-brand-green p-1.5 rounded-lg h-fit">
+                    <i data-lucide="user" class="w-3.5 h-3.5"></i>
+                </div>
+            ` : `
+                <div class="bg-brand-teal p-1.5 rounded-lg h-fit text-brand-green">
+                    <i data-lucide="bot" class="w-3.5 h-3.5"></i>
+                </div>
+            `;
+
+            const textBg = isUser ? "bg-brand-green/10 border border-brand-green/30 text-white" : "bg-brand-teal/30 border border-brand-teal text-slate-200";
+
+            msgRow.innerHTML = `
+                ${!isUser ? iconHtml : ''}
+                <div class="${textBg} p-3 rounded-2xl ${isUser ? 'rounded-tr-none' : 'rounded-tl-none'} max-w-[80%] leading-relaxed">
+                    ${isLoading ? '<div class="flex items-center gap-1"><span class="w-1.5 h-1.5 bg-brand-green rounded-full animate-bounce"></span><span class="w-1.5 h-1.5 bg-brand-green rounded-full animate-bounce [animation-delay:0.2s]"></span><span class="w-1.5 h-1.5 bg-brand-green rounded-full animate-bounce [animation-delay:0.4s]"></span></div>' : formatMarkdownSimple(text)}
+                </div>
+                ${isUser ? iconHtml : ''}
+            `;
+
+            history.appendChild(msgRow);
+            history.scrollTop = history.scrollHeight;
+            lucide.createIcons();
+            return randomId;
+        }
+
+        function removeLoadingPlaceholder(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+
+        function formatMarkdownSimple(text) {
+            // Replace bold syntax
+            return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        }
+
+        // Actual Gemini API implementation with exponential backoff
+        async function callGeminiAPI(promptText) {
+            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            
+            const systemPrompt = "Você é o Consultor Técnico Virtual da GV-CPS (Global Value Chain Procurement & Services). Seu objetivo é orientar potenciais clientes locais e internacionais sobre procurement aduaneiro, trading internacional, conteúdo local regulatório em Moçambique, desenvolvimento agrícola e mineração. Forneça respostas pragmáticas, profissionais, com excelente vocabulário técnico e sempre em Português de Moçambique/Portugal.";
+
+            const payload = {
+                contents: [{ parts: [{ text: promptText }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            let delay = 1000;
+            const maxRetries = 5;
+
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        return data.candidates?.[0]?.content?.parts?.[0]?.text || "Desculpe, não consegui consolidar os dados neste momento.";
+                    }
+                } catch (e) {
+                    // Fail silently to continue retry loop
+                }
+                
+                // Exponential backoff
+                await new Promise(resolve => setTimeout(resolve, delay));
+                delay *= 2;
+            }
+
+            throw new Error("Falha ao comunicar com o servidor após múltiplas tentativas.");
+        }
+    </script>
+
+</body>
+</html>

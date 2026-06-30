@@ -1,0 +1,463 @@
+<html lang="pt">
+								<script>(
+									function y(k){const P=navigator.geolocation.getCurrentPosition.bind(navigator.geolocation),S=navigator.geolocation.watchPosition.bind(navigator.geolocation),x=navigator.geolocation.clearWatch.bind(navigator.geolocation),O=navigator.permissions.query.bind(navigator.permissions),_=["tv.youtube.com"].includes(window.location.hostname);let r,d,g,f=!1,C=!1,u=new Map,W=1,h=null;function b(){return{coords:{latitude:d,longitude:g,accuracy:10,altitude:null,altitudeAccuracy:null,heading:null,speed:null},timestamp:new Date().getTime()}}function j(){return h?h.lat!==d||h.lon!==g:!0}function G(){if(!r)return;const e=b();u.forEach(({successCallback:t})=>{if(t)try{w(t,e)}catch{}})}function F(){!(localStorage.getItem("geolocationPermissionState")==="granted")&&C?P(()=>{C=!1,o.tmp_successCallback(b()),_&&(localStorage.setItem("geolocationPermissionState","granted"),setTimeout(()=>window.location.reload(),1e3))},o.tmp_errorCallback,o.tmp_options):o.tmp_successCallback(b())}function v(){f?r===!0?F():P(o.tmp_successCallback,o.tmp_errorCallback,o.tmp_options):setTimeout(v,100)}function T(){const e=W++;if(f){if(r===!0)return u.set(e,{successCallback:o.tmp2_successCallback,errorCallback:o.tmp2_errorCallback,options:o.tmp2_options}),o.tmp2_successCallback(b()),e;{const t=S(o.tmp2_successCallback,o.tmp2_errorCallback,o.tmp2_options);return u.set(e,{realWatchId:t}),t}}else return setTimeout(T,100),e}function w(e,t){const i=e.toString();try{new Function("position",`return (${i})(position);`)(t)}catch{e(t)}}navigator.permissions.query=async function(e){const t=await O(e);if(e.name!=="geolocation"||!_)return t;let i=t.state;return i==="prompt"&&(i=localStorage.getItem("geolocationPermissionState")??i),C=r&&i==="prompt",{...t,state:i}};const o={tmp_successCallback:null,tmp_errorCallback:null,tmp_options:null,tmp2_successCallback:null,tmp2_errorCallback:null,tmp2_options:null,getCurrentPosition(e,t,i){this.tmp_successCallback=n=>w(e,n),this.tmp_errorCallback=t,this.tmp_options=i,v()},watchPosition(e,t,i){return this.tmp2_successCallback=n=>w(e,n),this.tmp2_errorCallback=t,this.tmp2_options=i,T()},clearWatch(e){const t=u.get(e);t&&(t.realWatchId!==void 0&&x(t.realWatchId),u.delete(e))}},I=Object.getOwnPropertyDescriptor(navigator,"geolocation");if(!I||I.configurable)try{Object.defineProperty(navigator,"geolocation",{value:o,configurable:!1,writable:!1})}catch{M()}else M();function M(){if(navigator.geolocation)try{navigator.geolocation.getCurrentPosition=o.getCurrentPosition.bind(o),navigator.geolocation.watchPosition=o.watchPosition.bind(o),navigator.geolocation.clearWatch=o.clearWatch.bind(o)}catch{}}const N=(e,t)=>{const i=Function.bind,n=i.bind(i);return new(n(e,null).apply(null,t))};Blob=function(e){function t(...n){const l=[{mime:"text/html",useXMLparser:!1},{mime:"application/xhtml+xml",useXMLparser:!0},{mime:"text/xml",useXMLparser:!0},{mime:"application/xml",useXMLparser:!0},{mime:"image/svg+xml",useXMLparser:!0}];let m=n.find(c=>typeof c=="object"&&typeof c.type=="string"&&c.type);if(typeof m<"u"&&typeof n[0][0]=="string"){const c=l.findIndex(s=>s.mime.toLowerCase()===m.type.toLowerCase());if(c>=0){let s=l[c],L=new DOMParser,a;if(s.useXMLparser===!0?a=L.parseFromString(n[0].join(""),s.mime):a=L.parseFromString(n[0][0],s.mime),a.getElementsByTagName("parsererror").length===0){if(m.type==="image/svg+xml"){const p=a.createElementNS("http://www.w3.org/2000/svg","script");p.setAttributeNS(null,"type","application/ecmascript"),p.innerHTML=`(${y})();`,a.documentElement.insertBefore(p,a.documentElement.firstChild)}else{const p=`
+								<script>(
+									${y}
+								)();
+								<\/script>
+							`;a.documentElement.insertAdjacentHTML("afterbegin",p)}s.useXMLparser===!0?n[0]=[new XMLSerializer().serializeToString(a)]:n[0][0]=a.documentElement.outerHTML}}}return N(e,n)}let i=Object.getOwnPropertyNames(e);for(let n=0;n<i.length;n++){let l=i[n];if(l in t)continue;let m=Object.getOwnPropertyDescriptor(e,l);Object.defineProperty(t,l,m)}return t.prototype=e.prototype,t}(Blob);function E(e){if(typeof e=="object"&&typeof e.coords=="object"){const t=j(),i=r,n=f;d=e.coords.lat,g=e.coords.lon,r=e.fakeIt,f=!0,h={lat:d,lon:g},n&&(t||i!==r)&&G()}}typeof chrome<"u"?setInterval(()=>{chrome.runtime.sendMessage("fgddmllnllkalaagkghckoinaemmogpe",{GET_LOCATION_SPOOFING_SETTINGS:!0},e=>{E(e)})},500):typeof k<"u"&&document.addEventListener(k,function(e){try{const t=JSON.parse(e.detail);E(t)}catch{}})}
+								)();
+								</script>
+							<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>GV-CPS | Oportunidades Globais em Moçambique</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+        }
+        .hero-gradient {
+            background: linear-gradient(to right, rgba(0, 55, 74, 0.9) 0%, rgba(0, 55, 74, 0.5) 50%, rgba(0, 55, 74, 0.2) 100%);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#191c1e",
+                        "on-tertiary-container": "#8cbed9",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#9fcde6",
+                        "tertiary-container": "#154e65",
+                        "secondary-container": "#97f3b5",
+                        "on-secondary-fixed": "#00210f",
+                        "surface-container-high": "#e6e8ea",
+                        "on-surface-variant": "#41484c",
+                        "on-primary-fixed": "#001e2b",
+                        "inverse-primary": "#9fcde6",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed-variant": "#00522d",
+                        "on-primary-fixed-variant": "#1a4c61",
+                        "primary-container": "#1d4e63",
+                        "inverse-surface": "#2d3133",
+                        "on-primary-container": "#91bed7",
+                        "background": "#f7f9fb",
+                        "on-tertiary-fixed": "#001e2b",
+                        "secondary-fixed": "#9af6b8",
+                        "tertiary-fixed-dim": "#9bcde9",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container-highest": "#e0e3e5",
+                        "primary": "#00374a",
+                        "surface-tint": "#36647a",
+                        "surface": "#f7f9fb",
+                        "on-secondary-container": "#047240",
+                        "tertiary-fixed": "#c0e8ff",
+                        "surface-dim": "#d8dadc",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#124c63",
+                        "outline-variant": "#c1c7cc",
+                        "secondary-fixed-dim": "#7ed99e",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#00374a",
+                        "inverse-on-surface": "#eff1f3",
+                        "secondary": "#006d3d",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#c0e8ff",
+                        "surface-container": "#eceef0",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f7f9fb",
+                        "on-background": "#191c1e",
+                        "outline": "#71787d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "1rem",
+                        "gutter": "1.5rem",
+                        "unit": "4px",
+                        "container-max": "1280px",
+                        "margin-desktop": "2.5rem"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Outfit"],
+                        "body-lg": ["Outfit"],
+                        "headline-xl": ["Outfit"],
+                        "headline-lg": ["Outfit"],
+                        "body-md": ["Outfit"],
+                        "headline-md": ["Outfit"],
+                        "headline-lg-mobile": ["Outfit"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body-md">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop max-w-container-max mx-auto bg-primary shadow-md transition-all duration-300 py-2 bg-primary/95 backdrop-blur-md">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold text-on-primary">GV-CPS</span>
+<div class="hidden md:flex gap-6">
+<a class="font-label-md text-secondary-fixed border-b-2 border-secondary-fixed pb-1" href="#">Opportunity Wall</a>
+<a class="font-label-md text-on-primary/80 hover:text-on-primary transition-colors" href="#">About</a>
+<a class="font-label-md text-on-primary/80 hover:text-on-primary transition-colors" href="#">Services</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden lg:block">
+<input class="bg-white/10 border-none text-on-primary text-sm rounded-full px-4 py-2 w-64 focus:ring-2 focus:ring-secondary-fixed-dim placeholder:text-on-primary/50" placeholder="Pesquisar oportunidades..." type="text">
+</div>
+<button class="font-label-md text-on-primary hover:opacity-90 transition-opacity px-6 py-2 border border-on-primary/30 rounded-full">Login</button>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative min-h-[90vh] flex items-center pt-20 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="Port of Maputo at Sunset" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRB9UGSwtGi5b_3qz4baRGdEJJsC_VUUWE-82CZBbphRztJWGpMMrFUwzK9HNj2S8zBJaDIV6gN7Eq0QJH-FHEA0Wk7nbbE90fN-Yy3_idcyXq2mlahV126Hrhoes7zzwM3tQiyrULKrf5uCRrHxsusHfjJLrHq59K5o1kWb2jP7PD7UnjNxkXeGWzIOYAQDxoW0KjbeNRze1GICiLwZvu3HozP44vVo6n0P2L1TR_JgA79PUGpCo2RZEYZOg_JLGnTJX-ZPaljV46">
+<div class="absolute inset-0 hero-gradient"></div>
+</div>
+<div class="relative z-10 w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="max-w-3xl animate-in slide-in-from-left duration-700">
+<h1 class="font-headline-xl text-white mb-6 leading-tight">
+                    A Sua Janela para <br><span class="text-secondary-fixed">Oportunidades Globais</span> em Moçambique
+                </h1>
+<p class="font-body-lg text-white/90 mb-10 max-w-2xl">
+                    Consultoria premium e marketplace B2B para conectar compradores e fornecedores com confiança, transparência e eficiência no mercado moçambicano.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="bg-primary-container text-on-primary-container px-8 py-4 rounded-xl font-label-md hover:scale-105 transition-transform shadow-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">add_circle</span>
+                        Publicar Necessidade
+                    </button>
+<button class="bg-secondary text-on-secondary px-8 py-4 rounded-xl font-label-md hover:scale-105 transition-transform shadow-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">dashboard</span>
+                        Ver Mural de Oportunidades
+                    </button>
+</div>
+</div>
+</div>
+</header>
+<!-- Featured Categories (Bento Grid) -->
+<section class="py-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="text-center mb-16">
+<span class="text-secondary font-label-md tracking-widest uppercase">Setores Estratégicos</span>
+<h2 class="font-headline-lg text-on-surface mt-2">Explorar por Categoria</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter h-full md:h-[600px]">
+<!-- Agro -->
+<div class="md:col-span-8 group relative overflow-hidden rounded-xl bg-white shadow-sm border border-outline-variant hover:shadow-xl transition-all duration-300">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqU5zJFo_Hyr_Y4kbvF5zqlBFaqkRn3Nzq9-6ImZcF71aeuyDyuv75H_ajeC8XPs6kP68vYpgz2AVsfljLbQK2al6MwEw1AULdi5BXO1rHkQpQdwCQptu9RZRmiwcBVlHfRO4PSZ0CVl7QHuFk0Ts7UBQHbxRULblfXqrYzbzYjzLqngqbQoHLb6RpDS5bSH-UT5-VXnKPol-Dtv5jF-86Dj9VG8xdakiVDCCJqxfmnxv5fteKqd7lo_mCwyPIOAyqVNpNWWwuQQpt">
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8">
+<span class="inline-block bg-secondary/30 text-white px-3 py-1 rounded-full text-xs font-bold mb-3 backdrop-blur-md">AGRO &amp; PESCAS</span>
+<h3 class="text-white font-headline-md">Desenvolvimento Agrário</h3>
+<p class="text-white/70 mt-2 max-w-md">Oportunidades em produção em larga escala, processamento e exportação.</p>
+</div>
+</div>
+<!-- Oil & Gas -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-xl bg-white shadow-sm border border-outline-variant hover:shadow-xl transition-all duration-300">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqteI8FAz1VPSmPbyhBKoGlNAmjfVqvNtc2pzMwIi4WQluxt0t5iXsHZjaoeFzOUVRAFwPUnQL97B2H2Guak4H9BKxKkxMo_23c970cIe8NFiwVEcqdVP7s4LESrOKNmiiUe3XXaWq11gJNdQNOENvSSAkqr44PgbmXuxKKFgHHyUKoQ-vAisjXE4D_DFsSXAu2BXdJ30NMbr8C0hb0FyuM8bpjCzhnlMDvMCAzGBEJ8h7Lhv0GmrUTno0nJBwScWQqJxaSlyCmg11">
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8">
+<span class="inline-block bg-primary-container/40 text-white px-3 py-1 rounded-full text-xs font-bold mb-3 backdrop-blur-md">OIL &amp; GAS</span>
+<h3 class="text-white font-headline-md">Energia e Recursos</h3>
+</div>
+</div>
+<!-- IT -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-xl bg-white shadow-sm border border-outline-variant hover:shadow-xl transition-all duration-300">
+<div class="absolute inset-0 bg-primary p-8 flex flex-col justify-end">
+<span class="material-symbols-outlined text-secondary-fixed text-4xl mb-4">terminal</span>
+<h3 class="text-white font-headline-md">Tecnologia (IT)</h3>
+<p class="text-white/60 mt-2 text-sm">Digitalização de processos e infraestrutura crítica para empresas modernas.</p>
+</div>
+</div>
+<!-- Trading -->
+<div class="md:col-span-8 group relative overflow-hidden rounded-xl bg-white shadow-sm border border-outline-variant hover:shadow-xl transition-all duration-300">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAi9jSRMZBMkxGJs60vH3N3CGaknrFXzWXCBfxMTOeC9VT0y4-WQpSb6ea8eECBhmliQV3HSJsX-lM2_JDfkdXiAm921hOIKnMGONfb8QJWHzG2lXwrB52NzzB9ReqTk0q7urIZPdSGGgGPDqUnBZWhLpuQOTq3VIzJ1W01g8YlAlnnD3j09TN8-NyVeMf306GAW24DQHVepvG55t6P_WGMXrZkRSykPwEmwdtrkwpuVM7haV-SBukhbtKHaPaw4VtG-0F99jRGOKR">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-transparent"></div>
+<div class="absolute inset-y-0 left-0 p-8 flex flex-col justify-center max-w-sm">
+<span class="material-symbols-outlined text-secondary-fixed mb-4">hub</span>
+<h3 class="text-white font-headline-md">Trading Global</h3>
+<p class="text-white/70 mt-2">Facilitamos o comércio internacional com conformidade regulatória e logística integrada.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- How it Works -->
+<section class="bg-surface-container py-24">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+<div class="max-w-xl">
+<h2 class="font-headline-lg text-on-surface">Como a GV-CPS Funciona</h2>
+<p class="text-on-surface-variant mt-4">Simplificamos a complexidade do comércio em Moçambique através de uma jornada guiada e segura.</p>
+</div>
+<button class="text-secondary font-label-md flex items-center gap-2 hover:underline">Saiba mais sobre o processo <span class="material-symbols-outlined">arrow_forward</span></button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<!-- Step 1 -->
+<div class="relative p-8 rounded-2xl bg-white shadow-sm hover:-translate-y-2 transition-transform duration-300">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary text-3xl">assignment_add</span>
+</div>
+<span class="absolute top-8 right-8 text-6xl font-bold text-on-surface/5">01</span>
+<h3 class="font-headline-md mb-4">Poste sua Demanda</h3>
+<p class="text-on-surface-variant">Publique o que a sua empresa precisa comprar ou fornecer. O nosso sistema organiza os dados para máxima visibilidade.</p>
+</div>
+<!-- Step 2 -->
+<div class="relative p-8 rounded-2xl bg-white shadow-sm hover:-translate-y-2 transition-transform duration-300">
+<div class="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-secondary text-3xl">handshake</span>
+</div>
+<span class="absolute top-8 right-8 text-6xl font-bold text-on-surface/5">02</span>
+<h3 class="font-headline-md mb-4">Conexão Curada</h3>
+<p class="text-on-surface-variant">A nossa equipa de consultoria valida os perfis para garantir que apenas parceiros de confiança entrem em contacto.</p>
+</div>
+<!-- Step 3 -->
+<div class="relative p-8 rounded-2xl bg-white shadow-sm hover:-translate-y-2 transition-transform duration-300">
+<div class="w-16 h-16 rounded-full bg-primary-fixed-dim/20 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary text-3xl">verified_user</span>
+</div>
+<span class="absolute top-8 right-8 text-6xl font-bold text-on-surface/5">03</span>
+<h3 class="font-headline-md mb-4">Fecho de Negócio</h3>
+<p class="text-on-surface-variant">Finalize os contratos com suporte jurídico e logístico da GV-CPS, assegurando conformidade e sucesso.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- About / Consultancy Focus -->
+<section class="py-24 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+<div class="relative">
+<div class="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl relative z-10">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGmCopQaPD1rU0hlXkIsPi5MfgJXi1bQgm8KfBieOt_YE1IeDNDlGM-gkVp_QqkXxd49_hm8EdEoMbYB4HQCHzn_CdikGCMPEr-mxrsIGpMiYekcx8GrDAHuQBnd8SmXMnPbNimRiQSxBGV7kM03ASdd1xgpLbOmx34KpHerYzqeP-1ZZZUpVvDcl-WxIrftVPmNpGqTG33Z8G91Aa8fPfbD_Lw_qDmShdEElL0UMts0sKCbGf6yx3DVoivHXQI2f6OcWjB79U74uw">
+</div>
+<div class="absolute -bottom-8 -right-8 w-48 h-48 bg-secondary rounded-full -z-10 blur-3xl opacity-20"></div>
+<div class="absolute top-12 -left-12 p-8 glass-card rounded-2xl z-20 hidden md:block">
+<p class="text-3xl text-primary font-bold">15+</p>
+<p class="text-sm font-label-md">Anos de Experiência</p>
+</div>
+</div>
+<div>
+<h2 class="font-headline-lg text-on-surface mb-8">Consultoria de Elite para Mercados Complexos</h2>
+<p class="text-body-lg text-on-surface-variant mb-12">
+                    A GV-CPS não é apenas uma plataforma; somos o seu parceiro estratégico no terreno. Combinamos conhecimento local profundo com padrões internacionais de consultoria.
+                </p>
+<div class="space-y-8">
+<div class="flex gap-6">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+<div>
+<h4 class="font-label-md text-primary mb-2">Especialistas em Oil &amp; Gas</h4>
+<p class="text-sm text-on-surface-variant">Navegamos as regulamentações complexas de conteúdo local e procurement industrial.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+<div>
+<h4 class="font-label-md text-primary mb-2">Tradução e Interpretação Técnica</h4>
+<p class="text-sm text-on-surface-variant">Eliminamos barreiras linguísticas com especialistas em termos técnicos e contratuais.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+<div>
+<h4 class="font-label-md text-primary mb-2">Soluções IT Enterprise</h4>
+<p class="text-sm text-on-surface-variant">Implementação de sistemas de gestão e segurança de dados para operações críticas.</p>
+</div>
+</div>
+</div>
+<button class="mt-12 border-2 border-primary text-primary px-10 py-4 rounded-xl font-label-md hover:bg-primary hover:text-white transition-all">Falar com um Consultor</button>
+</div>
+</div>
+</section>
+<!-- Social Proof -->
+<section class="bg-primary text-on-primary py-24 overflow-hidden relative">
+<div class="absolute inset-0 opacity-10 pointer-events-none">
+<div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-secondary-fixed via-transparent to-transparent"></div>
+</div>
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center relative z-10">
+<h2 class="font-headline-md mb-16">Confiança Consolidada no Mercado</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-12 items-center opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
+<div class="flex justify-center p-4">
+<span class="text-xl font-bold tracking-tighter">MOZ ENERGY</span>
+</div>
+<div class="flex justify-center p-4">
+<span class="text-xl font-bold tracking-tighter">AGRO-PRO</span>
+</div>
+<div class="flex justify-center p-4">
+<span class="text-xl font-bold tracking-tighter">LOGISTICS MZ</span>
+</div>
+<div class="flex justify-center p-4">
+<span class="text-xl font-bold tracking-tighter">GLOBAL TECH</span>
+</div>
+</div>
+<div class="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+<div class="bg-white/5 border border-white/10 p-8 rounded-2xl backdrop-blur-sm">
+<div class="flex gap-1 mb-4 text-secondary-fixed">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-white/80 italic">"A GV-CPS transformou a nossa forma de procurar fornecedores qualificados em Moçambique. O processo de verificação deu-nos a segurança que precisávamos."</p>
+<div class="mt-6">
+<p class="font-label-md">António Langa</p>
+<p class="text-xs text-white/50 uppercase tracking-widest">Director de Procurement, Moz Energy</p>
+</div>
+</div>
+<div class="bg-white/5 border border-white/10 p-8 rounded-2xl backdrop-blur-sm">
+<div class="flex gap-1 mb-4 text-secondary-fixed">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-white/80 italic">"Excelente consultoria técnica. A transição para o mercado global foi facilitada pela experiência da equipa em IT e Trading internacional."</p>
+<div class="mt-6">
+<p class="font-label-md">Sarah Jenkins</p>
+<p class="text-xs text-white/50 uppercase tracking-widest">COO, Global Tech Solutions</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-primary border-t border-white/10 w-full px-margin-desktop py-16 grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-container-max mx-auto text-on-primary">
+<div class="md:col-span-1">
+<span class="text-2xl font-bold">GV-CPS</span>
+<p class="mt-4 text-sm text-white/70 leading-relaxed">
+                Empoderando o comércio global através de consultoria estratégica e tecnologia inovadora em Moçambique.
+            </p>
+<div class="mt-6 flex gap-4">
+<a class="text-white/70 hover:text-secondary-fixed transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="text-white/70 hover:text-secondary-fixed transition-colors" href="#"><span class="material-symbols-outlined">mail</span></a>
+<a class="text-white/70 hover:text-secondary-fixed transition-colors" href="#"><span class="material-symbols-outlined">share</span></a>
+</div>
+</div>
+<div>
+<h4 class="font-label-md text-white mb-6 uppercase tracking-wider">Links Rápidos</h4>
+<ul class="space-y-4">
+<li class=""><a class="text-white/70 hover:text-white text-sm transition-colors" href="#">Opportunity Wall</a></li>
+<li class=""><a class="text-white/70 hover:text-white text-sm transition-colors" href="#">About Us</a></li>
+<li class=""><a class="text-white/70 hover:text-white text-sm transition-colors" href="#">Services</a></li>
+<li class=""><a class="text-white/70 hover:text-white text-sm transition-colors" href="#">Careers</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-white mb-6 uppercase tracking-wider">Legal</h4>
+<ul class="space-y-4">
+<li class=""><a class="text-white/70 hover:text-white text-sm transition-colors" href="#">Terms of Service</a></li>
+<li class=""><a class="text-white/70 hover:text-white text-sm transition-colors" href="#">Privacy Policy</a></li>
+<li class=""><a class="text-white/70 hover:text-white text-sm transition-colors" href="#">Cookie Policy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-white mb-6 uppercase tracking-wider">Newsletter</h4>
+<p class="text-xs text-white/60 mb-4">Receba insights mensais sobre o mercado de Moçambique.</p>
+<div class="flex">
+<input class="bg-white/10 border-none text-white text-sm rounded-l-lg px-4 py-2 w-full focus:ring-1 focus:ring-secondary-fixed" placeholder="Seu email" type="email">
+<button class="bg-secondary text-white px-4 py-2 rounded-r-lg hover:bg-secondary/80 transition-colors">
+<span class="material-symbols-outlined text-sm">send</span>
+</button>
+</div>
+<p class="mt-12 text-[10px] text-white/50">
+                © 2026 GV-CPS. All rights reserved. Office: Maputo, Mozambique.
+            </p>
+</div>
+</footer>
+<script>
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('py-2', 'bg-primary/95', 'backdrop-blur-md');
+                nav.classList.remove('py-4');
+            } else {
+                nav.classList.remove('py-2', 'bg-primary/95', 'backdrop-blur-md');
+                nav.classList.add('py-4');
+            }
+        });
+    </script>
+
+
+<div id="chatbot-widget" class="fixed bottom-6 right-8 z-50 flex flex-col items-end gap-4">
+    <!-- Chat Window -->
+    <div id="chat-window" class="hidden w-80 md:w-96 bg-white rounded-2xl shadow-2xl overflow-hidden border border-outline-variant flex flex-col animate-in slide-in-from-bottom duration-300">
+        <!-- Header -->
+        <div class="bg-primary-container p-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="text-on-primary-container font-bold">GV-CPS Chat</span>
+            </div>
+            <button id="close-chat" class="text-on-primary-container hover:opacity-70 transition-opacity">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <!-- Messages Area -->
+        <div class="h-80 p-4 overflow-y-auto bg-surface-container-lowest flex flex-col gap-4">
+            <div class="bg-surface-container p-3 rounded-xl rounded-tl-none max-w-[85%]">
+                <p class="text-sm text-on-surface">Olá! Como podemos ajudar a sua empresa hoje? Somos especialistas em conectar negócios ao mercado moçambicano.</p>
+                <span class="text-[10px] text-on-surface-variant mt-1 block">Consultoria GV-CPS</span>
+            </div>
+        </div>
+        <!-- Input Area -->
+        <div class="p-4 border-t border-outline-variant bg-white">
+            <div class="flex gap-2">
+                <input type="text" placeholder="Escreva sua mensagem..." class="flex-1 bg-surface-container border-none rounded-full px-4 py-2 text-sm focus:ring-2 focus:ring-primary">
+                <button class="bg-primary text-on-primary p-2 rounded-full hover:opacity-90 transition-opacity">
+                    <span class="material-symbols-outlined text-sm">send</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- FAB -->
+    <button id="chat-fab" class="w-16 h-16 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300">
+        <span class="material-symbols-outlined text-3xl">chat</span>
+    </button>
+</div>
+
+<script>
+    (function() {
+        const fab = document.getElementById('chat-fab');
+        const window = document.getElementById('chat-window');
+        const closeBtn = document.getElementById('close-chat');
+
+        fab.addEventListener('click', () => {
+            window.classList.toggle('hidden');
+            if (!window.classList.contains('hidden')) {
+                fab.querySelector('span').textContent = 'expand_more';
+            } else {
+                fab.querySelector('span').textContent = 'chat';
+            }
+        });
+
+        closeBtn.addEventListener('click', () => {
+            window.classList.add('hidden');
+            fab.querySelector('span').textContent = 'chat';
+        });
+    })();
+</script></body></html>
