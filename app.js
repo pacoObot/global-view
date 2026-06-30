@@ -338,7 +338,17 @@ function navigate(viewPath) {
         if (appState.currentUser.role !== requiredRole) {
             // Redirect unauthorized to home
             window.location.hash = 'home';
-            alert('Acesso restrito. Por favor, faça login com o papel de ' + requiredRole + '.');
+            openLoginModal();
+            // Autofill mock credentials for demonstration
+            const emailMap = {
+                'buyer': 'buyer@gvcps.com',
+                'supplier': 'supplier@gvcps.com',
+                'consultant': 'consultant@gvcps.com',
+                'admin': 'admin@gvcps.com'
+            };
+            if (emailMap[requiredRole]) {
+                fillMockCreds(emailMap[requiredRole]);
+            }
             return;
         }
     }
@@ -807,7 +817,6 @@ function renderOpportunityWall(params = {}) {
 
 function createOpportunityCard(item) {
     const card = document.createElement('div');
-    card.className = 'opportunity-card bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant transition-all duration-300 flex flex-col h-full cursor-pointer';
     
     const lang = localStorage.getItem('gvcps_lang') || 'pt';
     
@@ -832,23 +841,8 @@ function createOpportunityCard(item) {
         catCode = 'consulting';
         catLabel = lang === 'pt' ? 'Consultoria' : 'Consulting';
     }
-    
-    let colors = { bg: 'bg-surface-container/10', text: 'text-on-surface-variant', border: 'border-outline-variant/20' };
-    switch(catCode) {
-        case 'commodities':
-        case 'energy':
-            colors = { bg: 'bg-secondary/10', text: 'text-secondary', border: 'border-secondary/20' };
-            break;
-        case 'tech':
-            colors = { bg: 'bg-primary-fixed/30', text: 'text-primary', border: 'border-primary/20' };
-            break;
-        case 'logistics':
-            colors = { bg: 'bg-primary/10', text: 'text-primary', border: 'border-primary/20' };
-            break;
-        case 'consulting':
-            colors = { bg: 'bg-on-tertiary-fixed-variant/10', text: 'text-on-tertiary-fixed-variant', border: 'border-on-tertiary-fixed-variant/20' };
-            break;
-    }
+
+    card.className = `opportunity-card cat-theme-${catCode} cat-border-accent bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant transition-all duration-300 flex flex-col h-full cursor-pointer hover:shadow-lg`;
     
     // Choose appropriate image
     let imgUrl = 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80'; // Default boardroom
@@ -890,7 +884,7 @@ function createOpportunityCard(item) {
                  src="${imgUrl}" 
                  alt="${item.title}">
             <div class="absolute top-4 left-4">
-                <span class="${colors.bg} ${colors.text} ${colors.border} border px-3 py-1 rounded-full text-label-sm font-label-lg backdrop-blur-sm">
+                <span class="cat-badge px-3 py-1 rounded-full text-label-sm font-label-lg backdrop-blur-sm">
                     ${catLabel}
                 </span>
             </div>
@@ -900,15 +894,15 @@ function createOpportunityCard(item) {
             
             <div class="space-y-3 mb-6 flex-grow">
                 <div class="flex items-center gap-2 text-on-surface-variant">
-                    <span class="material-symbols-outlined text-[18px]">inventory_2</span>
+                    <span class="material-symbols-outlined cat-text text-[18px]">inventory_2</span>
                     <span class="font-label-lg text-label-lg">${labelVolume}: ${item.quantity}</span>
                 </div>
                 <div class="flex items-center gap-2 text-on-surface-variant">
-                    <span class="material-symbols-outlined text-[18px]">public</span>
+                    <span class="material-symbols-outlined cat-text text-[18px]">public</span>
                     <span class="font-label-lg text-label-lg flex items-center gap-1.5">${labelCountry}: ${item.country} <span class="text-[1.1rem] leading-none">${flag}</span></span>
                 </div>
                 <div class="flex items-center gap-2 text-on-surface-variant">
-                    <span class="material-symbols-outlined text-[18px]">${isLogisticsTrue ? 'local_shipping' : 'block'}</span>
+                    <span class="material-symbols-outlined cat-text text-[18px]">${isLogisticsTrue ? 'local_shipping' : 'block'}</span>
                     <span class="font-label-lg text-label-lg">${labelLogistics}: ${valLogistics}</span>
                 </div>
                 <div class="flex items-center gap-2 text-on-surface-variant/60">
@@ -917,7 +911,9 @@ function createOpportunityCard(item) {
                 </div>
             </div>
 
-            <button onclick="event.stopPropagation(); window.location.hash='detail?id=${item.id}&type=${item.type}'" class="w-full bg-primary text-on-primary py-4 px-6 rounded-lg font-label-lg text-label-lg font-bold hover:opacity-90 active:scale-95 transition-all uppercase tracking-wider border-none cursor-pointer">
+            <button onclick="event.stopPropagation(); window.location.hash='detail?id=${item.id}&type=${item.type}'" 
+                    class="w-full py-4 px-6 rounded-lg font-label-lg text-label-lg font-bold hover:opacity-90 active:scale-95 transition-all uppercase tracking-wider border-none cursor-pointer"
+                    style="background-color: var(--cat-color) !important; color: white !important;">
                 ${labelInterest}
             </button>
         </div>
@@ -1727,22 +1723,30 @@ function renderPortalChat(containerId, matchId, channelType) {
     
     el.innerHTML = `
         <div class="portal-chat-card">
-            <div class="portal-chat-header">
+            <div class="portal-chat-header" style="padding: 16px 20px; border-bottom: 1px solid var(--outline-variant);">
                 <div class="portal-chat-title-info">
-                    <span class="material-symbols-outlined">corporate_fare</span>
+                    <span class="material-symbols-outlined" style="color: var(--secondary);">security</span>
                     <div>
-                        <h4 class="font-bold">${channelType === 'buyer' ? 'Canal Comprador' : 'Canal Fornecedor'}</h4>
-                        <p class="portal-chat-subtitle">Mediação: ${consultantObj.name}</p>
+                        <h4 class="font-bold" style="font-size: 14px; margin-bottom: 2px;">Intermediação Segura (GV-CPS)</h4>
+                        <p class="portal-chat-subtitle" style="font-size: 11px; color: #006d3d; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+                            <span style="display: inline-block; width: 6px; height: 6px; background-color: #25D366; border-radius: 50%;"></span>
+                            Consultor Responsável: ${consultantObj.name}
+                        </p>
                     </div>
                 </div>
-                <span class="portal-chat-badge">${match.status === 'fechado' ? 'NEGÓCIO FECHADO' : 'EM CURSO'}</span>
+                <span class="portal-chat-badge" style="background-color: ${match.status === 'fechado' ? 'rgba(0, 109, 61, 0.1)' : 'rgba(217, 119, 6, 0.1)'}; color: ${match.status === 'fechado' ? '#006d3d' : '#d97706'}; font-weight: bold; font-size: 10px; padding: 4px 8px; border-radius: var(--radius-sm);">${match.status === 'fechado' ? 'NEGÓCIO FECHADO' : 'EM CURSO'}</span>
             </div>
             
-            <div class="portal-chat-messages" id="${containerId}-messages-area">
+            <div class="bg-primary/5 text-primary text-xs font-semibold px-4 py-2 border-b border-outline-variant/30 text-center flex items-center justify-center gap-1.5" style="font-size: 10px; background-color: rgba(0, 55, 74, 0.05); color: var(--primary); border-bottom: 1px solid rgba(0, 0, 0, 0.05); font-weight: 600;">
+                <span class="material-symbols-outlined" style="font-size: 13px; color: var(--primary);">lock</span>
+                Negociação Segura: O contacto direto entre comprador e fornecedor é protegido sob sigilo comercial.
+            </div>
+            
+            <div class="portal-chat-messages" id="${containerId}-messages-area" style="padding: 16px;">
                 <!-- Messages will be injected -->
             </div>
             
-            <div class="portal-chat-input-area">
+            <div class="portal-chat-input-area" style="padding: 12px 16px; border-top: 1px solid var(--outline-variant);">
                 <form class="portal-chat-form" id="${containerId}-form" onsubmit="event.preventDefault(); sendChatMessage('${matchId}', '${channelType}', '${containerId}-input-field')">
                     <input type="text" class="portal-chat-input" id="${containerId}-input-field" placeholder="Escreva uma mensagem segura..." ${match.status === 'fechado' ? 'disabled' : ''}>
                     <button type="submit" class="portal-chat-send-btn" ${match.status === 'fechado' ? 'disabled' : ''}>

@@ -2351,3 +2351,46 @@ input:checked + .slider:before {
     transform: scale(1.0) !important;
 }
 
+/* Dynamic Category Themes */
+.cat-theme-commodities {
+    --cat-color: #006d3d;
+    --cat-bg: rgba(0, 109, 61, 0.08);
+}
+.cat-theme-logistics {
+    --cat-color: #d97706;
+    --cat-bg: rgba(217, 119, 6, 0.08);
+}
+.cat-theme-tech {
+    --cat-color: #0d9488;
+    --cat-bg: rgba(13, 148, 136, 0.08);
+}
+.cat-theme-energy {
+    --cat-color: #b45309;
+    --cat-bg: rgba(180, 83, 9, 0.08);
+}
+.cat-theme-consulting {
+    --cat-color: #00374a;
+    --cat-bg: rgba(0, 55, 74, 0.08);
+}
+
+/* Category styling utilities */
+.cat-badge {
+    color: var(--cat-color) !important;
+    background-color: var(--cat-bg) !important;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+.cat-border-accent {
+    border-top: 4px solid var(--cat-color) !important;
+}
+.cat-text {
+    color: var(--cat-color) !important;
+}
+.cat-icon {
+    background-color: var(--cat-bg) !important;
+    color: var(--cat-color) !important;
+}
+.cat-border-full {
+    border: 1px solid var(--cat-color) !important;
+}
+
+
