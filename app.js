@@ -3365,6 +3365,9 @@ function loadCmsContent() {
 function saveCmsContent() { localStorage.setItem(CMS_KEY, JSON.stringify(cmsState.content)); }
 
 function initCmsEditor() {
+    // Disabled for now
+    return;
+    
     if (!appState || appState.currentUser.role !== 'admin') return;
     cmsState.content = loadCmsContent();
     const bar = document.getElementById('cms-admin-bar');
@@ -3657,6 +3660,8 @@ function showCmsToast(msg, type='success') {
 }
 
 // Auto-init CMS when admin is already logged in on page load
+// Temporarily disabled:
+/*
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(function() {
         if (appState && appState.currentUser && appState.currentUser.role === 'admin') {
@@ -3664,3 +3669,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 400);
 });
+*/
