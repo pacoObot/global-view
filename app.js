@@ -946,32 +946,39 @@ function renderOpportunityWall(params = {}) {
     });
 }
 
+// Central category details styling helper
+function getCategoryDetails(category) {
+    const cat = (category || '').toLowerCase();
+    let code = 'consulting';
+    let label = 'Consultoria';
+    let icon = 'business_center';
+    
+    if (cat.includes('agro') || cat.includes('caju') || cat.includes('soja') || cat.includes('açúcar')) {
+        code = 'commodities';
+        label = 'Commodities/Agro';
+        icon = 'agriculture';
+    } else if (cat.includes('logística') || cat.includes('supply') || cat.includes('frete') || cat.includes('transporte')) {
+        code = 'logistics';
+        label = 'Logística';
+        icon = 'local_shipping';
+    } else if (cat.includes('tecnologia') || cat.includes('tech') || cat.includes('informática') || cat.includes('data center') || cat.includes('redes') || cat.includes('desenvolvimento') || cat.includes('ti')) {
+        code = 'tech';
+        label = 'Tecnologia';
+        icon = 'devices';
+    } else if (cat.includes('energia') || cat.includes('energy') || cat.includes('solar') || cat.includes('petróleo') || cat.includes('gás') || cat.includes('elétrica')) {
+        code = 'energy';
+        label = 'Energia';
+        icon = 'bolt';
+    }
+    return { code, label, icon };
+}
+
 function createOpportunityCard(item) {
     const card = document.createElement('div');
     
     const lang = localStorage.getItem('gvcps_lang') || 'pt';
     
-    // Category mapping logic to get matching colors & short label from prototype DESIGN.md
-    let catCode = 'consulting';
-    let catLabel = lang === 'pt' ? 'Consultoria' : 'Consulting';
-    
-    const cat = (item.category || '').toLowerCase();
-    if (cat.includes('commodities') || cat.includes('agro') || cat.includes('agronegócio') || cat.includes('açúcar') || cat.includes('minério') || cat.includes('trading')) {
-        catCode = 'commodities';
-        catLabel = lang === 'pt' ? 'Commodities/Agro' : 'Commodities/Agro';
-    } else if (cat.includes('logística') || cat.includes('logistics') || cat.includes('supply') || cat.includes('grãos') || cat.includes('frete')) {
-        catCode = 'logistics';
-        catLabel = lang === 'pt' ? 'Logística' : 'Logistics';
-    } else if (cat.includes('tecnologia') || cat.includes('tech') || cat.includes('informática') || cat.includes('data center') || cat.includes('redes') || cat.includes('desenvolvimento')) {
-        catCode = 'tech';
-        catLabel = lang === 'pt' ? 'Tecnologia' : 'Technology';
-    } else if (cat.includes('energia') || cat.includes('energy') || cat.includes('solar') || cat.includes('petróleo') || cat.includes('gás') || cat.includes('elétrica')) {
-        catCode = 'energy';
-        catLabel = lang === 'pt' ? 'Energia' : 'Energy';
-    } else {
-        catCode = 'consulting';
-        catLabel = lang === 'pt' ? 'Consultoria' : 'Consulting';
-    }
+    const { code: catCode, label: catLabel, icon: catIcon } = getCategoryDetails(item.category);
 
     card.className = `opportunity-card cat-theme-${catCode} cat-border-accent bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant transition-all duration-300 flex flex-col h-full cursor-pointer hover:shadow-lg`;
     
@@ -1009,16 +1016,28 @@ function createOpportunityCard(item) {
     const labelPublished = lang === 'pt' ? `Publicado em ${formatDate(item.date)}` : `Published on ${formatDate(item.date)}`;
     const labelInterest = lang === 'pt' ? 'Tenho Interesse' : 'I am Interested';
     
+    let featuredBadge = '';
+    if (item.featured) {
+        featuredBadge = `
+            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm border border-amber-300 text-amber-600 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                <span class="material-symbols-outlined text-[12px] fill-current">star</span>
+                Destaque
+            </div>
+        `;
+    }
+
     card.innerHTML = `
         <div class="relative h-48 w-full overflow-hidden">
             <img class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" 
                  src="${imgUrl}" 
                  alt="${item.title}">
-            <div class="absolute top-4 left-4">
-                <span class="cat-badge px-3 py-1 rounded-full text-label-sm font-label-lg backdrop-blur-sm">
+            <div class="absolute top-4 left-4 flex gap-1.5 items-center">
+                <span class="cat-badge px-3 py-1 rounded-full text-label-sm font-label-lg backdrop-blur-sm flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">${catIcon}</span>
                     ${catLabel}
                 </span>
             </div>
+            ${featuredBadge}
         </div>
         <div class="p-6 flex flex-col flex-grow">
             <h3 class="font-headline-sm text-headline-sm text-primary mb-4 h-16 line-clamp-2" title="${item.title}">${item.title}</h3>
@@ -1716,40 +1735,52 @@ function renderConsultantPortal(tab, activeId) {
             alert('Notas internas atualizadas com sucesso.');
         };
         
-        // Finalize Deal button
+        // Finalize Deal button (Locked with Admin reviews & Proposal approval states)
         const finalizeBtn = document.getElementById('btn-finalize-deal');
-        finalizeBtn.onclick = () => {
-            if (confirm('Tem certeza de que deseja fechar este negócio? O status do comprador e fornecedor passará para Concluído e a intermediação será finalizada.')) {
-                match.status = 'fechado';
-                req.status = 'concluida';
-                const offObj = appState.offers.find(o => o.id === match.offerId);
-                if (offObj) offObj.status = 'concluida';
-                
-                // Add final notification messages
-                appState.messages.push({
-                    id: `msg_${appState.messages.length + 1}`,
-                    matchId: match.id,
-                    senderId: consultantId,
-                    senderRole: 'consultant',
-                    text: 'NEGÓCIO FECHADO: A intermediação foi concluída com sucesso. Os documentos de contratação e faturamento final, incluindo os termos de logística acordados, foram emitidos e enviados para ambos os canais privados.',
-                    timestamp: new Date().toISOString(),
-                    channel: 'buyer'
-                });
-                appState.messages.push({
-                    id: `msg_${appState.messages.length + 1}`,
-                    matchId: match.id,
-                    senderId: consultantId,
-                    senderRole: 'consultant',
-                    text: 'NEGÓCIO FECHADO: A intermediação foi concluída com sucesso. Os documentos de faturamento final foram emitidos pela GV-CPS.',
-                    timestamp: new Date().toISOString(),
-                    channel: 'supplier'
-                });
-                
-                saveState();
-                alert('Negócio Concluído com Sucesso! Relatórios e documentos gerados no sistema.');
-                navigate(`consultant-portal?tab=dashboard`);
+        if (finalizeBtn) {
+            finalizeBtn.removeAttribute('disabled');
+            finalizeBtn.style.opacity = '1';
+            finalizeBtn.style.cursor = 'pointer';
+            
+            if (match.status === 'fechado') {
+                finalizeBtn.textContent = 'Negócio Concluído';
+                finalizeBtn.setAttribute('disabled', 'true');
+                finalizeBtn.style.opacity = '0.6';
+                finalizeBtn.style.cursor = 'not-allowed';
+            } else if (match.status === 'revisao') {
+                finalizeBtn.textContent = 'Aguardando Aprovação do Admin';
+                finalizeBtn.setAttribute('disabled', 'true');
+                finalizeBtn.style.opacity = '0.6';
+                finalizeBtn.style.cursor = 'not-allowed';
+            } else if (match.proposalApprovedByClient) {
+                finalizeBtn.textContent = 'Solicitar Aprovação do Admin';
+                finalizeBtn.style.backgroundColor = 'var(--electric-amber)';
+                finalizeBtn.onclick = () => {
+                    if (confirm('Deseja enviar esta negociação para revisão e aprovação financeira/pagamento do Administrador?')) {
+                        match.status = 'revisao';
+                        
+                        // Add notification to admin
+                        appState.notifications.push({
+                            id: `not_${appState.notifications.length + 1}`,
+                            userId: 'admin_1',
+                            text: `A negociação #${match.id.split('_')[1]} requer revisão de faturamento e aprovação de pagamento.`,
+                            date: new Date().toISOString().split('T')[0],
+                            read: false
+                        });
+                        
+                        saveState();
+                        alert('Solicitação enviada. A negociação está agora na fila de revisão do Administrador.');
+                        renderConsultantPortal('dashboard');
+                    }
+                };
+            } else {
+                finalizeBtn.textContent = 'Fechar Negócio (Pendente Proposta)';
+                finalizeBtn.style.backgroundColor = 'var(--outline)';
+                finalizeBtn.onclick = () => {
+                    alert('Não é possível fechar o negócio sem antes formular a proposta e obter a aceitação dos termos pelo cliente.');
+                };
             }
-        };
+        }
     }
 }
 
@@ -1763,6 +1794,8 @@ function renderAdminPortal(tab) {
     document.getElementById('admin-dashboard-tab').style.display = tab === 'dashboard' ? 'block' : 'none';
     document.getElementById('admin-users-tab').style.display = tab === 'users' ? 'block' : 'none';
     document.getElementById('admin-categories-tab').style.display = tab === 'categories' ? 'block' : 'none';
+    document.getElementById('admin-matches-tab').style.display = tab === 'matches' ? 'block' : 'none';
+    document.getElementById('admin-approvals-tab').style.display = tab === 'approvals' ? 'block' : 'none';
     
     if (tab === 'dashboard') {
         // Stats
@@ -1809,21 +1842,108 @@ function renderAdminPortal(tab) {
             });
         }
     } else if (tab === 'users') {
-        const tbody = document.getElementById('admin-users-table-body');
-        tbody.innerHTML = '';
-        
-        Object.values(appState.users).forEach(u => {
-            const rolePT = u.role === 'buyer' ? 'Comprador' : (u.role === 'supplier' ? 'Fornecedor' : (u.role === 'consultant' ? 'Consultor' : 'Admin'));
-            tbody.innerHTML += `
-                <tr>
-                    <td><strong>#${u.id}</strong></td>
-                    <td>${u.name}</td>
-                    <td>${u.email}</td>
-                    <td><span class="status-badge active" style="background-color: var(--surface-container-high); color: var(--primary);">${rolePT}</span></td>
-                    <td>Ativo</td>
-                </tr>
-            `;
-        });
+        // Clear search text and filters to display initial list
+        document.getElementById('admin-users-search').value = '';
+        document.getElementById('admin-users-filter-role').value = 'all';
+        document.getElementById('admin-users-filter-status').value = 'all';
+        applyAdminUserFilters();
+    } else if (tab === 'matches') {
+        const tbody = document.getElementById('admin-matches-table-body');
+        if (tbody) {
+            tbody.innerHTML = '';
+            
+            if (appState.matches.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="py-6 px-6 text-center text-slate-450 italic">
+                            Nenhuma intermediação ativa de negociação no sistema.
+                        </td>
+                    </tr>
+                `;
+            } else {
+                appState.matches.forEach(m => {
+                    const req = appState.requirements.find(r => r.id === m.requirementId) || { title: '?' };
+                    const off = appState.offers.find(o => o.id === m.offerId) || { title: '?' };
+                    const consultantObj = appState.users[m.consultantId] || { name: 'Geral' };
+                    
+                    const statusBadge = m.status === 'fechado'
+                        ? '<span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold text-[10px] uppercase">Concluído</span>'
+                        : (m.status === 'revisao'
+                            ? '<span class="px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200 font-semibold text-[10px] uppercase animate-pulse">Revisão</span>'
+                            : '<span class="px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 font-semibold text-[10px] uppercase">Em Negociação</span>');
+                    
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td class="py-4 px-6 font-bold text-slate-800">#${m.id.split('_')[1]}</td>
+                        <td class="py-4 px-6">
+                            <div class="font-bold text-slate-900">${req.title}</div>
+                            <div class="text-[10px] text-slate-450 mt-0.5">vs ${off.title}</div>
+                        </td>
+                        <td class="py-4 px-6 font-semibold text-slate-700">${consultantObj.name}</td>
+                        <td class="py-4 px-6">${statusBadge}</td>
+                        <td class="py-4 px-6 text-right">
+                            <div class="flex gap-2 justify-end">
+                                <button onclick="openAdminInspectChatModal('${m.id}')" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg text-[11px] font-bold text-slate-600 flex items-center gap-1 transition cursor-pointer" title="Inspecionar Negociação">
+                                    <span class="material-symbols-outlined text-[14px]">visibility</span>
+                                    Espreitar Chat
+                                </button>
+                                <button onclick="adminTakeOverMatch('${m.id}')" class="px-2.5 py-1.5 bg-gvTeal/10 hover:bg-gvTeal/20 border border-gvTeal/20 rounded-lg text-[11px] font-bold text-gvTeal flex items-center gap-1 transition cursor-pointer" ${m.consultantId === 'admin_1' ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : ''}>
+                                    Assumir
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+        }
+    } else if (tab === 'approvals') {
+        const tbody = document.getElementById('admin-approvals-table-body');
+        if (tbody) {
+            tbody.innerHTML = '';
+            const revisaoMatches = appState.matches.filter(m => m.status === 'revisao');
+            
+            if (revisaoMatches.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="py-6 px-6 text-center text-slate-450 italic">
+                            Nenhum negócio aguardando aprovação de pagamento no momento.
+                        </td>
+                    </tr>
+                `;
+            } else {
+                revisaoMatches.forEach(m => {
+                    const req = appState.requirements.find(r => r.id === m.requirementId) || { title: '?' };
+                    const off = appState.offers.find(o => o.id === m.offerId) || { title: '?' };
+                    
+                    const price = m.proposalPrice || 'A Definir';
+                    const logistics = m.proposalLogistics || 'Não Especificado';
+                    
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td class="py-4 px-6 font-bold text-slate-800">#${m.id.split('_')[1]}</td>
+                        <td class="py-4 px-6">
+                            <div class="font-bold text-slate-900">${req.title}</div>
+                            <div class="text-[10px] text-slate-450 mt-0.5">Comprador: #${req.owner} | Fornecedor: #${off.owner}</div>
+                        </td>
+                        <td class="py-4 px-6 font-bold text-gvTeal">${price}</td>
+                        <td class="py-4 px-6 font-semibold text-slate-650 text-xs">${logistics}</td>
+                        <td class="py-4 px-6 text-right">
+                            <div class="flex gap-2 justify-end">
+                                <button onclick="openAdminInspectChatModal('${m.id}')" class="p-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg text-slate-650 transition cursor-pointer" title="Inspecionar Chat">
+                                    <span class="material-symbols-outlined text-[16px] block">visibility</span>
+                                </button>
+                                <button onclick="adminApproveMatchPayment('${m.id}')" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-lg flex items-center gap-1 border-none shadow-sm transition cursor-pointer">
+                                    <span class="material-symbols-outlined text-[14px]">done_all</span>
+                                    Libertar Pagamento
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+        }
     } else if (tab === 'categories') {
         const listContainer = document.getElementById('admin-categories-list');
         listContainer.innerHTML = '';
@@ -1986,9 +2106,66 @@ function renderPortalChat(containerId, matchId, channelType) {
             
             const bubble = document.createElement('div');
             bubble.className = `chat-bubble ${isMe ? 'sent' : 'received'}`;
+            
+            let messageContentHTML = `<p>${m.text}</p>`;
+            
+            if (m.proposalData) {
+                const pd = m.proposalData;
+                const statusBadgeStyle = pd.status === 'aceite' 
+                    ? 'bg-emerald-100 text-emerald-800 border-emerald-200' 
+                    : (pd.status === 'recusada' ? 'bg-rose-100 text-rose-800 border-rose-200' : 'bg-amber-100 text-amber-800 border-amber-200');
+                
+                const statusLabel = pd.status === 'aceite' ? 'Aceite' : (pd.status === 'recusada' ? 'Recusada' : 'Pendente');
+                const showDetailsId = `proposal-details-${m.id}`;
+                
+                let actionButtonsHTML = '';
+                if (pd.status === 'pendente') {
+                    if (appState.currentUser.id !== m.senderId && appState.currentUser.role !== 'consultant' && appState.currentUser.role !== 'admin') {
+                        actionButtonsHTML = `
+                            <div class="flex gap-2 mt-3 pt-2 border-t border-slate-100 shrink-0">
+                                <button class="px-3 py-1.5 bg-emerald-600 text-white font-bold text-[10px] rounded-lg hover:bg-emerald-700 transition uppercase tracking-wider cursor-pointer border-none" onclick="respondToProposal('${m.id}', 'aceite')">Aceitar Termos</button>
+                                <button class="px-3 py-1.5 bg-rose-600 text-white font-bold text-[10px] rounded-lg hover:bg-rose-700 transition uppercase tracking-wider cursor-pointer border-none" onclick="respondToProposal('${m.id}', 'recusada')">Recusar</button>
+                            </div>
+                        `;
+                    } else {
+                        actionButtonsHTML = `
+                            <div class="text-[10px] text-slate-400 font-semibold italic mt-2">Aguardando resposta da contraparte...</div>
+                        `;
+                    }
+                }
+                
+                messageContentHTML = `
+                    <div class="bg-white border border-slate-200 rounded-xl p-3 shadow-sm flex flex-col gap-2 my-1.5 max-w-[280px]">
+                        <div class="flex justify-between items-center gap-2 border-b border-slate-100 pb-1.5 shrink-0">
+                            <span class="text-[9px] font-bold text-slate-450 uppercase tracking-wider flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[12px]">description</span>
+                                PROPOSTA COMERCIAL
+                            </span>
+                            <span class="px-1.5 py-0.5 rounded text-[8px] font-bold border ${statusBadgeStyle}">${statusLabel.toUpperCase()}</span>
+                        </div>
+                        <div class="text-left">
+                            <span class="text-[9px] text-slate-400 block font-semibold uppercase tracking-wider">Valor Proposto</span>
+                            <span class="text-base font-black text-gvTeal">${pd.price}</span>
+                        </div>
+                        
+                        <button onclick="toggleProposalDetails('${showDetailsId}')" class="text-left text-[10px] font-bold text-gvTeal hover:underline flex items-center gap-0.5 mt-1 focus:outline-none border-none bg-none cursor-pointer">
+                            <span>Ver mais detalhes</span>
+                            <span class="material-symbols-outlined text-[12px]" id="arrow-${showDetailsId}">keyboard_arrow_down</span>
+                        </button>
+                        
+                        <div id="${showDetailsId}" class="hidden space-y-1.5 mt-1 pt-1.5 border-t border-slate-100 text-[10px] text-slate-650 leading-normal text-left">
+                            <div>Logística GV: <strong class="text-slate-800">${pd.logisticsIncluded ? 'Sim (Inclusa)' : 'Não'}</strong></div>
+                            ${pd.logisticsIncluded ? `<div>Valor Frete: <strong class="text-slate-800">${pd.logisticsCost || 'MT 0'}</strong></div>` : ''}
+                            <div class="bg-slate-50 p-2 rounded-lg border border-slate-100 mt-1 font-normal break-words">${pd.details}</div>
+                        </div>
+                        ${actionButtonsHTML}
+                    </div>
+                `;
+            }
+            
             bubble.innerHTML = `
                 <span class="chat-bubble-sender">${senderObj.name} (${senderObj.role.toUpperCase()})</span>
-                <p>${m.text}</p>
+                ${messageContentHTML}
                 <span class="chat-bubble-time">${formatTime(m.timestamp)}</span>
             `;
             area.appendChild(bubble);
@@ -2337,4 +2514,673 @@ window.addEventListener('DOMContentLoaded', initApp);
 window.goBackToChatList = function() {
     window.location.hash = '#buyer-portal?tab=detail';
 };
+
+// PROPOSALS MANAGEMENT (CLIENT & CONSULTANT ACTIONS)
+window.respondToProposal = function(msgId, status) {
+    const m = appState.messages.find(msg => msg.id === msgId);
+    if (!m) return;
+    
+    m.proposalData.status = status;
+    const match = appState.matches.find(ma => ma.id === m.matchId);
+    
+    if (match) {
+        const req = appState.requirements.find(r => r.id === match.requirementId);
+        
+        // Notify consultant
+        appState.notifications.push({
+            id: `not_${appState.notifications.length + 1}`,
+            userId: match.consultantId,
+            text: `A proposta comercial para a negociação #${match.id.split('_')[1]} foi ${status} pelo cliente.`,
+            date: new Date().toISOString().split('T')[0],
+            read: false
+        });
+        
+        if (status === 'aceite') {
+            match.proposalApprovedByClient = true;
+            match.proposalPrice = m.proposalData.price;
+            match.proposalLogistics = m.proposalData.logisticsIncluded 
+                ? `Sim (Frete: ${m.proposalData.logisticsCost || 'A Combinar'})` 
+                : 'Não';
+            
+            // Add system messages in BOTH channels
+            appState.messages.push({
+                id: `msg_${appState.messages.length + 1}`,
+                matchId: match.id,
+                senderId: 'system',
+                senderRole: 'admin',
+                text: `PROPOSTA ACEITE: O Comprador aceitou os termos de ${m.proposalData.price}. A negociação prossegue para a fase de faturamento e aprovação administrativa.`,
+                timestamp: new Date().toISOString(),
+                channel: 'buyer'
+            });
+            
+            appState.messages.push({
+                id: `msg_${appState.messages.length + 1}`,
+                matchId: match.id,
+                senderId: 'system',
+                senderRole: 'admin',
+                text: `PROPOSTA ACEITE: O Comprador aceitou os termos de ${m.proposalData.price}. A negociação prossegue para a fase de faturamento e aprovação administrativa.`,
+                timestamp: new Date().toISOString(),
+                channel: 'supplier'
+            });
+        }
+    }
+    
+    saveState();
+    
+    // Re-render
+    const role = appState.currentUser.role;
+    if (role === 'buyer') {
+        renderBuyerPortal('detail');
+    } else if (role === 'supplier') {
+        renderSupplierPortal('detail');
+    } else if (role === 'consultant') {
+        renderConsultantPortal('negotiation', m.matchId);
+    } else if (role === 'admin') {
+        renderAdminPortal('matches');
+    }
+};
+
+window.toggleProposalDetails = function(id) {
+    const el = document.getElementById(id);
+    const arrow = document.getElementById(`arrow-${id}`);
+    if (el) {
+        if (el.classList.contains('hidden')) {
+            el.classList.remove('hidden');
+            if (arrow) arrow.textContent = 'keyboard_arrow_up';
+        } else {
+            el.classList.add('hidden');
+            if (arrow) arrow.textContent = 'keyboard_arrow_down';
+        }
+    }
+};
+
+window.openConsultantProposalModalFromPortal = function() {
+    const hash = window.location.hash;
+    let matchId = null;
+    let channelType = 'buyer';
+    
+    if (hash.includes('id=')) {
+        matchId = hash.split('id=')[1].split('&')[0];
+    }
+    
+    if (!matchId) {
+        alert('Selecione uma negociação ativa primeiro.');
+        return;
+    }
+    
+    window.openConsultantProposalModal(matchId, channelType);
+};
+
+window.openConsultantProposalModal = function(matchId, channelType) {
+    document.getElementById('proposal-match-id').value = matchId;
+    document.getElementById('proposal-channel-type').value = channelType;
+    document.getElementById('proposal-price').value = '';
+    document.getElementById('proposal-logistics-cost').value = '';
+    document.getElementById('proposal-details').value = '';
+    
+    window.toggleProposalLogisticsCost(true);
+    
+    const modal = document.getElementById('consultantProposalModal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.style.display = 'flex';
+    }
+};
+
+window.closeConsultantProposalModal = function() {
+    const modal = document.getElementById('consultantProposalModal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+    }
+};
+
+window.toggleProposalLogisticsCost = function(show) {
+    const container = document.getElementById('proposal-logistics-cost-container');
+    if (container) {
+        container.style.display = show ? 'block' : 'none';
+    }
+};
+
+window.submitProposalForm = function(event) {
+    event.preventDefault();
+    const matchId = document.getElementById('proposal-match-id').value;
+    const channelType = document.getElementById('proposal-channel-type').value;
+    const price = document.getElementById('proposal-price').value.trim();
+    const logisticsIncluded = document.getElementsByName('proposal-logistics')[0].checked;
+    const logisticsCost = document.getElementById('proposal-logistics-cost').value.trim();
+    const details = document.getElementById('proposal-details').value.trim();
+    
+    const msgId = `msg_${appState.messages.length + 1}`;
+    appState.messages.push({
+        id: msgId,
+        matchId: matchId,
+        senderId: appState.currentUser.id,
+        senderRole: appState.currentUser.role,
+        text: `PROPOSTA DE TERMOS ENVIADA: Valor comercial de ${price}.`,
+        timestamp: new Date().toISOString(),
+        channel: channelType,
+        proposalData: {
+            price: price,
+            logisticsIncluded: logisticsIncluded,
+            logisticsCost: logisticsIncluded ? logisticsCost : '',
+            details: details,
+            status: 'pendente'
+        }
+    });
+    
+    // Mirror proposal data to supplier channel as well
+    const otherChannel = channelType === 'buyer' ? 'supplier' : 'buyer';
+    appState.messages.push({
+        id: `msg_${appState.messages.length + 1}`,
+        matchId: matchId,
+        senderId: appState.currentUser.id,
+        senderRole: appState.currentUser.role,
+        text: `PROPOSTA DE TERMOS ENVIADA: Valor comercial de ${price}.`,
+        timestamp: new Date().toISOString(),
+        channel: otherChannel,
+        proposalData: {
+            price: price,
+            logisticsIncluded: logisticsIncluded,
+            logisticsCost: logisticsIncluded ? logisticsCost : '',
+            details: details,
+            status: 'pendente'
+        }
+    });
+    
+    saveState();
+    closeConsultantProposalModal();
+    
+    if (appState.currentUser.role === 'consultant') {
+        renderConsultantPortal('negotiation', matchId);
+    } else if (appState.currentUser.role === 'admin') {
+        renderAdminPortal('matches');
+    }
+};
+
+
+// ADMIN PORTAL - ADVANCED CONTROLS
+window.applyAdminUserFilters = function() {
+    const search = (document.getElementById('admin-users-search').value || '').toLowerCase();
+    const roleFilter = document.getElementById('admin-users-filter-role').value;
+    const statusFilter = document.getElementById('admin-users-filter-status').value;
+    
+    const tbody = document.getElementById('admin-users-table-body');
+    if (!tbody) return;
+    
+    tbody.innerHTML = '';
+    
+    Object.values(appState.users).forEach(u => {
+        // Mock status field if undefined
+        if (u.status === undefined) u.status = 'ativo';
+        
+        const matchesSearch = u.name.toLowerCase().includes(search) || u.email.toLowerCase().includes(search);
+        const matchesRole = roleFilter === 'all' || u.role === roleFilter;
+        const matchesStatus = statusFilter === 'all' || u.status === statusFilter;
+        
+        if (matchesSearch && matchesRole && matchesStatus) {
+            const rolePT = u.role === 'buyer' ? 'Comprador' : (u.role === 'supplier' ? 'Fornecedor' : (u.role === 'consultant' ? 'Consultor' : 'Admin'));
+            const statusBadge = u.status === 'ativo' 
+                ? '<span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold text-[10px] uppercase">Ativo</span>'
+                : '<span class="px-2 py-0.5 rounded bg-slate-100 text-slate-650 border border-slate-200 font-semibold text-[10px] uppercase">Inativo</span>';
+            
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="py-4 px-6 font-bold text-slate-800">#${u.id}</td>
+                <td class="py-4 px-6">
+                    <div class="font-bold text-slate-900">${u.name}</div>
+                    <div class="text-[10px] text-slate-400 mt-0.5">${u.email}</div>
+                </td>
+                <td class="py-4 px-6">
+                    <span class="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold text-slate-600">${rolePT}</span>
+                </td>
+                <td class="py-4 px-6">${statusBadge}</td>
+                <td class="py-4 px-6 text-right">
+                    <div class="flex gap-2 justify-end">
+                        <button onclick="openAdminUserMessageModal('${u.id}')" class="p-1.5 bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-600 rounded-lg transition" title="Enviar Mensagem">
+                            <span class="material-symbols-outlined text-[16px] block">chat</span>
+                        </button>
+                        <button onclick="adminToggleUserStatus('${u.id}')" class="p-1.5 bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-600 rounded-lg transition" title="${u.status === 'ativo' ? 'Desativar' : 'Ativar'}">
+                            <span class="material-symbols-outlined text-[16px] block">${u.status === 'ativo' ? 'toggle_on' : 'toggle_off'}</span>
+                        </button>
+                        <button onclick="adminEditUserPrompt('${u.id}')" class="p-1.5 bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-600 rounded-lg transition" title="Editar Utilizador">
+                            <span class="material-symbols-outlined text-[16px] block">edit</span>
+                        </button>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        }
+    });
+};
+
+window.adminToggleUserStatus = function(userId) {
+    const u = appState.users[userId];
+    if (u) {
+        u.status = u.status === 'inativo' ? 'ativo' : 'inativo';
+        saveState();
+        applyAdminUserFilters();
+    }
+};
+
+window.adminEditUserPrompt = function(userId) {
+    const u = appState.users[userId];
+    if (u) {
+        const newName = prompt('Editar nome completo do utilizador:', u.name);
+        const newEmail = prompt('Editar e-mail corporativo:', u.email);
+        if (newName !== null) u.name = newName.trim();
+        if (newEmail !== null) u.email = newEmail.trim();
+        saveState();
+        applyAdminUserFilters();
+    }
+};
+
+window.adminTakeOverMatch = function(matchId) {
+    const match = appState.matches.find(m => m.id === matchId);
+    if (match) {
+        if (confirm('Tem certeza de que deseja assumir esta intermediação? Você passará a ser o consultor dedicado responsável.')) {
+            match.consultantId = 'admin_1';
+            
+            // Add system messages
+            appState.messages.push({
+                id: `msg_${appState.messages.length + 1}`,
+                matchId: match.id,
+                senderId: 'system',
+                senderRole: 'admin',
+                text: 'ADMINISTRAÇÃO ASSUMIU: O Administrador Geral Pedro Gomes assumiu a responsabilidade direta por esta intermediação.',
+                timestamp: new Date().toISOString(),
+                channel: 'buyer'
+            });
+            appState.messages.push({
+                id: `msg_${appState.messages.length + 1}`,
+                matchId: match.id,
+                senderId: 'system',
+                senderRole: 'admin',
+                text: 'ADMINISTRAÇÃO ASSUMIU: O Administrador Geral Pedro Gomes assumiu a responsabilidade direta por esta intermediação.',
+                timestamp: new Date().toISOString(),
+                channel: 'supplier'
+            });
+            
+            saveState();
+            alert('Você assumiu a intermediação com sucesso!');
+            renderAdminPortal('matches');
+        }
+    }
+};
+
+window.adminTakeOverCurrentInspected = function() {
+    const matchId = document.getElementById('inspect-match-id').textContent.replace('#', '');
+    window.adminTakeOverMatch(matchId);
+    closeAdminInspectChatModal();
+};
+
+window.adminUpdateMatchStatus = function(matchId, status) {
+    const match = appState.matches.find(m => m.id === matchId);
+    if (match) {
+        match.status = status;
+        
+        // Synchronize requirement status
+        const req = appState.requirements.find(r => r.id === match.requirementId);
+        if (req) {
+            if (status === 'fechado') req.status = 'concluida';
+            else if (status === 'negociacao') req.status = 'atendimento';
+        }
+        
+        saveState();
+        alert('Estado da negociação alterado com sucesso.');
+        renderAdminPortal('matches');
+    }
+};
+
+window.adminUpdateCurrentInspectedStatus = function(status) {
+    const matchId = document.getElementById('inspect-match-id').textContent.replace('#', '');
+    window.adminUpdateMatchStatus(matchId, status);
+};
+
+window.adminSendGlobalNotice = function() {
+    const matchId = document.getElementById('inspect-match-id').textContent.replace('#', '');
+    const input = document.getElementById('inspect-admin-msg-input');
+    const text = input.value.trim();
+    if (!text) return;
+    
+    appState.messages.push({
+        id: `msg_${appState.messages.length + 1}`,
+        matchId: matchId,
+        senderId: 'admin_1',
+        senderRole: 'admin',
+        text: `MENSAGEM DA ADMINISTRAÇÃO: ${text}`,
+        timestamp: new Date().toISOString(),
+        channel: 'buyer'
+    });
+    
+    appState.messages.push({
+        id: `msg_${appState.messages.length + 1}`,
+        matchId: matchId,
+        senderId: 'admin_1',
+        senderRole: 'admin',
+        text: `MENSAGEM DA ADMINISTRAÇÃO: ${text}`,
+        timestamp: new Date().toISOString(),
+        channel: 'supplier'
+    });
+    
+    input.value = '';
+    saveState();
+    alert('Mensagem administrativa enviada para ambos os canais de chat.');
+    
+    // Refresh chats in the inspector modal
+    window.openAdminInspectChatModal(matchId);
+};
+
+// AUDIT INSPECTOR MODAL
+window.openAdminInspectChatModal = function(matchId) {
+    const match = appState.matches.find(m => m.id === matchId);
+    if (!match) return;
+    
+    const req = appState.requirements.find(r => r.id === match.requirementId) || { title: '?' };
+    const off = appState.offers.find(o => o.id === match.offerId) || { title: '?' };
+    const buyerObj = appState.users[req.owner] || { name: 'Cliente' };
+    const supplierObj = appState.users[off.owner] || { name: 'Fornecedor' };
+    
+    document.getElementById('inspect-match-id').textContent = `#${match.id}`;
+    document.getElementById('inspect-match-title').innerHTML = `
+        <span class="font-bold text-gvTeal">${req.title}</span> 
+        <span class="text-slate-400 font-normal">vs</span> 
+        <span class="font-bold text-emerald-700">${off.title}</span>
+    `;
+    
+    document.getElementById('inspect-buyer-name').textContent = buyerObj.name;
+    document.getElementById('inspect-supplier-name').textContent = supplierObj.name;
+    
+    // Set status dropdown value
+    document.getElementById('inspect-status-select').value = match.status;
+    
+    // Enable/disable takeover button
+    const takeoverBtn = document.getElementById('inspect-takeover-btn');
+    if (match.consultantId === 'admin_1') {
+        takeoverBtn.textContent = 'Sob sua gestão';
+        takeoverBtn.setAttribute('disabled', 'true');
+        takeoverBtn.style.opacity = '0.5';
+    } else {
+        takeoverBtn.textContent = 'Assumir Intermediação';
+        takeoverBtn.removeAttribute('disabled');
+        takeoverBtn.style.opacity = '1';
+    }
+    
+    // Inject buyer messages
+    const buyerArea = document.getElementById('inspect-buyer-chat-area');
+    buyerArea.innerHTML = '';
+    const buyerMsgs = appState.messages.filter(m => m.matchId === matchId && m.channel === 'buyer');
+    if (buyerMsgs.length === 0) {
+        buyerArea.innerHTML = `<div class="text-center py-6 text-slate-400 italic">Nenhuma mensagem neste canal.</div>`;
+    } else {
+        buyerMsgs.forEach(m => {
+            const sender = appState.users[m.senderId] || { name: 'Sistema' };
+            const bubble = document.createElement('div');
+            bubble.className = `p-2.5 rounded-xl text-xs leading-relaxed border ${
+                sender.role === 'admin' 
+                ? 'bg-amber-50 border-amber-200 text-amber-900' 
+                : (sender.role === 'consultant' ? 'bg-gvTeal/5 border-gvTeal/10 text-slate-800' : 'bg-white border-slate-200 text-slate-850')
+            }`;
+            bubble.innerHTML = `
+                <div class="flex justify-between items-center mb-1 shrink-0">
+                    <strong class="text-[10px] text-gvTeal uppercase tracking-wider">${sender.name} (${sender.role.toUpperCase()})</strong>
+                    <span class="text-[9px] text-slate-400">${formatTime(m.timestamp)}</span>
+                </div>
+                <p>${m.text}</p>
+            `;
+            buyerArea.appendChild(bubble);
+        });
+    }
+    
+    // Inject supplier messages
+    const supplierArea = document.getElementById('inspect-supplier-chat-area');
+    supplierArea.innerHTML = '';
+    const supplierMsgs = appState.messages.filter(m => m.matchId === matchId && m.channel === 'supplier');
+    if (supplierMsgs.length === 0) {
+        supplierArea.innerHTML = `<div class="text-center py-6 text-slate-400 italic">Nenhuma mensagem neste canal.</div>`;
+    } else {
+        supplierMsgs.forEach(m => {
+            const sender = appState.users[m.senderId] || { name: 'Sistema' };
+            const bubble = document.createElement('div');
+            bubble.className = `p-2.5 rounded-xl text-xs leading-relaxed border ${
+                sender.role === 'admin' 
+                ? 'bg-amber-50 border-amber-200 text-amber-900' 
+                : (sender.role === 'consultant' ? 'bg-gvTeal/5 border-gvTeal/10 text-slate-800' : 'bg-white border-slate-200 text-slate-850')
+            }`;
+            bubble.innerHTML = `
+                <div class="flex justify-between items-center mb-1 shrink-0">
+                    <strong class="text-[10px] text-emerald-700 uppercase tracking-wider">${sender.name} (${sender.role.toUpperCase()})</strong>
+                    <span class="text-[9px] text-slate-400">${formatTime(m.timestamp)}</span>
+                </div>
+                <p>${m.text}</p>
+            `;
+            supplierArea.appendChild(bubble);
+        });
+    }
+    
+    const modal = document.getElementById('adminInspectChatModal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.style.display = 'flex';
+    }
+};
+
+window.closeAdminInspectChatModal = function() {
+    const modal = document.getElementById('adminInspectChatModal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+    }
+};
+
+// USER MESSAGES MODAL
+window.openAdminUserMessageModal = function(userId) {
+    const u = appState.users[userId];
+    if (!u) return;
+    
+    document.getElementById('message-recipient-id').value = u.id;
+    document.getElementById('message-recipient-label').textContent = `Para: ${u.name} (${u.email})`;
+    document.getElementById('admin-message-text').value = '';
+    
+    const modal = document.getElementById('adminUserMessageModal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.style.display = 'flex';
+    }
+};
+
+window.closeAdminUserMessageModal = function() {
+    const modal = document.getElementById('adminUserMessageModal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+    }
+};
+
+window.submitAdminMessageForm = function(event) {
+    event.preventDefault();
+    const recipientId = document.getElementById('message-recipient-id').value;
+    const text = document.getElementById('admin-message-text').value.trim();
+    
+    // Inject notification for targeted user
+    appState.notifications.push({
+        id: `not_${appState.notifications.length + 1}`,
+        userId: recipientId,
+        text: `MENSAGEM DA ADMINISTRAÇÃO: ${text}`,
+        date: new Date().toISOString().split('T')[0],
+        read: false
+    });
+    
+    saveState();
+    closeAdminUserMessageModal();
+    alert('Mensagem administrativa enviada como notificação oficial.');
+};
+
+// PUBLISH DIRECTLY BY ADMIN MODAL
+window.openAdminPublishModal = function() {
+    // Inject active categories into category dropdown
+    const catSelect = document.getElementById('admin-pub-category');
+    if (catSelect) {
+        catSelect.innerHTML = '';
+        appState.categories.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c;
+            opt.textContent = c;
+            catSelect.appendChild(opt);
+        });
+    }
+    
+    window.toggleAdminPubOwnerDropdown('requirement');
+    
+    const modal = document.getElementById('adminPublishResourceModal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.style.display = 'flex';
+    }
+};
+
+window.closeAdminPublishModal = function() {
+    const modal = document.getElementById('adminPublishResourceModal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+    }
+};
+
+window.toggleAdminPubOwnerDropdown = function(type) {
+    const ownerSelect = document.getElementById('admin-pub-owner');
+    if (!ownerSelect) return;
+    ownerSelect.innerHTML = '';
+    
+    // Find users match the type
+    const targetRole = type === 'requirement' ? 'buyer' : 'supplier';
+    Object.values(appState.users).forEach(u => {
+        if (u.role === targetRole) {
+            const opt = document.createElement('option');
+            opt.value = u.id;
+            opt.textContent = `${u.name} (${u.email})`;
+            ownerSelect.appendChild(opt);
+        }
+    });
+};
+
+window.submitAdminPublish = function(event) {
+    event.preventDefault();
+    const pubType = document.getElementById('admin-pub-type').value;
+    const ownerId = document.getElementById('admin-pub-owner').value;
+    const title = document.getElementById('admin-pub-title').value.trim();
+    const category = document.getElementById('admin-pub-category').value;
+    const quantity = document.getElementById('admin-pub-quantity').value.trim();
+    const country = document.getElementById('admin-pub-country').value;
+    const logistics = document.getElementById('admin-pub-logistics').value;
+    const description = document.getElementById('admin-pub-description').value.trim();
+    const featured = document.getElementById('admin-pub-featured').checked;
+    
+    const newId = pubType === 'requirement' 
+        ? `req_${appState.requirements.length + 1}` 
+        : `off_${appState.offers.length + 1}`;
+        
+    const itemObj = {
+        id: newId,
+        title: title,
+        category: category,
+        description: description,
+        quantity: quantity,
+        country: country,
+        logistics: logistics,
+        date: new Date().toISOString().split('T')[0],
+        status: 'pendente',
+        owner: ownerId,
+        assignedConsultant: null,
+        featured: featured
+    };
+    
+    if (pubType === 'requirement') {
+        appState.requirements.push(itemObj);
+    } else {
+        appState.offers.push(itemObj);
+    }
+    
+    saveState();
+    closeAdminPublishModal();
+    alert('Publicado com sucesso como recurso oficial na plataforma!');
+    
+    // Re-render
+    renderAdminPortal('dashboard');
+};
+
+// TOGGLE HIGHLIGHT ACTION
+window.adminToggleHighlight = function(type, itemId) {
+    const list = type === 'requirement' ? appState.requirements : appState.offers;
+    const item = list.find(x => x.id === itemId);
+    if (item) {
+        item.featured = !item.featured;
+        saveState();
+        alert(item.featured ? 'Item marcado como Destaque com sucesso.' : 'Item removido dos destaques.');
+        renderAdminPortal('dashboard');
+    }
+};
+
+// APPROVE DEAL PAYMENT (ADMIN LOCK TRANSITION)
+window.adminApproveMatchPayment = function(matchId) {
+    const match = appState.matches.find(m => m.id === matchId);
+    if (match) {
+        if (confirm(`Tem certeza de que deseja aprovar o faturamento e pagamentos para a negociação #${matchId.split('_')[1]}? Isso finalizará a intermediação com sucesso.`)) {
+            match.status = 'fechado';
+            
+            const req = appState.requirements.find(r => r.id === match.requirementId);
+            if (req) req.status = 'concluida';
+            
+            const off = appState.offers.find(o => o.id === match.offerId);
+            if (off) off.status = 'concluida';
+            
+            // Add final system messages in BOTH channels
+            appState.messages.push({
+                id: `msg_${appState.messages.length + 1}`,
+                matchId: match.id,
+                senderId: 'admin_1',
+                senderRole: 'admin',
+                text: 'NEGÓCIO CONCLUÍDO E PAGAMENTO APROVADO: A GV-CPS faturou com sucesso os termos acordados. O processo de intermediação foi finalizado formalmente.',
+                timestamp: new Date().toISOString(),
+                channel: 'buyer'
+            });
+            
+            appState.messages.push({
+                id: `msg_${appState.messages.length + 1}`,
+                matchId: match.id,
+                senderId: 'admin_1',
+                senderRole: 'admin',
+                text: 'NEGÓCIO CONCLUÍDO E PAGAMENTO APROVADO: A GV-CPS faturou com sucesso os termos acordados. O processo de intermediação foi finalizado formalmente.',
+                timestamp: new Date().toISOString(),
+                channel: 'supplier'
+            });
+            
+            // Notifications for users
+            if (req) {
+                appState.notifications.push({
+                    id: `not_${appState.notifications.length + 1}`,
+                    userId: req.owner,
+                    text: `NEGÓCIO CONCLUÍDO: Pagamento para "${req.title}" aprovado pela administração.`,
+                    date: new Date().toISOString().split('T')[0],
+                    read: false
+                });
+            }
+            
+            if (off) {
+                appState.notifications.push({
+                    id: `not_${appState.notifications.length + 1}`,
+                    userId: off.owner,
+                    text: `NEGÓCIO CONCLUÍDO: Faturamento para "${off.title}" aprovado pela administração.`,
+                    date: new Date().toISOString().split('T')[0],
+                    read: false
+                });
+            }
+            
+            saveState();
+            alert('Pagamento aprovado! Negociação finalizada no sistema.');
+            renderAdminPortal('approvals');
+        }
+    }
+};
+
 

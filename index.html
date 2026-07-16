@@ -1825,7 +1825,11 @@
                                 <h2 id="consultant-negotiation-deal-title">Negociação #1</h2>
                                 <p style="margin-top: 4px;">Você atua como intermediário único. Comprador e Fornecedor NÃO trocam contato direto nem visualizam mensagens um do outro.</p>
                             </div>
-                            <div style="display: flex; gap: 12px;">
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <button class="btn btn-secondary btn-sm" onclick="openConsultantProposalModalFromPortal()" style="background-color: var(--primary-light); color: white; border: none; padding: 10px 16px; border-radius: var(--radius-lg); font-weight: bold; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 4px;">
+                                    <span class="material-symbols-outlined text-[16px]">description</span>
+                                    <span>Formular Proposta</span>
+                                </button>
                                 <button class="btn btn-primary btn-sm" id="btn-finalize-deal" style="background-color: var(--secondary-light);">Fechar Negócio & Facturar</button>
                             </div>
                         </div>
@@ -1868,29 +1872,45 @@
         <section id="view-admin-portal" class="view-section">
             <div class="portal-layout">
                 <!-- Sidebar -->
-                <aside class="portal-sidebar">
-                    <div class="portal-profile-summary">
-                        <div class="avatar" style="background-color: var(--primary); color: white;">PG</div>
-                        <div class="profile-info">
-                            <span class="profile-name">Pedro Gomes</span>
-                            <span class="profile-role-badge">Administrador</span>
+                <aside class="portal-sidebar flex flex-col justify-between h-full">
+                    <div>
+                        <div class="portal-profile-summary">
+                            <div class="avatar" style="background-color: var(--primary); color: white;">PG</div>
+                            <div class="profile-info">
+                                <span class="profile-name">Pedro Gomes</span>
+                                <span class="profile-role-badge">Administrador</span>
+                            </div>
                         </div>
+                        
+                        <nav class="portal-menu">
+                            <a href="#admin-portal?tab=dashboard" class="portal-menu-item active" data-tab="dashboard">
+                                <span class="material-symbols-outlined">dashboard</span>
+                                <span>Métricas e Painel</span>
+                            </a>
+                            <a href="#admin-portal?tab=users" class="portal-menu-item" data-tab="users">
+                                <span class="material-symbols-outlined">group</span>
+                                <span>Gestão Utilizadores</span>
+                            </a>
+                            <a href="#admin-portal?tab=matches" class="portal-menu-item" data-tab="matches">
+                                <span class="material-symbols-outlined">handshake</span>
+                                <span>Negociações Ativas</span>
+                            </a>
+                            <a href="#admin-portal?tab=approvals" class="portal-menu-item" data-tab="approvals">
+                                <span class="material-symbols-outlined">payments</span>
+                                <span>Aprovações Pagamento</span>
+                            </a>
+                            <a href="#admin-portal?tab=categories" class="portal-menu-item" data-tab="categories">
+                                <span class="material-symbols-outlined">category</span>
+                                <span>Catálogo Categorias</span>
+                            </a>
+                        </nav>
                     </div>
-                    
-                    <nav class="portal-menu">
-                        <a href="#admin-portal?tab=dashboard" class="portal-menu-item active" data-tab="dashboard">
-                            <span class="material-symbols-outlined">dashboard</span>
-                            <span>Métricas e Painel</span>
-                        </a>
-                        <a href="#admin-portal?tab=users" class="portal-menu-item" data-tab="users">
-                            <span class="material-symbols-outlined">group</span>
-                            <span>Gestão Utilizadores</span>
-                        </a>
-                        <a href="#admin-portal?tab=categories" class="portal-menu-item" data-tab="categories">
-                            <span class="material-symbols-outlined">category</span>
-                            <span>Catálogo Categorias</span>
-                        </a>
-                    </nav>
+                    <div class="px-4 py-6">
+                        <button class="w-full py-3 bg-gvTeal text-white font-bold text-xs rounded-xl hover:bg-gvTeal-light transition flex items-center justify-center gap-1.5 border border-gvTeal/10 cursor-pointer" onclick="openAdminPublishModal()">
+                            <span class="material-symbols-outlined text-[16px]">add_box</span>
+                            <span>Publicar Recurso</span>
+                        </button>
+                    </div>
                 </aside>
                 
                 <!-- Main Portal Content -->
@@ -1973,19 +1993,102 @@
                                 <p>Monitore perfis cadastrados e atribuições no sistema.</p>
                             </div>
                         </div>
-                        <div class="data-panel">
-                            <div class="data-table-wrapper">
-                                <table class="data-table">
+                        
+                        <!-- Barra de filtros moderna -->
+                        <div class="bg-white border border-slate-200 rounded-2xl p-4 mb-6 flex flex-col md:flex-row gap-4 items-center justify-between shadow-sm">
+                            <div class="relative w-full md:max-w-md">
+                                <span class="material-symbols-outlined absolute left-3 top-2.5 text-slate-400 text-[18px]">search</span>
+                                <input type="text" id="admin-users-search" oninput="applyAdminUserFilters()" class="w-full pl-10 pr-4 py-2 border border-slate-200 bg-slate-50 text-slate-800 rounded-xl text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-gvTeal/10 focus:border-gvTeal transition" placeholder="Pesquisar por nome ou e-mail...">
+                            </div>
+                            
+                            <div class="flex gap-3 w-full md:w-auto">
+                                <select id="admin-users-filter-role" onchange="applyAdminUserFilters()" class="flex-1 md:w-44 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-gvTeal/10 transition">
+                                    <option value="all">Todos os Papéis</option>
+                                    <option value="buyer">Compradores</option>
+                                    <option value="supplier">Fornecedores</option>
+                                    <option value="consultant">Consultores</option>
+                                    <option value="admin">Administradores</option>
+                                </select>
+                                
+                                <select id="admin-users-filter-status" onchange="applyAdminUserFilters()" class="flex-1 md:w-44 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-gvTeal/10 transition">
+                                    <option value="all">Todos os Estados</option>
+                                    <option value="ativo">Ativos</option>
+                                    <option value="inativo">Inativos</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse">
                                     <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Nome Completo</th>
-                                            <th>Endereço de E-mail</th>
-                                            <th>Papel Demo</th>
-                                            <th>Estado da Conta</th>
+                                        <tr class="bg-slate-50/80 border-b border-slate-200/50 text-slate-400 text-[10px] font-bold uppercase tracking-wider">
+                                            <th class="py-4 px-6 w-20">ID</th>
+                                            <th class="py-4 px-6">Utilizador</th>
+                                            <th class="py-4 px-6">Papel do Sistema</th>
+                                            <th class="py-4 px-6">Estado</th>
+                                            <th class="py-4 px-6 w-44 text-right">Ações Rápidas</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="admin-users-table-body">
+                                    <tbody id="admin-users-table-body" class="divide-y divide-slate-100 text-xs md:text-sm">
+                                        <!-- Injected -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2.5: Active Matches / Conversations Audit -->
+                    <div id="admin-matches-tab" style="display: none;">
+                        <div class="portal-page-header">
+                            <div class="portal-page-title-area">
+                                <h2>Auditoria de Negociações Ativas</h2>
+                                <p>Monitore chats em tempo real, assuma intermediações e gerencie o fluxo de trabalho.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr class="bg-slate-50/80 border-b border-slate-200/50 text-slate-400 text-[10px] font-bold uppercase tracking-wider">
+                                            <th class="py-4 px-6 w-20">ID</th>
+                                            <th class="py-4 px-6">Match de Negociação</th>
+                                            <th class="py-4 px-6">Consultor Responsável</th>
+                                            <th class="py-4 px-6 w-32">Estado</th>
+                                            <th class="py-4 px-6 w-60 text-right">Ações Rápidas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-matches-table-body" class="divide-y divide-slate-100 text-xs md:text-sm">
+                                        <!-- Injected -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2.6: Payment Approvals / Closures -->
+                    <div id="admin-approvals-tab" style="display: none;">
+                        <div class="portal-page-header">
+                            <div class="portal-page-title-area">
+                                <h2>Revisão e Aprovação de Pagamentos</h2>
+                                <p>Autorize a transição para a fase de faturamento e encerramento seguro após aceitação de termos.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr class="bg-slate-50/80 border-b border-slate-200/50 text-slate-400 text-[10px] font-bold uppercase tracking-wider">
+                                            <th class="py-4 px-6 w-20">ID</th>
+                                            <th class="py-4 px-6">Termos Aceites / Negócio</th>
+                                            <th class="py-4 px-6">Valor Acordado</th>
+                                            <th class="py-4 px-6">Logística</th>
+                                            <th class="py-4 px-6 w-48 text-right">Ações de Pagamento</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-approvals-table-body" class="divide-y divide-slate-100 text-xs md:text-sm">
                                         <!-- Injected -->
                                     </tbody>
                                 </table>
@@ -2023,6 +2126,241 @@
                 </div>
             </div>
         </section>
+
+        <!-- MODAL: INSPECT CHAT (ADMIN) -->
+        <div id="adminInspectChatModal" class="hidden" style="display: none; position: fixed; inset: 0; background-color: rgba(0, 55, 74, 0.6); backdrop-filter: blur(8px); z-index: 20000; align-items: center; justify-content: center; padding: 24px;" onclick="closeAdminInspectChatModal()">
+            <div class="bg-white p-6 rounded-3xl border border-outline-variant shadow-2xl max-w-5xl w-full h-[85vh] relative flex flex-col gap-4" onclick="event.stopPropagation();">
+                <button onclick="closeAdminInspectChatModal()" class="absolute top-5 right-5 bg-none border-none text-slate-400 hover:text-slate-700 cursor-pointer" title="Fechar Modal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                
+                <div class="border-b border-slate-100 pb-3 flex justify-between items-center shrink-0">
+                    <div>
+                        <h3 class="text-lg font-black text-slate-800 flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-gvTeal">visibility</span>
+                            <span>Auditoria de Negociação</span>
+                            <span id="inspect-match-id" class="text-xs font-normal text-slate-450">#MATCH</span>
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-0.5" id="inspect-match-title">Carregando...</p>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <button id="inspect-takeover-btn" class="px-3 py-1.5 bg-gvTeal text-white text-xs font-bold rounded-lg hover:bg-gvTeal-light transition" onclick="adminTakeOverCurrentInspected()">
+                            Assumir Intermediação
+                        </button>
+                        <select id="inspect-status-select" class="bg-slate-50 border border-slate-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none" onchange="adminUpdateCurrentInspectedStatus(this.value)">
+                            <option value="negociacao">Em Negociação</option>
+                            <option value="revisao">Em Revisão (Admin)</option>
+                            <option value="fechado">Concluído / Fechado</option>
+                            <option value="cancelado">Cancelado</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 overflow-hidden">
+                    <!-- Buyer side -->
+                    <div class="flex flex-col border border-slate-100 rounded-2xl overflow-hidden bg-slate-50 h-full">
+                        <div class="bg-slate-100/80 px-4 py-2.5 border-b border-slate-200 flex justify-between items-center shrink-0">
+                            <span class="text-xs font-bold text-slate-700 flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">person</span>
+                                <span>Canal Comprador</span>
+                            </span>
+                            <span id="inspect-buyer-name" class="text-[10px] bg-white border border-slate-200 px-2 py-0.5 rounded text-slate-550 font-semibold">Cliente</span>
+                        </div>
+                        <div class="flex-1 overflow-y-auto p-4 space-y-3" id="inspect-buyer-chat-area">
+                            <!-- Injected -->
+                        </div>
+                    </div>
+                    
+                    <!-- Supplier side -->
+                    <div class="flex flex-col border border-slate-100 rounded-2xl overflow-hidden bg-slate-50 h-full">
+                        <div class="bg-slate-100/80 px-4 py-2.5 border-b border-slate-200 flex justify-between items-center shrink-0">
+                            <span class="text-xs font-bold text-slate-700 flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">local_shipping</span>
+                                <span>Canal Fornecedor</span>
+                            </span>
+                            <span id="inspect-supplier-name" class="text-[10px] bg-white border border-slate-200 px-2 py-0.5 rounded text-slate-550 font-semibold">Fornecedor</span>
+                        </div>
+                        <div class="flex-1 overflow-y-auto p-4 space-y-3" id="inspect-supplier-chat-area">
+                            <!-- Injected -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="border-t border-slate-100 pt-3 flex gap-2 shrink-0">
+                    <input type="text" id="inspect-admin-msg-input" class="flex-1 px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-gvTeal" placeholder="Enviar uma mensagem administrativa global para ambos os canais...">
+                    <button onclick="adminSendGlobalNotice()" class="px-4 py-2 bg-gvTeal text-white font-bold text-xs rounded-xl hover:bg-gvTeal-light transition flex items-center gap-1 cursor-pointer">
+                        <span class="material-symbols-outlined text-sm">campaign</span>
+                        <span>Anunciar</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL: FORMULAR PROPOSTA COMERCIAL (CONSULTOR/ADMIN) -->
+        <div id="consultantProposalModal" class="hidden" style="display: none; position: fixed; inset: 0; background-color: rgba(0, 55, 74, 0.6); backdrop-filter: blur(8px); z-index: 20000; align-items: center; justify-content: center; padding: 24px;" onclick="closeConsultantProposalModal()">
+            <div class="bg-white p-6 rounded-3xl border border-outline-variant shadow-2xl max-w-md w-full relative flex flex-col gap-4" onclick="event.stopPropagation();">
+                <button onclick="closeConsultantProposalModal()" class="absolute top-5 right-5 bg-none border-none text-slate-400 hover:text-slate-700 cursor-pointer" title="Fechar Modal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                
+                <div class="text-center">
+                    <h3 class="text-lg font-black text-slate-800">Formular Proposta de Termos</h3>
+                    <p class="text-xs text-slate-500 mt-1">Crie um card de proposta estruturada para envio direto no chat.</p>
+                </div>
+                
+                <form id="consultant-proposal-form" onsubmit="submitProposalForm(event)" class="space-y-4">
+                    <input type="hidden" id="proposal-match-id">
+                    <input type="hidden" id="proposal-channel-type">
+                    
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-450 uppercase tracking-wider">Valor Proposto (MZN / USD)</label>
+                        <input type="text" id="proposal-price" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-gvTeal font-bold text-slate-800" placeholder="Ex: MT 1.250.000" required>
+                    </div>
+                    
+                    <div class="space-y-1.5">
+                        <label class="block text-[10px] font-bold text-slate-450 uppercase tracking-wider">Logística Incluída no Preço?</label>
+                        <div class="flex gap-2">
+                            <label class="flex-1 flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+                                <input type="radio" name="proposal-logistics" value="Sim" checked onchange="toggleProposalLogisticsCost(true)" class="text-gvTeal focus:ring-gvTeal">
+                                <span class="text-xs font-bold text-slate-700">Sim</span>
+                            </label>
+                            <label class="flex-1 flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+                                <input type="radio" name="proposal-logistics" value="Não" onchange="toggleProposalLogisticsCost(false)" class="text-gvTeal focus:ring-gvTeal">
+                                <span class="text-xs font-bold text-slate-700">Não</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-1" id="proposal-logistics-cost-container">
+                        <label class="block text-[10px] font-bold text-slate-450 uppercase tracking-wider">Custo estimado do frete / logística</label>
+                        <input type="text" id="proposal-logistics-cost" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-gvTeal font-bold text-slate-800" placeholder="Ex: MT 150.000">
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-450 uppercase tracking-wider">Especificações e Termos Adicionais</label>
+                        <textarea id="proposal-details" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-gvTeal" rows="3" placeholder="Descreva termos de entrega, validade da proposta, etc..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="w-full py-3 bg-gvTeal text-white font-bold text-xs rounded-xl hover:bg-gvTeal-light transition shadow-md cursor-pointer">
+                        Enviar Proposta ao Chat
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- MODAL: ENVIAR MENSAGEM DIRETA (ADMIN) -->
+        <div id="adminUserMessageModal" class="hidden" style="display: none; position: fixed; inset: 0; background-color: rgba(0, 55, 74, 0.6); backdrop-filter: blur(8px); z-index: 20000; align-items: center; justify-content: center; padding: 24px;" onclick="closeAdminUserMessageModal()">
+            <div class="bg-white p-6 rounded-3xl border border-outline-variant shadow-2xl max-w-md w-full relative flex flex-col gap-4" onclick="event.stopPropagation();">
+                <button onclick="closeAdminUserMessageModal()" class="absolute top-5 right-5 bg-none border-none text-slate-400 hover:text-slate-700 cursor-pointer" title="Fechar Modal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                
+                <div class="text-center">
+                    <h3 class="text-lg font-black text-slate-800">Enviar Mensagem / Notificação</h3>
+                    <p class="text-xs text-slate-500 mt-1" id="message-recipient-label">Para: Carregando...</p>
+                </div>
+                
+                <form id="admin-message-form" onsubmit="submitAdminMessageForm(event)" class="space-y-4">
+                    <input type="hidden" id="message-recipient-id">
+                    
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-450 uppercase tracking-wider">Conteúdo da Mensagem Administrativa</label>
+                        <textarea id="admin-message-text" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-gvTeal" rows="4" placeholder="Escreva a mensagem oficial para o utilizador..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="w-full py-3 bg-gvTeal text-white font-bold text-xs rounded-xl hover:bg-gvTeal-light transition shadow-md cursor-pointer">
+                        Enviar Notificação Oficial
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- MODAL: PUBLICAR RECURSO COMO QUALQUER ATOR (ADMIN) -->
+        <div id="adminPublishResourceModal" class="hidden" style="display: none; position: fixed; inset: 0; background-color: rgba(0, 55, 74, 0.6); backdrop-filter: blur(8px); z-index: 20000; align-items: center; justify-content: center; padding: 24px;" onclick="closeAdminPublishModal()">
+            <div class="bg-white p-6 rounded-3xl border border-outline-variant shadow-2xl max-w-lg w-full relative flex flex-col gap-4" onclick="event.stopPropagation();">
+                <button onclick="closeAdminPublishModal()" class="absolute top-5 right-5 bg-none border-none text-slate-400 hover:text-slate-700 cursor-pointer" title="Fechar Modal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                
+                <div class="text-center">
+                    <h3 class="text-lg font-black text-slate-800">Publicar Novo Recurso</h3>
+                    <p class="text-xs text-slate-500 mt-1">Como Administrador, publique uma necessidade (compra) ou oferta (venda) em nome de qualquer ator.</p>
+                </div>
+                
+                <form id="admin-publish-form" onsubmit="submitAdminPublish(event)" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label class="block text-[10px] font-bold text-slate-450 uppercase tracking-wider">Tipo de Publicação</label>
+                            <select id="admin-pub-type" onchange="toggleAdminPubOwnerDropdown(this.value)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-gvTeal/10 transition">
+                                <option value="requirement">Necessidade (Compra)</option>
+                                <option value="offer">Oferta (Venda)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="space-y-1">
+                            <label class="block text-[10px] font-bold text-slate-450 uppercase tracking-wider">Proprietário (Simular Usuário)</label>
+                            <select id="admin-pub-owner" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-gvTeal/10 transition">
+                                <!-- Injected -->
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-450 uppercase tracking-wider">Título do Lote / Recurso</label>
+                        <input type="text" id="admin-pub-title" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-gvTeal" placeholder="Ex: Carga Alimentar de Açúcar Mascavado" required>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label class="block text-[10px] font-bold text-slate-450 uppercase tracking-wider">Categoria</label>
+                            <select id="admin-pub-category" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-gvTeal/10 transition">
+                                <!-- Injected -->
+                            </select>
+                        </div>
+                        
+                        <div class="space-y-1">
+                            <label class="block text-[10px] font-bold text-slate-450 uppercase tracking-wider">Quantidade / Volume</label>
+                            <input type="text" id="admin-pub-quantity" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-gvTeal" placeholder="Ex: 200 Toneladas" required>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label class="block text-[10px] font-bold text-slate-450 uppercase tracking-wider">País de Origem / Destino</label>
+                            <select id="admin-pub-country" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-gvTeal/10 transition">
+                                <option value="Moçambique">Moçambique</option>
+                                <option value="Brasil">Brasil</option>
+                                <option value="Portugal">Portugal</option>
+                                <option value="China">China</option>
+                            </select>
+                        </div>
+                        
+                        <div class="space-y-1">
+                            <label class="block text-[10px] font-bold text-slate-450 uppercase tracking-wider">Logística Incluída?</label>
+                            <select id="admin-pub-logistics" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-gvTeal/10 transition">
+                                <option value="Sim">Sim (Faturado pela GV)</option>
+                                <option value="Não">Não (Tratado à parte)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-450 uppercase tracking-wider">Descrição Detalhada do Item (Sem contactos)</label>
+                        <textarea id="admin-pub-description" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-gvTeal" rows="3" placeholder="Insira a descrição técnica..." required></textarea>
+                    </div>
+                    
+                    <div class="flex items-center gap-2 pt-1">
+                        <input type="checkbox" id="admin-pub-featured" class="text-gvTeal focus:ring-gvTeal rounded">
+                        <label for="admin-pub-featured" class="text-xs font-bold text-slate-750 cursor-pointer select-none">Marcar esta publicação como destaque (Destaque público)</label>
+                    </div>
+                    
+                    <button type="submit" class="w-full py-3 bg-gvTeal text-white font-bold text-xs rounded-xl hover:bg-gvTeal-light transition shadow-md cursor-pointer">
+                        Confirmar e Publicar Oficialmente
+                    </button>
+                </form>
+            </div>
+        </div>
 
     </main>
     
