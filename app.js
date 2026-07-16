@@ -9,8 +9,8 @@ const INITIAL_STATE = {
         name: 'Visitante'
     },
     users: {
-        buyer_1: { id: 'buyer_1', name: 'João Silva', email: 'joao@buyer.com', role: 'buyer', initials: 'JS', landlineCode: '+258', landline: '21300400', mobileCode: '+258', mobile: '841234567', whatsappCode: '+258', whatsapp: '841234567' },
-        supplier_1: { id: 'supplier_1', name: 'Maria Santos', email: 'maria@supplier.com', role: 'supplier', initials: 'MS', landlineCode: '+55', landline: '1130004000', mobileCode: '+55', mobile: '11987654321', whatsappCode: '+55', whatsapp: '11987654321' },
+        buyer_1: { id: 'buyer_1', name: 'João Silva', email: 'joao@buyer.com', role: 'buyer', initials: 'JS' },
+        supplier_1: { id: 'supplier_1', name: 'Maria Santos', email: 'maria@supplier.com', role: 'supplier', initials: 'MS' },
         consultant_1: { id: 'consultant_1', name: 'Carlos Mendes', email: 'carlos@gv-cps.com', role: 'consultant', initials: 'CM' },
         admin_1: { id: 'admin_1', name: 'Pedro Gomes', email: 'pedro@gv-cps.com', role: 'admin', initials: 'PG' }
     },
@@ -392,11 +392,9 @@ function navigate(viewPath) {
             break;
         case 'publish-need':
             resetForm('need-form');
-            initPublishForm('need');
             break;
         case 'publish-offer':
             resetForm('offer-form');
-            initPublishForm('offer');
             break;
         case 'buyer-portal':
             renderBuyerPortal(params.tab || 'dashboard', params.id);
@@ -510,14 +508,6 @@ function updateSwitcherUI() {
         });
         if (btnLogin) btnLogin.style.display = 'flex';
         if (userMenu) userMenu.style.display = 'none';
-    }
-
-    // Live refresh publish forms if open
-    const activeView = window.location.hash ? window.location.hash.substring(1) : 'home';
-    if (activeView === 'publish-need') {
-        initPublishForm('need');
-    } else if (activeView === 'publish-offer') {
-        initPublishForm('offer');
     }
 }
 
@@ -865,35 +855,43 @@ function renderMarketExplorer() {
         else if (c.includes('china')) flag = '🇨🇳';
         else if (c.includes('emirados') || c.includes('árabes') || c.includes('dubai')) flag = '🇦🇪';
         
-        const div = document.createElement('div');
-        div.className = `p-3.5 bg-white border border-slate-200/70 hover:border-gvTeal/30 rounded-xl shadow-sm transition-all duration-300 flex items-center justify-between gap-4 cursor-pointer hover:shadow-md`;
-        div.onclick = () => {
+        const tr = document.createElement('tr');
+        tr.className = `border-b border-slate-100 hover:bg-slate-50/80 transition cursor-pointer`;
+        tr.onclick = () => {
             window.location.hash = `detail?id=${item.id}&type=${item.type}`;
         };
         
-        div.innerHTML = `
-            <div class="flex items-center gap-3 min-w-0">
-                <span class="p-2 bg-slate-50 rounded-lg flex items-center justify-center text-slate-500 shrink-0">
-                    <span class="material-symbols-outlined text-[18px]">${catIcon}</span>
-                </span>
-                <div class="min-w-0 text-left">
-                    <h5 class="font-bold text-slate-800 text-xs md:text-sm truncate pr-2" title="${item.title}">${item.title}</h5>
-                    <div class="flex items-center gap-2 mt-1 shrink-0 text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
-                        <span class="flex items-center gap-1">
-                            <span>${flag}</span>
-                            <span>${item.country}</span>
-                        </span>
-                        <span>•</span>
-                        <span>Qtd: ${item.quantity}</span>
+        tr.innerHTML = `
+            <td class="py-4 px-6">
+                <div class="flex items-center gap-3">
+                    <span class="p-2 bg-slate-50 rounded-lg flex items-center justify-center text-slate-500 shrink-0">
+                        <span class="material-symbols-outlined text-[18px]">${catIcon}</span>
+                    </span>
+                    <div class="min-w-0">
+                        <span class="block truncate font-bold text-sm text-slate-800" title="${item.title}">${item.title}</span>
+                        <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mt-0.5">${item.id}</span>
                     </div>
                 </div>
-            </div>
-            <div class="flex items-center gap-2 shrink-0">
+            </td>
+            <td class="py-4 px-6">
                 <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase border cat-badge cat-theme-${catCode}">${catLabel}</span>
-                <span class="material-symbols-outlined text-[16px] text-slate-350">chevron_right</span>
-            </div>
+            </td>
+            <td class="py-4 px-6 text-slate-600 font-medium">
+                <div class="flex items-center gap-1.5">
+                    <span>${flag}</span>
+                    <span>${item.country}</span>
+                </div>
+            </td>
+            <td class="py-4 px-6 text-slate-600 font-bold">
+                ${item.quantity}
+            </td>
+            <td class="py-4 px-6 text-center">
+                <button class="btn btn-primary btn-sm" style="padding: 6px 12px; font-size: 11px; background-color: var(--primary); border: none; color: white; font-weight: bold; border-radius: var(--radius-md); cursor: pointer;">
+                    Ver Detalhes
+                </button>
+            </td>
         `;
-        reqList.appendChild(div);
+        reqList.appendChild(tr);
     });
     
     // 2. Render Countries Grid with counters
@@ -2123,51 +2121,6 @@ function renderAdminPortal(tab) {
                 renderAdminPortal('categories');
             }
         };
-
-        // Render suggested/pending categories from custom submissions
-        const suggestedContainer = document.getElementById('admin-suggested-categories-list');
-        if (suggestedContainer) {
-            suggestedContainer.innerHTML = '';
-            
-            // Find all unique custom categories that are not in official categories list
-            const customCats = new Set();
-            appState.requirements.forEach(r => {
-                if (r.category && !appState.categories.includes(r.category)) {
-                    customCats.add(r.category);
-                }
-            });
-            appState.offers.forEach(o => {
-                if (o.category && !appState.categories.includes(o.category)) {
-                    customCats.add(o.category);
-                }
-            });
-
-            if (customCats.size === 0) {
-                suggestedContainer.innerHTML = `<div class="text-slate-400 text-xs italic py-2">Nenhuma sugestão pendente no momento.</div>`;
-            } else {
-                customCats.forEach(customCat => {
-                    const div = document.createElement('div');
-                    div.style.display = 'flex';
-                    div.style.justifyContent = 'space-between';
-                    div.style.alignItems = 'center';
-                    div.style.padding = '12px 16px';
-                    div.style.border = '1px dashed var(--outline)';
-                    div.style.borderRadius = 'var(--radius-lg)';
-                    div.style.backgroundColor = 'var(--surface-low)';
-                    div.style.marginBottom = '8px';
-                    div.innerHTML = `
-                        <div style="display: flex; flex-direction: column; gap: 2px;">
-                            <span class="body-sm font-bold text-slate-800" style="color: var(--on-surface);">${customCat}</span>
-                            <span class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Sugerida por Usuário</span>
-                        </div>
-                        <button class="btn btn-secondary btn-sm" onclick="adoptCategory('${customCat.replace(/'/g, "\\'")}')" style="padding: 6px 12px; font-size: 11px; background-color: var(--secondary-light); border: none; color: white; font-weight: bold; border-radius: var(--radius-md); cursor: pointer;">
-                            Adotar no Catálogo
-                        </button>
-                    `;
-                    suggestedContainer.appendChild(div);
-                });
-            }
-        }
     }
 }
 
@@ -2486,24 +2439,6 @@ function setupFormHandlers() {
             const country = document.getElementById('need-country').value;
             const logistics = document.querySelector('input[name="need-logistics"]:checked').value;
             
-            // Read Custom Category if selected
-            let finalCategory = category;
-            let isCategoryCustom = false;
-            if (category === 'Outro') {
-                finalCategory = document.getElementById('need-custom-category').value.trim();
-                isCategoryCustom = true;
-            }
-            
-            // Read Confidential Contacts
-            const contactName = document.getElementById('need-contact-name').value.trim();
-            const contactEmail = document.getElementById('need-contact-email').value.trim();
-            const landlineCode = document.getElementById('need-landline-code').value.trim();
-            const landlineNum = document.getElementById('need-landline-number').value.trim();
-            const mobileCode = document.getElementById('need-mobile-code').value.trim();
-            const mobileNum = document.getElementById('need-mobile-number').value.trim();
-            const whatsappCode = document.getElementById('need-whatsapp-code').value.trim();
-            const whatsappNum = document.getElementById('need-whatsapp-number').value.trim();
-
             // Re-validate anti-contact
             if (detectContactInfo(description)) {
                 alert('BLOQUEIO COMERCIAL: Não é permitido colocar emails, telefones ou links externos na descrição da necessidade. Por favor, remova-os antes de submeter.');
@@ -2515,8 +2450,7 @@ function setupFormHandlers() {
             appState.requirements.push({
                 id: newId,
                 title: title,
-                category: finalCategory,
-                isCategoryCustom: isCategoryCustom,
+                category: category,
                 description: description,
                 quantity: quantity,
                 country: country,
@@ -2524,13 +2458,7 @@ function setupFormHandlers() {
                 date: new Date().toISOString().split('T')[0],
                 status: 'pendente',
                 owner: appState.currentUser.id || 'buyer_1', // Assign to simulated buyer if logged out
-                assignedConsultant: null,
-                // Contact Details (Confidential)
-                contactName: contactName,
-                contactEmail: contactEmail,
-                contactLandline: landlineNum ? `${landlineCode} ${landlineNum}` : '',
-                contactMobile: `${mobileCode} ${mobileNum}`,
-                contactWhatsapp: whatsappNum ? `${whatsappCode} ${whatsappNum}` : ''
+                assignedConsultant: null
             });
             
             saveState();
@@ -2552,24 +2480,6 @@ function setupFormHandlers() {
             const country = document.getElementById('offer-country').value;
             const logistics = document.querySelector('input[name="offer-logistics"]:checked').value;
             
-            // Read Custom Category if selected
-            let finalCategory = category;
-            let isCategoryCustom = false;
-            if (category === 'Outro') {
-                finalCategory = document.getElementById('offer-custom-category').value.trim();
-                isCategoryCustom = true;
-            }
-            
-            // Read Confidential Contacts
-            const contactName = document.getElementById('offer-contact-name').value.trim();
-            const contactEmail = document.getElementById('offer-contact-email').value.trim();
-            const landlineCode = document.getElementById('offer-landline-code').value.trim();
-            const landlineNum = document.getElementById('offer-landline-number').value.trim();
-            const mobileCode = document.getElementById('offer-mobile-code').value.trim();
-            const mobileNum = document.getElementById('offer-mobile-number').value.trim();
-            const whatsappCode = document.getElementById('offer-whatsapp-code').value.trim();
-            const whatsappNum = document.getElementById('offer-whatsapp-number').value.trim();
-
             if (detectContactInfo(description)) {
                 alert('BLOQUEIO COMERCIAL: Não é permitido colocar emails, telefones ou links externos na descrição da oferta. Remova-os para submeter.');
                 return;
@@ -2579,8 +2489,7 @@ function setupFormHandlers() {
             appState.offers.push({
                 id: newId,
                 title: title,
-                category: finalCategory,
-                isCategoryCustom: isCategoryCustom,
+                category: category,
                 description: description,
                 quantity: quantity,
                 country: country,
@@ -2588,13 +2497,7 @@ function setupFormHandlers() {
                 date: new Date().toISOString().split('T')[0],
                 status: 'pendente',
                 owner: appState.currentUser.id || 'supplier_1',
-                assignedConsultant: null,
-                // Contact Details (Confidential)
-                contactName: contactName,
-                contactEmail: contactEmail,
-                contactLandline: landlineNum ? `${landlineCode} ${landlineNum}` : '',
-                contactMobile: `${mobileCode} ${mobileNum}`,
-                contactWhatsapp: whatsappNum ? `${whatsappCode} ${whatsappNum}` : ''
+                assignedConsultant: null
             });
             
             saveState();
@@ -3424,341 +3327,5 @@ window.adminApproveMatchPayment = function(matchId) {
         }
     }
 };
-
-// DYNAMIC PUBLISH FORM INITIALIZERS AND HELPERS
-function initPublishForm(type) {
-    const isNeed = type === 'need';
-    const formId = isNeed ? 'need-form' : 'offer-form';
-    const form = document.getElementById(formId);
-    if (!form) return;
-
-    // 1. Manage Sidebar Login vs Active Session Cards
-    const role = appState.currentUser.role;
-    const loginCard = document.getElementById(`${type}-login-card`);
-    const loggedCard = document.getElementById(`${type}-logged-card`);
-    
-    // Select form contact elements
-    const nameInput = document.getElementById(`${type}-contact-name`);
-    const emailInput = document.getElementById(`${type}-contact-email`);
-    const landlineCode = document.getElementById(`${type}-landline-code`);
-    const landlineNum = document.getElementById(`${type}-landline-number`);
-    const mobileCode = document.getElementById(`${type}-mobile-code`);
-    const mobileNum = document.getElementById(`${type}-mobile-number`);
-    const whatsappCode = document.getElementById(`${type}-whatsapp-code`);
-    const whatsappNum = document.getElementById(`${type}-whatsapp-number`);
-    const whatsappSync = document.getElementById(`${type}-whatsapp-sync`);
-
-    if (role !== 'visitor') {
-        if (loginCard) loginCard.classList.add('hidden');
-        if (loggedCard) {
-            loggedCard.classList.remove('hidden');
-            const avatar = document.getElementById(`${type}-side-avatar`);
-            const nameEl = document.getElementById(`${type}-side-username`);
-            const roleEl = document.getElementById(`${type}-side-userrole`);
-            
-            // Prefill sidebar details
-            const user = appState.users[appState.currentUser.id] || { name: 'Visitante', role: 'visitor' };
-            const initials = user.initials || (user.name ? user.name.split(' ').map(n=>n[0]).join('').substring(0,2) : 'VS');
-            if (avatar) avatar.textContent = initials;
-            if (nameEl) nameEl.textContent = user.name;
-            if (roleEl) roleEl.textContent = user.role === 'buyer' ? 'Comprador' : (user.role === 'supplier' ? 'Fornecedor' : user.role);
-        }
-
-        // Prefill form contact inputs
-        const user = appState.users[appState.currentUser.id] || {};
-        if (nameInput) nameInput.value = user.name || '';
-        if (emailInput) emailInput.value = user.email || '';
-        if (landlineCode) landlineCode.value = user.landlineCode || '+258';
-        if (landlineNum) landlineNum.value = user.landline || '';
-        if (mobileCode) mobileCode.value = user.mobileCode || '+258';
-        if (mobileNum) mobileNum.value = user.mobile || '';
-        if (whatsappCode) whatsappCode.value = user.whatsappCode || '+258';
-        if (whatsappNum) whatsappNum.value = user.whatsapp || '';
-    } else {
-        if (loginCard) loginCard.classList.remove('hidden');
-        if (loggedCard) loggedCard.classList.add('hidden');
-        
-        // Reset/Empty inputs for guests
-        if (nameInput) nameInput.value = '';
-        if (emailInput) emailInput.value = '';
-        if (landlineCode) landlineCode.value = '+258';
-        if (landlineNum) landlineNum.value = '';
-        if (mobileCode) mobileCode.value = '+258';
-        if (mobileNum) mobileNum.value = '';
-        if (whatsappCode) whatsappCode.value = '+258';
-        if (whatsappNum) whatsappNum.value = '';
-    }
-
-    // 2. Render Color-coded Category grid chips
-    const chipsContainer = document.getElementById(`${type}-category-chips`);
-    if (chipsContainer) {
-        chipsContainer.innerHTML = '';
-        const themeMap = {
-            'commodities': { color: '#006d3d', bg: 'rgba(0, 109, 61, 0.08)' },
-            'logistics': { color: '#d97706', bg: 'rgba(217, 119, 6, 0.08)' },
-            'tech': { color: '#0d9488', bg: 'rgba(13, 148, 136, 0.08)' },
-            'energy': { color: '#b45309', bg: 'rgba(180, 83, 9, 0.08)' },
-            'consulting': { color: '#00374a', bg: 'rgba(0, 55, 74, 0.08)' }
-        };
-
-        appState.categories.forEach(cat => {
-            const details = getCategoryDetails(cat);
-            const theme = themeMap[details.code] || themeMap.consulting;
-            
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'cat-chip-btn';
-            btn.dataset.category = cat;
-            btn.innerHTML = `
-                <span class="material-symbols-outlined">${details.icon}</span>
-                <span>${cat.split(' (')[0]}</span>
-            `;
-            
-            btn.style.setProperty('--cat-color', theme.color);
-            btn.style.setProperty('--cat-bg', theme.bg);
-            
-            btn.addEventListener('click', () => {
-                // Clear active states
-                chipsContainer.querySelectorAll('.cat-chip-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                // Update hidden input
-                document.getElementById(`${type}-category`).value = cat;
-                
-                // Hide custom input group
-                const customGroup = document.getElementById(`${type}-custom-category-group`);
-                if (customGroup) {
-                    customGroup.classList.add('hidden');
-                    document.getElementById(`${type}-custom-category`).required = false;
-                }
-            });
-            chipsContainer.appendChild(btn);
-        });
-
-        // Add 'Outro / Personalizar' Chip
-        const otherBtn = document.createElement('button');
-        otherBtn.type = 'button';
-        otherBtn.className = 'cat-chip-btn';
-        otherBtn.dataset.category = 'Outro';
-        otherBtn.innerHTML = `
-            <span class="material-symbols-outlined">edit_note</span>
-            <span>Personalizar...</span>
-        `;
-        otherBtn.style.setProperty('--cat-color', '#d97706');
-        otherBtn.style.setProperty('--cat-bg', 'rgba(217, 119, 6, 0.08)');
-        otherBtn.addEventListener('click', () => {
-            chipsContainer.querySelectorAll('.cat-chip-btn').forEach(b => b.classList.remove('active'));
-            otherBtn.classList.add('active');
-            
-            document.getElementById(`${type}-category`).value = 'Outro';
-            
-            const customGroup = document.getElementById(`${type}-custom-category-group`);
-            if (customGroup) {
-                customGroup.classList.remove('hidden');
-                const customInput = document.getElementById(`${type}-custom-category`);
-                customInput.required = true;
-                customInput.focus();
-            }
-        });
-        chipsContainer.appendChild(otherBtn);
-    }
-
-    // 3. Dynamic Quantity Component Setup
-    const slider = document.getElementById(`${type}-qty-slider`);
-    const valDisplay = document.getElementById(`${type}-qty-val-display`);
-    const unitDisplay = document.getElementById(`${type}-qty-unit-display`);
-    const hiddenQty = document.getElementById(`${type}-quantity`);
-    const unitTabs = document.getElementById(`${type}-qty-unit-tabs`);
-    const customUnitInput = document.getElementById(`${type}-qty-custom-unit`);
-    
-    function updateQtyHidden() {
-        const value = slider.value;
-        let unit = unitDisplay.textContent.trim();
-        if (unit.toLowerCase() === 'outro') {
-            unit = customUnitInput.value.trim() || 'Outro';
-        }
-        hiddenQty.value = `${value} ${unit}`;
-    }
-
-    if (slider && valDisplay) {
-        slider.addEventListener('input', () => {
-            valDisplay.textContent = slider.value;
-            updateQtyHidden();
-        });
-        
-        // Plus / Minus buttons
-        const minusBtn = document.getElementById(`btn-${type}-qty-minus`);
-        const plusBtn = document.getElementById(`btn-${type}-qty-plus`);
-        
-        if (minusBtn) {
-            // Remove potential old listeners
-            const newMinus = minusBtn.cloneNode(true);
-            minusBtn.parentNode.replaceChild(newMinus, minusBtn);
-            newMinus.addEventListener('click', () => {
-                let currentVal = parseInt(slider.value, 10);
-                if (currentVal > 1) {
-                    slider.value = currentVal - 1;
-                    valDisplay.textContent = slider.value;
-                    updateQtyHidden();
-                }
-            });
-        }
-        
-        if (plusBtn) {
-            const newPlus = plusBtn.cloneNode(true);
-            plusBtn.parentNode.replaceChild(newPlus, plusBtn);
-            newPlus.addEventListener('click', () => {
-                let currentVal = parseInt(slider.value, 10);
-                if (currentVal < 1000) {
-                    slider.value = currentVal + 1;
-                    valDisplay.textContent = slider.value;
-                    updateQtyHidden();
-                }
-            });
-        }
-    }
-
-    if (unitTabs) {
-        unitTabs.querySelectorAll('.unit-tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                unitTabs.querySelectorAll('.unit-tab-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                const unit = btn.dataset.unit;
-                unitDisplay.textContent = unit;
-                
-                if (unit === 'Outro') {
-                    if (customUnitInput) {
-                        customUnitInput.classList.remove('hidden');
-                        customUnitInput.required = true;
-                        customUnitInput.focus();
-                    }
-                } else {
-                    if (customUnitInput) {
-                        customUnitInput.classList.add('hidden');
-                        customUnitInput.required = false;
-                    }
-                }
-                updateQtyHidden();
-            });
-        });
-    }
-
-    if (customUnitInput) {
-        customUnitInput.addEventListener('input', () => {
-            updateQtyHidden();
-        });
-    }
-
-    // Presets click
-    form.querySelectorAll('.qty-preset-btn').forEach(pBtn => {
-        pBtn.addEventListener('click', () => {
-            const val = pBtn.dataset.val;
-            if (slider && valDisplay) {
-                slider.value = val;
-                valDisplay.textContent = val;
-                updateQtyHidden();
-            }
-        });
-    });
-
-    // 4. WhatsApp Copy Sync Checkbox
-    if (whatsappSync) {
-        whatsappSync.checked = false; // default
-        if (whatsappCode) whatsappCode.disabled = false;
-        if (whatsappNum) whatsappNum.disabled = false;
-
-        whatsappSync.addEventListener('change', () => {
-            if (whatsappSync.checked) {
-                if (whatsappCode && mobileCode) whatsappCode.value = mobileCode.value;
-                if (whatsappNum && mobileNum) whatsappNum.value = mobileNum.value;
-                
-                if (whatsappCode) whatsappCode.disabled = true;
-                if (whatsappNum) whatsappNum.disabled = true;
-            } else {
-                if (whatsappCode) whatsappCode.disabled = false;
-                if (whatsappNum) whatsappNum.disabled = false;
-            }
-        });
-        
-        // Setup change listeners on mobile fields to sync live if checked
-        if (mobileCode) {
-            mobileCode.addEventListener('input', () => {
-                if (whatsappSync.checked && whatsappCode) {
-                    whatsappCode.value = mobileCode.value;
-                }
-            });
-        }
-        if (mobileNum) {
-            mobileNum.addEventListener('input', () => {
-                if (whatsappSync.checked && whatsappNum) {
-                    whatsappNum.value = mobileNum.value;
-                }
-            });
-        }
-    }
-}
-window.initPublishForm = initPublishForm;
-
-window.handleSidebarLogin = function(event, type) {
-    event.preventDefault();
-    const email = document.getElementById(`${type}-side-email`).value.trim().toLowerCase();
-    
-    let role = 'visitor';
-    if (email.includes('buyer')) role = 'buyer';
-    else if (email.includes('supplier')) role = 'supplier';
-    else if (email.includes('consultant')) role = 'consultant';
-    else if (email.includes('admin')) role = 'admin';
-    
-    const userObj = appState.users[`${role}_1`] || null;
-    
-    appState.currentUser = {
-        role: role,
-        id: userObj ? userObj.id : null,
-        name: userObj ? userObj.name : 'Visitante'
-    };
-    
-    saveState();
-    updateSwitcherUI();
-    
-    // Clear sidebar input fields
-    const emailField = document.getElementById(`${type}-side-email`);
-    const passwordField = document.getElementById(`${type}-side-password`);
-    if (emailField) emailField.value = '';
-    if (passwordField) passwordField.value = '';
-    
-    alert(`Autenticação efetuada com sucesso! Logado como ${appState.currentUser.name}.`);
-    
-    initPublishForm(type);
-};
-
-window.handleMockLogout = function() {
-    appState.currentUser = {
-        role: 'visitor',
-        id: null,
-        name: 'Visitante'
-    };
-    saveState();
-    updateSwitcherUI();
-    alert('Sessão terminada. Retornou ao modo Visitante.');
-    
-    // Re-initialize whichever publish view is active
-    const activeView = window.location.hash ? window.location.hash.substring(1) : 'home';
-    if (activeView === 'publish-need') {
-        initPublishForm('need');
-    } else if (activeView === 'publish-offer') {
-        initPublishForm('offer');
-    }
-};
-
-window.adoptCategory = function(categoryName) {
-    if (categoryName && !appState.categories.includes(categoryName)) {
-        appState.categories.push(categoryName);
-        saveState();
-        alert(`Categoria "${categoryName}" adotada com sucesso no catálogo oficial!`);
-        renderAdminPortal('categories');
-    }
-};
-
 
 

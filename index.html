@@ -383,48 +383,6 @@
                 </div>
             </section>
 
-            <!-- Explorador de Mercado (Full Width) -->
-            <section class="py-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto border-t border-outline-variant/30">
-                <!-- 1. Últimas Demandas do Mercado (Full Width) -->
-                <div class="space-y-6 mb-12">
-                    <div class="flex items-center justify-between border-b border-outline-variant/30 pb-4">
-                        <h3 class="font-headline-md text-primary flex items-center gap-2 m-0" style="font-size: 22px; font-weight: bold;">
-                            <span class="material-symbols-outlined text-secondary">list_alt</span>
-                            Últimas Demandas do Mercado
-                        </h3>
-                        <a href="#wall" class="text-xs font-bold text-gvTeal hover:underline no-underline" style="color: var(--primary-light);">Ver Todas Oportunidades</a>
-                    </div>
-                    <div id="home-latest-requirements-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Injected dynamically by app.js (compact rows in a 2-column grid to use the full width beautifully!) -->
-                    </div>
-                </div>
-
-                <!-- 2. Countries and Categories Directory (Side by Side below) -->
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-                    <!-- Left: Countries Grid -->
-                    <div class="md:col-span-6 bg-slate-50 border border-slate-200/60 p-6 rounded-2xl">
-                        <h4 class="font-headline-sm text-primary mb-4 flex items-center gap-2 m-0" style="font-size: 16px; font-weight: bold;">
-                            <span class="material-symbols-outlined text-secondary">public</span>
-                            Oportunidades por País
-                        </h4>
-                        <div class="grid grid-cols-2 gap-3" id="home-countries-grid">
-                            <!-- Injected dynamically by app.js -->
-                        </div>
-                    </div>
-                    
-                    <!-- Right: Categories Grid -->
-                    <div class="md:col-span-6 bg-slate-50 border border-slate-200/60 p-6 rounded-2xl">
-                        <h4 class="font-headline-sm text-primary mb-4 flex items-center gap-2 m-0" style="font-size: 16px; font-weight: bold;">
-                            <span class="material-symbols-outlined text-secondary">category</span>
-                            Navegar por Categoria
-                        </h4>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="home-categories-grid">
-                            <!-- Injected dynamically by app.js -->
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             <!-- Strategic Sectors / Services Grid of 4 Cards -->
             <section id="services-section" class="py-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
                 <div class="text-center mb-16">
@@ -527,6 +485,86 @@
                 </div>
             </section>
 
+            <!-- Featured B2B Opportunities Section (Mercado em tempo real) -->
+            <section class="py-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto border-t border-outline-variant/30">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                    <div>
+                        <span class="text-secondary font-label-md tracking-widest uppercase" data-translate-pt="Mercado em Tempo Real" data-translate-en="Real-Time Market">Mercado em Tempo Real</span>
+                        <h2 class="font-headline-lg text-on-surface mt-2" data-translate-pt="Oportunidades em Destaque" data-translate-en="Featured Opportunities">Oportunidades em Destaque</h2>
+                        <p class="text-on-surface-variant mt-2 text-sm" data-translate-pt="Demandas e ofertas B2B ativas intermediadas formalmente pela GV-CPS." data-translate-en="Active B2B demands and offers formally intermediated by GV-CPS.">Demandas e ofertas B2B ativas intermediadas formalmente pela GV-CPS.</p>
+                    </div>
+                    <a href="#wall" class="btn btn-secondary font-label-md flex items-center gap-2" style="padding: 10px 20px; border-radius: var(--radius-xl); text-decoration: none;" data-translate-pt="Ver Mural Completo" data-translate-en="View Full Wall">
+                        Ver Mural Completo <span class="material-symbols-outlined">arrow_forward</span>
+                    </a>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter" id="home-wall-recent-grid">
+                    <!-- Injected by app.js (4 cards) -->
+                </div>
+            </section>
+
+            <!-- Explorador de Mercado (Full Width Directory Table) -->
+            <section class="py-16 w-full px-4 md:px-12 border-t border-outline-variant/30 bg-surface-container/20">
+                <div class="w-full mx-auto">
+                    <!-- Title & Headers -->
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-outline-variant/30 pb-6 mb-8">
+                        <div>
+                            <span class="text-secondary font-label-md tracking-widest uppercase" data-translate-pt="Explorador B2B Global" data-translate-en="Global B2B Explorer">Explorador B2B Global</span>
+                            <h3 class="font-headline-lg text-primary mt-1 m-0" style="font-size: 24px; font-weight: bold;" data-translate-pt="Últimas Demandas do Mercado" data-translate-en="Latest Market Demands">
+                                Últimas Demandas do Mercado
+                            </h3>
+                            <p class="text-xs text-on-surface-variant mt-1" data-translate-pt="Lista de oportunidades de importação e exportação em Moçambique e no mundo." data-translate-en="List of import and export opportunities in Mozambique and worldwide.">
+                                Lista de oportunidades de importação e exportação em Moçambique e no mundo.
+                            </p>
+                        </div>
+                        <a href="#wall" class="text-xs font-bold text-gvTeal hover:underline no-underline" style="color: var(--primary-light);" data-translate-pt="Ver Todas Oportunidades" data-translate-en="See All Opportunities">Ver Todas Oportunidades</a>
+                    </div>
+
+                    <!-- B2B Requirements Full-Width Grid Table -->
+                    <div class="overflow-x-auto bg-white border border-slate-200/80 rounded-2xl shadow-sm mb-12">
+                        <table class="w-full min-w-[900px] border-collapse text-left text-xs md:text-sm">
+                            <thead>
+                                <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase tracking-wider">
+                                    <th class="py-4 px-6" style="width: 35%;" data-translate-pt="Produto / Requisito B2B" data-translate-en="Product / B2B Requirement">Produto / Requisito B2B</th>
+                                    <th class="py-4 px-6" style="width: 20%;" data-translate-pt="Categoria" data-translate-en="Category">Categoria</th>
+                                    <th class="py-4 px-6" style="width: 15%;" data-translate-pt="Origem/Destino" data-translate-en="Origin/Destination">Origem/Destino</th>
+                                    <th class="py-4 px-6" style="width: 15%;" data-translate-pt="Quantidade" data-translate-en="Quantity">Quantidade</th>
+                                    <th class="py-4 px-6 text-center" style="width: 15%;" data-translate-pt="Ações" data-translate-en="Actions">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="home-latest-requirements-list">
+                                <!-- Injected dynamically by app.js as full-width table rows! -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Bottom: Countries and Categories Directory -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Left: Countries Grid -->
+                        <div class="bg-white border border-slate-200/65 p-6 rounded-2xl shadow-sm">
+                            <h4 class="font-headline-sm text-primary mb-4 flex items-center gap-2 m-0" style="font-size: 16px; font-weight: bold;">
+                                <span class="material-symbols-outlined text-secondary">public</span>
+                                Oportunidades por País
+                            </h4>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3" id="home-countries-grid">
+                                <!-- Injected dynamically by app.js -->
+                            </div>
+                        </div>
+                        
+                        <!-- Right: Categories Grid -->
+                        <div class="bg-white border border-slate-200/65 p-6 rounded-2xl shadow-sm">
+                            <h4 class="font-headline-sm text-primary mb-4 flex items-center gap-2 m-0" style="font-size: 16px; font-weight: bold;">
+                                <span class="material-symbols-outlined text-secondary">category</span>
+                                Navegar por Categoria
+                            </h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="home-categories-grid">
+                                <!-- Injected dynamically by app.js -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- How it Works -->
             <section class="bg-surface-container py-24">
                 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
@@ -566,24 +604,6 @@
                             <p class="text-on-surface-variant text-sm leading-relaxed">Finalize os acordos comerciais sob o suporte jurídico e logístico integrado faturado diretamente pela GV-CPS.</p>
                         </div>
                     </div>
-                </div>
-            </section>
-
-            <!-- Featured B2B Opportunities Section (Mercado em tempo real) -->
-            <section class="py-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto border-t border-outline-variant/30">
-                <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-                    <div>
-                        <span class="text-secondary font-label-md tracking-widest uppercase" data-translate-pt="Mercado em Tempo Real" data-translate-en="Real-Time Market">Mercado em Tempo Real</span>
-                        <h2 class="font-headline-lg text-on-surface mt-2" data-translate-pt="Oportunidades em Destaque" data-translate-en="Featured Opportunities">Oportunidades em Destaque</h2>
-                        <p class="text-on-surface-variant mt-2 text-sm" data-translate-pt="Demandas e ofertas B2B ativas intermediadas formalmente pela GV-CPS." data-translate-en="Active B2B demands and offers formally intermediated by GV-CPS.">Demandas e ofertas B2B ativas intermediadas formalmente pela GV-CPS.</p>
-                    </div>
-                    <a href="#wall" class="btn btn-secondary font-label-md flex items-center gap-2" style="padding: 10px 20px; border-radius: var(--radius-xl); text-decoration: none;" data-translate-pt="Ver Mural Completo" data-translate-en="View Full Wall">
-                        Ver Mural Completo <span class="material-symbols-outlined">arrow_forward</span>
-                    </a>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter" id="home-wall-recent-grid">
-                    <!-- Injected by app.js (4 cards) -->
                 </div>
             </section>
 
@@ -1151,321 +1171,134 @@
 
         <!-- 4. PUBLICAR NECESSIDADE FORM (BUYER) -->
         <section id="view-publish-need" class="view-section">
-            <div class="form-page-layout">
-                <!-- Left Main Column (Form Card) -->
-                <div class="form-card">
-                    <h2>Publicar Necessidade de Compra</h2>
-                    <p class="form-subtitle-desc">Cadastre a sua requisição de importação, trading ou contratação técnica. Os dados confidenciais de contacto serão visíveis apenas para a intermediação oficial da GV-CPS.</p>
+            <div class="max-w-xl mx-auto px-4 py-8">
+                <div class="bg-white rounded-3xl border border-slate-200 shadow-xl p-6 md:p-8 space-y-6">
+                    <div>
+                        <h2 class="text-xl md:text-2xl font-black text-slate-900 tracking-tight">Publicar Necessidade de Compra</h2>
+                        <p class="text-slate-500 text-xs md:text-sm mt-1">Cadastre a sua requisição de importação, trading ou contratação técnica. Os dados confidenciais de contacto serão visíveis apenas para a intermediação oficial da GV-CPS.</p>
+                    </div>
                     
-                    <form id="need-form" class="space-y-6">
-                        <!-- Title Field -->
-                        <div class="form-group col-span-2">
-                            <label for="need-title">Título do seu Requisito de Compra</label>
-                            <input type="text" id="need-title" class="form-input" placeholder="Ex: Carga de Casca de Caju Bruta para Exportação" required>
+                    <form id="need-form" class="space-y-4">
+                        <div class="space-y-1.5">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider text-left" for="need-title">Título Curto da Demanda</label>
+                            <input type="text" id="need-title" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-gvTeal/20 focus:border-gvTeal transition" placeholder="Ex: Carga de Casca de Caju Bruta para Exportação" required>
                         </div>
                         
-                        <!-- Visual Category Grid Field -->
-                        <div class="form-group col-span-2">
-                            <label>Categoria do seu Requisito (Selecione um guia de cor)</label>
-                            <div id="need-category-chips" class="cat-chip-grid">
-                                <!-- Dynamically injected chips -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="space-y-1.5">
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider text-left" for="need-category">Categoria do Catálogo</label>
+                                <select id="need-category" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-gvTeal/20 focus:border-gvTeal transition" required>
+                                    <option value="Consultoria para Agropecuária e Agronegócios">Agropecuária e Agronegócios</option>
+                                    <option value="Consultoria para Commodities Trading">Commodities Trading</option>
+                                    <option value="Consultoria Económico-Jurídica para Petróleo e Gás">Petróleo e Gás</option>
+                                    <option value="Consultoria para Tecnologias de Informação">Tecnologias de Informação</option>
+                                    <option value="Avaliação, Elaboração e Monitoria de Projectos">Avaliação e Elaboração de Projectos</option>
+                                    <option value="Tradução de Documentos (Português, Inglês, Francês, línguas nacionais)">Tradução de Documentos</option>
+                                </select>
                             </div>
-                            <input type="hidden" id="need-category" value="" required>
                             
-                            <!-- Custom Category input displayed if 'Outro' chip is selected -->
-                            <div id="need-custom-category-group" class="hidden mt-3 space-y-2">
-                                <label for="need-custom-category" class="text-xs text-slate-500">Escreva a sua Categoria Personalizada</label>
-                                <input type="text" id="need-custom-category" class="form-input" placeholder="Ex: Equipamentos Biomédicos">
+                            <div class="space-y-1.5">
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider text-left" for="need-quantity">Volume ou Escopo Estimado</label>
+                                <input type="text" id="need-quantity" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-gvTeal/20 focus:border-gvTeal transition" placeholder="Ex: 500 Toneladas, 12 meses" required>
                             </div>
                         </div>
                         
-                        <!-- Dynamic Quantity Component -->
-                        <div class="form-group col-span-2">
-                            <label>Quantidade e Unidade Requerida (Ajuste dinâmico)</label>
-                            <div class="qty-dynamic-wrapper">
-                                <!-- Output Display -->
-                                <div class="qty-display-box">
-                                    <span id="need-qty-val-display" class="qty-val-text">15</span>
-                                    <span id="need-qty-unit-display" class="qty-unit-text">Toneladas</span>
-                                </div>
-                                
-                                <!-- Unit Tabs -->
-                                <div class="unit-tabs-container" id="need-qty-unit-tabs">
-                                    <button type="button" class="unit-tab-btn active" data-unit="Toneladas">Toneladas</button>
-                                    <button type="button" class="unit-tab-btn" data-unit="kg">Quilogramas (kg)</button>
-                                    <button type="button" class="unit-tab-btn" data-unit="Contentores">Contentores</button>
-                                    <button type="button" class="unit-tab-btn" data-unit="Caixas">Caixas</button>
-                                    <button type="button" class="unit-tab-btn" data-unit="Litros">Litros</button>
-                                    <button type="button" class="unit-tab-btn" data-unit="Outro">Outro</button>
-                                </div>
-                                
-                                <!-- Custom Unit input displayed if 'Outro' tab is selected -->
-                                <input type="text" id="need-qty-custom-unit" class="hidden w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs" placeholder="Especifique a unidade (ex: Paletes, Metros Cúbicos)">
-
-                                <!-- Slider control -->
-                                <div class="qty-control-row">
-                                    <button type="button" id="btn-need-qty-minus" class="qty-ctrl-btn">-</button>
-                                    <input type="range" id="need-qty-slider" min="1" max="1000" value="15" class="qty-slider-input">
-                                    <button type="button" id="btn-need-qty-plus" class="qty-ctrl-btn">+</button>
-                                </div>
-                                
-                                <!-- Presets -->
-                                <div class="qty-presets-row">
-                                    <span class="text-slate-400">Escala de Volume</span>
-                                    <div class="flex gap-1.5">
-                                        <button type="button" class="qty-preset-btn" data-val="10">10</button>
-                                        <button type="button" class="qty-preset-btn" data-val="25">25</button>
-                                        <button type="button" class="qty-preset-btn" data-val="50">50</button>
-                                        <button type="button" class="qty-preset-btn" data-val="100">100</button>
-                                        <button type="button" class="qty-preset-btn" data-val="500">500</button>
-                                        <button type="button" class="qty-preset-btn" data-val="1000">1000</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <input type="hidden" id="need-quantity" value="15 Toneladas" required>
-                        </div>
-                        
-                        <!-- Country and Logistics -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 col-span-2">
-                            <div class="form-group">
-                                <label for="need-country">País do Comprador / Destino</label>
-                                <select id="need-country" class="form-select" required>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="space-y-1.5">
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider text-left" for="need-country">País do Comprador / Destino</label>
+                                <select id="need-country" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-gvTeal/20 focus:border-gvTeal transition" required>
                                     <option value="Moçambique">Moçambique</option>
                                     <option value="Brasil">Brasil</option>
                                     <option value="Portugal">Portugal</option>
                                     <option value="Emirados Árabes">Emirados Árabes</option>
-                                    <option value="China">China</option>
-                                    <option value="África do Sul">África do Sul</option>
-                                    <option value="Índia">Índia</option>
-                                    <option value="Outro">Outro País</option>
                                 </select>
                             </div>
                             
-                            <div class="form-group">
-                                <label>A Logística está incluída?</label>
-                                <div class="logistics-options">
-                                    <label class="logistics-card-option selected">
-                                        <input type="radio" name="need-logistics" value="Sim" checked>
-                                        <div class="logistics-option-desc">
-                                            <span class="logistics-option-title">Sim (Faturado pela GV)</span>
-                                            <span class="logistics-option-detail">Faturado pela GV-CPS</span>
+                            <div class="space-y-1.5">
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider text-left">A Logística está incluída?</label>
+                                <div class="flex gap-2">
+                                    <label class="flex-1 flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+                                        <input type="radio" name="need-logistics" value="Sim" checked class="text-gvTeal focus:ring-gvTeal">
+                                        <div class="text-[11px]">
+                                            <span class="font-bold text-slate-800 block">Sim</span>
+                                            <span class="text-slate-500 text-[10px]">Faturado pela GV-CPS</span>
                                         </div>
                                     </label>
-                                    <label class="logistics-card-option">
-                                        <input type="radio" name="need-logistics" value="Não">
-                                        <div class="logistics-option-desc">
-                                            <span class="logistics-option-title">Não</span>
-                                            <span class="logistics-option-detail">Tratado à parte</span>
+                                    <label class="flex-1 flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+                                        <input type="radio" name="need-logistics" value="Não" class="text-gvTeal focus:ring-gvTeal">
+                                        <div class="text-[11px]">
+                                            <span class="font-bold text-slate-800 block">Não</span>
+                                            <span class="text-slate-500 text-[10px]">Tratado à parte</span>
                                         </div>
                                     </label>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Description -->
-                        <div class="form-group col-span-2">
-                            <label for="need-description">Descrição Detalhada do Requisito</label>
-                            <textarea id="need-description" class="form-textarea" rows="4" placeholder="Descreva tecnicamente o que a sua empresa precisa (especificações, port of delivery, etc.). NÃO coloque números de telefone, emails ou sites neste campo." required></textarea>
-                            <div class="input-warning-msg" id="need-desc-warning">
+                        <div class="space-y-1.5">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider text-left" for="need-description">Descrição Detalhada do Requisito</label>
+                            <textarea id="need-description" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-gvTeal/20 focus:border-gvTeal transition" rows="4" placeholder="Descreva tecnicamente o que a sua empresa precisa. NÃO coloque números de telefone, emails ou sites neste campo, caso contrário a proposta será bloqueada pelo sistema de segurança." required></textarea>
+                            <div class="hidden flex gap-2 items-center text-xs text-amber-600 bg-amber-50 border border-amber-100 p-2.5 rounded-xl mt-1.5" id="need-desc-warning">
                                 <span class="material-symbols-outlined text-sm shrink-0">warning</span>
-                                <span>ALERTA DE SEGURANÇA: Dados de contacto detectados! Remova e-mails, telefones ou sites para evitar bloqueios comerciais.</span>
+                                <span>ALERTA DE SEGURANÇA: Dados de contacto detectados! Remova e-mails, telefones ou sites para evitar bloqueios.</span>
                             </div>
                         </div>
                         
-                        <!-- Private Contacts Box (Configurable/Editable) -->
-                        <div class="form-group col-span-2" style="background-color: var(--surface-low); border: 1px solid var(--outline-variant); padding: 20px; border-radius: var(--radius-xl); margin-top: 8px;">
-                            <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 16px; color: var(--primary);">
-                                <span class="material-symbols-outlined" style="font-size: 20px;">lock</span>
-                                <h4 class="font-bold">Dados de Contacto Privado (Confidencial para a GV-CPS)</h4>
+                        <!-- Internal Private Contacts Box -->
+                        <div class="bg-slate-50 border border-slate-200/80 p-4 rounded-2xl space-y-3">
+                            <div class="flex gap-2 items-center text-gvTeal font-bold">
+                                <span class="material-symbols-outlined text-[18px]">lock</span>
+                                <h4 class="text-xs uppercase tracking-wider">Dados de Contacto Privado (Confidencial)</h4>
                             </div>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div class="form-group">
-                                    <label for="need-contact-name" style="font-size:12px; font-weight:normal;">Seu Nome Completo</label>
-                                    <input type="text" id="need-contact-name" class="form-input" placeholder="Ex: João Silva" required>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                                <div class="space-y-1">
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Nome de Contacto</label>
+                                    <input type="text" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-slate-800" value="João Silva" disabled>
                                 </div>
-                                <div class="form-group">
-                                    <label for="need-contact-email" style="font-size:12px; font-weight:normal;">Seu E-mail Corporativo</label>
-                                    <input type="email" id="need-contact-email" class="form-input" placeholder="Ex: joao@empresa.com" required>
-                                </div>
-                                <div class="form-group">
-                                    <label style="font-size:12px; font-weight:normal;">Telefone Fixo / Linha Direta</label>
-                                    <div class="flex gap-2">
-                                        <input type="text" id="need-landline-code" class="form-input" style="width: 70px; text-align: center;" placeholder="+258">
-                                        <input type="text" id="need-landline-number" class="form-input flex-1" placeholder="Número fixo">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label style="font-size:12px; font-weight:normal;">Telemóvel / Celular</label>
-                                    <div class="flex gap-2">
-                                        <input type="text" id="need-mobile-code" class="form-input" style="width: 70px; text-align: center;" placeholder="+258">
-                                        <input type="text" id="need-mobile-number" class="form-input flex-1" placeholder="Número móvel" required>
-                                    </div>
-                                </div>
-                                <div class="form-group col-span-2">
-                                    <label style="font-size:12px; font-weight:normal;">WhatsApp de Contacto</label>
-                                    <div class="flex gap-2 items-center">
-                                        <input type="text" id="need-whatsapp-code" class="form-input" style="width: 70px; text-align: center;" placeholder="+258">
-                                        <input type="text" id="need-whatsapp-number" class="form-input flex-1" placeholder="Número de WhatsApp">
-                                    </div>
-                                    <label class="flex items-center gap-2 mt-1.5 cursor-pointer text-xs text-slate-500">
-                                        <input type="checkbox" id="need-whatsapp-sync" class="rounded text-gvTeal focus:ring-gvTeal">
-                                        <span>Utilizar o mesmo número do telemóvel</span>
-                                    </label>
+                                <div class="space-y-1">
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">E-mail do Comprador</label>
+                                    <input type="email" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-slate-800" value="joao@buyer.com" disabled>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="form-group col-span-2">
-                            <button type="submit" class="w-full py-4 font-bold text-sm">Post My Buy Requirement / Publicar Necessidade</button>
-                        </div>
+                        <button type="submit" class="w-full py-3.5 bg-gvTeal text-white rounded-xl text-xs font-bold hover:bg-gvTeal-dark transition shadow-md active:scale-95 duration-150">Publicar Necessidade</button>
                     </form>
-                </div>
-                
-                <!-- Right Column (Sidebar Login & Benefits) -->
-                <div class="form-sidebar">
-                    <!-- Member Login Card -->
-                    <div class="form-sidebar-card" id="need-login-card">
-                        <h3>Já é membro?</h3>
-                        <p class="text-xs text-slate-500 mb-4">Os membros efetuam o login para carregar os seus dados de contacto automaticamente.</p>
-                        
-                        <form onsubmit="handleSidebarLogin(event, 'need')" class="quick-login-input-group">
-                            <div class="form-group">
-                                <label style="font-size:11px;" for="need-side-email">Username / E-mail</label>
-                                <input type="email" id="need-side-email" class="form-input" style="padding:8px 12px; font-size:13px;" placeholder="nome@empresa.com" required>
-                            </div>
-                            <div class="form-group">
-                                <label style="font-size:11px;" for="need-side-password">Senha</label>
-                                <input type="password" id="need-side-password" class="form-input" style="padding:8px 12px; font-size:13px;" placeholder="••••••••" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-full py-2.5 text-xs font-bold">Entrar</button>
-                            <a href="#" onclick="alert('Funcionalidade simulada. Use os logins de demonstração no cabeçalho.')" class="text-xs text-center text-gvTeal hover:underline mt-1 block">Esqueceu a senha?</a>
-                        </form>
-                    </div>
-                    
-                    <!-- Member Status Logged In Card (hidden by default) -->
-                    <div class="form-sidebar-card hidden" id="need-logged-card">
-                        <h3>Sessão Ativa</h3>
-                        <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200 mb-4">
-                            <div class="w-10 h-10 rounded-full bg-gvTeal text-white flex items-center justify-center font-bold text-sm" id="need-side-avatar">JS</div>
-                            <div>
-                                <h4 class="text-xs font-bold text-slate-800" id="need-side-username">João Silva</h4>
-                                <span class="text-[10px] text-slate-400 uppercase tracking-wider font-bold" id="need-side-userrole">Comprador</span>
-                            </div>
-                        </div>
-                        <p class="text-xs text-slate-500 mb-4">Seus dados confidenciais de contacto serão anexados de forma segura a este requisito.</p>
-                        <button type="button" onclick="handleMockLogout()" class="btn btn-outline w-full py-2 text-xs font-bold">Terminar Sessão</button>
-                    </div>
-                    
-                    <!-- Benefits Card -->
-                    <div class="form-sidebar-card" style="background: linear-gradient(135deg, var(--surface) 0%, rgba(13, 148, 136, 0.05) 100%); border-left: 4px solid var(--secondary);">
-                        <h3>Vantagens de Publicar</h3>
-                        <ul class="space-y-4 text-xs text-slate-600 list-none p-0 m-0">
-                            <li class="flex gap-2.5 items-start">
-                                <span class="material-symbols-outlined text-gvTeal text-base shrink-0">check_circle</span>
-                                <div>
-                                    <strong class="text-slate-800 block">Cotações Gratuitas</strong>
-                                    <span>Receba ofertas qualificadas de fornecedores do mundo inteiro sem taxas de adesão.</span>
-                                </div>
-                            </li>
-                            <li class="flex gap-2.5 items-start">
-                                <span class="material-symbols-outlined text-gvTeal text-base shrink-0">security</span>
-                                <div>
-                                    <strong class="text-slate-800 block">Privacidade Blindada</strong>
-                                    <span>Nenhuma informação de contacto direto é exibida publicamente. A intermediação da GV-CPS protege o seu negócio.</span>
-                                </div>
-                            </li>
-                            <li class="flex gap-2.5 items-start">
-                                <span class="material-symbols-outlined text-gvTeal text-base shrink-0">speed</span>
-                                <div>
-                                    <strong class="text-slate-800 block">Economia de Tempo</strong>
-                                    <span>Nossos consultores fazem a triagem e ligam-no apenas às melhores oportunidades viáveis de mercado.</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </section>
 
         <!-- 5. PUBLICAR OFERTA FORM (SUPPLIER) -->
         <section id="view-publish-offer" class="view-section">
-            <div class="form-page-layout">
-                <!-- Left Main Column (Form Card) -->
+            <div class="max-container form-page-layout">
                 <div class="form-card">
                     <h2>Publicar Oferta de Fornecimento</h2>
-                    <p class="form-subtitle-desc">Cadastre a sua oferta de commodities ou prestação de serviço técnico de forma gratuita. Conectamos a sua empresa a compradores internacionais de forma intermediada.</p>
+                    <p class="form-subtitle-desc">Cadastre a sua oferta de commodities ou prestação de serviço técnico de forma gratuita. Conectamos a sua empresa à compradores internacionais de forma intermediada.</p>
                     
-                    <form id="offer-form" class="space-y-6">
-                        <!-- Title Field -->
-                        <div class="form-group col-span-2">
-                            <label for="offer-title">Título Curto do Produto / Lote</label>
-                            <input type="text" id="offer-title" class="form-input" placeholder="Ex: Fornecimento de Açúcar Refinado ICUMSA 45" required>
-                        </div>
-                        
-                        <!-- Visual Category Grid Field -->
-                        <div class="form-group col-span-2">
-                            <label>Categoria da sua Oferta (Selecione um guia de cor)</label>
-                            <div id="offer-category-chips" class="cat-chip-grid">
-                                <!-- Dynamically injected chips -->
+                    <form id="offer-form">
+                        <div class="form-grid">
+                            <div class="form-group col-span-2">
+                                <label for="offer-title">Título Curto do Produto / Lote</label>
+                                <input type="text" id="offer-title" class="form-input" placeholder="Ex: Fornecimento de Açúcar Refinado ICUMSA 45" required>
                             </div>
-                            <input type="hidden" id="offer-category" value="" required>
                             
-                            <!-- Custom Category input displayed if 'Outro' chip is selected -->
-                            <div id="offer-custom-category-group" class="hidden mt-3 space-y-2">
-                                <label for="offer-custom-category" class="text-xs text-slate-500">Escreva a sua Categoria Personalizada</label>
-                                <input type="text" id="offer-custom-category" class="form-input" placeholder="Ex: Engenharia Civil e de Estruturas">
+                            <div class="form-group">
+                                <label for="offer-category">Categoria do Catálogo</label>
+                                <select id="offer-category" class="form-select" required>
+                                    <option value="Consultoria para Commodities Trading">Commodities Trading</option>
+                                    <option value="Consultoria para Agropecuária e Agronegócios">Agropecuária e Agronegócios</option>
+                                    <option value="Consultoria Económico-Jurídica para Petróleo e Gás">Petróleo e Gás</option>
+                                    <option value="Consultoria para Tecnologias de Informação">Tecnologias de Informação</option>
+                                    <option value="Avaliação, Elaboração e Monitoria de Projectos">Avaliação e Elaboração de Projectos</option>
+                                    <option value="Tradução de Documentos (Português, Inglês, Francês, línguas nacionais)">Tradução de Documentos</option>
+                                </select>
                             </div>
-                        </div>
-                        
-                        <!-- Dynamic Quantity Component -->
-                        <div class="form-group col-span-2">
-                            <label>Lote Mínimo ou Capacidade Disponível (Ajuste dinâmico)</label>
-                            <div class="qty-dynamic-wrapper">
-                                <!-- Output Display -->
-                                <div class="qty-display-box">
-                                    <span id="offer-qty-val-display" class="qty-val-text">50</span>
-                                    <span id="offer-qty-unit-display" class="qty-unit-text">Toneladas</span>
-                                </div>
-                                
-                                <!-- Unit Tabs -->
-                                <div class="unit-tabs-container" id="offer-qty-unit-tabs">
-                                    <button type="button" class="unit-tab-btn active" data-unit="Toneladas">Toneladas</button>
-                                    <button type="button" class="unit-tab-btn" data-unit="kg">Quilogramas (kg)</button>
-                                    <button type="button" class="unit-tab-btn" data-unit="Contentores">Contentores</button>
-                                    <button type="button" class="unit-tab-btn" data-unit="Caixas">Caixas</button>
-                                    <button type="button" class="unit-tab-btn" data-unit="Litros">Litros</button>
-                                    <button type="button" class="unit-tab-btn" data-unit="Outro">Outro</button>
-                                </div>
-                                
-                                <!-- Custom Unit input displayed if 'Outro' tab is selected -->
-                                <input type="text" id="offer-qty-custom-unit" class="hidden w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs" placeholder="Especifique a unidade (ex: Sacos, Garrafas)">
-
-                                <!-- Slider control -->
-                                <div class="qty-control-row">
-                                    <button type="button" id="btn-offer-qty-minus" class="qty-ctrl-btn">-</button>
-                                    <input type="range" id="offer-qty-slider" min="1" max="1000" value="50" class="qty-slider-input">
-                                    <button type="button" id="btn-offer-qty-plus" class="qty-ctrl-btn">+</button>
-                                </div>
-                                
-                                <!-- Presets -->
-                                <div class="qty-presets-row">
-                                    <span class="text-slate-400">Escala de Volume</span>
-                                    <div class="flex gap-1.5">
-                                        <button type="button" class="qty-preset-btn" data-val="10">10</button>
-                                        <button type="button" class="qty-preset-btn" data-val="25">25</button>
-                                        <button type="button" class="qty-preset-btn" data-val="50">50</button>
-                                        <button type="button" class="qty-preset-btn" data-val="100">100</button>
-                                        <button type="button" class="qty-preset-btn" data-val="500">500</button>
-                                        <button type="button" class="qty-preset-btn" data-val="1000">1000</button>
-                                    </div>
-                                </div>
+                            
+                            <div class="form-group">
+                                <label for="offer-quantity">Lote Mínimo ou Capacidade</label>
+                                <input type="text" id="offer-quantity" class="form-input" placeholder="Ex: Lote de 12,500 Toneladas, Recorrente" required>
                             </div>
-                            <input type="hidden" id="offer-quantity" value="50 Toneladas" required>
-                        </div>
-                        
-                        <!-- Country and Logistics -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 col-span-2">
+                            
                             <div class="form-group">
                                 <label for="offer-country">País de Origem da Carga</label>
                                 <select id="offer-country" class="form-select" required>
@@ -1473,8 +1306,6 @@
                                     <option value="Moçambique">Moçambique</option>
                                     <option value="Portugal">Portugal</option>
                                     <option value="China">China</option>
-                                    <option value="África do Sul">África do Sul</option>
-                                    <option value="Outro">Outro País</option>
                                 </select>
                             </div>
                             
@@ -1485,142 +1316,51 @@
                                         <input type="radio" name="offer-logistics" value="Sim" checked>
                                         <div class="logistics-option-desc">
                                             <span class="logistics-option-title">Sim (Faturada pela GV)</span>
-                                            <span class="logistics-option-detail">Nós incluímos o frete na fatura intermediada.</span>
+                                            <span class="logistics-option-detail">Nós incluímos o frete na fatura final da intermediação.</span>
                                         </div>
                                     </label>
                                     <label class="logistics-card-option">
                                         <input type="radio" name="offer-logistics" value="Não">
                                         <div class="logistics-option-desc">
-                                            <span class="logistics-option-title">Não</span>
+                                            <span class="logistics-option-title">Não (À cargo do comprador)</span>
                                             <span class="logistics-option-detail">O comprador deve retirar a carga.</span>
                                         </div>
                                     </label>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <!-- Description -->
-                        <div class="form-group col-span-2">
-                            <label for="offer-description">Descrição Detalhada do Lote / Produto</label>
-                            <textarea id="offer-description" class="form-textarea" rows="4" placeholder="Descreva especificações técnicas, padrões de qualidade e condições de expedição. NÃO coloque contatos telefónicos ou emails neste campo." required></textarea>
-                            <div class="input-warning-msg" id="offer-desc-warning">
-                                <span class="material-symbols-outlined text-sm shrink-0">warning</span>
-                                <span>ALERTA DE SEGURANÇA: Dados de contacto detectados! Remova e-mails, telefones ou sites para evitar bloqueios comerciais.</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Private Contacts Box (Configurable/Editable) -->
-                        <div class="form-group col-span-2" style="background-color: var(--surface-low); border: 1px solid var(--outline-variant); padding: 20px; border-radius: var(--radius-xl); margin-top: 8px;">
-                            <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 16px; color: var(--primary);">
-                                <span class="material-symbols-outlined" style="font-size: 20px;">lock</span>
-                                <h4 class="font-bold">Dados de Contacto Privado (Confidencial para a GV-CPS)</h4>
+                            
+                            <div class="form-group col-span-2">
+                                <label for="offer-description">Descrição Detalhada do Produto</label>
+                                <textarea id="offer-description" class="form-textarea" rows="5" placeholder="Descreva especificações técnicas, padrões de qualidade e condições de expedição. NÃO coloque contatos telefónicos ou endereços de e-mail neste campo." required></textarea>
+                                <div class="input-warning-msg" id="offer-desc-warning">
+                                    <span class="material-symbols-outlined" style="font-size:16px;">warning</span>
+                                    <span>ALERTA DE SEGURANÇA: Dados de contacto detectados! Remova e-mails, telefones ou sites para evitar bloqueios.</span>
+                                </div>
                             </div>
                             
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div class="form-group">
-                                    <label for="offer-contact-name" style="font-size:12px; font-weight:normal;">Nome do Fornecedor / Empresa</label>
-                                    <input type="text" id="offer-contact-name" class="form-input" placeholder="Ex: Maria Santos" required>
+                            <!-- Internal Private Contacts Box -->
+                            <div class="form-group col-span-2" style="background-color: var(--surface-low); border: 1px solid var(--outline-variant); padding: 16px; border-radius: var(--radius-xl); margin-top: 8px;">
+                                <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 12px; color: var(--primary);">
+                                    <span class="material-symbols-outlined" style="font-size: 20px;">lock</span>
+                                    <h4 class="font-bold">Dados de Contacto Privado (Confidencial para a GV-CPS)</h4>
                                 </div>
-                                <div class="form-group">
-                                    <label for="offer-contact-email" style="font-size:12px; font-weight:normal;">E-mail Corporativo</label>
-                                    <input type="email" id="offer-contact-email" class="form-input" placeholder="Ex: maria@fornecedor.com" required>
-                                </div>
-                                <div class="form-group">
-                                    <label style="font-size:12px; font-weight:normal;">Telefone Fixo / Linha Direta</label>
-                                    <div class="flex gap-2">
-                                        <input type="text" id="offer-landline-code" class="form-input" style="width: 70px; text-align: center;" placeholder="+258">
-                                        <input type="text" id="offer-landline-number" class="form-input flex-1" placeholder="Número fixo">
+                                <div class="grid grid-cols-2 gap-4" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                    <div class="form-group" style="gap:4px;">
+                                        <label style="font-size:12px; font-weight:normal;">Nome do Fornecedor</label>
+                                        <input type="text" class="form-input" style="padding: 8px 12px; font-size:13px;" value="Maria Santos" disabled>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label style="font-size:12px; font-weight:normal;">Telemóvel / Celular</label>
-                                    <div class="flex gap-2">
-                                        <input type="text" id="offer-mobile-code" class="form-input" style="width: 70px; text-align: center;" placeholder="+258">
-                                        <input type="text" id="offer-mobile-number" class="form-input flex-1" placeholder="Número móvel" required>
+                                    <div class="form-group" style="gap:4px;">
+                                        <label style="font-size:12px; font-weight:normal;">E-mail Corporativo</label>
+                                        <input type="email" class="form-input" style="padding: 8px 12px; font-size:13px;" value="maria@supplier.com" disabled>
                                     </div>
-                                </div>
-                                <div class="form-group col-span-2">
-                                    <label style="font-size:12px; font-weight:normal;">WhatsApp de Contacto</label>
-                                    <div class="flex gap-2 items-center">
-                                        <input type="text" id="offer-whatsapp-code" class="form-input" style="width: 70px; text-align: center;" placeholder="+258">
-                                        <input type="text" id="offer-whatsapp-number" class="form-input flex-1" placeholder="Número de WhatsApp">
-                                    </div>
-                                    <label class="flex items-center gap-2 mt-1.5 cursor-pointer text-xs text-slate-500">
-                                        <input type="checkbox" id="offer-whatsapp-sync" class="rounded text-gvTeal focus:ring-gvTeal">
-                                        <span>Utilizar o mesmo número do telemóvel</span>
-                                    </label>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="form-group col-span-2">
-                            <button type="submit" class="btn btn-secondary w-full py-4 font-bold text-sm">Publicar Oferta Gratuitamente</button>
+                            
+                            <div class="form-group col-span-2" style="margin-top: 12px;">
+                                <button type="submit" class="btn btn-secondary w-full">Publicar Oferta Gratuitamente</button>
+                            </div>
                         </div>
                     </form>
-                </div>
-                
-                <!-- Right Column (Sidebar Login & Benefits) -->
-                <div class="form-sidebar">
-                    <!-- Member Login Card -->
-                    <div class="form-sidebar-card" id="offer-login-card">
-                        <h3>Já é membro?</h3>
-                        <p class="text-xs text-slate-500 mb-4">Os membros efetuam o login para carregar os seus dados de contacto automaticamente.</p>
-                        
-                        <form onsubmit="handleSidebarLogin(event, 'offer')" class="quick-login-input-group">
-                            <div class="form-group">
-                                <label style="font-size:11px;" for="offer-side-email">Username / E-mail</label>
-                                <input type="email" id="offer-side-email" class="form-input" style="padding:8px 12px; font-size:13px;" placeholder="nome@empresa.com" required>
-                            </div>
-                            <div class="form-group">
-                                <label style="font-size:11px;" for="offer-side-password">Senha</label>
-                                <input type="password" id="offer-side-password" class="form-input" style="padding:8px 12px; font-size:13px;" placeholder="••••••••" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-full py-2.5 text-xs font-bold">Entrar</button>
-                            <a href="#" onclick="alert('Funcionalidade simulada. Use os logins de demonstração no cabeçalho.')" class="text-xs text-center text-gvTeal hover:underline mt-1 block">Esqueceu a senha?</a>
-                        </form>
-                    </div>
-                    
-                    <!-- Member Status Logged In Card (hidden by default) -->
-                    <div class="form-sidebar-card hidden" id="offer-logged-card">
-                        <h3>Sessão Ativa</h3>
-                        <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200 mb-4">
-                            <div class="w-10 h-10 rounded-full bg-gvTeal text-white flex items-center justify-center font-bold text-sm" id="offer-side-avatar">MS</div>
-                            <div>
-                                <h4 class="text-xs font-bold text-slate-800" id="offer-side-username">Maria Santos</h4>
-                                <span class="text-[10px] text-slate-400 uppercase tracking-wider font-bold" id="offer-side-userrole">Fornecedor</span>
-                            </div>
-                        </div>
-                        <p class="text-xs text-slate-500 mb-4">Seus dados confidenciais de contacto serão anexados de forma segura a esta oferta.</p>
-                        <button type="button" onclick="handleMockLogout()" class="btn btn-outline w-full py-2 text-xs font-bold">Terminar Sessão</button>
-                    </div>
-                    
-                    <!-- Benefits Card -->
-                    <div class="form-sidebar-card" style="background: linear-gradient(135deg, var(--surface) 0%, rgba(13, 148, 136, 0.05) 100%); border-left: 4px solid var(--secondary);">
-                        <h3>Vantagens de Publicar</h3>
-                        <ul class="space-y-4 text-xs text-slate-600 list-none p-0 m-0">
-                            <li class="flex gap-2.5 items-start">
-                                <span class="material-symbols-outlined text-gvTeal text-base shrink-0">check_circle</span>
-                                <div>
-                                    <strong class="text-slate-800 block">Exposição Qualificada</strong>
-                                    <span>Seu produto é exibido para compradores verificados globais na nossa rede exclusiva.</span>
-                                </div>
-                            </li>
-                            <li class="flex gap-2.5 items-start">
-                                <span class="material-symbols-outlined text-gvTeal text-base shrink-0">security</span>
-                                <div>
-                                    <strong class="text-slate-800 block">Negociação Segura</strong>
-                                    <span>A GV-CPS atua como fiadora contratual e logística, mitigando qualquer risco de calote.</span>
-                                </div>
-                            </li>
-                            <li class="flex gap-2.5 items-start">
-                                <span class="material-symbols-outlined text-gvTeal text-base shrink-0">payments</span>
-                                <div>
-                                    <strong class="text-slate-800 block">Uso 100% Gratuito</strong>
-                                    <span>Não cobramos assinaturas mensais ou taxas de adesão para anunciar as suas ofertas no mural.</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </section>
@@ -2589,19 +2329,6 @@
                                 <div id="admin-categories-list" style="margin-top:16px;">
                                     <!-- Injected -->
                                 </div>
-                            </div>
-                        </div>
-
-                        <!-- Suggested Categories Panel -->
-                        <div class="data-panel" style="margin-top: 24px; padding: 24px;">
-                            <h3 class="data-panel-title" style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                                <span class="material-symbols-outlined text-amber-500">lightbulb</span>
-                                Categorias Sugeridas por Utilizadores (Adoção Pendente)
-                            </h3>
-                            <p class="text-xs text-slate-500 mb-4">Estas categorias foram inseridas como personalizadas por compradores ou fornecedores. Pode adotá-las no catálogo oficial com um clique.</p>
-                            <div id="admin-suggested-categories-list" style="display: flex; flex-direction: column; gap: 8px;">
-                                <!-- Injected suggested categories -->
-                                <div class="text-slate-400 text-xs italic py-2">Nenhuma sugestão pendente no momento.</div>
                             </div>
                         </div>
                     </div>
