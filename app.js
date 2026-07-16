@@ -381,6 +381,7 @@ function navigate(viewPath) {
         case 'about':
         case 'services':
         case 'contact':
+        case 'trust':
             // Static corporate views, nothing to render dynamically
             break;
         case 'wall':
