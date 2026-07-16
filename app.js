@@ -1127,37 +1127,122 @@ function renderBuyerPortal(tab, activeId) {
         tbody.innerHTML = '';
         
         if (reqs.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-on-surface-variant">Você ainda não publicou nenhuma necessidade.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-slate-400">Você ainda não publicou nenhuma necessidade.</td></tr>`;
             return;
         }
         
         reqs.forEach(r => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td><strong>#${r.id.split('_')[1]}</strong></td>
-                <td><a href="#buyer-portal?tab=detail&id=${r.id}" class="text-primary font-bold hover:underline">${r.title}</a></td>
-                <td><span class="label-sm">${r.quantity}</span></td>
-                <td><span class="status-badge ${r.status}">${formatStatusPT(r.status)}</span></td>
-                <td>
-                    <a href="#buyer-portal?tab=detail&id=${r.id}" class="btn btn-ghost" style="padding: 4px 8px; font-size: 11px; text-transform: none;">
+                <td class="py-4 px-6 font-bold text-slate-800">#${r.id.split('_')[1]}</td>
+                <td class="py-4 px-6"><a href="#buyer-portal?tab=detail&id=${r.id}" class="text-gvTeal font-bold hover:underline">${r.title}</a></td>
+                <td class="py-4 px-6"><span class="px-2 py-1 bg-slate-100 rounded text-[11px] font-medium text-slate-600">${r.quantity}</span></td>
+                <td class="py-4 px-6"><span class="status-badge ${r.status}">${formatStatusPT(r.status)}</span></td>
+                <td class="py-4 px-6 text-right">
+                    <a href="#buyer-portal?tab=detail&id=${r.id}" class="inline-flex items-center gap-1 text-xs font-bold text-gvTeal hover:text-gvTeal-light hover:underline">
                         Gerenciar Negociação
+                        <span class="material-symbols-outlined text-[14px]">chevron_right</span>
                     </a>
                 </td>
             `;
             tbody.appendChild(tr);
         });
     } else if (tab === 'detail') {
-        const targetReqId = activeId || (reqs[0] ? reqs[0].id : null);
+        const targetReqId = activeId || (window.innerWidth >= 1024 ? (reqs[0] ? reqs[0].id : null) : null);
+        
+        // 1. Render Chat List in Left Column
+        const listContainer = document.getElementById('buyer-chat-list-container');
+        if (listContainer) {
+            listContainer.innerHTML = '';
+            if (reqs.length === 0) {
+                listContainer.innerHTML = `<div class="text-center py-12 text-xs text-slate-400">Nenhuma requisição registada.</div>`;
+            } else {
+                reqs.forEach(r => {
+                    const match = appState.matches.find(m => m.requirementId === r.id);
+                    const isActive = r.id === targetReqId;
+                    
+                    const words = r.title.replace('Importação de ', '').replace('Aquisição de ', '').split(' ');
+                    const initials = ((words[0] ? words[0][0] : '') + (words[1] ? words[1][0] : '')).toUpperCase() || 'RQ';
+                    
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = `p-3 rounded-xl cursor-pointer transition flex gap-3 border ${
+                        isActive 
+                        ? 'bg-gvTeal/5 border-gvTeal/20 shadow-sm' 
+                        : 'border-transparent hover:bg-slate-50'
+                    }`;
+                    itemDiv.onclick = () => {
+                        window.location.hash = `#buyer-portal?tab=detail&id=${r.id}`;
+                    };
+                    
+                    let subtitle = 'Aguardando consultor...';
+                    let avatarBg = 'bg-slate-200 text-slate-600';
+                    if (match) {
+                        const consultant = appState.users[match.consultantId];
+                        subtitle = `Consultor: ${consultant ? consultant.name : 'GV-CPS'}`;
+                        avatarBg = r.status === 'atendimento' ? 'bg-gvTeal text-white' : 'bg-amber-500 text-white';
+                    } else if (r.status === 'concluida') {
+                        avatarBg = 'bg-emerald-500 text-white';
+                        subtitle = 'Negócio Concluído';
+                    }
+                    
+                    itemDiv.innerHTML = `
+                        <div class="w-10 h-10 rounded-full ${avatarBg} flex items-center justify-center font-bold text-xs shrink-0">${initials}</div>
+                        <div class="overflow-hidden w-full">
+                            <div class="flex justify-between items-start">
+                                <h4 class="font-bold text-xs text-slate-800 truncate">${r.title}</h4>
+                                <span class="text-[9px] text-slate-400">${formatDate(r.date)}</span>
+                            </div>
+                            <p class="text-slate-500 text-[11px] truncate mt-0.5">${subtitle}</p>
+                        </div>
+                    `;
+                    listContainer.appendChild(itemDiv);
+                });
+            }
+        }
+        
+        // 2. Mobile Responsive Columns Toggle
+        const listCol = document.getElementById('buyer-chat-list-column');
+        const contentCol = document.getElementById('buyer-chat-content-column');
+        
+        if (listCol && contentCol) {
+            if (targetReqId) {
+                // Active chat selected: show content, hide list on mobile
+                listCol.classList.add('hidden');
+                listCol.classList.remove('block');
+                contentCol.classList.add('flex');
+                contentCol.classList.remove('hidden');
+            } else {
+                // No chat selected: show list, hide content on mobile
+                listCol.classList.add('block');
+                listCol.classList.remove('hidden');
+                contentCol.classList.add('hidden');
+                contentCol.classList.remove('flex');
+            }
+        }
+
+        // 3. Show Placeholder or Render Details & Chat
+        const placeholderEl = document.getElementById('buyer-chat-placeholder');
+        const contentAreaEl = document.getElementById('buyer-active-chat-content');
+        
         const req = appState.requirements.find(r => r.id === targetReqId);
         
         if (!req) {
-            document.getElementById('buyer-detail-container').innerHTML = `
-                <div class="text-center py-12 text-on-surface-variant">
-                    <p class="body-lg">Nenhuma necessidade selecionada ou cadastrada.</p>
-                    <a href="#publish-need" class="btn btn-primary mt-4">Publicar Necessidade</a>
-                </div>
-            `;
+            if (placeholderEl) {
+                placeholderEl.classList.remove('hidden');
+                placeholderEl.classList.add('flex');
+            }
+            if (contentAreaEl) {
+                contentAreaEl.classList.add('hidden');
+            }
             return;
+        } else {
+            if (placeholderEl) {
+                placeholderEl.classList.add('hidden');
+                placeholderEl.classList.remove('flex');
+            }
+            if (contentAreaEl) {
+                contentAreaEl.classList.remove('hidden');
+            }
         }
         
         // Render Detail Panel HTML
@@ -1186,19 +1271,19 @@ function renderBuyerPortal(tab, activeId) {
             chatContainer.style.display = 'block';
             chatContainer.innerHTML = `
                 <div class="portal-chat-card">
-                    <div class="portal-chat-header">
+                    <div class="portal-chat-header" style="padding: 16px 20px; border-bottom: 1px solid var(--outline-variant);">
                         <div class="portal-chat-title-info">
-                            <span class="material-symbols-outlined">corporate_fare</span>
+                            <span class="material-symbols-outlined" style="color: var(--primary);">corporate_fare</span>
                             <div>
-                                <h4 class="font-bold">Intermediação GV-CPS</h4>
-                                <p class="portal-chat-subtitle">Suporte técnico dedicado</p>
+                                <h4 class="font-bold" style="font-size: 14px; margin-bottom: 2px;">Intermediação GV-CPS</h4>
+                                <p class="portal-chat-subtitle" style="font-size: 11px; color: var(--primary); font-weight: 600;">Suporte técnico dedicado</p>
                             </div>
                         </div>
                     </div>
-                    <div class="portal-chat-messages" style="justify-content: center; align-items: center; text-align: center;">
-                        <span class="material-symbols-outlined text-[48px] text-outline mb-2">hourglass_empty</span>
-                        <p class="body-md font-bold text-primary">Aguardando Análise do Consultor</p>
-                        <p class="body-sm text-on-surface-variant px-6">Esta proposta está sendo analisada pelos nossos consultores. Assim que identificarmos um fornecedor compatível, o canal de chat mediado será aberto aqui.</p>
+                    <div class="portal-chat-messages" style="justify-content: center; align-items: center; text-align: center; padding: 32px 16px;">
+                        <span class="material-symbols-outlined text-[48px] text-slate-300 mb-2">hourglass_empty</span>
+                        <p class="body-md font-bold text-gvTeal">Aguardando Análise do Consultor</p>
+                        <p class="text-xs text-slate-500 max-w-sm mx-auto mt-1 leading-relaxed">Esta proposta está sendo analisada pelos nossos consultores. Assim que identificarmos um fornecedor compatível, o canal de chat mediado será aberto aqui.</p>
                     </div>
                 </div>
             `;
@@ -2247,3 +2332,9 @@ function formatStatusPT(status) {
 
 // Launch app on load
 window.addEventListener('DOMContentLoaded', initApp);
+
+// Mobile chat navigation helper
+window.goBackToChatList = function() {
+    window.location.hash = '#buyer-portal?tab=detail';
+};
+

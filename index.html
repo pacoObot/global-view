@@ -6,12 +6,24 @@
     <title>GV-CPS | Plataforma B2B de Intermediação Comercial</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     "colors": {
+                        "gvTeal": {
+                            DEFAULT: '#0c3c4c',
+                            dark: '#07242e',
+                            light: '#135c75',
+                            accent: '#1eb4d4'
+                        },
+                        "gvGold": {
+                            DEFAULT: '#e2a537',
+                            hover: '#c9912e',
+                            light: '#fdf6e9'
+                        },
                         "on-surface": "var(--on-surface)",
                         "on-tertiary-container": "#8cbed9",
                         "surface-variant": "var(--outline-variant)",
@@ -950,21 +962,23 @@
 
         <!-- 4. PUBLICAR NECESSIDADE FORM (BUYER) -->
         <section id="view-publish-need" class="view-section">
-            <div class="max-container form-page-layout">
-                <div class="form-card">
-                    <h2>Publicar Necessidade de Compra</h2>
-                    <p class="form-subtitle-desc">Cadastre a sua requisição de importação, trading ou contratação técnica. Os dados confidenciais de contacto serão visíveis apenas para a intermediação oficial da GV-CPS.</p>
+            <div class="max-w-xl mx-auto px-4 py-8">
+                <div class="bg-white rounded-3xl border border-slate-200 shadow-xl p-6 md:p-8 space-y-6">
+                    <div>
+                        <h2 class="text-xl md:text-2xl font-black text-slate-900 tracking-tight">Publicar Necessidade de Compra</h2>
+                        <p class="text-slate-500 text-xs md:text-sm mt-1">Cadastre a sua requisição de importação, trading ou contratação técnica. Os dados confidenciais de contacto serão visíveis apenas para a intermediação oficial da GV-CPS.</p>
+                    </div>
                     
-                    <form id="need-form">
-                        <div class="form-grid">
-                            <div class="form-group col-span-2">
-                                <label for="need-title">Título Curto da Demanda</label>
-                                <input type="text" id="need-title" class="form-input" placeholder="Ex: Carga de Casca de Caju Bruta para Exportação" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="need-category">Categoria do Catálogo</label>
-                                <select id="need-category" class="form-select" required>
+                    <form id="need-form" class="space-y-4">
+                        <div class="space-y-1.5">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider text-left" for="need-title">Título Curto da Demanda</label>
+                            <input type="text" id="need-title" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-gvTeal/20 focus:border-gvTeal transition" placeholder="Ex: Carga de Casca de Caju Bruta para Exportação" required>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="space-y-1.5">
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider text-left" for="need-category">Categoria do Catálogo</label>
+                                <select id="need-category" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-gvTeal/20 focus:border-gvTeal transition" required>
                                     <option value="Consultoria para Agropecuária e Agronegócios">Agropecuária e Agronegócios</option>
                                     <option value="Consultoria para Commodities Trading">Commodities Trading</option>
                                     <option value="Consultoria Económico-Jurídica para Petróleo e Gás">Petróleo e Gás</option>
@@ -974,14 +988,16 @@
                                 </select>
                             </div>
                             
-                            <div class="form-group">
-                                <label for="need-quantity">Volume ou Escopo Estimado</label>
-                                <input type="text" id="need-quantity" class="form-input" placeholder="Ex: 500 Toneladas, 12 meses" required>
+                            <div class="space-y-1.5">
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider text-left" for="need-quantity">Volume ou Escopo Estimado</label>
+                                <input type="text" id="need-quantity" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-gvTeal/20 focus:border-gvTeal transition" placeholder="Ex: 500 Toneladas, 12 meses" required>
                             </div>
-                            
-                            <div class="form-group">
-                                <label for="need-country">País do Comprador / Destino</label>
-                                <select id="need-country" class="form-select" required>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="space-y-1.5">
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider text-left" for="need-country">País do Comprador / Destino</label>
+                                <select id="need-country" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-gvTeal/20 focus:border-gvTeal transition" required>
                                     <option value="Moçambique">Moçambique</option>
                                     <option value="Brasil">Brasil</option>
                                     <option value="Portugal">Portugal</option>
@@ -989,57 +1005,55 @@
                                 </select>
                             </div>
                             
-                            <div class="form-group">
-                                <label>Regra de Negócio: A Logística está incluída?</label>
-                                <div class="logistics-options">
-                                    <label class="logistics-card-option selected">
-                                        <input type="radio" name="need-logistics" value="Sim" checked>
-                                        <div class="logistics-option-desc">
-                                            <span class="logistics-option-title">Sim (GV-CPS Fatura)</span>
-                                            <span class="logistics-option-detail">A GV organiza o frete e inclui na fatura.</span>
+                            <div class="space-y-1.5">
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider text-left">A Logística está incluída?</label>
+                                <div class="flex gap-2">
+                                    <label class="flex-1 flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+                                        <input type="radio" name="need-logistics" value="Sim" checked class="text-gvTeal focus:ring-gvTeal">
+                                        <div class="text-[11px]">
+                                            <span class="font-bold text-slate-800 block">Sim</span>
+                                            <span class="text-slate-500 text-[10px]">Faturado pela GV-CPS</span>
                                         </div>
                                     </label>
-                                    <label class="logistics-card-option">
-                                        <input type="radio" name="need-logistics" value="Não">
-                                        <div class="logistics-option-desc">
-                                            <span class="logistics-option-title">Não (Tratado à parte)</span>
-                                            <span class="logistics-option-detail">O transporte é cuidado separadamente.</span>
+                                    <label class="flex-1 flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+                                        <input type="radio" name="need-logistics" value="Não" class="text-gvTeal focus:ring-gvTeal">
+                                        <div class="text-[11px]">
+                                            <span class="font-bold text-slate-800 block">Não</span>
+                                            <span class="text-slate-500 text-[10px]">Tratado à parte</span>
                                         </div>
                                     </label>
                                 </div>
-                            </div>
-                            
-                            <div class="form-group col-span-2">
-                                <label for="need-description">Descrição Detalhada do Requisito</label>
-                                <textarea id="need-description" class="form-textarea" rows="5" placeholder="Descreva tecnicamente o que a sua empresa precisa. NÃO coloque números de telefone, emails ou sites neste campo, caso contrário a proposta será bloqueada pelo sistema de segurança." required></textarea>
-                                <div class="input-warning-msg" id="need-desc-warning">
-                                    <span class="material-symbols-outlined" style="font-size:16px;">warning</span>
-                                    <span>ALERTA DE SEGURANÇA: Dados de contacto detectados! Remova e-mails, telefones ou sites para evitar bloqueios.</span>
-                                </div>
-                            </div>
-                            
-                            <!-- Internal Private Contacts Box -->
-                            <div class="form-group col-span-2" style="background-color: var(--surface-low); border: 1px solid var(--outline-variant); padding: 16px; border-radius: var(--radius-xl); margin-top: 8px;">
-                                <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 12px; color: var(--primary);">
-                                    <span class="material-symbols-outlined" style="font-size: 20px;">lock</span>
-                                    <h4 class="font-bold">Dados de Contacto Privado (Confidencial para a GV-CPS)</h4>
-                                </div>
-                                <div class="grid grid-cols-2 gap-4" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                                    <div class="form-group" style="gap:4px;">
-                                        <label style="font-size:12px; font-weight:normal;">Nome de Contacto</label>
-                                        <input type="text" class="form-input" style="padding: 8px 12px; font-size:13px;" value="João Silva" disabled>
-                                    </div>
-                                    <div class="form-group" style="gap:4px;">
-                                        <label style="font-size:12px; font-weight:normal;">E-mail do Comprador</label>
-                                        <input type="email" class="form-input" style="padding: 8px 12px; font-size:13px;" value="joao@buyer.com" disabled>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group col-span-2" style="margin-top: 12px;">
-                                <button type="submit" class="btn btn-primary w-full">Publicar Necessidade</button>
                             </div>
                         </div>
+                        
+                        <div class="space-y-1.5">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider text-left" for="need-description">Descrição Detalhada do Requisito</label>
+                            <textarea id="need-description" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-gvTeal/20 focus:border-gvTeal transition" rows="4" placeholder="Descreva tecnicamente o que a sua empresa precisa. NÃO coloque números de telefone, emails ou sites neste campo, caso contrário a proposta será bloqueada pelo sistema de segurança." required></textarea>
+                            <div class="hidden flex gap-2 items-center text-xs text-amber-600 bg-amber-50 border border-amber-100 p-2.5 rounded-xl mt-1.5" id="need-desc-warning">
+                                <span class="material-symbols-outlined text-sm shrink-0">warning</span>
+                                <span>ALERTA DE SEGURANÇA: Dados de contacto detectados! Remova e-mails, telefones ou sites para evitar bloqueios.</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Internal Private Contacts Box -->
+                        <div class="bg-slate-50 border border-slate-200/80 p-4 rounded-2xl space-y-3">
+                            <div class="flex gap-2 items-center text-gvTeal font-bold">
+                                <span class="material-symbols-outlined text-[18px]">lock</span>
+                                <h4 class="text-xs uppercase tracking-wider">Dados de Contacto Privado (Confidencial)</h4>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                                <div class="space-y-1">
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Nome de Contacto</label>
+                                    <input type="text" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-slate-800" value="João Silva" disabled>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">E-mail do Comprador</label>
+                                    <input type="email" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-slate-800" value="joao@buyer.com" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="w-full py-3.5 bg-gvTeal text-white rounded-xl text-xs font-bold hover:bg-gvTeal-dark transition shadow-md active:scale-95 duration-150">Publicar Necessidade</button>
                     </form>
                 </div>
             </div>
@@ -1180,56 +1194,82 @@
                     
                     <!-- TAB 1: Dashboard -->
                     <div id="buyer-dashboard-tab">
-                        <div class="portal-page-header">
-                            <div class="portal-page-title-area">
-                                <h2>Suas Necessidades de Compra</h2>
-                                <p>Monitore o andamento das intermediações comerciais oficiais contratadas pela sua empresa.</p>
+                        <!-- Cabeçalho do Painel -->
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                            <div>
+                                <h1 class="text-xl md:text-2xl font-black text-slate-900 tracking-tight">Suas Necessidades de Compra</h1>
+                                <p class="text-slate-550 text-xs md:text-sm mt-0.5">Monitore o andamento das intermediações comerciais oficiais contratadas pela sua empresa.</p>
                             </div>
-                            <a href="#publish-need" class="btn btn-primary btn-sm"><span class="material-symbols-outlined">add</span> Nova Proposta</a>
+                            <a href="#publish-need" class="inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-gvTeal text-white rounded-xl text-xs font-bold hover:bg-gvTeal-dark transition shadow-md hover:shadow-lg active:scale-[0.98] duration-150 w-full md:w-auto">
+                                <span class="material-symbols-outlined text-sm">add</span>
+                                <span>NOVA PROPOSTA</span>
+                            </a>
                         </div>
                         
-                        <div class="stats-row">
-                            <div class="stat-card">
-                                <div class="stat-card-icon-box"><span class="material-symbols-outlined">list_alt</span></div>
-                                <div class="stat-card-info">
-                                    <span class="stat-card-value" id="buyer-stat-total">0</span>
-                                    <span class="stat-card-label">Total Publicadas</span>
+                        <!-- Bento Grid de KPIs -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mb-6">
+                            <!-- KPI 1 -->
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition duration-200 flex items-center justify-between relative overflow-hidden group">
+                                <div class="absolute top-0 left-0 w-1.5 h-full bg-gvTeal"></div>
+                                <div>
+                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Total Publicadas</span>
+                                    <span class="text-2xl md:text-3xl font-black text-slate-900 mt-1 block" id="buyer-stat-total">0</span>
+                                </div>
+                                <div class="p-3 bg-slate-100 rounded-xl text-slate-600 group-hover:bg-gvTeal/10 group-hover:text-gvTeal transition duration-150">
+                                    <span class="material-symbols-outlined">list_alt</span>
                                 </div>
                             </div>
-                            <div class="stat-card">
-                                <div class="stat-card-icon-box amber"><span class="material-symbols-outlined">hourglass_top</span></div>
-                                <div class="stat-card-info">
-                                    <span class="stat-card-value" id="buyer-stat-pending">0</span>
-                                    <span class="stat-card-label">Em Fila / Análise</span>
+
+                            <!-- KPI 2 -->
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition duration-200 flex items-center justify-between relative overflow-hidden group">
+                                <div class="absolute top-0 left-0 w-1.5 h-full bg-amber-500"></div>
+                                <div>
+                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Em Fila / Análise</span>
+                                    <span class="text-2xl md:text-3xl font-black text-slate-900 mt-1 block" id="buyer-stat-pending">0</span>
+                                </div>
+                                <div class="p-3 bg-amber-50 rounded-xl text-amber-600 group-hover:bg-amber-100/50 transition duration-150">
+                                    <span class="material-symbols-outlined">hourglass_top</span>
                                 </div>
                             </div>
-                            <div class="stat-card">
-                                <div class="stat-card-icon-box"><span class="material-symbols-outlined">sync_alt</span></div>
-                                <div class="stat-card-info">
-                                    <span class="stat-card-value" id="buyer-stat-active">0</span>
-                                    <span class="stat-card-label">Em Negociação</span>
+
+                            <!-- KPI 3 -->
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition duration-200 flex items-center justify-between relative overflow-hidden group">
+                                <div class="absolute top-0 left-0 w-1.5 h-full bg-sky-500"></div>
+                                <div>
+                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Em Negociação</span>
+                                    <span class="text-2xl md:text-3xl font-black text-slate-900 mt-1 block" id="buyer-stat-active">0</span>
+                                </div>
+                                <div class="p-3 bg-sky-50 rounded-xl text-sky-600 group-hover:bg-sky-100/50 transition duration-150">
+                                    <span class="material-symbols-outlined">sync_alt</span>
                                 </div>
                             </div>
-                            <div class="stat-card">
-                                <div class="stat-card-icon-box green"><span class="material-symbols-outlined">verified</span></div>
-                                <div class="stat-card-info">
-                                    <span class="stat-card-value" id="buyer-stat-closed">0</span>
-                                    <span class="stat-card-label">Concluídas</span>
+
+                            <!-- KPI 4 -->
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition duration-200 flex items-center justify-between relative overflow-hidden group">
+                                <div class="absolute top-0 left-0 w-1.5 h-full bg-emerald-500"></div>
+                                <div>
+                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Concluídas</span>
+                                    <span class="text-2xl md:text-3xl font-black text-slate-900 mt-1 block" id="buyer-stat-closed">0</span>
+                                </div>
+                                <div class="p-3 bg-emerald-50 rounded-xl text-emerald-600 group-hover:bg-emerald-100/50 transition duration-150">
+                                    <span class="material-symbols-outlined">verified</span>
                                 </div>
                             </div>
                         </div>
                         
                         <!-- WhatsApp Sincronização Alert Box -->
-                        <div class="whatsapp-sync-card" style="display: flex; justify-content: space-between; align-items: center; background-color: rgba(37, 211, 102, 0.08); border: 1px solid rgba(37, 211, 102, 0.2); padding: 16px 24px; border-radius: var(--radius-xl); margin-bottom: 24px; gap: 16px;">
-                            <div style="display: flex; gap: 12px; align-items: center;">
-                                <div style="font-size: 24px; color: #25D366; background-color: white; width: 40px; height: 40px; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); font-family: var(--font-body);">💬</div>
-                                <div style="text-align: left;">
-                                    <h4 style="font-size: 14px; font-weight: bold; color: var(--primary); margin: 0; font-family: var(--font-heading);">Sincronização com o WhatsApp</h4>
-                                    <p style="font-size: 12px; color: var(--on-surface-variant); margin: 2px 0 0 0; font-family: var(--font-body);">Receba notificações instantâneas no seu telemóvel quando um consultor encontrar correspondência ou responder no chat.</p>
+                        <div class="bg-emerald-50/60 border border-emerald-100 rounded-2xl p-4 md:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all duration-300 mb-6">
+                            <div class="flex gap-4 items-start sm:items-center">
+                                <div class="bg-emerald-500 text-white p-3 rounded-xl shadow-md shrink-0 flex items-center justify-center">
+                                    <span class="material-symbols-outlined">chat</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-slate-800 text-xs md:text-sm">Sincronização Ativa com o WhatsApp</h3>
+                                    <p class="text-[11px] text-slate-500 mt-0.5">Alertas e aprovações de lances diretamente no seu telemóvel.</p>
                                 </div>
                             </div>
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <span style="font-size: 12px; color: var(--outline); font-weight: 600; font-family: var(--font-heading);" id="buyer-whatsapp-status-label">NOTIFICAÇÕES ATIVAS</span>
+                            <div class="flex items-center gap-2 bg-white px-3.5 py-1.5 rounded-xl shadow-sm border border-emerald-100 self-end sm:self-auto shrink-0">
+                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider" id="buyer-whatsapp-status-label">NOTIFICAÇÕES ATIVAS</span>
                                 <label class="switch" style="position: relative; display: inline-block; width: 44px; height: 24px;">
                                     <input type="checkbox" checked onchange="toggleWhatsAppAlerts('buyer', this)" style="opacity: 0; width: 0; height: 0;">
                                     <span class="slider" style="position: absolute; cursor: pointer; inset: 0; background-color: #25D366; transition: .4s; border-radius: 24px;"></span>
@@ -1237,22 +1277,27 @@
                             </div>
                         </div>
                         
-                        <div class="data-panel">
-                            <div class="data-panel-header">
-                                <h3 class="data-panel-title">Lista de Requisições Recentes</h3>
+                        <!-- Tabela de Requisições / Lista Re-desenhada -->
+                        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                            <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                <div>
+                                    <h2 class="text-md md:text-lg font-bold text-slate-800">Lista de Requisições Recentes</h2>
+                                    <p class="text-[11px] text-slate-450">Acompanhe e controle o progresso das suas requisições.</p>
+                                </div>
                             </div>
-                            <div class="data-table-wrapper">
-                                <table class="data-table">
+
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse">
                                     <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Necessidade Comercial</th>
-                                            <th>Volume/Escopo</th>
-                                            <th>Estado do Fluxo</th>
-                                            <th>Acção</th>
+                                        <tr class="bg-slate-50/70 border-b border-slate-200/50 text-slate-400 text-[10px] font-bold uppercase tracking-wider">
+                                            <th class="py-4 px-6 w-20">ID</th>
+                                            <th class="py-4 px-6">Necessidade Comercial</th>
+                                            <th class="py-4 px-6">Volume / Escopo</th>
+                                            <th class="py-4 px-6 w-44">Estado do Fluxo</th>
+                                            <th class="py-4 px-6 w-36 text-right">Acção</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="buyer-requirements-table-body">
+                                    <tbody id="buyer-requirements-table-body" class="divide-y divide-slate-100 text-xs md:text-sm">
                                         <!-- Injected dynamically -->
                                     </tbody>
                                 </table>
@@ -1261,76 +1306,105 @@
                     </div>
                     
                     <!-- TAB 2: Detail, Timeline and Chat -->
-                    <div id="buyer-detail-tab" style="display: none;">
-                        <div class="portal-page-header">
-                            <div class="portal-page-title-area">
-                                <h2 id="buyer-detail-title">Óleo de Soja Refinado</h2>
-                                <p style="margin-top: 4px;">Acompanhamento de conformidade regulatória, logística e sala de conversas.</p>
-                            </div>
-                            <span id="buyer-detail-status" class="status-badge atendimento">Em Atendimento</span>
-                        </div>
-                        
-                        <div class="portal-detail-layout">
-                            <!-- Left: Details & timeline -->
-                            <div class="portal-sidebar-box" style="gap:24px;">
-                                <div class="data-panel">
-                                    <h3 class="data-panel-title" style="margin-bottom:16px;">Detalhes Registados</h3>
-                                    <div style="font-size:14px; line-height:1.6; color:var(--on-surface-variant); margin-bottom: 24px;" id="buyer-detail-desc">
-                                        Descrição da necessidade comercial.
-                                    </div>
-                                    <div class="grid grid-cols-2 gap-4 text-sm" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; border-top:1px solid var(--surface-container); padding-top:16px;">
-                                        <div>Categoria: <strong id="buyer-detail-category">-</strong></div>
-                                        <div>Volume: <strong id="buyer-detail-quantity">-</strong></div>
-                                        <div>País Destino: <strong id="buyer-detail-country">-</strong></div>
-                                        <div>Logística GV: <strong id="buyer-detail-logistics">-</strong></div>
-                                        <div class="col-span-2">Cadastrado em: <strong id="buyer-detail-date">-</strong></div>
-                                    </div>
+                    <div id="buyer-detail-tab" style="display: none;" class="w-full">
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[600px] md:h-[650px] overflow-hidden rounded-2xl border border-slate-200 bg-white">
+                            <!-- Left: List of active chats/requirements -->
+                            <div id="buyer-chat-list-column" class="bg-white p-4 space-y-3 overflow-y-auto lg:border-r border-slate-200 h-full block lg:block">
+                                <div class="px-2 mb-2">
+                                    <h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Suas Negociações</h3>
+                                    <p class="text-[10px] text-slate-500 mt-0.5">Selecione para abrir o chat mediado.</p>
                                 </div>
-                                
-                                <div class="data-panel">
-                                    <h3 class="data-panel-title">Estado do Negócio (Progresso)</h3>
-                                    <div class="timeline" id="buyer-timeline">
-                                        <!-- Timeline markers injected -->
-                                    </div>
+                                <div id="buyer-chat-list-container" class="space-y-2">
+                                    <!-- Injected dynamically: List of requirements with status -->
                                 </div>
                             </div>
                             
-                            <!-- Right: Mediated Chat -->
-                            <div class="portal-sidebar-box" id="buyer-chat-card-container">
-                                <div class="portal-chat-card" id="buyer-chat-box">
-                                    <!-- Injected dynamically -->
+                            <!-- Right: Conversation and details pane -->
+                            <div id="buyer-chat-content-column" class="lg:col-span-2 flex flex-col justify-between overflow-hidden h-full relative bg-slate-50 hidden lg:flex">
+                                <!-- Back button for mobile -->
+                                <div class="lg:hidden p-3 bg-white border-b border-slate-200 flex items-center shrink-0">
+                                    <button onclick="goBackToChatList()" class="flex items-center gap-1.5 text-xs font-bold text-slate-650 hover:text-slate-900 transition focus:outline-none">
+                                        <span class="material-symbols-outlined text-sm">arrow_back</span>
+                                        <span>Voltar para Conversas</span>
+                                    </button>
+                                </div>
+                                
+                                <!-- Detailed active requirement details + chat -->
+                                <div class="flex-1 overflow-y-auto p-4 md:p-6 space-y-6" id="buyer-active-chat-content">
+                                    <!-- Details & timeline -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <!-- Details -->
+                                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+                                            <div class="flex items-center justify-between">
+                                                <h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Detalhes Registados</h3>
+                                                <span id="buyer-detail-status" class="status-badge atendimento">Em Atendimento</span>
+                                            </div>
+                                            <h2 class="text-base font-black text-slate-900 leading-tight" id="buyer-detail-title">Óleo de Soja Refinado</h2>
+                                            <p class="text-xs text-slate-600 leading-relaxed" id="buyer-detail-desc">Descrição da necessidade comercial.</p>
+                                            
+                                            <div class="grid grid-cols-2 gap-2 text-xs border-t border-slate-100 pt-3 text-slate-500">
+                                                <div>Categoria: <strong class="text-slate-800 font-semibold block mt-0.5" id="buyer-detail-category">-</strong></div>
+                                                <div>Volume: <strong class="text-slate-800 font-semibold block mt-0.5" id="buyer-detail-quantity">-</strong></div>
+                                                <div>Destino: <strong class="text-slate-800 font-semibold block mt-0.5" id="buyer-detail-country">-</strong></div>
+                                                <div>Logística: <strong class="text-slate-800 font-semibold block mt-0.5" id="buyer-detail-logistics">-</strong></div>
+                                                <div class="col-span-2 mt-1">Data de Cadastro: <strong class="text-slate-800 font-semibold block mt-0.5" id="buyer-detail-date">-</strong></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Timeline -->
+                                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+                                            <h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Estado do Negócio (Progresso)</h3>
+                                            <div class="timeline" id="buyer-timeline">
+                                                <!-- Timeline markers injected -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Chat Box Container -->
+                                    <div id="buyer-chat-card-container" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+                                        <div id="buyer-chat-box">
+                                            <!-- Injected dynamically -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Placeholder when no requirement is selected -->
+                                <div id="buyer-chat-placeholder" class="hidden flex-1 p-6 flex flex-col items-center justify-center text-center">
+                                    <span class="material-symbols-outlined text-[48px] mb-2 text-slate-300">inbox</span>
+                                    <h4 class="font-bold text-slate-700 text-sm">Nenhuma Negociação Selecionada</h4>
+                                    <p class="text-xs text-slate-550 max-w-xs mt-1">Selecione uma das suas negociações na barra lateral para ver o progresso e conversar com o consultor.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
                     <!-- TAB 3: Notifications -->
-                    <div id="buyer-notifications-tab" style="display: none;">
-                        <div class="portal-page-header">
-                            <div class="portal-page-title-area">
-                                <h2>Suas Notificações</h2>
-                                <p>Atualizações em tempo real dos seus processos de intermediação.</p>
+                    <div id="buyer-notifications-tab" style="display: none;" class="w-full">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h1 class="text-xl md:text-2xl font-black text-slate-900">Suas Notificações</h1>
+                                <p class="text-slate-500 text-xs md:text-sm mt-0.5">Atualizações em tempo real dos seus processos de intermediação.</p>
                             </div>
                         </div>
-                        <div id="buyer-notifications-list">
+                        <div id="buyer-notifications-list" class="space-y-3">
                             <!-- Injected -->
                         </div>
                     </div>
 
                     <!-- TAB 4: Mural de Oportunidades (Privado) -->
-                    <div id="buyer-wall-tab" style="display: none;">
-                        <div class="portal-page-header">
-                            <div class="portal-page-title-area">
-                                <h2>Mural de Oportunidades Ativas</h2>
-                                <p>Exposição restrita e segura de commodities e demandas de intermediação corporativa.</p>
+                    <div id="buyer-wall-tab" style="display: none;" class="w-full">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                            <div>
+                                <h1 class="text-xl md:text-2xl font-black text-slate-900">Mural de Oportunidades Ativas</h1>
+                                <p class="text-slate-500 text-xs md:text-sm mt-0.5">Exposição restrita e segura de commodities e demandas de intermediação corporativa.</p>
                             </div>
                         </div>
                         
                         <!-- Filter Bar inside portal -->
-                        <div class="glass-panel rounded-2xl p-6 mb-8 shadow-sm flex flex-col md:flex-row gap-4 items-center" style="background-color: var(--surface-low); border: 1px solid var(--outline-variant); display: flex; gap: 16px;">
-                            <div style="flex: 1; min-width: 150px; display: flex; flex-direction: column; gap: 4px;">
-                                <label class="block font-label-md text-sm mb-1" style="text-align: left; font-weight: 600; color: var(--primary);">Categoria</label>
-                                <select class="w-full bg-white border border-outline-variant rounded-lg p-2 focus:ring-2 focus:ring-primary focus:outline-none transition-all text-on-surface" id="buyer-portal-filter-category" style="width: 100%; border-radius: var(--radius-lg); padding: 8px;">
+                        <div class="bg-white rounded-2xl border border-slate-200 p-5 mb-8 shadow-sm flex flex-col md:flex-row gap-4 items-end">
+                            <div class="flex-1 w-full space-y-1.5">
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider text-left">Categoria</label>
+                                <select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-gvTeal/20 focus:border-gvTeal transition" id="buyer-portal-filter-category">
                                     <option value="all">Todas as Categorias</option>
                                     <option value="Consultoria para Agropecuária e Agronegócios">Agropecuária e Agronegócios</option>
                                     <option value="Consultoria para Commodities Trading">Commodities Trading</option>
@@ -1339,9 +1413,9 @@
                                     <option value="Tradução de Documentos (Português, Inglês, Francês, línguas nacionais)">Tradução de Documentos</option>
                                 </select>
                             </div>
-                            <div style="flex: 1; min-width: 150px; display: flex; flex-direction: column; gap: 4px;">
-                                <label class="block font-label-md text-sm mb-1" style="text-align: left; font-weight: 600; color: var(--primary);">Origem / Destino</label>
-                                <select class="w-full bg-white border border-outline-variant rounded-lg p-2 focus:ring-2 focus:ring-primary focus:outline-none transition-all text-on-surface" id="buyer-portal-filter-country" style="width: 100%; border-radius: var(--radius-lg); padding: 8px;">
+                            <div class="flex-1 w-full space-y-1.5">
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider text-left">Origem / Destino</label>
+                                <select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-gvTeal/20 focus:border-gvTeal transition" id="buyer-portal-filter-country">
                                     <option value="all">Todos os Países</option>
                                     <option value="Moçambique">Moçambique</option>
                                     <option value="Brasil">Brasil</option>
@@ -1349,15 +1423,13 @@
                                     <option value="China">China</option>
                                 </select>
                             </div>
-                            <div style="margin-top: 20px;">
-                                <button onclick="applyBuyerPortalFilters()" class="btn btn-primary" style="padding: 10px 16px; border-radius: var(--radius-lg); cursor: pointer; border: none; display: flex; align-items: center;">
-                                    <span class="material-symbols-outlined" style="font-size: 18px;">search</span>
-                                </button>
-                            </div>
+                            <button onclick="applyBuyerPortalFilters()" class="w-full md:w-auto px-5 py-3.5 bg-gvTeal text-white rounded-xl text-xs font-bold hover:bg-gvTeal-dark transition flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-[18px]">search</span>
+                            </button>
                         </div>
 
                         <!-- Private grid of opportunities -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter" id="buyer-portal-wall-grid">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="buyer-portal-wall-grid">
                             <!-- Injected by app.js -->
                         </div>
                     </div>
