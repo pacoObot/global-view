@@ -26,7 +26,9 @@ const INITIAL_STATE = {
             date: '2026-06-17',
             status: 'atendimento', // pendente, analise, atendimento, concluida
             owner: 'buyer_1',
-            assignedConsultant: 'consultant_1'
+            assignedConsultant: 'consultant_1',
+            contactWhatsapp: '+258 84 999 1111',
+            contactEmail: 'compras@sojaco.mz'
         },
         {
             id: 'req_2',
@@ -39,7 +41,9 @@ const INITIAL_STATE = {
             date: '2026-06-16',
             status: 'analise',
             owner: 'buyer_1',
-            assignedConsultant: 'consultant_1'
+            assignedConsultant: 'consultant_1',
+            contactWhatsapp: '+258 82 444 5555',
+            contactEmail: 'infra@engenharia.co.mz'
         },
         {
             id: 'req_3',
@@ -52,7 +56,9 @@ const INITIAL_STATE = {
             date: '2026-06-14',
             status: 'pendente',
             owner: 'buyer_1',
-            assignedConsultant: null
+            assignedConsultant: null,
+            contactWhatsapp: '+351 912 345 678',
+            contactEmail: 'legal@gascorp.pt'
         },
         {
             id: 'req_4',
@@ -65,7 +71,9 @@ const INITIAL_STATE = {
             date: '2026-05-12',
             status: 'concluida',
             owner: 'buyer_1',
-            assignedConsultant: 'consultant_1'
+            assignedConsultant: 'consultant_1',
+            contactWhatsapp: '+971 4 123 4567',
+            contactEmail: 'metals@dubaitrade.ae'
         }
     ],
     offers: [
@@ -199,7 +207,7 @@ function startSlideShow() {
     if (isSliderPaused) return; // Don't auto rotate if paused
     slideInterval = setInterval(() => {
         nextSlide();
-    }, 6000); // Auto rotate every 6 seconds
+    }, 15000); // Auto rotate every 15 seconds
 }
 
 function setSlide(index) {
@@ -1259,13 +1267,26 @@ function renderDetailView(id, type) {
     
     document.getElementById('detail-desc').textContent = item.description;
     
-    // Specs sidebar
     document.getElementById('detail-spec-category').textContent = item.category;
     document.getElementById('detail-spec-quantity').textContent = item.quantity;
     document.getElementById('detail-spec-country').textContent = item.country;
     document.getElementById('detail-spec-logistics').textContent = item.logistics === 'Sim' ? 'Sim (Incluída na facturação GV-CPS)' : 'Não (Por conta do cliente)';
     document.getElementById('detail-spec-date').textContent = formatDate(item.date);
     
+    // Render Admin-Only Contacts
+    const adminContactsDiv = document.getElementById('detail-spec-admin-contacts');
+    if (adminContactsDiv) {
+        if (appState && appState.currentUser && appState.currentUser.role === 'admin') {
+            adminContactsDiv.classList.remove('hidden');
+            const whatsappVal = item.contactWhatsapp || '-';
+            const emailVal = item.contactEmail || '-';
+            document.getElementById('detail-spec-whatsapp').innerHTML = `WhatsApp: <strong>${whatsappVal}</strong>`;
+            document.getElementById('detail-spec-email').innerHTML = `Email: <strong>${emailVal}</strong>`;
+        } else {
+            adminContactsDiv.classList.add('hidden');
+        }
+    }
+
     // Intermediary warning box logic
     const actionBtn = document.getElementById('detail-action-btn');
     
@@ -2527,6 +2548,26 @@ function setupFormHandlers() {
             window.location.hash = 'wall';
         });
     }
+    
+    // Auto country recognition from WhatsApp prefix
+    const wizardWhatsapp = document.getElementById('wizard-contact-whatsapp');
+    if (wizardWhatsapp) {
+        wizardWhatsapp.addEventListener('input', (e) => {
+            const val = e.target.value.trim();
+            const countrySelect = document.getElementById('wizard-contact-country');
+            if (countrySelect) {
+                if (val.startsWith('+258')) {
+                    countrySelect.value = 'Moçambique';
+                } else if (val.startsWith('+55')) {
+                    countrySelect.value = 'Brasil';
+                } else if (val.startsWith('+351')) {
+                    countrySelect.value = 'Portugal';
+                } else if (val.startsWith('+971')) {
+                    countrySelect.value = 'Emirados Árabes';
+                }
+            }
+        });
+    }
 }
 
 function resetForm(formId) {
@@ -3658,6 +3699,473 @@ function showCmsToast(msg, type='success') {
     t.style.opacity='1'; clearTimeout(t._t);
     t._t = setTimeout(()=>{ t.style.opacity='0'; }, 2500);
 }
+
+// ==========================================
+// GUIDED SERVICE REQUEST WIZARD LOGIC
+// ==========================================
+const GV_CATALOG = {
+    agro: {
+        label: 'Agronegócio',
+        icon: 'agriculture',
+        color: '#16a34a',
+        categories: {
+            fertilizantes: { 
+                label: 'Fertilizantes', 
+                unit: 'Toneladas', 
+                products: ['NPK 12-24-12', 'Ureia Prilada 46%', 'DAP (Fosfato Diamónico)', 'Adubo Orgânico Compostado'], 
+                quantities: ['25 Toneladas', '50 Toneladas', '100 Toneladas', '250 Toneladas', '500 Toneladas'] 
+            },
+            sementes: { 
+                label: 'Sementes & Mudas', 
+                unit: 'Kg', 
+                products: ['Semente de Soja Certificada', 'Semente de Milho Híbrido', 'Semente de Gergelim Selecionada', 'Mudas de Cajueiro Enxertado'], 
+                quantities: ['250 Kg', '500 Kg', '1000 Kg', '5000 Kg'] 
+            },
+            caju: { 
+                label: 'Caju & Castanha', 
+                unit: 'Toneladas', 
+                products: ['Castanha de Caju Bruta (Raw Cashew)', 'Amêndoa de Caju Processada W180', 'Amêndoa de Caju W240', 'Casca de Caju para LCC'], 
+                quantities: ['15 Toneladas (1 Contentor)', '30 Toneladas', '100 Toneladas', '300 Toneladas'] 
+            },
+            acucar: { 
+                label: 'Açúcar', 
+                unit: 'Toneladas', 
+                products: ['Açúcar Refinado ICUMSA 45', 'Açúcar VHP de Cana', 'Açúcar Mascavado Orgânico'], 
+                quantities: ['50 Toneladas', '250 Toneladas', '500 Toneladas', '12500 Toneladas'] 
+            },
+            equipamentos: { 
+                label: 'Equipamentos Agrícolas', 
+                unit: 'Unidades', 
+                products: ['Trator Agrícola 75HP 4x4', 'Charrua Aiveca 3 Discos', 'Semeadora Linha Dupla', 'Sistema de Irrigação por Gotejamento'], 
+                quantities: ['1 unidade', '2 unidades', '5 unidades', '10 unidades'] 
+            }
+        }
+    },
+    oil: {
+        label: 'Oil & Gas',
+        icon: 'local_gas_station',
+        color: '#f59e0b',
+        categories: {
+            equipamentos: { 
+                label: 'Equipamentos Industriais', 
+                unit: 'Unidades', 
+                products: ['Compressores de Ar de Alta Vazão', 'Geradores Silenciosos 500kVA', 'Bombas Centrífugas de Lodo', 'Válvulas de Retenção Industriais'], 
+                quantities: ['1 unidade', '2 unidades', '5 unidades'] 
+            },
+            lubrificantes: { 
+                label: 'Lubrificantes & Químicos', 
+                unit: 'Litros', 
+                products: ['Óleo Hidráulico ISO 68 Premium', 'Graxa Industrial de Lítio', 'Aditivos para Motores Estacionários', 'Fluidos de Perfuração'], 
+                quantities: ['200 Litros (1 Tambor)', '1000 Litros', '5000 Litros'] 
+            },
+            servicos: { 
+                label: 'Serviços Técnicos', 
+                unit: 'Projeto', 
+                products: ['Inspeção de Solda por Ultra-som (NDT)', 'Auditoria de Conformidade Ambiental', 'Manutenção Preventiva de Motores Turbina', 'Consultoria de Conteúdo Local'], 
+                quantities: ['1 projeto', 'Contrato Trimestral', 'Contrato Anual'] 
+            }
+        }
+    },
+    tech: {
+        label: 'Tecnologia',
+        icon: 'devices',
+        color: '#2563eb',
+        categories: {
+            computadores: { 
+                label: 'Computadores & TI', 
+                unit: 'Unidades', 
+                products: ['Laptops Corporativos Core i7 16GB', 'Desktops de Escritório Core i5', 'Monitores Led IPS 24 polegadas', 'Impressoras Térmicas de Etiquetas'], 
+                quantities: ['5 unidades', '10 unidades', '25 unidades', '50 unidades', '100 unidades'] 
+            },
+            servidores: { 
+                label: 'Servidores & Infraestrutura', 
+                unit: 'Unidades', 
+                products: ['Servidor Rack 2U Dual Xeon Silver', 'Storage NAS 64TB Enterprise', 'Unidade UPS On-line 10kVA'], 
+                quantities: ['1 unidade', '2 unidades', '5 unidades'] 
+            },
+            redes: { 
+                label: 'Redes & Telecomunicações', 
+                unit: 'Projeto', 
+                products: ['Cabeamento Estruturado Cat6 por Ponto', 'Switches Cisco Gerenciáveis 24P', 'Sistema de Câmaras CCTV IP Hikvision'], 
+                quantities: ['1 projeto', 'Contrato de Manutenção Técnica', 'Instalação Completa'] 
+            },
+            software: { 
+                label: 'Software & Licenças', 
+                unit: 'Licenças', 
+                products: ['Licenças do Sistema ERP Primavera', 'Subscrição Anual Microsoft 365 Pro', 'Licenças de Segurança Endpoint Sophos'], 
+                quantities: ['5 licenças', '25 licenças', '50 licenças', '100 licenças'] 
+            }
+        }
+    },
+    logistics: {
+        label: 'Logística',
+        icon: 'local_shipping',
+        color: '#4338ca',
+        categories: {
+            maritimo: { 
+                label: 'Frete Marítimo', 
+                unit: 'Contêiner', 
+                products: ['Envio de Contêiner 20ft Standard (FCL)', 'Envio de Contêiner 40ft High Cube (FCL)', 'Consolidação de Carga Marítima (LCL)', 'Carga a Granel Marítima (Dry Bulk)'], 
+                quantities: ['1x Contêiner 20ft', '1x Contêiner 40ft', '5x Contêineres', '10x Contêineres'] 
+            },
+            terrestre: { 
+                label: 'Frete Terrestre', 
+                unit: 'Viagem', 
+                products: ['Camião Fechado Baú TIR (Moçambique-África do Sul)', 'Plataforma Porta-Contentor Flatbed', 'Camião Cisterna de Combustível'], 
+                quantities: ['1 viagem', '5 viagens', 'Contrato Mensal de Rota'] 
+            },
+            aduaneiro: { 
+                label: 'Desembaraço Aduaneiro', 
+                unit: 'Processo', 
+                products: ['Trâmite Aduaneiro de Importação Geral', 'Trâmite Aduaneiro de Exportação', 'Trânsito Aduaneiro Internacional de Carga'], 
+                quantities: ['1 processo', '5 processos', 'Desembaraço Contínuo'] 
+            }
+        }
+    }
+};
+
+let wizardState = {
+    currentStep: 1,
+    selectedSector: '',
+    selectedCategory: '',
+    selectedProduct: '',
+    selectedQty: '',
+    urgency: 'Urgente',
+    whatsapp: '',
+    email: '',
+    country: 'Moçambique',
+    logistics: 'Sim',
+    description: ''
+};
+
+function openRequestWizard(preselectedSector = null) {
+    const modal = document.getElementById('serviceWizardModal');
+    if (!modal) return;
+    
+    // Reset state
+    wizardState = {
+        currentStep: 1,
+        selectedSector: '',
+        selectedCategory: '',
+        selectedProduct: '',
+        selectedQty: '',
+        urgency: 'Urgente',
+        whatsapp: '',
+        email: '',
+        country: 'Moçambique',
+        logistics: 'Sim',
+        description: ''
+    };
+    
+    // Clear inputs in form
+    document.getElementById('wizard-product-input').value = '';
+    document.getElementById('wizard-qty-input').value = '';
+    document.getElementById('wizard-contact-whatsapp').value = '';
+    document.getElementById('wizard-contact-email').value = '';
+    document.getElementById('wizard-contact-desc').value = '';
+    
+    // Pre-fill contacts from logged-in user if available
+    if (appState && appState.currentUser) {
+        const uId = appState.currentUser.id;
+        const fullUser = appState.users[uId];
+        if (fullUser) {
+            document.getElementById('wizard-contact-email').value = fullUser.email || '';
+            document.getElementById('wizard-contact-whatsapp').value = fullUser.whatsapp || '+258 ';
+        }
+    }
+
+    modal.classList.remove('hidden');
+    modal.style.display = 'flex';
+    
+    if (preselectedSector && GV_CATALOG[preselectedSector]) {
+        selectWizardSector(preselectedSector);
+    } else {
+        wizardState.currentStep = 1;
+        updateWizardUI();
+    }
+}
+
+function closeRequestWizard() {
+    const modal = document.getElementById('serviceWizardModal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+    }
+}
+
+function selectWizardSector(sectorCode) {
+    wizardState.selectedSector = sectorCode;
+    
+    // Highlight card
+    document.querySelectorAll('.sector-card').forEach(c => c.classList.remove('selected'));
+    const selectedCard = document.getElementById(`sector-${sectorCode}-card`);
+    if (selectedCard) selectedCard.classList.add('selected');
+    
+    // Render Step 2 Categories and navigate
+    renderCategoryChips();
+    wizardState.currentStep = 2;
+    updateWizardUI();
+}
+
+function renderCategoryChips() {
+    const container = document.getElementById('wizard-category-chips');
+    if (!container) return;
+    container.innerHTML = '';
+    
+    const sector = GV_CATALOG[wizardState.selectedSector];
+    if (!sector) {
+        // Handle "other" or empty sectors
+        container.innerHTML = `
+            <div class="wizard-input-group" style="width: 100%;">
+                <label class="wizard-input-label">Escreva a Categoria Desejada:</label>
+                <input type="text" id="wizard-custom-category" class="wizard-input" placeholder="Ex: Construção Civil, Serviços Financeiros..." oninput="wizardState.selectedCategory = this.value">
+            </div>
+        `;
+        return;
+    }
+    
+    Object.keys(sector.categories).forEach(catKey => {
+        const cat = sector.categories[catKey];
+        const chip = document.createElement('button');
+        chip.className = 'suggestion-chip';
+        chip.style.cssText = 'padding: 12px 24px; border-radius: 12px; font-weight: bold;';
+        chip.textContent = cat.label;
+        chip.onclick = () => {
+            wizardState.selectedCategory = catKey;
+            renderProductAndQtyChips();
+            wizardState.currentStep = 3;
+            updateWizardUI();
+        };
+        container.appendChild(chip);
+    });
+    
+    // Always add an "Outro" custom option
+    const otherChip = document.createElement('button');
+    otherChip.className = 'suggestion-chip';
+    otherChip.style.cssText = 'padding: 12px 24px; border-radius: 12px; font-weight: bold; border-style: dashed; border-color: var(--secondary);';
+    otherChip.textContent = 'Outro (Não listado)';
+    otherChip.onclick = () => {
+        wizardState.selectedCategory = 'outro';
+        renderProductAndQtyChips();
+        wizardState.currentStep = 3;
+        updateWizardUI();
+    };
+    container.appendChild(otherChip);
+}
+
+function renderProductAndQtyChips() {
+    const prodContainer = document.getElementById('wizard-product-chips');
+    const qtyContainer = document.getElementById('wizard-qty-chips');
+    const unitBadge = document.getElementById('wizard-unit-badge');
+    
+    if (!prodContainer || !qtyContainer) return;
+    
+    prodContainer.innerHTML = '';
+    qtyContainer.innerHTML = '';
+    
+    const sector = GV_CATALOG[wizardState.selectedSector];
+    const cat = sector ? sector.categories[wizardState.selectedCategory] : null;
+    
+    if (cat) {
+        if (unitBadge) unitBadge.textContent = cat.unit;
+        
+        // Render products
+        cat.products.forEach(p => {
+            const chip = document.createElement('button');
+            chip.className = 'suggestion-chip';
+            chip.textContent = p;
+            chip.onclick = () => {
+                document.getElementById('wizard-product-input').value = p;
+                wizardState.selectedProduct = p;
+                // Highlight product chips
+                prodContainer.querySelectorAll('.suggestion-chip').forEach(c => c.classList.remove('selected'));
+                chip.classList.add('selected');
+            };
+            prodContainer.appendChild(chip);
+        });
+        
+        // Render quantities
+        cat.quantities.forEach(q => {
+            const chip = document.createElement('button');
+            chip.className = 'suggestion-chip';
+            chip.textContent = q;
+            chip.onclick = () => {
+                document.getElementById('wizard-qty-input').value = q;
+                wizardState.selectedQty = q;
+                // Highlight qty chips
+                qtyContainer.querySelectorAll('.suggestion-chip').forEach(c => c.classList.remove('selected'));
+                chip.classList.add('selected');
+            };
+            qtyContainer.appendChild(chip);
+        });
+    } else {
+        if (unitBadge) unitBadge.textContent = 'unidades';
+        
+        // Custom or "outro" inputs
+        prodContainer.innerHTML = '<span class="text-xs text-on-surface-variant">Escreva as especificações do produto abaixo.</span>';
+        qtyContainer.innerHTML = '<span class="text-xs text-on-surface-variant">Escreva a quantidade pretendida abaixo.</span>';
+    }
+}
+
+function wizardNextStep() {
+    if (wizardState.currentStep === 1) {
+        if (!wizardState.selectedSector) {
+            alert('Por favor, selecione um setor para avançar.');
+            return;
+        }
+    } else if (wizardState.currentStep === 2) {
+        if (wizardState.selectedSector === 'other') {
+            const customCat = document.getElementById('wizard-custom-category');
+            if (customCat && !customCat.value.trim()) {
+                alert('Por favor, especifique o setor/categoria desejado.');
+                return;
+            }
+            wizardState.selectedCategory = customCat ? customCat.value.trim() : 'Outro';
+        } else if (!wizardState.selectedCategory) {
+            alert('Por favor, selecione uma categoria para avançar.');
+            return;
+        }
+    } else if (wizardState.currentStep === 3) {
+        const prodVal = document.getElementById('wizard-product-input').value.trim();
+        const qtyVal = document.getElementById('wizard-qty-input').value.trim();
+        
+        if (!prodVal) {
+            alert('Por favor, especifique o produto ou serviço pretendido.');
+            return;
+        }
+        if (!qtyVal) {
+            alert('Por favor, introduza a quantidade/volume.');
+            return;
+        }
+        
+        wizardState.selectedProduct = prodVal;
+        wizardState.selectedQty = qtyVal;
+        wizardState.urgency = document.querySelector('input[name="wizard-urgency"]:checked').value;
+        
+        // Auto navigate to step 4
+        wizardState.currentStep = 4;
+        updateWizardUI();
+        return;
+    } else if (wizardState.currentStep === 4) {
+        // Validate Contacts and submit!
+        const whatsapp = document.getElementById('wizard-contact-whatsapp').value.trim();
+        const email = document.getElementById('wizard-contact-email').value.trim();
+        const country = document.getElementById('wizard-contact-country').value;
+        const logistics = document.querySelector('input[name="wizard-logistics"]:checked').value;
+        const desc = document.getElementById('wizard-contact-desc').value.trim();
+        
+        if (!whatsapp || whatsapp.length < 5) {
+            alert('Por favor, insira um contacto WhatsApp válido.');
+            return;
+        }
+        if (!email || !email.includes('@')) {
+            alert('Por favor, insira um endereço de e-mail corporativo válido.');
+            return;
+        }
+        
+        wizardState.whatsapp = whatsapp;
+        wizardState.email = email;
+        wizardState.country = country;
+        wizardState.logistics = logistics;
+        wizardState.description = desc;
+        
+        // Process new B2B requirement push
+        const newId = `req_${appState.requirements.length + 1}`;
+        const sectorLabel = GV_CATALOG[wizardState.selectedSector] ? GV_CATALOG[wizardState.selectedSector].label : 'Serviços';
+        const categoryLabel = (wizardState.selectedCategory === 'outro') ? 'Outro' : wizardState.selectedCategory;
+        
+        const finalTitle = `Aquisição de ${wizardState.selectedProduct}`;
+        const finalCategory = `Consultoria para ${sectorLabel} (${categoryLabel})`;
+        
+        const finalDesc = wizardState.description || `Solicitação formal de intermediação B2B para o produto/serviço ${wizardState.selectedProduct}. Prazo de entrega pretendido: ${wizardState.urgency}.`;
+        
+        appState.requirements.push({
+            id: newId,
+            title: finalTitle,
+            category: finalCategory,
+            description: finalDesc,
+            quantity: wizardState.selectedQty,
+            country: wizardState.country,
+            logistics: wizardState.logistics,
+            date: new Date().toISOString().split('T')[0],
+            status: 'pendente',
+            owner: appState.currentUser ? appState.currentUser.id : 'buyer_1',
+            assignedConsultant: null,
+            contactWhatsapp: wizardState.whatsapp,
+            contactEmail: wizardState.email
+        });
+        
+        saveState();
+        alert('Pedido de serviço B2B registado com sucesso!\n\nAs suas informações de contacto (WhatsApp e E-mail) foram salvas de forma segura e estão visíveis apenas para o Administrador. O seu pedido entrará em análise imediata.');
+        
+        closeRequestWizard();
+        renderOpportunityWall(); // Refresh lists
+        
+        // Redirect to wall to see the card
+        window.location.hash = 'wall';
+        return;
+    }
+    
+    wizardState.currentStep += 1;
+    updateWizardUI();
+}
+
+function wizardPrevStep() {
+    if (wizardState.currentStep > 1) {
+        wizardState.currentStep -= 1;
+        updateWizardUI();
+    }
+}
+
+function updateWizardUI() {
+    // Show/hide step panels
+    for (let i = 1; i <= 4; i++) {
+        const panel = document.getElementById(`wstep-panel-${i}`);
+        const dot = document.getElementById(`wstep-dot-${i}`);
+        
+        if (panel) {
+            if (i === wizardState.currentStep) {
+                panel.classList.add('active');
+            } else {
+                panel.classList.remove('active');
+            }
+        }
+        
+        if (dot) {
+            dot.classList.remove('active', 'completed');
+            if (i === wizardState.currentStep) {
+                dot.classList.add('active');
+            } else if (i < wizardState.currentStep) {
+                dot.classList.add('completed');
+            }
+        }
+    }
+    
+    // Update footer buttons
+    const btnPrev = document.getElementById('wizard-btn-prev');
+    const btnNext = document.getElementById('wizard-btn-next');
+    
+    if (btnPrev) {
+        btnPrev.disabled = (wizardState.currentStep === 1);
+    }
+    
+    if (btnNext) {
+        if (wizardState.currentStep === 4) {
+            btnNext.textContent = 'Submeter Requisito';
+            btnNext.style.backgroundColor = 'var(--secondary)';
+        } else {
+            btnNext.textContent = 'Avançar';
+            btnNext.style.backgroundColor = '';
+        }
+    }
+}
+
+// Expose Wizard API globally
+window.openRequestWizard = openRequestWizard;
+window.closeRequestWizard = closeRequestWizard;
+window.selectWizardSector = selectWizardSector;
+window.wizardNextStep = wizardNextStep;
+window.wizardPrevStep = wizardPrevStep;
 
 // Auto-init CMS when admin is already logged in on page load
 // Temporarily disabled:

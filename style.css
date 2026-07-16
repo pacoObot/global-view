@@ -2659,4 +2659,181 @@ body {
     transition: font-size 0.2s ease;
 }
 
+/* GUIDED SERVICE REQUEST WIZARD */
+.wizard-modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 55, 74, 0.65);
+    backdrop-filter: blur(12px);
+    z-index: 21000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.wizard-modal.hidden {
+    display: none !important;
+}
+.wizard-card {
+    background: var(--surface, #ffffff);
+    color: var(--on-surface, #0f172a);
+    width: 100%;
+    max-width: 680px;
+    border-radius: 24px;
+    border: 1px solid var(--outline-variant, #cbd5e1);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+}
+.wizard-header {
+    padding: 24px 32px 16px;
+    border-bottom: 1px solid var(--outline-variant, #cbd5e1);
+}
+.wizard-progress-bar {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    width: 100%;
+}
+.wizard-progress-step {
+    flex: 1;
+    height: 6px;
+    background: var(--outline-variant, #e2e8f0);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+.wizard-progress-step.active {
+    background: var(--secondary, #00875a);
+}
+.wizard-progress-step.completed {
+    background: var(--primary-light, #2563eb);
+}
+.wizard-body {
+    padding: 32px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+.wizard-footer {
+    padding: 20px 32px;
+    border-top: 1px solid var(--outline-variant, #cbd5e1);
+    background: var(--surface-low, #f8fafc);
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+.wizard-step-panel {
+    display: none;
+}
+.wizard-step-panel.active {
+    display: block;
+}
+
+/* Step 1: Sector Grid */
+.sector-grid {
+    display: grid;
+    grid-template-cols: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+.sector-card {
+    background: var(--surface-low, #f8fafc);
+    border: 1.5px solid var(--outline-variant, #cbd5e1);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+.sector-card:hover {
+    border-color: var(--secondary, #00875a);
+    background: var(--surface-container, #f1f5f9);
+    transform: translateY(-2px);
+}
+.sector-card.selected {
+    border-color: var(--secondary, #00875a);
+    background: rgba(0, 135, 90, 0.08);
+}
+.sector-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--on-surface-variant, #64748b);
+    transition: all 0.2s ease;
+}
+.sector-card.selected .sector-card-icon {
+    background: var(--secondary, #00875a);
+    color: white;
+}
+
+/* Category & Suggestion Chips */
+.chip-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+    margin-bottom: 20px;
+}
+.suggestion-chip {
+    background: var(--surface-low, #f8fafc);
+    border: 1px solid var(--outline-variant, #cbd5e1);
+    color: var(--on-surface-variant, #64748b);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.suggestion-chip:hover {
+    border-color: var(--primary-light, #2563eb);
+    color: var(--on-surface, #0f172a);
+    background: var(--surface-container, #f1f5f9);
+}
+.suggestion-chip.selected {
+    background: var(--primary-light, #2563eb);
+    color: white;
+    border-color: var(--primary-light, #2563eb);
+}
+
+/* Forms input custom overrides for wizard */
+.wizard-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+.wizard-input-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--on-surface-variant, #64748b);
+}
+.wizard-input {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--surface-low, #f8fafc);
+    border: 1px solid var(--outline-variant, #cbd5e1);
+    border-radius: 12px;
+    color: var(--on-surface, #0f172a);
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+.wizard-input:focus {
+    border-color: var(--secondary, #00875a);
+    outline: none;
+}
+
+
 
