@@ -3329,3 +3329,316 @@ window.adminApproveMatchPayment = function(matchId) {
 };
 
 
+
+// ============================================================
+// GV-CPS CMS INLINE EDITOR ENGINE
+// ============================================================
+
+const CMS_KEY = 'gvcps_cms_v1';
+let cmsState = { editMode: false, content: {}, history: [] };
+
+function loadCmsContent() {
+    try { const r = localStorage.getItem(CMS_KEY); return r ? JSON.parse(r) : {}; } catch(e) { return {}; }
+}
+function saveCmsContent() { localStorage.setItem(CMS_KEY, JSON.stringify(cmsState.content)); }
+
+function initCmsEditor() {
+    if (!appState || appState.currentUser.role !== 'admin') return;
+    cmsState.content = loadCmsContent();
+    const bar = document.getElementById('cms-admin-bar');
+    if (bar) { bar.classList.remove('hidden'); document.body.classList.add('cms-bar-open'); }
+    renderCmsContent();
+    if (cmsState.content['__sectionOrder']) applySectionOrder(cmsState.content['__sectionOrder']);
+    if (cmsState.content['__hiddenSections']) {
+        cmsState.content['__hiddenSections'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.add('cms-hidden');
+        });
+    }
+}
+
+function hideCmsEditor() {
+    const bar = document.getElementById('cms-admin-bar');
+    if (bar) { bar.classList.add('hidden'); document.body.classList.remove('cms-bar-open'); }
+    if (cmsState.editMode) toggleCmsEditMode();
+}
+
+function renderCmsContent() {
+    const c = cmsState.content;
+    document.querySelectorAll('[data-cms-key]').forEach(el => {
+        const key = el.getAttribute('data-cms-key');
+        if (c[key] !== undefined) el.innerHTML = c[key];
+    });
+    document.querySelectorAll('[data-cms-img]').forEach(el => {
+        const key = el.getAttribute('data-cms-img');
+        if (c[key]) el.src = c[key];
+    });
+    document.querySelectorAll('[data-cms-bg]').forEach(el => {
+        const key = el.getAttribute('data-cms-bg');
+        if (c[key]) el.style.backgroundImage = `url('${c[key]}')`;
+    });
+}
+
+function toggleCmsEditMode() {
+    cmsState.editMode = !cmsState.editMode;
+    const btn = document.getElementById('cms-edit-toggle');
+    document.body.classList.toggle('cms-edit-active', cmsState.editMode);
+    if (cmsState.editMode) {
+        btn.classList.add('active');
+        btn.innerHTML = `<span class="material-symbols-outlined" style="font-size:15px;">edit_off</span> Sair da Edição`;
+        activateEditableTexts();
+        activateImageWrappers();
+        initSectionDragging();
+    } else {
+        btn.classList.remove('active');
+        btn.innerHTML = `<span class="material-symbols-outlined" style="font-size:15px;">edit</span> Editar Página`;
+        deactivateEditableTexts();
+        deactivateSectionDragging();
+    }
+}
+
+function activateEditableTexts() {
+    document.querySelectorAll('[data-cms-key]').forEach(el => {
+        el.setAttribute('contenteditable', 'true');
+        el.addEventListener('blur', onCmsTextBlur);
+        el.addEventListener('keydown', onCmsKeydown);
+    });
+}
+function deactivateEditableTexts() {
+    document.querySelectorAll('[data-cms-key]').forEach(el => {
+        el.removeAttribute('contenteditable');
+        el.removeEventListener('blur', onCmsTextBlur);
+        el.removeEventListener('keydown', onCmsKeydown);
+    });
+}
+function onCmsTextBlur(e) {
+    const el = e.target, key = el.getAttribute('data-cms-key');
+    if (!key) return;
+    pushCmsHistory(key, cmsState.content[key]);
+    cmsState.content[key] = el.innerHTML;
+    saveCmsContent();
+    showCmsToast('Texto guardado!');
+}
+function onCmsKeydown(e) {
+    if (e.key === 'Escape') e.target.blur();
+    if (e.key === 'Enter' && !e.shiftKey && ['H1','H2','H3','H4','SPAN'].includes(e.target.tagName)) {
+        e.preventDefault(); e.target.blur();
+    }
+}
+
+function activateImageWrappers() {
+    document.querySelectorAll('[data-cms-img]').forEach(img => {
+        if (img.closest('.cms-img-wrapper')) return;
+        const wrapper = document.createElement('div');
+        wrapper.className = 'cms-img-wrapper';
+        img.parentNode.insertBefore(wrapper, img);
+        wrapper.appendChild(img);
+        const btn = document.createElement('button');
+        btn.className = 'cms-img-btn';
+        btn.innerHTML = `<span class="material-symbols-outlined" style="font-size:16px;">image</span> Trocar Imagem`;
+        btn.onclick = e => { e.stopPropagation(); openCmsImageModal(img); };
+        wrapper.appendChild(btn);
+    });
+    document.querySelectorAll('[data-cms-bg]').forEach(el => {
+        if (el.querySelector('.cms-bg-edit-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'cms-img-btn cms-bg-edit-btn';
+        btn.innerHTML = `<span class="material-symbols-outlined" style="font-size:16px;">wallpaper</span> Trocar Fundo`;
+        btn.onclick = e => { e.stopPropagation(); openCmsImageModal(el); };
+        el.style.position = 'relative';
+        el.appendChild(btn);
+    });
+}
+
+window._cmsImgTarget = null;
+function openCmsImageModal(el) {
+    window._cmsImgTarget = el;
+    const modal = document.getElementById('cms-image-modal');
+    const input = document.getElementById('cms-image-url-input');
+    const preview = document.getElementById('cms-img-preview');
+    const src = el.tagName === 'IMG' ? el.src : '';
+    input.value = src;
+    preview.src = src || 'https://placehold.co/480x120/1e293b/64748b?text=Sem+imagem';
+    modal.classList.remove('hidden');
+    setTimeout(() => input.focus(), 50);
+}
+function updateCmsImgPreview(url) {
+    const preview = document.getElementById('cms-img-preview');
+    if (url) preview.src = url;
+}
+function applyCmsImage() {
+    const url = document.getElementById('cms-image-url-input').value.trim();
+    const el = window._cmsImgTarget;
+    if (!url || !el) { closeCmsImageModal(); return; }
+    const key = el.getAttribute('data-cms-img') || el.getAttribute('data-cms-bg');
+    pushCmsHistory(key, cmsState.content[key]);
+    if (el.tagName === 'IMG') el.src = url;
+    else el.style.backgroundImage = `url('${url}')`;
+    cmsState.content[key] = url;
+    saveCmsContent();
+    closeCmsImageModal();
+    showCmsToast('Imagem atualizada!');
+}
+function closeCmsImageModal() {
+    document.getElementById('cms-image-modal').classList.add('hidden');
+    window._cmsImgTarget = null;
+}
+
+const CMS_SECTIONS = [
+    { id: 'cms-wrap-services',      label: 'Setores de Atuação' },
+    { id: 'cms-wrap-opportunities', label: 'Oportunidades em Destaque' },
+    { id: 'cms-wrap-market',        label: 'Explorador de Mercado' },
+    { id: 'cms-wrap-how',           label: 'Como Funciona' },
+    { id: 'cms-wrap-about',         label: 'Sobre / Consultoria' },
+    { id: 'cms-wrap-social',        label: 'Prova Social' }
+];
+
+function showSectionPicker() {
+    const picker = document.getElementById('cms-section-picker');
+    const list = document.getElementById('cms-section-list');
+    list.innerHTML = '';
+    CMS_SECTIONS.forEach(s => {
+        const el = document.getElementById(s.id);
+        const hidden = el && el.classList.contains('cms-hidden');
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 12px;background:rgba(255,255,255,0.04);border-radius:8px;border:1px solid rgba(255,255,255,0.08);';
+        row.innerHTML = `<span style="color:#e2e8f0;font-size:13px;font-weight:600;">${s.label}</span>
+            <button onclick="toggleSectionVisibility('${s.id}',this)" class="cms-bar-btn ${hidden?'danger':'success'}" style="min-width:90px;">
+                <span class="material-symbols-outlined" style="font-size:14px;">${hidden?'visibility_off':'visibility'}</span>
+                ${hidden?'Oculta':'Visível'}
+            </button>`;
+        list.appendChild(row);
+    });
+    picker.style.display = 'flex';
+}
+function closeSectionPicker() { document.getElementById('cms-section-picker').style.display = 'none'; }
+function toggleSectionVisibility(id, btn) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.toggle('cms-hidden');
+    const isHidden = el.classList.contains('cms-hidden');
+    btn.className = `cms-bar-btn ${isHidden?'danger':'success'}`;
+    btn.innerHTML = `<span class="material-symbols-outlined" style="font-size:14px;">${isHidden?'visibility_off':'visibility'}</span> ${isHidden?'Oculta':'Visível'}`;
+    const hidden = CMS_SECTIONS.filter(s => { const e=document.getElementById(s.id); return e&&e.classList.contains('cms-hidden'); }).map(s=>s.id);
+    cmsState.content['__hiddenSections'] = hidden;
+    saveCmsContent();
+    showCmsToast(isHidden?'Secção ocultada':'Secção visível');
+}
+
+let _dragSrc = null;
+function initSectionDragging() {
+    CMS_SECTIONS.forEach(s => {
+        const el = document.getElementById(s.id);
+        if (!el) return;
+        el.setAttribute('draggable','true');
+        el.addEventListener('dragstart', _onDragStart);
+        el.addEventListener('dragover', _onDragOver);
+        el.addEventListener('dragleave', _onDragLeave);
+        el.addEventListener('drop', _onDrop);
+        el.addEventListener('dragend', _onDragEnd);
+    });
+}
+function deactivateSectionDragging() {
+    CMS_SECTIONS.forEach(s => {
+        const el = document.getElementById(s.id);
+        if (!el) return;
+        el.removeAttribute('draggable');
+        el.removeEventListener('dragstart',_onDragStart);
+        el.removeEventListener('dragover',_onDragOver);
+        el.removeEventListener('dragleave',_onDragLeave);
+        el.removeEventListener('drop',_onDrop);
+        el.removeEventListener('dragend',_onDragEnd);
+    });
+}
+function _onDragStart(e) { _dragSrc=this; this.classList.add('cms-dragging'); e.dataTransfer.effectAllowed='move'; }
+function _onDragOver(e) { e.preventDefault(); if(this!==_dragSrc) this.classList.add('cms-drag-over'); return false; }
+function _onDragLeave() { this.classList.remove('cms-drag-over'); }
+function _onDrop(e) {
+    e.stopPropagation();
+    if (!_dragSrc || _dragSrc===this) { this.classList.remove('cms-drag-over'); return; }
+    const parent = this.parentNode;
+    const els = [...parent.querySelectorAll('.cms-section-wrapper')];
+    const si = els.indexOf(_dragSrc), ti = els.indexOf(this);
+    if (si < ti) parent.insertBefore(_dragSrc, this.nextSibling);
+    else parent.insertBefore(_dragSrc, this);
+    cmsState.content['__sectionOrder'] = [...parent.querySelectorAll('.cms-section-wrapper')].map(e=>e.id);
+    saveCmsContent();
+    showCmsToast('Ordem guardada!');
+    this.classList.remove('cms-drag-over');
+    return false;
+}
+function _onDragEnd() { this.classList.remove('cms-dragging'); document.querySelectorAll('.cms-drag-over').forEach(e=>e.classList.remove('cms-drag-over')); }
+
+function applySectionOrder(order) {
+    const home = document.getElementById('view-home');
+    if (!home) return;
+    order.forEach(id => { const el=document.getElementById(id); if(el&&el.classList.contains('cms-section-wrapper')) home.appendChild(el); });
+}
+
+function pushCmsHistory(key, old) { cmsState.history.push({key,value:old}); if(cmsState.history.length>30) cmsState.history.shift(); }
+function undoCmsChange() {
+    if (!cmsState.history.length) { showCmsToast('Nada para desfazer.','warn'); return; }
+    const last = cmsState.history.pop();
+    if (last.value===undefined) delete cmsState.content[last.key];
+    else cmsState.content[last.key] = last.value;
+    saveCmsContent(); renderCmsContent();
+    showCmsToast('Alteração desfeita!');
+}
+
+function saveAllCms() { saveCmsContent(); showCmsToast('Tudo guardado!'); }
+function resetCmsContent() {
+    if (!confirm('⚠️ Apagar todas as edições e restaurar conteúdo original?')) return;
+    localStorage.removeItem(CMS_KEY);
+    cmsState.content = {}; cmsState.history = [];
+    location.reload();
+}
+function exportCmsContent() {
+    const blob = new Blob([JSON.stringify(cmsState.content,null,2)],{type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href=url; a.download=`gvcps-content-${new Date().toISOString().slice(0,10)}.json`;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showCmsToast('JSON exportado!');
+}
+function importCmsContent(e) {
+    const file = e.target.files[0]; if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+        try {
+            cmsState.content = JSON.parse(ev.target.result);
+            saveCmsContent(); renderCmsContent();
+            if (cmsState.content['__sectionOrder']) applySectionOrder(cmsState.content['__sectionOrder']);
+            showCmsToast('Importado com sucesso!');
+        } catch(err) { alert('Erro ao ler ficheiro JSON.'); }
+    };
+    reader.readAsText(file);
+    e.target.value='';
+}
+function viewAsVisitor() {
+    document.getElementById('cms-admin-bar').style.display='none';
+    document.body.classList.remove('cms-bar-open');
+    if (cmsState.editMode) toggleCmsEditMode();
+    const btn = document.createElement('button');
+    btn.style.cssText='position:fixed;bottom:20px;right:20px;z-index:9999;background:#0f172a;color:#f59e0b;border:1px solid rgba(245,158,11,0.3);padding:10px 18px;border-radius:10px;font-weight:700;font-size:12px;cursor:pointer;font-family:Outfit,sans-serif;box-shadow:0 4px 20px rgba(0,0,0,0.4);display:flex;align-items:center;gap:6px;';
+    btn.innerHTML='<span class="material-symbols-outlined" style="font-size:16px;">arrow_back</span> Voltar ao Editor';
+    btn.onclick=()=>{ document.getElementById('cms-admin-bar').style.display='flex'; document.body.classList.add('cms-bar-open'); btn.remove(); };
+    document.body.appendChild(btn);
+}
+function showCmsToast(msg, type='success') {
+    const t = document.getElementById('cms-toast');
+    if(!t) return;
+    t.style.background = type==='warn'?'#d97706':'#16a34a';
+    t.innerHTML = `<span class="material-symbols-outlined" style="font-size:16px;">${type==='warn'?'warning':'check_circle'}</span> ${msg}`;
+    t.style.opacity='1'; clearTimeout(t._t);
+    t._t = setTimeout(()=>{ t.style.opacity='0'; }, 2500);
+}
+
+// Auto-init CMS when admin is already logged in on page load
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        if (appState && appState.currentUser && appState.currentUser.role === 'admin') {
+            initCmsEditor();
+        }
+    }, 400);
+});

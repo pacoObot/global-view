@@ -1,6 +1,143 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
+    <!-- GV-CPS CMS Editor Styles -->
+    <style id="cms-styles">
+        /* ─── Admin CMS Bar ─────────────────────────────── */
+        #cms-admin-bar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+            height: 48px; background: #0f172a;
+            display: flex; align-items: center; gap: 8px;
+            padding: 0 16px; border-bottom: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+            font-family: 'Outfit', sans-serif; font-size: 13px;
+        }
+        #cms-admin-bar.hidden { display: none !important; }
+        .cms-bar-logo { color: #f59e0b; font-weight: 800; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; margin-right: 8px; white-space: nowrap; }
+        .cms-bar-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.12); margin: 0 4px; }
+        .cms-bar-btn {
+            display: flex; align-items: center; gap: 5px; color: #cbd5e1;
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+            padding: 4px 12px; border-radius: 6px; cursor: pointer;
+            font-size: 12px; font-weight: 600; white-space: nowrap;
+            transition: all 0.15s; font-family: 'Outfit', sans-serif;
+        }
+        .cms-bar-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+        .cms-bar-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
+        .cms-bar-btn.danger:hover { background: #dc2626; border-color: #dc2626; color: #fff; }
+        .cms-bar-btn.success { background: #16a34a; color: #fff; border-color: #16a34a; }
+        .cms-bar-spacer { flex: 1; }
+        .cms-status-dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; animation: pulse-green 1.5s ease infinite; }
+        @keyframes pulse-green { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        body.cms-bar-open { padding-top: 48px !important; }
+
+        /* ─── Edit Mode: Editable Elements ─────────────── */
+        body.cms-edit-active [data-cms-key]:not([contenteditable="false"]) {
+            outline: 2px dashed rgba(37, 99, 235, 0.4);
+            outline-offset: 2px; border-radius: 4px; cursor: text;
+            transition: outline 0.15s;
+        }
+        body.cms-edit-active [data-cms-key]:hover {
+            outline: 2px solid #2563eb; background: rgba(37,99,235,0.04);
+        }
+        body.cms-edit-active [data-cms-key]:focus {
+            outline: 2px solid #2563eb; background: rgba(37,99,235,0.07);
+            box-shadow: 0 0 0 4px rgba(37,99,235,0.12);
+        }
+
+        /* ─── Section Drag & Reorder ─────────────────────── */
+        .cms-section-wrapper { position: relative; transition: box-shadow 0.2s; }
+        .cms-drag-handle {
+            display: none; position: absolute; top: 12px; right: 12px; z-index: 100;
+            background: #1e293b; color: #94a3b8;
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 4px 10px; border-radius: 6px; cursor: grab;
+            font-size: 11px; font-family: 'Outfit', sans-serif; font-weight: 600;
+            align-items: center; gap: 4px; user-select: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        body.cms-edit-active .cms-drag-handle { display: flex; }
+        .cms-section-wrapper.cms-dragging { opacity: 0.5; box-shadow: 0 0 0 2px #2563eb; }
+        .cms-section-wrapper.cms-drag-over { box-shadow: 0 -3px 0 0 #2563eb; }
+
+        /* ─── Image Edit Overlay ──────────────────────────── */
+        .cms-img-wrapper { position: relative; display: inline-block; width: 100%; }
+        .cms-img-btn {
+            display: none; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: rgba(15,23,42,0.82); color: white;
+            border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(6px);
+            padding: 8px 16px; border-radius: 8px; cursor: pointer;
+            font-size: 12px; font-weight: 700; font-family: 'Outfit', sans-serif;
+            align-items: center; gap: 6px; white-space: nowrap;
+            transition: transform 0.15s; z-index: 20;
+        }
+        body.cms-edit-active .cms-img-wrapper:hover .cms-img-btn {
+            display: flex; transform: translate(-50%, -50%) scale(1);
+        }
+        body.cms-edit-active .cms-img-wrapper { cursor: pointer; }
+        body.cms-edit-active .cms-img-wrapper:hover::after {
+            content: ''; position: absolute; inset: 0;
+            background: rgba(37, 99, 235, 0.18); border-radius: inherit;
+            border: 2px solid #2563eb;
+        }
+
+        /* ─── Section Hide/Show ───────────────────────────── */
+        .cms-section-hidden-overlay {
+            display: none; position: absolute; inset: 0; z-index: 50;
+            background: repeating-linear-gradient(45deg, rgba(0,0,0,0.03), rgba(0,0,0,0.03) 4px, transparent 4px, transparent 12px);
+            border: 2px dashed rgba(239,68,68,0.4); border-radius: 4px;
+            align-items: center; justify-content: center;
+        }
+        body.cms-edit-active .cms-section-wrapper.cms-hidden .cms-section-hidden-overlay { display: flex; }
+        body.cms-edit-active .cms-section-wrapper.cms-hidden > *:not(.cms-drag-handle):not(.cms-section-hidden-overlay) { opacity: 0.15; pointer-events: none; }
+
+        /* ─── CMS Toast ────────────────────────────────────── */
+        #cms-toast {
+            position: fixed; bottom: 24px; right: 24px; z-index: 10001;
+            background: #16a34a; color: #fff;
+            padding: 9px 18px; border-radius: 10px;
+            font-size: 13px; font-weight: 700; font-family: 'Outfit', sans-serif;
+            opacity: 0; transition: opacity 0.3s;
+            display: flex; align-items: center; gap: 6px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        }
+
+        /* ─── Image Modal ─────────────────────────────────── */
+        #cms-image-modal {
+            position: fixed; inset: 0; z-index: 10000;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+            display: flex; align-items: center; justify-content: center;
+        }
+        #cms-image-modal.hidden { display: none; }
+        .cms-modal-box {
+            background: #1e293b; border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 16px; padding: 28px 32px; width: 480px; max-width: 94vw;
+            font-family: 'Outfit', sans-serif;
+        }
+        .cms-modal-box h3 { color: #e2e8f0; font-size: 16px; font-weight: 700; margin: 0 0 6px; }
+        .cms-modal-box p { color: #64748b; font-size: 12px; margin: 0 0 16px; }
+        .cms-modal-input {
+            width: 100%; padding: 10px 14px; border-radius: 8px;
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+            color: #e2e8f0; font-size: 13px; font-family: 'Outfit', sans-serif;
+            outline: none; margin-bottom: 16px; box-sizing: border-box;
+        }
+        .cms-modal-input:focus { border-color: #2563eb; }
+        .cms-modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+        .cms-modal-preview { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 14px; background: #0f172a; }
+
+        /* ─── Quick Actions Bar (all roles) ───────────────── */
+        #quick-actions-bar { display: none; }
+        .cms-section-label {
+            display: none; position: absolute; top: 8px; left: 12px;
+            background: #1e293b; color: #64748b; font-size: 10px;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+            padding: 2px 8px; border-radius: 4px; z-index: 90;
+            font-family: 'Outfit', sans-serif; border: 1px solid rgba(255,255,255,0.08);
+        }
+        body.cms-edit-active .cms-section-label { display: block; }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GV-CPS | Plataforma B2B de Intermediação Comercial</title>
@@ -212,10 +349,10 @@
                         <span class="inline-block bg-white/10 border border-white/20 text-secondary-fixed font-outfit font-bold text-xs uppercase px-3 py-1.5 rounded-full backdrop-blur-md select-none" data-translate-pt="Parceiro Comercial de Confiança em Moçambique" data-translate-en="Trusted Commercial Partner in Mozambique">
                             Parceiro Comercial de Confiança em Moçambique
                         </span>
-                        <h1 class="font-outfit font-bold text-4xl md:text-5xl lg:text-6xl text-white leading-tight" data-translate-pt="A Sua Janela para Oportunidades Globais" data-translate-en="Your Window to Global Opportunities">
+                        <h1 class="font-outfit font-bold text-4xl md:text-5xl lg:text-6xl text-white leading-tight" data-translate-pt="A Sua Janela para Oportunidades Globais" data-translate-en="Your Window to Global Opportunities" data-cms-key="hero.slide0.title">
                             A Sua Janela para <br><span class="text-secondary-fixed">Oportunidades Globais</span>
                         </h1>
-                        <p class="font-outfit text-base md:text-lg text-white/90 font-light leading-relaxed max-w-2xl" data-translate-pt="Consultoria premium e intermediação B2B para conectar compradores e fornecedores com total conformidade jurídica, cambial e aduaneira no mercado moçambicano." data-translate-en="Premium consulting and B2B intermediation to connect buyers and suppliers with full legal, foreign exchange, and customs compliance in Mozambique.">
+                        <p class="font-outfit text-base md:text-lg text-white/90 font-light leading-relaxed max-w-2xl" data-cms-key="hero.slide0.subtitle">
                             Consultoria premium e intermediação B2B para conectar compradores e fornecedores com total conformidade jurídica, cambial e aduaneira no mercado moçambicano.
                         </p>
                         <div class="flex flex-col sm:flex-row gap-4 pt-4">
@@ -384,11 +521,14 @@
             </section>
 
             <!-- Strategic Sectors / Services Grid of 4 Cards -->
+            <div id="cms-wrap-services" class="cms-section-wrapper" draggable="false">
+            <span class="cms-section-label">Secção: Setores de Atuação</span>
+            <div class="cms-drag-handle" id="handle-services"><span class="material-symbols-outlined" style="font-size:14px;">drag_indicator</span> Arrastar</div>
             <section id="services-section" class="py-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
                 <div class="text-center mb-16">
-                    <span class="text-secondary font-label-md tracking-widest uppercase" data-translate-pt="Setores de Atuação" data-translate-en="Sectors of Activity">Setores de Atuação</span>
-                    <h2 class="font-headline-lg text-on-surface mt-2" data-translate-pt="Nossos Serviços Corporativos" data-translate-en="Our Corporate Services">Nossos Serviços Corporativos</h2>
-                    <p class="text-on-surface-variant max-w-xl mx-auto mt-2 text-sm" data-translate-pt="Oferecemos consultoria de elite e intermediação segura estruturada em quatro pilares fundamentais." data-translate-en="We offer elite consulting and secure B2B intermediation structured on four core pillars.">Oferecemos consultoria de elite e intermediação segura estruturada em quatro pilares fundamentais.</p>
+                    <span class="text-secondary font-label-md tracking-widest uppercase" data-cms-key="services.eyebrow">Setores de Atuação</span>
+                    <h2 class="font-headline-lg text-on-surface mt-2" data-cms-key="services.title">Nossos Serviços Corporativos</h2>
+                    <p class="text-on-surface-variant max-w-xl mx-auto mt-2 text-sm" data-cms-key="services.subtitle">Oferecemos consultoria de elite e intermediação segura estruturada em quatro pilares fundamentais.</p>
                 </div>
                 
                 <!-- Bento/Grid of sectors -->
@@ -484,7 +624,11 @@
 
                 </div>
             </section>
+            </div><!-- /cms-wrap-services -->
 
+            <div id="cms-wrap-opportunities" class="cms-section-wrapper" draggable="false">
+            <span class="cms-section-label">Secção: Oportunidades em Destaque</span>
+            <div class="cms-drag-handle" id="handle-opportunities"><span class="material-symbols-outlined" style="font-size:14px;">drag_indicator</span> Arrastar</div>
             <!-- Featured B2B Opportunities Section (Mercado em tempo real) -->
             <section class="py-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto border-t border-outline-variant/30">
                 <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
@@ -502,7 +646,11 @@
                     <!-- Injected by app.js (4 cards) -->
                 </div>
             </section>
+            </div><!-- /cms-wrap-opportunities -->
 
+            <div id="cms-wrap-market" class="cms-section-wrapper" draggable="false">
+            <span class="cms-section-label">Secção: Explorador de Mercado</span>
+            <div class="cms-drag-handle" id="handle-market"><span class="material-symbols-outlined" style="font-size:14px;">drag_indicator</span> Arrastar</div>
             <!-- Explorador de Mercado (Full Width Directory Table) -->
             <section class="py-16 w-full px-4 md:px-12 border-t border-outline-variant/30 bg-surface-container/20">
                 <div class="w-full mx-auto">
@@ -564,14 +712,18 @@
                     </div>
                 </div>
             </section>
+            </div><!-- /cms-wrap-market -->
 
+            <div id="cms-wrap-how" class="cms-section-wrapper" draggable="false">
+            <span class="cms-section-label">Secção: Como Funciona</span>
+            <div class="cms-drag-handle" id="handle-how"><span class="material-symbols-outlined" style="font-size:14px;">drag_indicator</span> Arrastar</div>
             <!-- How it Works -->
             <section class="bg-surface-container py-24">
                 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
                     <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
                         <div class="max-w-xl">
-                            <h2 class="font-headline-lg text-on-surface">Como a GV-CPS Funciona</h2>
-                            <p class="text-on-surface-variant mt-4">Simplificamos a complexidade do comércio em Moçambique através de uma jornada guiada e segura.</p>
+                            <h2 class="font-headline-lg text-on-surface" data-cms-key="how.title">Como a GV-CPS Funciona</h2>
+                            <p class="text-on-surface-variant mt-4" data-cms-key="how.subtitle">Simplificamos a complexidade do comércio em Moçambique através de uma jornada guiada e segura.</p>
                         </div>
                         <button onclick="window.location.hash='wall'" class="text-secondary font-label-md flex items-center gap-2 hover:underline bg-transparent border-none cursor-pointer">Saiba mais sobre o processo <span class="material-symbols-outlined">arrow_forward</span></button>
                     </div>
@@ -606,7 +758,11 @@
                     </div>
                 </div>
             </section>
+            </div><!-- /cms-wrap-how -->
 
+            <div id="cms-wrap-about" class="cms-section-wrapper" draggable="false">
+            <span class="cms-section-label">Secção: Sobre / Consultoria</span>
+            <div class="cms-drag-handle" id="handle-about"><span class="material-symbols-outlined" style="font-size:14px;">drag_indicator</span> Arrastar</div>
             <!-- About / Consultancy Focus -->
             <section class="py-24 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
@@ -621,8 +777,8 @@
                         </div>
                     </div>
                     <div>
-                        <h2 class="font-headline-lg text-on-surface mb-8">Consultoria de Elite para Mercados Complexos</h2>
-                        <p class="body-lg text-on-surface-variant mb-12">
+                        <h2 class="font-headline-lg text-on-surface mb-8" data-cms-key="about.title">Consultoria de Elite para Mercados Complexos</h2>
+                        <p class="body-lg text-on-surface-variant mb-12" data-cms-key="about.subtitle">
                             A GV-CPS não é apenas uma plataforma de marketplace B2B; somos o seu parceiro estratégico no terreno. Combinamos conhecimento local profundo com padrões internacionais de consultoria corporativa.
                         </p>
                         <div class="space-y-8">
@@ -652,7 +808,11 @@
                     </div>
                 </div>
             </section>
+            </div><!-- /cms-wrap-about -->
 
+            <div id="cms-wrap-social" class="cms-section-wrapper" draggable="false">
+            <span class="cms-section-label">Secção: Prova Social</span>
+            <div class="cms-drag-handle" id="handle-social"><span class="material-symbols-outlined" style="font-size:14px;">drag_indicator</span> Arrastar</div>
             <!-- Social Proof -->
             <section class="bg-primary text-on-primary py-24 overflow-hidden relative">
                 <div class="absolute inset-0 opacity-10 pointer-events-none">
@@ -707,6 +867,7 @@
                 </div>
             </section>
         </section>
+        </div><!-- /cms-wrap-social -->
 
         <!-- SOBRE NÓS VIEW -->
         <section id="view-about" class="view-section">
@@ -2712,15 +2873,6 @@
                 </div>
 
                 <!-- Link Highlight Section -->
-                <button onclick="toggleLinkHighlight()" id="acc-links-btn" class="acc-option-btn" style="width: 100%; padding: 10px 8px; border: 1px solid var(--outline-variant); background: var(--surface); color: var(--on-surface); font-size: 12px; font-weight: 600; border-radius: var(--radius-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s;">
-                    <span class="material-symbols-outlined" style="font-size: 20px;">link</span>
-                    <span data-translate-pt="Destacar Links" data-translate-en="Highlight Links">Destacar Links</span>
-                </button>
-
-                <!-- Text Zoom Section -->
-                <div>
-                    <span style="font-size: 10px; font-weight: bold; color: var(--outline); text-transform: uppercase; display: block; margin-bottom: 6px;" data-translate-pt="Tamanho do Texto" data-translate-en="Text Size">Tamanho do Texto</span>
-                    <div style="display: flex; gap: 6px; align-items: center;">
                         <button onclick="changeTextSize('decrease')" class="acc-zoom-btn" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--outline-variant); background: var(--surface); border-radius: var(--radius-lg); cursor: pointer; color: var(--on-surface); font-size: 16px; font-weight: bold; transition: all 0.2s;">A-</button>
                         <button onclick="changeTextSize('reset')" class="acc-zoom-btn" style="flex: 1; height: 36px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--outline-variant); background: var(--surface); border-radius: var(--radius-lg); cursor: pointer; color: var(--on-surface); font-size: 11px; font-weight: bold; transition: all 0.2s;" data-translate-pt="Normal" data-translate-en="Normal">Normal</button>
                         <button onclick="changeTextSize('increase')" class="acc-zoom-btn" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--outline-variant); background: var(--surface); border-radius: var(--radius-lg); cursor: pointer; color: var(--on-surface); font-size: 16px; font-weight: bold; transition: all 0.2s;">A+</button>
