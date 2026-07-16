@@ -189,7 +189,7 @@ const INITIAL_STATE = {
 
 // DYNAMIC HERO SLIDER CONTROLLER
 let currentSlide = 0;
-const totalSlides = 4;
+const totalSlides = 3;
 let slideInterval = null;
 let isSliderPaused = false;
 
@@ -4166,6 +4166,22 @@ window.closeRequestWizard = closeRequestWizard;
 window.selectWizardSector = selectWizardSector;
 window.wizardNextStep = wizardNextStep;
 window.wizardPrevStep = wizardPrevStep;
+
+function toggleLatestDemands() {
+    const marketSection = document.getElementById('cms-wrap-market');
+    if (!marketSection) return;
+    
+    const isHidden = marketSection.style.display === 'none';
+    if (isHidden) {
+        marketSection.style.display = 'block';
+        setTimeout(() => {
+            marketSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    } else {
+        marketSection.style.display = 'none';
+    }
+}
+window.toggleLatestDemands = toggleLatestDemands;
 
 // Auto-init CMS when admin is already logged in on page load
 // Temporarily disabled:
