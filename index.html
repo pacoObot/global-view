@@ -250,6 +250,94 @@
 </head>
 <body class="app-container">
 
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- GV EDITOR — CMS ADMIN BAR (fixed, body-level)   -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div id="cms-admin-bar" class="hidden">
+        <span class="cms-bar-logo">✦ GV Editor</span>
+        <div class="cms-bar-divider"></div>
+        <div class="cms-status-dot"></div>
+        <span style="color:#64748b;font-size:11px;margin-right:4px;">localStorage</span>
+        <div class="cms-bar-divider"></div>
+
+        <button id="cms-edit-toggle" class="cms-bar-btn" onclick="toggleCmsEditMode()">
+            <span class="material-symbols-outlined" style="font-size:15px;">edit</span>
+            Editar Página
+        </button>
+
+        <button class="cms-bar-btn" onclick="showSectionPicker()" title="Mostrar/Ocultar Secções">
+            <span class="material-symbols-outlined" style="font-size:15px;">layers</span>
+            Secções
+        </button>
+
+        <button class="cms-bar-btn" onclick="undoCmsChange()" title="Desfazer última alteração">
+            <span class="material-symbols-outlined" style="font-size:15px;">undo</span>
+            Desfazer
+        </button>
+
+        <div class="cms-bar-divider"></div>
+
+        <button class="cms-bar-btn success" onclick="saveAllCms()">
+            <span class="material-symbols-outlined" style="font-size:15px;">save</span>
+            Guardar
+        </button>
+
+        <button class="cms-bar-btn" onclick="exportCmsContent()" title="Exportar como JSON">
+            <span class="material-symbols-outlined" style="font-size:15px;">download</span>
+            Exportar
+        </button>
+
+        <button class="cms-bar-btn" onclick="document.getElementById('cms-import-input').click()" title="Importar JSON">
+            <span class="material-symbols-outlined" style="font-size:15px;">upload</span>
+            Importar
+        </button>
+        <input type="file" id="cms-import-input" accept=".json" style="display:none" onchange="importCmsContent(event)">
+
+        <div class="cms-bar-spacer"></div>
+
+        <button class="cms-bar-btn" onclick="viewAsVisitor()">
+            <span class="material-symbols-outlined" style="font-size:15px;">visibility</span>
+            Ver como Visitante
+        </button>
+
+        <button class="cms-bar-btn danger" onclick="resetCmsContent()">
+            <span class="material-symbols-outlined" style="font-size:15px;">restart_alt</span>
+            Resetar
+        </button>
+    </div>
+
+    <!-- CMS Save Toast -->
+    <div id="cms-toast">
+        <span class="material-symbols-outlined" style="font-size:16px;">check_circle</span>
+        Guardado!
+    </div>
+
+    <!-- CMS Image Edit Modal -->
+    <div id="cms-image-modal" class="hidden">
+        <div class="cms-modal-box">
+            <h3>Trocar Imagem</h3>
+            <p>Cole o URL da nova imagem. Formatos: JPG, PNG, WebP.</p>
+            <img id="cms-img-preview" class="cms-modal-preview" src="" alt="Preview">
+            <input id="cms-image-url-input" class="cms-modal-input" type="url" placeholder="https://exemplo.com/imagem.jpg" oninput="updateCmsImgPreview(this.value)">
+            <div class="cms-modal-actions">
+                <button class="cms-bar-btn danger" onclick="closeCmsImageModal()">Cancelar</button>
+                <button class="cms-bar-btn success" onclick="applyCmsImage()">Aplicar Imagem</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CMS Section Picker Modal -->
+    <div id="cms-section-picker" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+        <div class="cms-modal-box" style="width:360px;">
+            <h3 style="margin-bottom:14px;">Visibilidade das Secções</h3>
+            <div id="cms-section-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px;"></div>
+            <div class="cms-modal-actions">
+                <button class="cms-bar-btn success" onclick="closeSectionPicker()">Fechar</button>
+            </div>
+        </div>
+    </div>
+    <!-- ═══════════════════════════════════════════════ -->
+
     <!-- GLOBAL APP HEADER -->
     <header class="app-header">
         <div class="max-container header-content">
