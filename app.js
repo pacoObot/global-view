@@ -823,6 +823,142 @@ function renderHomepage() {
     recent.forEach(item => {
         grid.appendChild(createOpportunityCard(item));
     });
+    
+    // Render B2B Directory explorer components
+    renderMarketExplorer();
+}
+
+function renderMarketExplorer() {
+    // 1. Render latest requirements
+    const reqList = document.getElementById('home-latest-requirements-list');
+    if (!reqList) return;
+    reqList.innerHTML = '';
+    
+    const items = [
+        ...appState.requirements.map(r => ({ ...r, type: 'procura' })),
+        ...appState.offers.map(o => ({ ...o, type: 'oferta' }))
+    ];
+    
+    // Sort by date desc
+    items.sort((a, b) => new Date(b.date) - new Date(a.date));
+    
+    // Display 5 latest requirements/offers in list
+    const latestItems = items.slice(0, 5);
+    latestItems.forEach(item => {
+        const { code: catCode, label: catLabel, icon: catIcon } = getCategoryDetails(item.category);
+        let flag = '🌎';
+        const c = (item.country || '').toLowerCase();
+        if (c.includes('moçambique')) flag = '🇲🇿';
+        else if (c.includes('brasil')) flag = '🇧🇷';
+        else if (c.includes('portugal')) flag = '🇵🇹';
+        else if (c.includes('china')) flag = '🇨🇳';
+        else if (c.includes('emirados') || c.includes('árabes') || c.includes('dubai')) flag = '🇦🇪';
+        
+        const div = document.createElement('div');
+        div.className = `p-3.5 bg-white border border-slate-200/70 hover:border-gvTeal/30 rounded-xl shadow-sm transition-all duration-300 flex items-center justify-between gap-4 cursor-pointer hover:shadow-md`;
+        div.onclick = () => {
+            window.location.hash = `detail?id=${item.id}&type=${item.type}`;
+        };
+        
+        div.innerHTML = `
+            <div class="flex items-center gap-3 min-w-0">
+                <span class="p-2 bg-slate-50 rounded-lg flex items-center justify-center text-slate-500 shrink-0">
+                    <span class="material-symbols-outlined text-[18px]">${catIcon}</span>
+                </span>
+                <div class="min-w-0 text-left">
+                    <h5 class="font-bold text-slate-800 text-xs md:text-sm truncate pr-2" title="${item.title}">${item.title}</h5>
+                    <div class="flex items-center gap-2 mt-1 shrink-0 text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
+                        <span class="flex items-center gap-1">
+                            <span>${flag}</span>
+                            <span>${item.country}</span>
+                        </span>
+                        <span>•</span>
+                        <span>Qtd: ${item.quantity}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+                <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase border cat-badge cat-theme-${catCode}">${catLabel}</span>
+                <span class="material-symbols-outlined text-[16px] text-slate-350">chevron_right</span>
+            </div>
+        `;
+        reqList.appendChild(div);
+    });
+    
+    // 2. Render Countries Grid with counters
+    const countriesGrid = document.getElementById('home-countries-grid');
+    if (countriesGrid) {
+        countriesGrid.innerHTML = '';
+        const targetCountries = [
+            { name: 'Moçambique', flag: '🇲🇿' },
+            { name: 'Brasil', flag: '🇧🇷' },
+            { name: 'Portugal', flag: '🇵🇹' },
+            { name: 'China', flag: '🇨🇳' },
+            { name: 'Emirados Árabes', flag: '🇦🇪' }
+        ];
+        
+        targetCountries.forEach(tc => {
+            const count = items.filter(i => i.country.toLowerCase().includes(tc.name.toLowerCase())).length;
+            const btn = document.createElement('button');
+            btn.className = `p-3 bg-white border border-slate-200/70 hover:border-gvTeal/30 hover:bg-gvTeal/5 rounded-xl shadow-sm transition duration-300 flex items-center justify-between text-left cursor-pointer border-none`;
+            btn.onclick = () => {
+                window.location.hash = `wall?country=${encodeURIComponent(tc.name)}`;
+            };
+            btn.innerHTML = `
+                <div class="flex items-center gap-2 min-w-0">
+                    <span class="text-lg">${tc.flag}</span>
+                    <span class="font-bold text-slate-700 text-xs md:text-sm truncate">${tc.name}</span>
+                </div>
+                <span class="px-1.5 py-0.5 bg-slate-100 rounded text-[9px] font-bold text-slate-500">${count}</span>
+            `;
+            countriesGrid.appendChild(btn);
+        });
+    }
+    
+    // 3. Render Categories Grid with counters
+    const categoriesGrid = document.getElementById('home-categories-grid');
+    if (categoriesGrid) {
+        categoriesGrid.innerHTML = '';
+        
+        const catMap = {
+            'commodities': { label: 'Commodities/Agro', search: 'Agropecuária' },
+            'logistics': { label: 'Logística', search: 'Logística' },
+            'tech': { label: 'Tecnologia', search: 'Tecnologias' },
+            'energy': { label: 'Energia', search: 'Projectos' },
+            'consulting': { label: 'Consultoria', search: 'Tradução' }
+        };
+        
+        // Compute count for each category details mapping
+        const counts = { commodities: 0, logistics: 0, tech: 0, energy: 0, consulting: 0 };
+        items.forEach(i => {
+            const details = getCategoryDetails(i.category);
+            if (counts[details.code] !== undefined) {
+                counts[details.code]++;
+            }
+        });
+        
+        Object.entries(catMap).forEach(([code, data]) => {
+            const count = counts[code] || 0;
+            const btn = document.createElement('button');
+            btn.className = `w-full p-3 bg-white border border-slate-200/70 hover:border-gvTeal/30 hover:bg-gvTeal/5 rounded-xl shadow-sm transition duration-300 flex items-center justify-between text-left cursor-pointer border-none`;
+            
+            const catDetails = getCategoryDetails(data.label);
+            btn.onclick = () => {
+                window.location.hash = `wall?cat=${encodeURIComponent(data.search)}`;
+            };
+            
+            btn.innerHTML = `
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <span class="p-1.5 bg-slate-50 rounded-lg text-slate-500 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-[16px]">${catDetails.icon}</span>
+                    </span>
+                    <span class="font-bold text-slate-700 text-xs md:text-sm truncate">${data.label}</span>
+                </div>
+                <span class="px-1.5 py-0.5 bg-slate-100 rounded text-[9px] font-bold text-slate-500">${count}</span>
+            `;
+            categoriesGrid.appendChild(btn);
+        });
+    }
 }
 
 function renderOpportunityWall(params = {}) {
