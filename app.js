@@ -183,6 +183,7 @@ const INITIAL_STATE = {
 let currentSlide = 0;
 const totalSlides = 4;
 let slideInterval = null;
+let isSliderPaused = false;
 
 function initHeroSlider() {
     // Check if hero elements exist in the DOM
@@ -195,6 +196,7 @@ function initHeroSlider() {
 
 function startSlideShow() {
     if (slideInterval) clearInterval(slideInterval);
+    if (isSliderPaused) return; // Don't auto rotate if paused
     slideInterval = setInterval(() => {
         nextSlide();
     }, 6000); // Auto rotate every 6 seconds
@@ -253,10 +255,30 @@ function prevSlide() {
     startSlideShow(); // Reset timer on manual navigation
 }
 
+function togglePlayPause() {
+    isSliderPaused = !isSliderPaused;
+    const btn = document.getElementById('play-pause-btn');
+    if (btn) {
+        if (isSliderPaused) {
+            btn.innerHTML = `<span class="material-symbols-outlined text-sm">play_arrow</span>`;
+            btn.setAttribute('title', 'Iniciar slide');
+            if (slideInterval) {
+                clearInterval(slideInterval);
+                slideInterval = null;
+            }
+        } else {
+            btn.innerHTML = `<span class="material-symbols-outlined text-sm">pause</span>`;
+            btn.setAttribute('title', 'Pausar slide');
+            startSlideShow();
+        }
+    }
+}
+
 // Expose slider functions to global scope for HTML onclick events
 window.setSlide = setSlide;
 window.nextSlide = nextSlide;
 window.prevSlide = prevSlide;
+window.togglePlayPause = togglePlayPause;
 
 let appState = null;
 
