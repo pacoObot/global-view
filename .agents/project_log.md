@@ -84,12 +84,11 @@ O protótipo da plataforma de intermediação B2B da **Global View (GV-CPS)** en
     *   A partir das capturas de tela fornecidas pelo utilizador, identificou-se que as tags `<option>` da barra de filtros (`#filter-category`, `#filter-country`, `#sort-by`) não possuíam os atributos `data-translate-pt`/`data-translate-en`, mantendo os textos em Português quando o idioma estava em Inglês.
     *   Corrigida a função `getCategoryDetails(category)` em `app.js` para retornar rótulos bilíngues de badges (`Agro & Commodities`, `Energy & Industry`, `Technology & Innovation`, `Logistics & Projects`, `Consulting & Services`) e sub-rótulos em maiúsculas (`AGRICULTURAL MARKET`, `PROJECT MANAGEMENT`, `PROFESSIONAL SERVICES`) dinamicamente no idioma ativo.
     *   Implementado o fallback inteligente em `getTranslatedField` para traduzir 100% dos títulos do mural (`title`) mesmo em instâncias recarregadas do `localStorage`.
-*   **Diagnóstico e Solução Definitiva do Botão de Acessibilidade (`#accessibility-fab`)**:
-    *   Identificada a causa raiz da "não aceitação de clique" no navegador: o uso simultâneo de `position: fixed` em elementos filhos dentro de um contêiner pai flexbox desalinharia a caixa de captura de cliques (hit-testing box) no WebKit/Blink.
-    *   Removido o `position: fixed` individual dos botões flutuantes, deixando o layout flexbox do contêiner `.chatbot-widget-container` gerir o empilhamento vertical naturalmente.
-    *   Aplicado `pointer-events: none` no contêiner pai e `pointer-events: auto` em cada botão e janela popover, eliminando qualquer bloqueio de clique na tela.
+*   **Solução Definitiva dos Botões Flutuantes e Painel de Acessibilidade (`#accessibility-fab`)**:
+    *   Restaurada a estrutura visual original dos dois botões flutuantes (`#accessibility-fab` a `bottom: 24px` e `#chat-fab` a `bottom: 84px`), garantindo que ambos fiquem 100% visíveis no canto inferior direito.
+    *   Corrigida a função `toggleAccessibilityMenu` em `app.js` utilizando `panel.style.setProperty('display', 'flex', 'important')`. Isso garante que o painel de opções de acessibilidade sobrepõe a regra `.hidden { display: none !important; }` do Tailwind CSS ao ser clicado.
 *   **Deploy Atualizado**:
-    *   Ficheiros enviados para o Vercel via GitHub `c8fab25`.
+    *   Ficheiros enviados para o Vercel via GitHub `be96f9f`.
     *   **URL Correta do Deploy**: [https://global-view-eight.vercel.app](https://global-view-eight.vercel.app)
 
 ### Sessão: 21 de Julho de 2026
