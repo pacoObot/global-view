@@ -85,10 +85,11 @@ O protótipo da plataforma de intermediação B2B da **Global View (GV-CPS)** en
     *   Corrigida a função `getCategoryDetails(category)` em `app.js` para retornar rótulos bilíngues de badges (`Agro & Commodities`, `Energy & Industry`, `Technology & Innovation`, `Logistics & Projects`, `Consulting & Services`) e sub-rótulos em maiúsculas (`AGRICULTURAL MARKET`, `PROJECT MANAGEMENT`, `PROFESSIONAL SERVICES`) dinamicamente no idioma ativo.
     *   Implementado o fallback inteligente em `getTranslatedField` para traduzir 100% dos títulos do mural (`title`) mesmo em instâncias recarregadas do `localStorage`.
 *   **Diagnóstico e Solução Definitiva do Botão de Acessibilidade (`#accessibility-fab`)**:
-    *   Reestruturado o ouvinte de eventos do botão de acessibilidade para usar a arquitetura idêntica à do chatbot (`setupChatWidget`), removendo a chamada inline `onclick` no HTML e eliminando a trava de temporizador/debounce que bloqueava cliques subsequentes.
-    *   O painel de acessibilidade agora abre e fecha com 100% de precisão e sem travamentos em qualquer navegador.
+    *   Identificada a causa raiz da "não aceitação de clique" no navegador: o uso simultâneo de `position: fixed` em elementos filhos dentro de um contêiner pai flexbox desalinharia a caixa de captura de cliques (hit-testing box) no WebKit/Blink.
+    *   Removido o `position: fixed` individual dos botões flutuantes, deixando o layout flexbox do contêiner `.chatbot-widget-container` gerir o empilhamento vertical naturalmente.
+    *   Aplicado `pointer-events: none` no contêiner pai e `pointer-events: auto` em cada botão e janela popover, eliminando qualquer bloqueio de clique na tela.
 *   **Deploy Atualizado**:
-    *   Ficheiros enviados para o Vercel via GitHub `2ad1fb8`.
+    *   Ficheiros enviados para o Vercel via GitHub `c8fab25`.
     *   **URL Correta do Deploy**: [https://global-view-eight.vercel.app](https://global-view-eight.vercel.app)
 
 ### Sessão: 21 de Julho de 2026
