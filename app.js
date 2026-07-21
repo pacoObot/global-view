@@ -606,10 +606,18 @@ function initApp() {
     // Sync mural data from Supabase on init
     syncMuralFromSupabase();
     
-    // Auto load language (detecting browser/mobile language if not set)
-    const browserLang = navigator.language || navigator.userLanguage || 'pt';
-    const detectedLang = browserLang.startsWith('en') ? 'en' : 'pt';
-    const currentLang = localStorage.getItem('gvcps_lang') || detectedLang;
+    // English First auto-detection protocol
+    function getInitialLang() {
+        const saved = localStorage.getItem('gvcps_lang');
+        if (saved === 'pt' || saved === 'en') return saved;
+        
+        // Auto-detect browser/system language: if Portuguese, set pt, otherwise default to English First ('en')
+        const navLang = (navigator.language || (navigator.languages && navigator.languages[0]) || '').toLowerCase();
+        if (navLang.startsWith('pt')) return 'pt';
+        return 'en'; // English First
+    }
+    
+    const currentLang = getInitialLang();
     setLanguage(currentLang);
     
     // Initialize accessibility options
@@ -1078,6 +1086,26 @@ function setLanguage(lang) {
 
 // ACCESSIBILITY CONTROL PANEL HANDLERS
 function initAccessibility() {
+    // Attach direct click listener to accessibility FAB button for foolproof toggling
+    const fab = document.getElementById('accessibility-fab');
+    if (fab) {
+        fab.onclick = function(e) {
+            const evt = e || window.event;
+            if (evt && evt.stopPropagation) evt.stopPropagation();
+            toggleAccessibilityMenu(evt);
+        };
+    }
+    
+    // Attach outside click listener to close accessibility panel safely
+    document.addEventListener('click', (e) => {
+        const panel = document.getElementById('accessibility-panel');
+        const fabBtn = document.getElementById('accessibility-fab');
+        if (panel && fabBtn && !panel.contains(e.target) && !fabBtn.contains(e.target)) {
+            panel.style.display = 'none';
+            panel.classList.add('hidden');
+        }
+    });
+
     // 1. Dark Mode
     const darkMode = localStorage.getItem('gvcps_dark_mode') === 'true';
     if (darkMode) {
@@ -1111,7 +1139,9 @@ function initAccessibility() {
 }
 
 function toggleAccessibilityMenu(e) {
-    if (e && e.stopPropagation) e.stopPropagation();
+    const evt = e || window.event;
+    if (evt && evt.stopPropagation) evt.stopPropagation();
+    
     const panel = document.getElementById('accessibility-panel');
     if (!panel) return;
     
@@ -1189,20 +1219,43 @@ window.changeTextSize = changeTextSize;
 function applyTranslations(lang) {
     document.querySelectorAll('[data-translate-pt]').forEach(el => {
         const text = el.getAttribute(`data-translate-${lang}`);
-        if (text) {
-            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                el.placeholder = text;
+        if (!text) return;
+
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+            el.placeholder = text;
+            return;
+        }
+
+        const icon = el.querySelector('.material-symbols-outlined');
+        const childSpan = el.querySelector('span:not(.material-symbols-outlined)');
+
+        if (childSpan && childSpan.hasAttribute(`data-translate-${lang}`)) {
+            // Let child span translate in its own query iteration
+            return;
+        }
+
+        if (icon) {
+            let textNodeFound = false;
+            el.childNodes.forEach(node => {
+                if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0) {
+                    node.nodeValue = ' ' + text.trim();
+                    textNodeFound = true;
+                }
+            });
+            if (!textNodeFound) {
+                el.appendChild(document.createTextNode(' ' + text.trim()));
+            }
+        } else if (text.includes('<') || text.includes('&lt;') || text.includes('&gt;')) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(text, 'text/html');
+            el.innerHTML = doc.body.innerHTML;
+        } else {
+            if (el.children.length === 0) {
+                el.textContent = text;
             } else {
-                const icon = el.querySelector('.material-symbols-outlined');
-                if (icon) {
-                    el.innerHTML = '';
-                    el.appendChild(icon);
-                    el.appendChild(document.createTextNode(' ' + text));
-                } else if (text.includes('<') || text.includes('&lt;') || text.includes('&gt;')) {
-                    // Safe HTML decode & rendering
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(text, 'text/html');
-                    el.innerHTML = doc.body.innerHTML;
+                let textNode = Array.from(el.childNodes).find(n => n.nodeType === Node.TEXT_NODE && n.nodeValue.trim().length > 0);
+                if (textNode) {
+                    textNode.nodeValue = ' ' + text.trim();
                 } else {
                     el.textContent = text;
                 }
