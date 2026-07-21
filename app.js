@@ -1103,14 +1103,14 @@ function setLanguage(lang) {
 
 // ACCESSIBILITY CONTROL PANEL HANDLERS
 function initAccessibility() {
-    // Attach direct click listener to accessibility FAB button for foolproof toggling
+    // Attach clean click listener matching chat-fab
     const fab = document.getElementById('accessibility-fab');
     if (fab) {
-        fab.onclick = function(e) {
-            const evt = e || window.event;
-            if (evt && evt.stopPropagation) evt.stopPropagation();
-            toggleAccessibilityMenu(evt);
-        };
+        fab.onclick = null;
+        fab.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleAccessibilityMenu(e);
+        });
     }
     
     // Attach outside click listener to close accessibility panel safely
@@ -1155,26 +1155,22 @@ function initAccessibility() {
     }
 }
 
-let lastAccToggleTime = 0;
-
 function toggleAccessibilityMenu(e) {
-    const now = Date.now();
-    if (now - lastAccToggleTime < 250) return; // Prevent double toggling from inline + JS listener
-    lastAccToggleTime = now;
-
     const evt = e || window.event;
     if (evt && evt.stopPropagation) evt.stopPropagation();
     
     const panel = document.getElementById('accessibility-panel');
     if (!panel) return;
     
-    const isHidden = panel.classList.contains('hidden') || panel.style.display === 'none' || getComputedStyle(panel).display === 'none';
+    const isHidden = panel.classList.contains('hidden') || panel.style.display === 'none';
     if (isHidden) {
         // Close chat window if open
         const chatWindow = document.getElementById('chat-window');
         if (chatWindow) {
             chatWindow.style.display = 'none';
             chatWindow.classList.add('hidden');
+            const chatIcon = document.getElementById('chat-icon');
+            if (chatIcon) chatIcon.textContent = 'chat';
         }
         panel.style.display = 'flex';
         panel.classList.remove('hidden');
