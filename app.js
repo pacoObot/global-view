@@ -3125,10 +3125,9 @@ function setupFormHandlers() {
             window.location.hash = 'wall';
         });
     }
-}
     
     // =====================================================================
-    // EXTENSÕES DO WIZARD (DDI, FORMATTING, SLIDER)
+    // EXTENSOES DO WIZARD (DDI, FORMATTING, SLIDER)
     // =====================================================================
     const wizardWhatsapp = document.getElementById('wizard-contact-whatsapp');
     const whatsappFlagBadge = document.getElementById('whatsapp-flag-badge');
@@ -4822,7 +4821,7 @@ function renderProductAndQtyChips() {
     }
 }
 
-function wizardNextStep() {
+async function wizardNextStep() {
     const lang = localStorage.getItem('gvcps_lang') || 'pt';
     
     if (wizardState.currentStep === 1) {
