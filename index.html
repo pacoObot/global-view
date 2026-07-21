@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel="shortcut icon" href="favicon.ico">
     <!-- GV-CPS CMS Editor Styles -->
     <style id="cms-styles">
         /* ─── Admin CMS Bar ─────────────────────────────── */
@@ -3095,13 +3097,13 @@
             </div>
         </div>
         
-        <!-- FAB Floating Button -->
-        <button id="chat-fab" class="btn btn-primary" style="width: 56px; height: 56px; border-radius: var(--radius-full); padding: 0; box-shadow: var(--shadow-lg);">
-            <span class="material-symbols-outlined" id="chat-icon" style="font-size: 28px;">chat</span>
+        <!-- FAB Floating Button (Chat) -->
+        <button id="chat-fab" class="btn btn-primary" style="position: fixed; bottom: 84px; right: 24px; z-index: 10001; width: 48px; height: 48px; border-radius: var(--radius-full); padding: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center;">
+            <span class="material-symbols-outlined" id="chat-icon" style="font-size: 24px; pointer-events: none;">chat</span>
         </button>
 
         <!-- Accessibility Panel -->
-        <div id="accessibility-panel" class="hidden" style="display: none; width: 280px; background-color: var(--surface); border: 1px solid var(--outline-variant); border-radius: var(--radius-2xl); box-shadow: var(--shadow-lg); flex-direction: column; overflow: hidden; margin-bottom: 4px;">
+        <div id="accessibility-panel" class="hidden" style="display: none; position: fixed; bottom: 84px; right: 24px; z-index: 10005; width: 290px; background-color: var(--surface); border: 1px solid var(--outline-variant); border-radius: var(--radius-2xl); box-shadow: 0 12px 36px rgba(0,0,0,0.22); flex-direction: column; overflow: hidden;">
             <!-- Panel Header -->
             <div style="background-color: var(--primary); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; color: white;">
                 <div style="display: flex; align-items: center; gap: 8px;">
@@ -3161,8 +3163,8 @@
         </div>
         
         <!-- Accessibility FAB -->
-        <button id="accessibility-fab" onclick="toggleAccessibilityMenu(event)" class="btn" style="width: 48px; height: 48px; border-radius: var(--radius-full); padding: 0; box-shadow: var(--shadow-md); display: flex; align-items: center; justify-content: center; background-color: var(--secondary); color: white; border: none; cursor: pointer; transition: all 0.2s;">
-            <span class="material-symbols-outlined" style="font-size: 24px;">accessibility</span>
+        <button id="accessibility-fab" onclick="toggleAccessibilityMenu(event)" class="btn" style="position: fixed; bottom: 24px; right: 24px; z-index: 10002; width: 48px; height: 48px; border-radius: var(--radius-full); padding: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; background-color: var(--secondary); color: white; border: none; cursor: pointer; transition: all 0.2s;">
+            <span class="material-symbols-outlined" style="font-size: 24px; pointer-events: none;">accessibility</span>
         </button>
     </div>
 
@@ -3170,7 +3172,10 @@
     <footer class="app-footer">
         <div class="max-container footer-grid">
             <div class="footer-col">
-                <h3 class="footer-logo">GV-CPS</h3>
+                <div class="logo-container footer-logo-container" onclick="window.location.hash='home'" style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px; cursor: pointer;">
+                    <img src="assets/images/logo.png" alt="GV-CPS Logo" class="logo-img" style="height: 32px; width: auto;">
+                    <span class="logo-text" style="color: #ffffff; font-size: 22px; font-weight: 700;">GV-CPS</span>
+                </div>
                 <p class="footer-desc" data-translate-pt="Global View — Consultoria & Prestação de Serviços. Ponte comercial e aduaneira segura que conecta Moçambique ao resto do comércio global." data-translate-en="Global View — Consulting & Services. Secure commercial and customs bridge connecting Mozambique to the rest of global trade.">Global View — Consultoria & Prestação de Serviços. Ponte comercial e aduaneira segura que conecta Moçambique ao resto do comércio global.</p>
             </div>
             <div class="footer-col">
