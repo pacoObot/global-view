@@ -1,6 +1,285 @@
 // Global Application State Management
 const STATE_KEY = 'gvcps_state_v1';
 
+// DICTIONARY OF TRANSLATIONS FOR PT / EN
+const UI_TRANSLATIONS = {
+    pt: {
+        secure_intermediation: "Intermediação Segura (GV-CPS)",
+        responsible_consultant: "Consultor Responsável: ",
+        closed_deal: "NEGÓCIO FECHADO",
+        in_progress: "EM CURSO",
+        secure_negotiation_warning: "Negociação Segura: O contacto direto entre comprador e fornecedor é protegido sob sigilo comercial.",
+        write_secure_message: "Escreva uma mensagem segura...",
+        no_messages: "Sem mensagens. Escreva algo para iniciar a intermediação.",
+        waiting_response: "Aguardando resposta da contraparte...",
+        // Chatbot strings
+        bot_name: "Assistente GV",
+        bot_welcome: "Olá! Seja bem-vindo ao portal GV-CPS. Como posso ajudar com a intermediação comercial da sua empresa hoje?",
+        bot_title: "Suporte GV-CPS",
+        bot_subtitle: "Assistente em tempo real",
+        bot_input_placeholder: "Digite a sua mensagem...",
+        bot_default_response: "Obrigado pela sua mensagem. Sou o assistente automático da GV-CPS. Toda a nossa intermediação é confidencial e segura.",
+        bot_buy_response: "Para registar uma necessidade de compra, clique no botão \"Publicar Necessidade\" na parte superior da página. O formulário é curto e a nossa equipa tratará da intermediação com fornecedores validados.",
+        bot_sell_response: "Pode cadastrar a sua oferta de fornecimento gratuitamente clicando em \"Publicar Oferta\". Os fornecedores não pagam taxas de subscrição para expor produtos.",
+        bot_logistics_response: "A GV-CPS oferece logística integrada opcional. Pode optar por incluir o transporte de mercadorias no faturamento final da proposta.",
+        // Alerts
+        alert_no_contacts: "NÃO EXPONHA CONTATOS: Para sua segurança no marketplace B2B da GV-CPS, não compartilhe telefones ou emails diretamente no chat.",
+        // Accessibility titles
+        accessibility_title: "Acessibilidade",
+        accessibility_language: "Idioma",
+        accessibility_dark_mode: "Modo Escuro",
+        accessibility_contrast: "Alto Contraste",
+        accessibility_highlight_links: "Realçar Links",
+        accessibility_text_size: "Tamanho do Texto",
+        accessibility_normal: "Normal",
+        // Additional UI
+        read_more: "Ler Mais",
+        read_less: "Ler Menos",
+        volume: "Volume",
+        country: "País",
+        logistics: "Logística",
+        included: "Incluída",
+        not_included: "Não Incluída",
+        published_on: "Publicado em",
+        i_am_interested: "Tenho Interesse",
+        procura: "Procura",
+        oferta: "Oferta",
+        category: "Categoria",
+        actions: "Ações",
+        no_opportunities: "Nenhuma oportunidade encontrada com os filtros selecionados.",
+        status_pendente: "Pendente",
+        status_analise: "Em Análise",
+        status_atendimento: "Em Atendimento",
+        status_concluida: "Concluída",
+    },
+    en: {
+        secure_intermediation: "Secure Intermediation (GV-CPS)",
+        responsible_consultant: "Responsible Consultant: ",
+        closed_deal: "CLOSED DEAL",
+        in_progress: "IN PROGRESS",
+        secure_negotiation_warning: "Secure Negotiation: Direct contact between buyer and supplier is protected under commercial secrecy.",
+        write_secure_message: "Write a secure message...",
+        no_messages: "No messages. Write something to start intermediation.",
+        waiting_response: "Waiting for counterparty response...",
+        // Chatbot strings
+        bot_name: "GV Assistant",
+        bot_welcome: "Hello! Welcome to the GV-CPS portal. How can I help with your company's commercial intermediation today?",
+        bot_title: "GV-CPS Support",
+        bot_subtitle: "Real-time Assistant",
+        bot_input_placeholder: "Type your message...",
+        bot_default_response: "Thank you for your message. I am the GV-CPS automated assistant. All our intermediation is confidential and secure.",
+        bot_buy_response: "To register a buying requirement, click the \"Publish Need\" button at the top of the page. The form is short, and our team will handle the secure matching with validated suppliers.",
+        bot_sell_response: "You can list your supply offer for free by clicking on \"Publish Offer\". Suppliers do not pay fees to advertise lots.",
+        bot_logistics_response: "GV-CPS offers optional integrated logistics and customs clearance (sea freight, road freight, port handling). You can request logistics in Step 4 of the purchase form.",
+        // Alerts
+        alert_no_contacts: "DO NOT SHARE CONTACT DETAILS: For your security on the GV-CPS B2B marketplace, do not share phone numbers or emails directly in the chat.",
+        // Accessibility titles
+        accessibility_title: "Accessibility",
+        accessibility_language: "Language",
+        accessibility_dark_mode: "Dark Mode",
+        accessibility_contrast: "High Contrast",
+        accessibility_highlight_links: "Highlight Links",
+        accessibility_text_size: "Text Size",
+        accessibility_normal: "Normal",
+        // Additional UI
+        read_more: "Read More",
+        read_less: "Read Less",
+        volume: "Volume",
+        country: "Country",
+        logistics: "Logistics",
+        included: "Included",
+        not_included: "Not Included",
+        published_on: "Published on",
+        i_am_interested: "I'm Interested",
+        procura: "Buying",
+        oferta: "Selling",
+        category: "Category",
+        actions: "Actions",
+        no_opportunities: "No opportunities found with the selected filters.",
+        status_pendente: "Pending",
+        status_analise: "Under Review",
+        status_atendimento: "In Progress",
+        status_concluida: "Completed",
+    }
+};
+
+// EN TRANSLATION CATALOG FOR THE WIZARD
+const GV_CATALOG_EN = {
+    agro: {
+        label: 'Agribusiness',
+        icon: 'agriculture',
+        color: '#16a34a',
+        categories: {
+            fertilizantes: { 
+                label: 'Fertilizers', 
+                unit: 'Tons', 
+                products: ['NPK 12-24-12', 'Prilled Urea 46%', 'DAP (Diammonium Phosphate)', 'Composted Organic Fertilizer'], 
+                quantities: ['25 Tons', '50 Tons', '100 Tons', '250 Tons', '500 Tons'] 
+            },
+            sementes: { 
+                label: 'Seeds & Seedlings', 
+                unit: 'Kg', 
+                products: ['Certified Soybean Seed', 'Hybrid Maize Seed', 'Selected Sesame Seed', 'Grafted Cashew Seedlings'], 
+                quantities: ['250 Kg', '500 Kg', '1000 Kg', '5000 Kg'] 
+            },
+            caju: { 
+                label: 'Cashews & Nuts', 
+                unit: 'Tons', 
+                products: ['Raw Cashew Nut (RCN)', 'Processed Cashew Kernel W180', 'Cashew Kernel W240', 'Cashew Shell Liquid (CNSL)'], 
+                quantities: ['15 Tons (1 Container)', '30 Tons', '100 Tons', '300 Tons'] 
+            },
+            acucar: { 
+                label: 'Sugar', 
+                unit: 'Tons', 
+                products: ['Refined Cane Sugar ICUMSA 45', 'VHP Cane Sugar', 'Organic Brown Sugar'], 
+                quantities: ['50 Tons', '250 Tons', '500 Tons', '12500 Tons'] 
+            },
+            equipamentos: { 
+                label: 'Agricultural Equipment', 
+                unit: 'Units', 
+                products: ['75HP 4x4 Farm Tractor', '3-Disk Moldboard Plow', 'Double-Row Planter', 'Drip Irrigation System'], 
+                quantities: ['1 unit', '2 units', '5 units', '10 units'] 
+            }
+        }
+    },
+    oil: {
+        label: 'Oil & Gas',
+        icon: 'local_gas_station',
+        color: '#f59e0b',
+        categories: {
+            equipamentos: { 
+                label: 'Industrial Equipment', 
+                unit: 'Units', 
+                products: ['High-Flow Air Compressors', '500kVA Silent Generators', 'Centrifugal Slurry Pumps', 'Industrial Check Valves'], 
+                quantities: ['1 unit', '2 units', '5 units'] 
+            },
+            lubrificantes: { 
+                label: 'Lubricants & Chemicals', 
+                unit: 'Liters', 
+                products: ['Premium Hydraulic Oil ISO 68', 'Industrial Lithium Grease', 'Stationary Engine Additives', 'Drilling Fluids'], 
+                quantities: ['200 Liters (1 Drum)', '1000 Liters', '5000 Liters'] 
+            },
+            servicos: { 
+                label: 'Technical Services', 
+                unit: 'Project', 
+                products: ['Ultrasonic Weld Inspection (NDT)', 'Environmental Compliance Audit', 'Preventive Maintenance for Turbine Engines', 'Local Content Consulting'], 
+                quantities: ['1 project', 'Quarterly Contract', 'Annual Contract'] 
+            }
+        }
+    },
+    tech: {
+        label: 'Technology',
+        icon: 'devices',
+        color: '#2563eb',
+        categories: {
+            computadores: { 
+                label: 'Computers & IT', 
+                unit: 'Units', 
+                products: ['Corporate i7 Laptops 16GB', 'Office i5 Desktops', '24-inch IPS LED Monitors', 'Thermal Label Printers'], 
+                quantities: ['5 units', '10 units', '25 units', '50 units', '100 units'] 
+            },
+            servidores: { 
+                label: 'Servers & Infrastructure', 
+                unit: 'Units', 
+                products: ['2U Dual Xeon Silver Rack Server', '64TB Enterprise NAS Storage', '10kVA Online UPS Unit'], 
+                quantities: ['1 unit', '2 units', '5 units'] 
+            },
+            redes: { 
+                label: 'Networks & Telecom', 
+                unit: 'Project', 
+                products: ['Structured Cat6 Cabling per Point', 'Cisco Managed Switches 24P', 'Hikvision IP CCTV Camera System'], 
+                quantities: ['1 project', 'Technical Maintenance Contract', 'Complete Installation'] 
+            },
+            software: { 
+                label: 'Software & Licenses', 
+                unit: 'Licenses', 
+                products: ['Primavera ERP System Licenses', 'Microsoft 365 Pro Annual Subscription', 'Sophos Endpoint Security Licenses'], 
+                quantities: ['5 licenses', '25 licenses', '50 licenses', '100 licenses'] 
+            }
+        }
+    },
+    logistics: {
+        label: 'Logistics',
+        icon: 'local_shipping',
+        color: '#4338ca',
+        categories: {
+            maritimo: { 
+                label: 'Ocean Freight', 
+                unit: 'Container', 
+                products: ['20ft Standard Container Shipping (FCL)', '40ft High Cube Container Shipping (FCL)', 'Less than Container Load Consolidation (LCL)', 'Dry Bulk Shipping'], 
+                quantities: ['1x 20ft Container', '1x 40ft Container', '5x Containers', '10x Containers'] 
+            },
+            terrestre: { 
+                label: 'Road Freight', 
+                unit: 'Trip', 
+                products: ['Closed TIR Box Truck (Mozambique-South Africa)', 'Flatbed Container Carrier', 'Fuel Tanker Truck'], 
+                quantities: ['1 trip', '5 trips', 'Monthly Route Contract'] 
+            },
+            aduaneiro: { 
+                label: 'Customs Clearance', 
+                unit: 'Process', 
+                products: ['General Import Customs Clearance', 'Export Customs Clearance', 'International Cargo Customs Transit'], 
+                quantities: ['1 process', '5 processes', 'Continuous Clearance'] 
+            }
+        }
+    }
+};
+
+// HELPER FUNCTION TO GET TRANSLATED ITEM FIELDS (PT / EN)
+function getTranslatedField(item, field) {
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    if (lang === 'en') {
+        const enVal = item[field + 'En'] || item[field + '_en'];
+        if (enVal !== undefined) return enVal;
+        
+        // Automatic fallbacks for common fields
+        if (field === 'category') {
+            const cat = (item.category || '').toLowerCase();
+            if (cat.includes('agropecuária') || cat.includes('agronegócio')) {
+                return 'Agribusiness & Commodities Consulting';
+            } else if (cat.includes('projectos') || cat.includes('avaliação')) {
+                return 'Project Evaluation & Monitoring';
+            } else if (cat.includes('tradução')) {
+                return 'Document Translation (PT/EN/FR)';
+            } else if (cat.includes('trading') || cat.includes('commodities')) {
+                return 'Commodities Trading Consulting';
+            } else if (cat.includes('tecnologia') || cat.includes('informação')) {
+                return 'IT & Enterprise Software Consulting';
+            } else if (cat.includes('logística') || cat.includes('fretes')) {
+                return 'Global Logistics & Freight';
+            }
+        }
+        if (field === 'country') {
+            const c = (item.country || '').toLowerCase();
+            if (c.includes('moçambique')) return 'Mozambique';
+            if (c.includes('brasil')) return 'Brazil';
+            if (c.includes('portugal')) return 'Portugal';
+            if (c.includes('emirados') || c.includes('árabes')) return 'United Arab Emirates';
+            if (c.includes('china')) return 'China';
+        }
+        if (field === 'quantity') {
+            const q = (item.quantity || '').toLowerCase();
+            if (q.includes('toneladas')) return q.replace('toneladas', 'Tons');
+            if (q.includes('contratos')) return q.replace('contratos', 'Contracts');
+            if (q.includes('nível industrial')) return 'Industrial Level';
+            if (q.includes('fluxo contínuo')) return 'Continuous Flow';
+            if (q.includes('lote industrial')) return 'Industrial Batch';
+        }
+        if (field === 'logistics') {
+            const l = (item.logistics || '').toLowerCase();
+            if (l === 'sim' || l === 'yes') return 'Yes';
+            if (l === 'não' || l === 'no') return 'No';
+        }
+    }
+    return item[field];
+}
+
+// HELPER TO GET ACTIVE SECTOR CATALOG DEPENDING ON LANGUAGE
+function getCatalog() {
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    return lang === 'en' ? GV_CATALOG_EN : GV_CATALOG;
+}
+
 // Initial Mock Data
 const INITIAL_STATE = {
     currentUser: {
@@ -18,8 +297,10 @@ const INITIAL_STATE = {
         {
             id: 'req_1',
             title: 'Importação de Óleo de Soja Refinado',
+            titleEn: 'Refined Soybean Oil Importation',
             category: 'Consultoria para Agropecuária e Agronegócios',
             description: 'Buscamos fornecedor qualificado para suprir demanda recorrente de óleo de soja refinado de qualidade premium em Moçambique.',
+            descriptionEn: 'We are looking for a qualified supplier to meet the recurring demand for premium quality refined soybean oil in Mozambique.',
             quantity: '500 Toneladas',
             country: 'Moçambique',
             logistics: 'Sim', // Yes - GV-CPS handles logistics
@@ -33,8 +314,10 @@ const INITIAL_STATE = {
         {
             id: 'req_2',
             title: 'Manutenção Preventiva de Subestação Elétrica',
+            titleEn: 'Preventive Maintenance of Electrical Substation',
             category: 'Avaliação, Elaboração e Monitoria de Projectos',
             description: 'Serviços técnicos especializados de engenharia para manutenção preventiva e corretiva de equipamentos elétricos de média tensão.',
+            descriptionEn: 'Specialized technical engineering services for preventive and corrective maintenance of medium voltage electrical equipment.',
             quantity: 'Nível Industrial',
             country: 'Moçambique',
             logistics: 'Não',
@@ -48,8 +331,10 @@ const INITIAL_STATE = {
         {
             id: 'req_3',
             title: 'Tradução Juramentada de Contratos Comerciais (EN-PT)',
+            titleEn: 'Sworn Translation of Commercial Contracts (EN-PT)',
             category: 'Tradução de Documentos (Português, Inglês, Francês, línguas nacionais)',
             description: 'Tradução juramentada de contratos internacionais de exploração e trading de gás natural.',
+            descriptionEn: 'Sworn translation of international contracts for the exploration and trading of natural gas.',
             quantity: '45 Contratos',
             country: 'Portugal',
             logistics: 'Não',
@@ -63,8 +348,10 @@ const INITIAL_STATE = {
         {
             id: 'req_4',
             title: 'Aquisição de Minério de Ferro 62%',
+            titleEn: 'Acquisition of Iron Ore 62%',
             category: 'Consultoria para Commodities Trading',
             description: 'Procuramos fornecedor confiável para entrega regular de minério de ferro de teor mínimo 62% Fe.',
+            descriptionEn: 'We are looking for a reliable supplier for regular delivery of iron ore with a minimum grade of 62% Fe.',
             quantity: '50,000 MT/Mês',
             country: 'Emirados Árabes',
             logistics: 'Sim',
@@ -80,8 +367,10 @@ const INITIAL_STATE = {
         {
             id: 'off_1',
             title: 'Fornecimento de Açúcar ICUMSA 45',
+            titleEn: 'Supply of ICUMSA 45 Sugar',
             category: 'Consultoria para Commodities Trading',
             description: 'Dispomos de cotas anuais para fornecimento e exportação de açúcar ICUMSA 45 refinado de alta qualidade.',
+            descriptionEn: 'We have annual quotas for the supply and export of high-quality refined ICUMSA 45 sugar.',
             quantity: '12,500 MT',
             country: 'Brasil',
             logistics: 'Sim',
@@ -93,8 +382,10 @@ const INITIAL_STATE = {
         {
             id: 'off_2',
             title: 'Instalação de Painéis Fotovoltaicos Monocristalinos',
+            titleEn: 'Installation of Monocrystalline Photovoltaic Panels',
             category: 'Consultoria para Tecnologias de Informação',
             description: 'Fornecimento e montagem de painéis solares industriais de alto rendimento para plantas comerciais.',
+            descriptionEn: 'Supply and assembly of high-yield industrial solar panels for commercial plants.',
             quantity: 'Lote Industrial',
             country: 'China',
             logistics: 'Sim',
@@ -106,8 +397,10 @@ const INITIAL_STATE = {
         {
             id: 'off_3',
             title: 'Logística de Casca de Castanha de Caju Bruta',
+            titleEn: 'Logistics of Raw Cashew Nut Shell',
             category: 'Consultoria para Agropecuária e Agronegócios',
             description: 'Castanha bruta de caju de ótima qualidade proveniente de cooperativas do norte de Moçambique.',
+            descriptionEn: 'High-quality raw cashew nuts from cooperatives in northern Mozambique.',
             quantity: 'Fluxo Contínuo',
             country: 'Moçambique',
             logistics: 'Sim',
@@ -172,18 +465,11 @@ const INITIAL_STATE = {
         { id: 'not_3', userId: 'consultant_1', text: 'Nova proposta de Tradução de Documentos cadastrada sem consultor atribuído.', date: '2026-06-14', read: true }
     ],
     categories: [
-        'Avaliação, Elaboração e Monitoria de Projectos',
-        'Consultoria Económico-Jurídica para Petróleo e Gás',
-        'Consultoria Económico-Jurídica para Conteúdo Local',
-        'Consultoria para Commodities Trading',
-        'Consultoria para Gestão Financeira',
-        'Consultoria para Gestão de Finanças Públicas',
-        'Consultoria para PMEs',
-        'Consultoria para Agropecuária e Agronegócios',
-        'Consultoria para Tecnologias de Informação',
-        'Consultoria Sociocultural e Ambiental',
-        'Formação e Treinamento Profissional',
-        'Tradução de Documentos (Português, Inglês, Francês, línguas nacionais)'
+        'Agro & Commodities',
+        'Energia & Industria',
+        'Tecnologia & Inovacao',
+        'Logistica & Projetos',
+        'Consultoria & Servicos'
     ]
 };
 
@@ -316,6 +602,9 @@ function initApp() {
     setupFormValidation();
     setupEventListeners();
     initHeroSlider();
+    
+    // Sync mural data from Supabase on init
+    syncMuralFromSupabase();
     
     // Auto load language (detecting browser/mobile language if not set)
     const browserLang = navigator.language || navigator.userLanguage || 'pt';
@@ -506,6 +795,7 @@ function updateSwitcherUI() {
     const memberNavs = document.querySelectorAll('.member-portal-link');
     const btnLogin = document.getElementById('btnHeaderLogin');
     const userMenu = document.getElementById('loggedInUserMenu');
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
     
     document.querySelectorAll('.role-option').forEach(opt => {
         if (opt.dataset.role === role) {
@@ -515,11 +805,17 @@ function updateSwitcherUI() {
         }
     });
     
-    let text = 'Demo: Visitante';
+    let text = lang === 'pt' ? 'Demo: Visitante' : 'Demo: Visitor';
+    
+    const roleMap = {
+        pt: { buyer: 'Comprador', supplier: 'Fornecedor', consultant: 'Consultor', admin: 'Admin' },
+        en: { buyer: 'Buyer', supplier: 'Supplier', consultant: 'Consultant', admin: 'Admin' }
+    };
+    
     if (role !== 'visitor') {
         const name = appState.currentUser.name;
-        const roleLabelPT = role === 'buyer' ? 'Comprador' : (role === 'supplier' ? 'Fornecedor' : (role === 'consultant' ? 'Consultor' : 'Admin'));
-        text = `Demo: ${roleLabelPT} (${name.split(' ')[0]})`;
+        const roleLabel = roleMap[lang][role];
+        text = `Demo: ${roleLabel} (${name.split(' ')[0]})`;
     }
     if (label) label.textContent = text;
     
@@ -527,7 +823,8 @@ function updateSwitcherUI() {
     if (role !== 'visitor') {
         memberNavs.forEach(nav => {
             nav.href = `#${role}-portal`;
-            nav.textContent = `Painel ${role === 'buyer' ? 'Comprador' : (role === 'supplier' ? 'Fornecedor' : (role === 'consultant' ? 'Consultor' : 'Admin'))}`;
+            const roleLabel = roleMap[lang][role];
+            nav.textContent = lang === 'pt' ? `Painel ${roleLabel}` : `${roleLabel} Panel`;
             nav.style.display = 'inline-block';
         });
         if (btnLogin) btnLogin.style.display = 'none';
@@ -563,36 +860,84 @@ function fillMockCreds(email) {
     document.getElementById('login-password').value = 'gvcps123';
 }
 
-function handleMockLogin(event) {
+async function handleMockLogin(event) {
     event.preventDefault();
-    const email = document.getElementById('login-email').value.trim().toLowerCase();
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
     
-    let role = 'visitor';
-    if (email.includes('buyer')) role = 'buyer';
-    else if (email.includes('supplier')) role = 'supplier';
-    else if (email.includes('consultant')) role = 'consultant';
-    else if (email.includes('admin')) role = 'admin';
+    // Feedback visual do botão
+    const btn = event.submitter || document.querySelector('#loginModal button[type="submit"]');
+    const originalText = btn ? btn.textContent : 'Aceder com Segurança';
+    if (btn) {
+        btn.textContent = 'A processar...';
+        btn.disabled = true;
+    }
     
-    const userObj = appState.users[`${role}_1`] || null;
-    
-    appState.currentUser = {
-        role: role,
-        id: userObj ? userObj.id : null,
-        name: userObj ? userObj.name : 'Visitante'
-    };
-    
-    saveState();
-    updateSwitcherUI();
-    closeLoginModal();
-    
-    if (role !== 'visitor') {
-        window.location.hash = `${role}-portal`;
-        // Welcome notification via WhatsApp
+    try {
+        if (!window.gvApi) throw new Error("gvApi não inicializado.");
+        
+        // 1. Tenta login real no Supabase Auth
+        const authData = await window.gvApi.login(email, password);
+        const profile = await window.gvApi.getUserProfile(authData.user.id);
+        
+        appState.currentUser = {
+            role: profile.role,
+            id: profile.id,
+            name: profile.contacts ? profile.contacts.real_name : (profile.company_name || 'Utilizador Supabase'),
+            email: email
+        };
+        
+        saveState();
+        updateSwitcherUI();
+        closeLoginModal();
+        
+        // Redireciona para o portal apropriado
+        window.location.hash = `${profile.role}-portal`;
+        
+        // WhatsApp notification simulation
         setTimeout(() => {
-            simulateWhatsAppNotification(userObj.id, `Olá ${userObj.name}, bem-vindo de volta ao portal GV-CPS.`);
+            simulateWhatsAppNotification(profile.id, `Olá ${appState.currentUser.name}, bem-vindo ao portal seguro da GV-CPS.`);
         }, 1000);
-    } else {
-        window.location.hash = 'home';
+        
+        // Sincronizar o mural de imediato
+        syncMuralFromSupabase();
+        
+    } catch (error) {
+        console.warn("Supabase Auth indisponível ou credenciais erradas. Usando login simulado (Mock):", error.message);
+        
+        // 2. Fallback de Simulação
+        let role = 'visitor';
+        const lowerEmail = email.toLowerCase();
+        if (lowerEmail.includes('buyer')) role = 'buyer';
+        else if (lowerEmail.includes('supplier')) role = 'supplier';
+        else if (lowerEmail.includes('consultant')) role = 'consultant';
+        else if (lowerEmail.includes('admin')) role = 'admin';
+        
+        const userObj = appState.users[`${role}_1`] || null;
+        
+        appState.currentUser = {
+            role: role,
+            id: userObj ? userObj.id : null,
+            name: userObj ? userObj.name : 'Visitante'
+        };
+        
+        saveState();
+        updateSwitcherUI();
+        closeLoginModal();
+        
+        if (role !== 'visitor') {
+            window.location.hash = `${role}-portal`;
+            setTimeout(() => {
+                simulateWhatsAppNotification(userObj.id, `Olá ${userObj.name}, bem-vindo de volta ao portal GV-CPS (Modo Simulado).`);
+            }, 1000);
+        } else {
+            window.location.hash = 'home';
+        }
+    } finally {
+        if (btn) {
+            btn.textContent = originalText;
+            btn.disabled = false;
+        }
     }
 }
 
@@ -676,6 +1021,7 @@ function toggleCardDetail(btn) {
 // BILINGUAL LANGUAGE SWITCHER HANDLERS
 function setLanguage(lang) {
     localStorage.setItem('gvcps_lang', lang);
+    document.documentElement.lang = lang; // Google Translate compatibility!
     applyTranslations(lang);
     
     const btnPt = document.getElementById('btn-lang-pt');
@@ -684,14 +1030,38 @@ function setLanguage(lang) {
         if (lang === 'pt') {
             btnPt.style.backgroundColor = 'var(--secondary)';
             btnPt.style.color = 'white';
+            btnPt.style.border = 'none';
             btnEn.style.backgroundColor = 'transparent';
             btnEn.style.color = 'var(--on-surface-variant)';
+            btnEn.style.border = '1px solid var(--outline-variant)';
         } else {
             btnEn.style.backgroundColor = 'var(--secondary)';
             btnEn.style.color = 'white';
+            btnEn.style.border = 'none';
             btnPt.style.backgroundColor = 'transparent';
             btnPt.style.color = 'var(--on-surface-variant)';
+            btnPt.style.border = '1px solid var(--outline-variant)';
         }
+    }
+    
+    // Also re-render switcher UI
+    updateSwitcherUI();
+    
+    // Initialize/re-initialize chatbot welcome message
+    initWidgetChatMessages(lang);
+    
+    // Re-render current page
+    const currentView = window.location.hash ? window.location.hash.substring(1).split('?')[0] : 'home';
+    if (currentView === 'home') {
+        renderHomepage();
+        renderMarketExplorer();
+    } else if (currentView === 'wall') {
+        renderOpportunityWall();
+    } else if (currentView === 'detail') {
+        const urlParams = new URLSearchParams(window.location.hash.split('?')[1] || '');
+        const id = urlParams.get('id');
+        const type = urlParams.get('type');
+        if (id && type) renderDetailView(id, type);
     }
 }
 
@@ -816,6 +1186,11 @@ function applyTranslations(lang) {
                     el.innerHTML = '';
                     el.appendChild(icon);
                     el.appendChild(document.createTextNode(' ' + text));
+                } else if (text.includes('<') || text.includes('&lt;') || text.includes('&gt;')) {
+                    // Safe HTML decode & rendering
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(text, 'text/html');
+                    el.innerHTML = doc.body.innerHTML;
                 } else {
                     el.textContent = text;
                 }
@@ -874,22 +1249,28 @@ function renderMarketExplorer() {
     items.sort((a, b) => new Date(b.date) - new Date(a.date));
     
     // Display 6 latest requirements/offers in list
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
     const latestItems = items.slice(0, 6);
     latestItems.forEach(item => {
         const { code: catCode, label: catLabel, icon: catIcon } = getCategoryDetails(item.category);
         let flag = '🌎';
-        const c = (item.country || '').toLowerCase();
-        if (c.includes('moçambique')) flag = '🇲🇿';
-        else if (c.includes('brasil')) flag = '🇧🇷';
+        const translatedCountry = getTranslatedField(item, 'country');
+        const c = translatedCountry.toLowerCase();
+        if (c.includes('moçambique') || c.includes('mozambique')) flag = '🇲🇿';
+        else if (c.includes('brasil') || c.includes('brazil')) flag = '🇧🇷';
         else if (c.includes('portugal')) flag = '🇵🇹';
         else if (c.includes('china')) flag = '🇨🇳';
-        else if (c.includes('emirados') || c.includes('árabes') || c.includes('dubai')) flag = '🇦🇪';
+        else if (c.includes('emirados') || c.includes('árabes') || c.includes('united arab')) flag = '🇦🇪';
         
         const tr = document.createElement('tr');
         tr.className = `border-b border-slate-100 hover:bg-slate-50/80 transition cursor-pointer`;
         tr.onclick = () => {
             window.location.hash = `detail?id=${item.id}&type=${item.type}`;
         };
+        
+        const titleText = getTranslatedField(item, 'title');
+        const qtyText = getTranslatedField(item, 'quantity');
+        const btnText = lang === 'pt' ? 'Ver Detalhes' : 'View Details';
         
         tr.innerHTML = `
             <td class="py-4 px-6">
@@ -898,7 +1279,7 @@ function renderMarketExplorer() {
                         <span class="material-symbols-outlined text-[18px]">${catIcon}</span>
                     </span>
                     <div class="min-w-0">
-                        <span class="block truncate font-bold text-sm text-slate-800" title="${item.title}">${item.title}</span>
+                        <span class="block truncate font-bold text-sm text-slate-800" title="${titleText}">${titleText}</span>
                         <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mt-0.5">${item.id}</span>
                     </div>
                 </div>
@@ -909,15 +1290,15 @@ function renderMarketExplorer() {
             <td class="py-4 px-6 text-slate-600 font-medium">
                 <div class="flex items-center gap-1.5">
                     <span>${flag}</span>
-                    <span>${item.country}</span>
+                    <span>${translatedCountry}</span>
                 </div>
             </td>
             <td class="py-4 px-6 text-slate-600 font-bold">
-                ${item.quantity}
+                ${qtyText}
             </td>
             <td class="py-4 px-6 text-center">
                 <button class="btn btn-primary btn-sm" style="padding: 6px 12px; font-size: 11px; background-color: var(--primary); border: none; color: white; font-weight: bold; border-radius: var(--radius-md); cursor: pointer;">
-                    Ver Detalhes
+                    ${btnText}
                 </button>
             </td>
         `;
@@ -960,15 +1341,15 @@ function renderMarketExplorer() {
         categoriesGrid.innerHTML = '';
         
         const catMap = {
-            'commodities': { label: 'Commodities/Agro', search: 'Agropecuária' },
-            'logistics': { label: 'Logística', search: 'Logística' },
-            'tech': { label: 'Tecnologia', search: 'Tecnologias' },
-            'energy': { label: 'Energia', search: 'Projectos' },
-            'consulting': { label: 'Consultoria', search: 'Tradução' }
+            'agro':       { label: 'Agro & Commodities',    search: 'agro' },
+            'energy':     { label: 'Energia & Industria',   search: 'energy' },
+            'tech':       { label: 'Tecnologia & Inovacao', search: 'tech' },
+            'logistics':  { label: 'Logistica & Projetos',  search: 'logistics' },
+            'consulting': { label: 'Consultoria & Servicos',search: 'consulting' }
         };
         
-        // Compute count for each category details mapping
-        const counts = { commodities: 0, logistics: 0, tech: 0, energy: 0, consulting: 0 };
+        // Compute count for each category
+        const counts = { agro: 0, energy: 0, tech: 0, logistics: 0, consulting: 0 };
         items.forEach(i => {
             const details = getCategoryDetails(i.category);
             if (counts[details.code] !== undefined) {
@@ -1010,17 +1391,17 @@ function renderOpportunityWall(params = {}) {
     const filterType = params.type || 'all'; // all, procura, oferta
     const sortBy = params.sort || 'latest';
     
-    // Map verbose/old categories to shorthand ones
+    // Map verbose/old categories to the 5 canonical codes
     const lowerCat = filterCat.toLowerCase();
-    if (lowerCat.includes('agro') || lowerCat.includes('commodities') || lowerCat.includes('trading')) {
-        filterCat = 'commodities';
-    } else if (lowerCat.includes('logística') || lowerCat.includes('logistics') || lowerCat.includes('supply')) {
-        filterCat = 'logistics';
-    } else if (lowerCat.includes('tecnologia') || lowerCat.includes('tech') || lowerCat.includes('informática') || lowerCat.includes('data center')) {
-        filterCat = 'tech';
-    } else if (lowerCat.includes('petróleo') || lowerCat.includes('gás') || lowerCat.includes('energia') || lowerCat.includes('energy') || lowerCat.includes('solar')) {
+    if (lowerCat === 'agro' || lowerCat.includes('agro') || lowerCat.includes('commodities') || lowerCat.includes('trading')) {
+        filterCat = 'agro';
+    } else if (lowerCat === 'energy' || lowerCat.includes('energia') || lowerCat.includes('petróleo') || lowerCat.includes('gás') || lowerCat.includes('industry') || lowerCat.includes('indústria') || lowerCat.includes('solar')) {
         filterCat = 'energy';
-    } else if (lowerCat.includes('avaliação') || lowerCat.includes('projectos') || lowerCat.includes('tradução') || lowerCat.includes('consultoria') || lowerCat.includes('consulting')) {
+    } else if (lowerCat === 'tech' || lowerCat.includes('tecnologia') || lowerCat.includes('tech') || lowerCat.includes('informática') || lowerCat.includes('inovação')) {
+        filterCat = 'tech';
+    } else if (lowerCat === 'logistics' || lowerCat.includes('logística') || lowerCat.includes('logistics') || lowerCat.includes('supply') || lowerCat.includes('projetos') || lowerCat.includes('avaliação')) {
+        filterCat = 'logistics';
+    } else if (lowerCat === 'consulting' || lowerCat.includes('consultoria') || lowerCat.includes('consulting') || lowerCat.includes('serviços') || lowerCat.includes('tradução') || lowerCat.includes('formação') || lowerCat.includes('jurídica')) {
         filterCat = 'consulting';
     }
 
@@ -1062,16 +1443,16 @@ function renderOpportunityWall(params = {}) {
     if (filterCat !== 'all') {
         list = list.filter(item => {
             const cat = (item.category || '').toLowerCase();
-            if (filterCat === 'commodities') {
-                return cat.includes('commodities') || cat.includes('agro') || cat.includes('agronegócio') || cat.includes('açúcar') || cat.includes('minério') || cat.includes('trading');
-            } else if (filterCat === 'logistics') {
-                return cat.includes('logística') || cat.includes('logistics') || cat.includes('supply') || cat.includes('grãos') || cat.includes('frete');
-            } else if (filterCat === 'tech') {
-                return cat.includes('tecnologia') || cat.includes('tech') || cat.includes('informática') || cat.includes('data center') || cat.includes('redes') || cat.includes('desenvolvimento');
+            if (filterCat === 'agro') {
+                return cat.includes('agro') || cat.includes('commodities') || cat.includes('açúcar') || cat.includes('caju') || cat.includes('soja') || cat.includes('minério') || cat.includes('trading') || cat.includes('agroneg');
             } else if (filterCat === 'energy') {
-                return cat.includes('energia') || cat.includes('energy') || cat.includes('solar') || cat.includes('petróleo') || cat.includes('gás') || cat.includes('elétrica');
+                return cat.includes('energia') || cat.includes('energy') || cat.includes('solar') || cat.includes('petróleo') || cat.includes('gás') || cat.includes('elétrica') || cat.includes('indústria') || cat.includes('industrial');
+            } else if (filterCat === 'tech') {
+                return cat.includes('tecnologia') || cat.includes('tech') || cat.includes('informática') || cat.includes('inovação') || cat.includes('data center') || cat.includes('redes') || cat.includes('desenvolvimento') || cat.includes('ti');
+            } else if (filterCat === 'logistics') {
+                return cat.includes('logística') || cat.includes('logistics') || cat.includes('supply') || cat.includes('frete') || cat.includes('projetos') || cat.includes('avaliação') || cat.includes('monitoria') || cat.includes('aduaneiro');
             } else if (filterCat === 'consulting') {
-                return cat.includes('consultoria') || cat.includes('consulting') || cat.includes('projectos') || cat.includes('tradução') || cat.includes('documentos') || cat.includes('jurídica');
+                return cat.includes('consultoria') || cat.includes('consulting') || cat.includes('tradução') || cat.includes('documentos') || cat.includes('jurídica') || cat.includes('formação') || cat.includes('serviços') || cat.includes('finanças') || cat.includes('pmes');
             }
             return cat.includes(filterCat.toLowerCase());
         });
@@ -1121,156 +1502,269 @@ function renderOpportunityWall(params = {}) {
     });
 }
 
-// Central category details styling helper
+// Central category details — 5 canonical categories derived from GV-CPS green palette
 function getCategoryDetails(category) {
     const cat = (category || '').toLowerCase();
-    let code = 'consulting';
-    let label = 'Consultoria';
-    let icon = 'business_center';
-    
-    if (cat.includes('agro') || cat.includes('caju') || cat.includes('soja') || cat.includes('açúcar')) {
-        code = 'commodities';
-        label = 'Commodities/Agro';
-        icon = 'agriculture';
-    } else if (cat.includes('logística') || cat.includes('supply') || cat.includes('frete') || cat.includes('transporte')) {
-        code = 'logistics';
-        label = 'Logística';
-        icon = 'local_shipping';
-    } else if (cat.includes('tecnologia') || cat.includes('tech') || cat.includes('informática') || cat.includes('data center') || cat.includes('redes') || cat.includes('desenvolvimento') || cat.includes('ti')) {
-        code = 'tech';
-        label = 'Tecnologia';
-        icon = 'devices';
-    } else if (cat.includes('energia') || cat.includes('energy') || cat.includes('solar') || cat.includes('petróleo') || cat.includes('gás') || cat.includes('elétrica')) {
-        code = 'energy';
-        label = 'Energia';
-        icon = 'bolt';
+    // Default: Consultoria & Servicos
+    let code    = 'consulting';
+    let label   = 'Consultoria & Servicos';
+    let icon    = 'business_center';
+    let sublabel = 'SERVICOS PROFISSIONAIS';
+
+    if (
+        cat.includes('agro') || cat.includes('caju') || cat.includes('soja') ||
+        cat.includes('açúcar') || cat.includes('minério') || cat.includes('commodities') ||
+        cat.includes('trading') || cat.includes('agroneg') || cat.includes('sementes') ||
+        cat.includes('fertiliz') || cat.includes('castanha') || cat.includes('mercado agr')
+    ) {
+        code     = 'agro';
+        label    = 'Agro & Commodities';
+        icon     = 'agriculture';
+        sublabel = 'MERCADO AGRICOLA';
+    } else if (
+        cat.includes('energia') || cat.includes('energy') || cat.includes('solar') ||
+        cat.includes('petróleo') || cat.includes('gás') || cat.includes('elétrica') ||
+        cat.includes('industrial') || cat.includes('indústria') || cat.includes('subestação') ||
+        cat.includes('renovável') || cat.includes('fotovolt') || cat.includes('infraestrutura industrial')
+    ) {
+        code     = 'energy';
+        label    = 'Energia & Industria';
+        icon     = 'bolt';
+        sublabel = 'INFRAESTRUTURA INDUSTRIAL';
+    } else if (
+        cat.includes('tecnologia') || cat.includes('tech') || cat.includes('informática') ||
+        cat.includes('inovação') || cat.includes('data center') || cat.includes('redes') ||
+        cat.includes('desenvolvimento') || cat.includes('software') || cat.includes('ti') ||
+        cat.includes('iot') || cat.includes('conectividade') || cat.includes('servidores')
+    ) {
+        code     = 'tech';
+        label    = 'Tecnologia & Inovacao';
+        icon     = 'devices';
+        sublabel = 'SOFTWARE CORPORATIVO';
+    } else if (
+        cat.includes('logística') || cat.includes('logistics') || cat.includes('supply') ||
+        cat.includes('frete') || cat.includes('avaliação') || cat.includes('monitoria') ||
+        cat.includes('projectos') || cat.includes('projetos') || cat.includes('aduaneiro') ||
+        cat.includes('marítimo') || cat.includes('terrestre') || cat.includes('infraestrutura')
+    ) {
+        code     = 'logistics';
+        label    = 'Logistica & Projetos';
+        icon     = 'local_shipping';
+        sublabel = 'GESTAO DE PROJECTOS';
     }
-    return { code, label, icon };
+
+    return { code, label, icon, sublabel };
 }
 
 function createOpportunityCard(item) {
     const card = document.createElement('div');
-    
     const lang = localStorage.getItem('gvcps_lang') || 'pt';
-    
-    const { code: catCode, label: catLabel, icon: catIcon } = getCategoryDetails(item.category);
+    const { code: catCode, label: catLabel, icon: catIcon, sublabel: catSublabel } = getCategoryDetails(item.category);
 
-    card.className = `opportunity-card cat-theme-${catCode} cat-border-accent bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant transition-all duration-300 flex flex-col h-full cursor-pointer hover:shadow-lg`;
-    
-    // Choose appropriate image
-    let imgUrl = 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80'; // Default boardroom
-    if (catCode === 'commodities') {
-        if (item.title.toLowerCase().includes('minério') || item.title.toLowerCase().includes('ferro')) {
-            imgUrl = 'https://images.unsplash.com/photo-1587919946444-650059e7428f?auto=format&fit=crop&w=800&q=80';
-        } else {
-            imgUrl = 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80';
-        }
-    } else if (catCode === 'tech') {
-        imgUrl = 'https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&w=800&q=80';
-    } else if (catCode === 'energy') {
-        imgUrl = 'https://images.unsplash.com/photo-1508514177221-18d162b85567?auto=format&fit=crop&w=800&q=80';
-    } else if (catCode === 'logistics') {
-        imgUrl = 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80';
-    }
-    
-    // Country flag mapping
-    let flag = '🌎';
-    const c = (item.country || '').toLowerCase();
-    if (c.includes('moçambique')) flag = '🇲🇿';
-    else if (c.includes('brasil')) flag = '🇧🇷';
+    card.className = `opportunity-card cat-theme-${catCode} bg-white rounded-2xl overflow-hidden border border-slate-200 flex flex-col justify-between`;
+    card.style.cssText = 'border-top: 4px solid var(--cat-color); box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s ease;';
+    card.onmouseover = () => {
+        card.style.transform = 'translateY(-5px)';
+        card.style.boxShadow = '0 16px 30px -6px rgba(2,56,64,0.12), 0 4px 12px -2px rgba(2,56,64,0.06)';
+    };
+    card.onmouseout = () => {
+        card.style.transform = '';
+        card.style.boxShadow = '0 2px 8px rgba(0,0,0,0.06)';
+    };
+
+    const titleText  = getTranslatedField(item, 'title');
+    const countryText = getTranslatedField(item, 'country');
+    const qtyText    = getTranslatedField(item, 'quantity');
+
+    // ---- Hero image per category — aligned with reference ----
+    const imgMap = {
+        agro: [
+            'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&w=800&q=80'
+        ],
+        energy: [
+            'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=800&q=80'
+        ],
+        tech: [
+            'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80'
+        ],
+        logistics: [
+            'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1519003300449-424ad0405076?auto=format&fit=crop&w=800&q=80'
+        ],
+        consulting: [
+            'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=800&q=80'
+        ]
+    };
+    const imgPool = imgMap[catCode] || imgMap.consulting;
+    const imgUrl = imgPool[item.id.charCodeAt(item.id.length - 1) % imgPool.length];
+
+    // ---- Country flag ----
+    let flag = '';
+    const c = countryText.toLowerCase();
+    if (c.includes('moçambique') || c.includes('mozambique')) flag = '🇲🇿';
+    else if (c.includes('brasil') || c.includes('brazil')) flag = '🇧🇷';
     else if (c.includes('portugal')) flag = '🇵🇹';
     else if (c.includes('china')) flag = '🇨🇳';
     else if (c.includes('emirados') || c.includes('árabes') || c.includes('dubai')) flag = '🇦🇪';
-    
-    const isLogisticsTrue = item.logistics === 'Sim';
-    
-    const labelVolume = lang === 'pt' ? 'Volume' : 'Volume';
-    const labelCountry = lang === 'pt' ? 'País' : 'Country';
-    const labelLogistics = lang === 'pt' ? 'Logística' : 'Logistics';
-    const valLogistics = isLogisticsTrue ? (lang === 'pt' ? 'Incluída' : 'Included') : (lang === 'pt' ? 'Não Incluída' : 'Not Included');
-    const labelPublished = lang === 'pt' ? `Publicado em ${formatDate(item.date)}` : `Published on ${formatDate(item.date)}`;
-    const labelInterest = lang === 'pt' ? 'Tenho Interesse' : 'I am Interested';
-    
-    let featuredBadge = '';
-    if (item.featured) {
-        featuredBadge = `
-            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm border border-amber-300 text-amber-600 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-sm">
-                <span class="material-symbols-outlined text-[12px] fill-current">star</span>
-                Destaque
-            </div>
-        `;
-    }
+    else flag = '🌐';
+
+    // ---- Type badge ----
+    const typeRaw  = item.type || 'procura';
+    const typePill = typeRaw === 'oferta' ? 'oferta' : (item.serviceType === 'servico' ? 'servico' : (item.serviceType === 'projeto' ? 'projeto' : 'demanda'));
+    const typeLabels = {
+        demanda: lang === 'pt' ? 'DEMANDA'  : 'DEMAND',
+        oferta:  lang === 'pt' ? 'OFERTA'   : 'OFFER',
+        servico: lang === 'pt' ? 'SERVICO'  : 'SERVICE',
+        projeto: lang === 'pt' ? 'PROJETO'  : 'PROJECT'
+    };
+    const typeLabel = typeLabels[typePill] || 'DEMANDA';
+
+    // ---- Logistics label ----
+    const isLog = item.logistics === 'Sim';
+    const logLabel = isLog
+        ? (lang === 'pt' ? 'CIF Incluido' : 'CIF Included')
+        : (lang === 'pt' ? 'Nao Incluida' : 'Not Included');
+
+    // ---- Volume label (context-aware) ----
+    const labelVol = (() => {
+        if (catCode === 'logistics' || catCode === 'consulting') return lang === 'pt' ? 'Escopo' : 'Scope';
+        return lang === 'pt' ? 'Volume' : 'Volume';
+    })();
+    const labelCountryKey = catCode === 'logistics' ? (lang === 'pt' ? 'Destino' : 'Destination') : (lang === 'pt' ? 'Pais Destino' : 'Country');
+    const labelTerms = catCode === 'logistics' ? (lang === 'pt' ? 'Regime' : 'Regime') : (lang === 'pt' ? 'Logistica' : 'Logistics');
+    const labelDate  = lang === 'pt' ? 'Data' : 'Date';
+    const labelInterest = lang === 'pt' ? 'TENHO INTERESSE' : 'I AM INTERESTED';
 
     card.innerHTML = `
-        <div class="relative h-48 w-full overflow-hidden">
-            <img class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" 
-                 src="${imgUrl}" 
-                 alt="${item.title}">
-            <div class="absolute top-4 left-4 flex gap-1.5 items-center">
-                <span class="cat-badge px-3 py-1 rounded-full text-label-sm font-label-lg backdrop-blur-sm flex items-center gap-1">
-                    <span class="material-symbols-outlined text-[14px]">${catIcon}</span>
+        <!-- Hero image -->
+        <div class="relative overflow-hidden" style="height:180px;">
+            <img
+                src="${imgUrl}"
+                alt="${titleText}"
+                loading="lazy"
+                style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;"
+                onmouseover="this.style.transform='scale(1.05)'"
+                onmouseout="this.style.transform='scale(1)'"
+            >
+            <!-- Dark gradient overlay -->
+            <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.05) 60%, transparent 100%);"></div>
+
+            <!-- Category badge (top left) -->
+            <div style="position:absolute;top:12px;left:12px;">
+                <span class="cat-badge" style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:0.06em;backdrop-filter:blur(6px);">
+                    <span class="material-symbols-outlined" style="font-size:12px;">${catIcon}</span>
                     ${catLabel}
                 </span>
             </div>
-            ${featuredBadge}
+
+            <!-- Type badge (top right) -->
+            <div style="position:absolute;top:12px;right:12px;">
+                <span class="card-type-pill ${typePill}">${typeLabel}</span>
+            </div>
         </div>
-        <div class="p-6 flex flex-col flex-grow">
-            <h3 class="font-headline-sm text-headline-sm text-primary mb-4 h-16 line-clamp-2" title="${item.title}">${item.title}</h3>
-            
-            <div class="space-y-3 mb-6 flex-grow">
-                <div class="flex items-center gap-2 text-on-surface-variant">
-                    <span class="material-symbols-outlined cat-text text-[18px]">inventory_2</span>
-                    <span class="font-label-lg text-label-lg">${labelVolume}: ${item.quantity}</span>
+
+        <!-- Card body -->
+        <div style="padding:18px 18px 20px;display:flex;flex-direction:column;flex:1;gap:10px;">
+
+            <!-- Subcategory + Title -->
+            <div>
+                <span class="card-subcategory-label">${catSublabel}</span>
+                <h3 style="margin:0;font-size:14px;font-weight:800;line-height:1.35;color:#0f172a;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;" title="${titleText}">${titleText}</h3>
+            </div>
+
+            <!-- Detail rows -->
+            <div style="flex:1;margin-top:4px;">
+                <div class="card-detail-row">
+                    <span class="card-detail-label">
+                        <span class="material-symbols-outlined">inventory_2</span>
+                        ${labelVol}:
+                    </span>
+                    <span class="card-detail-value">${qtyText}</span>
                 </div>
-                <div class="flex items-center gap-2 text-on-surface-variant">
-                    <span class="material-symbols-outlined cat-text text-[18px]">public</span>
-                    <span class="font-label-lg text-label-lg flex items-center gap-1.5">${labelCountry}: ${item.country} <span class="text-[1.1rem] leading-none">${flag}</span></span>
+                <div class="card-detail-row">
+                    <span class="card-detail-label">
+                        <span class="material-symbols-outlined">public</span>
+                        ${labelCountryKey}:
+                    </span>
+                    <span class="card-detail-value" style="display:flex;align-items:center;gap:4px;">
+                        ${countryText} <span style="font-size:14px;line-height:1;">${flag}</span>
+                    </span>
                 </div>
-                <div class="flex items-center gap-2 text-on-surface-variant">
-                    <span class="material-symbols-outlined cat-text text-[18px]">${isLogisticsTrue ? 'local_shipping' : 'block'}</span>
-                    <span class="font-label-lg text-label-lg">${labelLogistics}: ${valLogistics}</span>
+                <div class="card-detail-row">
+                    <span class="card-detail-label">
+                        <span class="material-symbols-outlined">${isLog ? 'local_shipping' : 'remove_circle_outline'}</span>
+                        ${labelTerms}:
+                    </span>
+                    <span class="card-detail-value tag">${isLog ? '&#10003; ' : ''}${logLabel}</span>
                 </div>
-                <div class="flex items-center gap-2 text-on-surface-variant/60">
-                    <span class="material-symbols-outlined text-[18px]">calendar_today</span>
-                    <span class="font-label-sm text-label-sm">${labelPublished}</span>
+                <div class="card-detail-row" style="border:none;padding-bottom:0;">
+                    <span class="card-detail-label">
+                        <span class="material-symbols-outlined">calendar_today</span>
+                        ${labelDate}:
+                    </span>
+                    <span class="card-detail-value" style="color:#64748b;font-weight:500;">${formatDate(item.date)}</span>
                 </div>
             </div>
 
-            <button onclick="event.stopPropagation(); window.location.hash='detail?id=${item.id}&type=${item.type}'" 
-                    class="w-full py-4 px-6 rounded-lg font-label-lg text-label-lg font-bold hover:opacity-90 active:scale-95 transition-all uppercase tracking-wider border-none cursor-pointer"
-                    style="background-color: var(--cat-color) !important; color: white !important;">
-                ${labelInterest}
-            </button>
-        </div>
+            <!-- CTA Button -->
+            <div style="padding:0 18px 20px;">
+                <button
+                    onclick="event.stopPropagation(); window.location.hash='detail?id=${item.id}&type=${item.type}'"
+                    style="width:100%;padding:12px;border-radius:12px;border:none;cursor:pointer;font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#fff;background-color:var(--cat-color);box-shadow:0 4px 10px -2px rgba(0,0,0,0.18);transition:background-color 0.2s,transform 0.15s;display:flex;align-items:center;justify-content:center;gap:8px;"
+                    onmouseover="this.style.backgroundColor='var(--cat-hover)'"
+                    onmouseout="this.style.backgroundColor='var(--cat-color)'"
+                    onmousedown="this.style.transform='scale(0.97)'"
+                    onmouseup="this.style.transform='scale(1)'"
+                >
+                    ${labelInterest}
+                    <span style="font-size:13px;transition:transform 0.2s;" class="arrow-icon">&rarr;</span>
+                </button>
+            </div>
     `;
-    
+
     card.addEventListener('click', () => {
         window.location.hash = `detail?id=${item.id}&type=${item.type}`;
     });
-    
+
     return card;
 }
+
 
 function renderDetailView(id, type) {
     const list = type === 'procura' ? appState.requirements : appState.offers;
     const item = list.find(x => x.id === id);
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
     
     if (!item) {
-        alert('Oportunidade não encontrada.');
+        alert(lang === 'pt' ? 'Oportunidade não encontrada.' : 'Opportunity not found.');
         window.location.hash = 'wall';
         return;
     }
     
-    document.getElementById('detail-title').textContent = item.title;
-    document.getElementById('detail-type-badge').textContent = type === 'procura' ? 'PROCURA-SE / DEMANDA' : 'OFERTA / DISPONÍVEL';
+    const translatedTitle = getTranslatedField(item, 'title');
+    const translatedDesc = getTranslatedField(item, 'description');
+    const translatedCategory = getTranslatedField(item, 'category');
+    const translatedQuantity = getTranslatedField(item, 'quantity');
+    const translatedCountry = getTranslatedField(item, 'country');
+    
+    document.getElementById('detail-title').textContent = translatedTitle;
+    document.getElementById('detail-type-badge').textContent = type === 'procura' 
+        ? (lang === 'pt' ? 'PROCURA-SE / DEMANDA' : 'BUYING / DEMAND') 
+        : (lang === 'pt' ? 'OFERTA / DISPONÍVEL' : 'SELLING / AVAILABLE');
     document.getElementById('detail-type-badge').className = `card-type-badge ${type === 'procura' ? 'procura' : 'oferta'}`;
     
-    document.getElementById('detail-desc').textContent = item.description;
+    document.getElementById('detail-desc').textContent = translatedDesc;
     
-    document.getElementById('detail-spec-category').textContent = item.category;
-    document.getElementById('detail-spec-quantity').textContent = item.quantity;
-    document.getElementById('detail-spec-country').textContent = item.country;
-    document.getElementById('detail-spec-logistics').textContent = item.logistics === 'Sim' ? 'Sim (Incluída na facturação GV-CPS)' : 'Não (Por conta do cliente)';
+    document.getElementById('detail-spec-category').textContent = translatedCategory;
+    document.getElementById('detail-spec-quantity').textContent = translatedQuantity;
+    document.getElementById('detail-spec-country').textContent = translatedCountry;
+    document.getElementById('detail-spec-logistics').textContent = item.logistics === 'Sim' 
+        ? (lang === 'pt' ? 'Sim (Incluída na facturação GV-CPS)' : 'Yes (Included in GV-CPS invoicing)') 
+        : (lang === 'pt' ? 'Não (Por conta do cliente)' : 'No (Handled by the client)');
     document.getElementById('detail-spec-date').textContent = formatDate(item.date);
     
     // Render Admin-Only Contacts
@@ -1293,7 +1787,11 @@ function renderDetailView(id, type) {
     // Custom button click behavior
     actionBtn.onclick = () => {
         // Open simulation form for showing interest
-        alert(`O seu interesse na proposta "${item.title}" foi registado na plataforma GV-CPS.\n\nUm consultor especializado irá fazer a análise e entrará em contacto directo consigo via email para prosseguir com a intermediação.\n\n(Lembre-se: por regras de segurança, o contacto direto entre as contrapartes é proibido).`);
+        if (lang === 'pt') {
+            alert(`O seu interesse na proposta "${translatedTitle}" foi registado na plataforma GV-CPS.\n\nUm consultor especializado irá fazer a análise e entrará em contacto directo consigo via email para prosseguir com a intermediação.\n\n(Lembre-se: por regras de segurança, o contacto direto entre as contrapartes é proibido).`);
+        } else {
+            alert(`Your interest in the proposal "${translatedTitle}" has been registered on the GV-CPS platform.\n\nA specialized consultant will analyze it and contact you directly via email to proceed with the intermediation.\n\n(Remember: for security rules, direct contact between counterparties is prohibited).`);
+        }
     };
     
     // Set dynamic detail image
@@ -2285,6 +2783,13 @@ function renderPortalChat(containerId, matchId, channelType) {
     const area = document.getElementById(`${containerId}-messages-area`);
     area.innerHTML = '';
     
+    // Setup Supabase real-time sync if we have a real user session
+    if (appState.currentUser && appState.currentUser.id && appState.currentUser.id.includes('-')) {
+        setTimeout(() => {
+            setupSupabaseChat(matchId, channelType, containerId);
+        }, 50);
+    }
+    
     if (msgs.length === 0) {
         area.innerHTML = `<div class="text-center py-6 opacity-60 font-italic">Sem mensagens. Escreva algo para iniciar a intermediação.</div>`;
     } else {
@@ -2364,7 +2869,7 @@ function renderPortalChat(containerId, matchId, channelType) {
     area.scrollTop = area.scrollHeight;
 }
 
-window.sendChatMessage = function(matchId, channelType, inputFieldId) {
+window.sendChatMessage = async function(matchId, channelType, inputFieldId) {
     const input = document.getElementById(inputFieldId);
     const text = input.value.trim();
     if (!text) return;
@@ -2378,26 +2883,44 @@ window.sendChatMessage = function(matchId, channelType, inputFieldId) {
     const senderId = appState.currentUser.id;
     const senderRole = appState.currentUser.role;
     
-    appState.messages.push({
-        id: `msg_${appState.messages.length + 1}`,
-        matchId: matchId,
-        senderId: senderId,
-        senderRole: senderRole,
-        text: text,
-        timestamp: new Date().toISOString(),
-        channel: channelType
-    });
+    // If Supabase user, push to database
+    if (senderId && senderId.includes('-')) {
+        try {
+            const rooms = await window.gvApi.getChatRooms(senderId);
+            const activeRoom = rooms.find(r => r.negotiation_id === matchId);
+            if (activeRoom) {
+                await window.gvApi.sendChatMessage(activeRoom.id, senderId, text);
+            } else {
+                console.warn("Sala de chat correspondente não encontrada no Supabase.");
+            }
+        } catch (e) {
+            console.error("Erro ao enviar mensagem no Supabase:", e);
+        }
+    } else {
+        // Fallback simulated local push
+        appState.messages.push({
+            id: `msg_${appState.messages.length + 1}`,
+            matchId: matchId,
+            senderId: senderId,
+            senderRole: senderRole,
+            text: text,
+            timestamp: new Date().toISOString(),
+            channel: channelType
+        });
+        saveState();
+    }
     
     input.value = '';
-    saveState();
     
-    // Re-render
-    if (senderRole === 'consultant') {
-        renderConsultantPortal('negotiation', matchId);
-    } else if (senderRole === 'buyer') {
-        renderBuyerPortal('detail');
-    } else if (senderRole === 'supplier') {
-        renderSupplierPortal('detail');
+    // Re-render (for local users, Supabase users will be updated via Realtime trigger automatically)
+    if (!senderId || !senderId.includes('-')) {
+        if (senderRole === 'consultant') {
+            renderConsultantPortal('negotiation', matchId);
+        } else if (senderRole === 'buyer') {
+            renderBuyerPortal('detail');
+        } else if (senderRole === 'supplier') {
+            renderSupplierPortal('detail');
+        }
     }
 };
 
@@ -2458,12 +2981,13 @@ function detectContactInfo(text) {
 function validateFieldForContacts(inputId, warningId) {
     const input = document.getElementById(inputId);
     const warning = document.getElementById(warningId);
+    if (!input) return;
     
     if (detectContactInfo(input.value)) {
-        warning.classList.add('show');
+        if (warning) warning.classList.add('show');
         input.style.borderColor = 'var(--error)';
     } else {
-        warning.classList.remove('show');
+        if (warning) warning.classList.remove('show');
         input.style.borderColor = 'var(--outline-variant)';
     }
 }
@@ -2472,7 +2996,7 @@ function setupFormHandlers() {
     // Need Form Submit
     const needForm = document.getElementById('need-form');
     if (needForm) {
-        needForm.addEventListener('submit', (e) => {
+        needForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const title = document.getElementById('need-title').value.trim();
@@ -2488,23 +3012,49 @@ function setupFormHandlers() {
                 return;
             }
             
-            // Create target requirement
-            const newId = `req_${appState.requirements.length + 1}`;
-            appState.requirements.push({
-                id: newId,
-                title: title,
-                category: category,
-                description: description,
-                quantity: quantity,
-                country: country,
-                logistics: logistics,
-                date: new Date().toISOString().split('T')[0],
-                status: 'pendente',
-                owner: appState.currentUser.id || 'buyer_1', // Assign to simulated buyer if logged out
-                assignedConsultant: null
-            });
+            const pushLocal = () => {
+                const newId = `req_${appState.requirements.length + 1}`;
+                appState.requirements.push({
+                    id: newId,
+                    title: title,
+                    category: category,
+                    description: description,
+                    quantity: quantity,
+                    country: country,
+                    logistics: logistics,
+                    date: new Date().toISOString().split('T')[0],
+                    status: 'pendente',
+                    owner: appState.currentUser.id || 'buyer_1',
+                    assignedConsultant: null
+                });
+                saveState();
+            };
+
+            // Check if logged in with real Supabase user
+            if (appState.currentUser && appState.currentUser.id && appState.currentUser.id.includes('-')) {
+                try {
+                    await window.gvApi.postRequirement({
+                        buyer_id: appState.currentUser.id,
+                        title: title,
+                        category: category,
+                        description: description,
+                        quantity: parseFloat(quantity) || 1,
+                        country: country,
+                        logistics_included: logistics === 'Sim'
+                    }, {
+                        email: appState.currentUser.email || 'contato@gvcps.com',
+                        whatsapp: '+258 84 000 0000'
+                    });
+                    
+                    await syncMuralFromSupabase();
+                } catch (err) {
+                    console.error("Erro no Supabase. Gravando local:", err);
+                    pushLocal();
+                }
+            } else {
+                pushLocal();
+            }
             
-            saveState();
             alert('Necessidade publicada com sucesso no sistema! A sua proposta foi inserida em fila de análise técnica pelos nossos consultores. Não contêm dados expostos publicamente.');
             window.location.hash = 'wall';
         });
@@ -2513,7 +3063,7 @@ function setupFormHandlers() {
     // Offer Form Submit
     const offerForm = document.getElementById('offer-form');
     if (offerForm) {
-        offerForm.addEventListener('submit', (e) => {
+        offerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const title = document.getElementById('offer-title').value.trim();
@@ -2528,44 +3078,182 @@ function setupFormHandlers() {
                 return;
             }
             
-            const newId = `off_${appState.offers.length + 1}`;
-            appState.offers.push({
-                id: newId,
-                title: title,
-                category: category,
-                description: description,
-                quantity: quantity,
-                country: country,
-                logistics: logistics,
-                date: new Date().toISOString().split('T')[0],
-                status: 'pendente',
-                owner: appState.currentUser.id || 'supplier_1',
-                assignedConsultant: null
-            });
+            const pushLocal = () => {
+                const newId = `off_${appState.offers.length + 1}`;
+                appState.offers.push({
+                    id: newId,
+                    title: title,
+                    category: category,
+                    description: description,
+                    quantity: quantity,
+                    country: country,
+                    logistics: logistics,
+                    date: new Date().toISOString().split('T')[0],
+                    status: 'pendente',
+                    owner: appState.currentUser.id || 'supplier_1',
+                    assignedConsultant: null
+                });
+                saveState();
+            };
+
+            // Check if logged in with real Supabase user
+            if (appState.currentUser && appState.currentUser.id && appState.currentUser.id.includes('-')) {
+                try {
+                    await window.gvApi.postOffer({
+                        supplier_id: appState.currentUser.id,
+                        title: title,
+                        category: category,
+                        description: description,
+                        quantity: parseFloat(quantity) || 1,
+                        country: country,
+                        logistics_included: logistics === 'Sim'
+                    }, {
+                        email: appState.currentUser.email || 'contato@gvcps.com',
+                        whatsapp: '+258 84 000 0000'
+                    });
+                    
+                    await syncMuralFromSupabase();
+                } catch (err) {
+                    console.error("Erro no Supabase. Gravando local:", err);
+                    pushLocal();
+                }
+            } else {
+                pushLocal();
+            }
             
-            saveState();
             alert('Oferta de fornecimento publicada de forma gratuita na plataforma GV-CPS! Entrou na fila de correspondência comercial.');
             window.location.hash = 'wall';
         });
     }
+}
     
-    // Auto country recognition from WhatsApp prefix
+    // =====================================================================
+    // EXTENSÕES DO WIZARD (DDI, FORMATTING, SLIDER)
+    // =====================================================================
     const wizardWhatsapp = document.getElementById('wizard-contact-whatsapp');
+    const whatsappFlagBadge = document.getElementById('whatsapp-flag-badge');
+    const countrySelect = document.getElementById('wizard-contact-country');
+
+    function formatWhatsAppNumber(value) {
+        let cleaned = value.replace(/[^\d+]/g, '');
+        if (cleaned && !cleaned.startsWith('+')) {
+            cleaned = '+' + cleaned;
+        }
+        
+        let flag = '🌐';
+        let countryVal = '';
+        
+        if (cleaned.startsWith('+258')) {
+            flag = '🇲🇿';
+            countryVal = 'Moçambique';
+            let rest = cleaned.substring(4).replace(/\s/g, '');
+            let formatted = '+258';
+            if (rest.length > 0) {
+                if (rest.length <= 2) formatted += ' ' + rest;
+                else if (rest.length <= 5) formatted += ' ' + rest.substring(0, 2) + ' ' + rest.substring(2);
+                else formatted += ' ' + rest.substring(0, 2) + ' ' + rest.substring(2, 5) + ' ' + rest.substring(5, 9);
+            }
+            return { text: formatted, flag, country: countryVal };
+        } else if (cleaned.startsWith('+351')) {
+            flag = '🇵🇹';
+            countryVal = 'Portugal';
+            let rest = cleaned.substring(4).replace(/\s/g, '');
+            let formatted = '+351';
+            if (rest.length > 0) {
+                if (rest.length <= 3) formatted += ' ' + rest;
+                else if (rest.length <= 6) formatted += ' ' + rest.substring(0, 3) + ' ' + rest.substring(3);
+                else formatted += ' ' + rest.substring(0, 3) + ' ' + rest.substring(3, 6) + ' ' + rest.substring(6, 9);
+            }
+            return { text: formatted, flag, country: countryVal };
+        } else if (cleaned.startsWith('+55')) {
+            flag = '🇧🇷';
+            countryVal = 'Brasil';
+            let rest = cleaned.substring(3).replace(/[\s\(\)\-]/g, '');
+            let formatted = '+55';
+            if (rest.length > 0) {
+                if (rest.length <= 2) formatted += ' (' + rest;
+                else if (rest.length <= 7) formatted += ' (' + rest.substring(0, 2) + ') ' + rest.substring(2);
+                else formatted += ' (' + rest.substring(0, 2) + ') ' + rest.substring(2, 7) + '-' + rest.substring(7, 11);
+            }
+            return { text: formatted, flag, country: countryVal };
+        } else if (cleaned.startsWith('+971')) {
+            flag = '🇦🇪';
+            countryVal = 'Emirados Árabes';
+            let rest = cleaned.substring(4).replace(/\s/g, '');
+            let formatted = '+971';
+            if (rest.length > 0) {
+                if (rest.length <= 2) formatted += ' ' + rest;
+                else if (rest.length <= 5) formatted += ' ' + rest.substring(0, 2) + ' ' + rest.substring(2);
+                else formatted += ' ' + rest.substring(0, 2) + ' ' + rest.substring(2, 5) + ' ' + rest.substring(5, 9);
+            }
+            return { text: formatted, flag, country: countryVal };
+        }
+        
+        return { text: cleaned, flag, country: countryVal };
+    }
+
     if (wizardWhatsapp) {
         wizardWhatsapp.addEventListener('input', (e) => {
-            const val = e.target.value.trim();
-            const countrySelect = document.getElementById('wizard-contact-country');
-            if (countrySelect) {
-                if (val.startsWith('+258')) {
-                    countrySelect.value = 'Moçambique';
-                } else if (val.startsWith('+55')) {
-                    countrySelect.value = 'Brasil';
-                } else if (val.startsWith('+351')) {
-                    countrySelect.value = 'Portugal';
-                } else if (val.startsWith('+971')) {
-                    countrySelect.value = 'Emirados Árabes';
-                }
+            let cursorPosition = e.target.selectionStart;
+            let originalLength = e.target.value.length;
+            
+            const res = formatWhatsAppNumber(e.target.value);
+            e.target.value = res.text;
+            
+            let newLength = e.target.value.length;
+            e.target.selectionStart = e.target.selectionEnd = cursorPosition + (newLength - originalLength);
+
+            if (whatsappFlagBadge) {
+                whatsappFlagBadge.textContent = res.flag;
             }
+            if (countrySelect && res.country) {
+                countrySelect.value = res.country;
+            }
+        });
+    }
+
+    if (countrySelect) {
+        countrySelect.addEventListener('change', (e) => {
+            const country = e.target.value;
+            if (!wizardWhatsapp) return;
+            
+            let prefix = '';
+            let flag = '🌐';
+            
+            if (country === 'Moçambique') { prefix = '+258 '; flag = '🇲🇿'; }
+            else if (country === 'Portugal') { prefix = '+351 '; flag = '🇵🇹'; }
+            else if (country === 'Brasil') { prefix = '+55 '; flag = '🇧🇷'; }
+            else if (country === 'Emirados Árabes') { prefix = '+971 '; flag = '🇦🇪'; }
+            
+            wizardWhatsapp.value = prefix;
+            if (whatsappFlagBadge) whatsappFlagBadge.textContent = flag;
+            wizardWhatsapp.focus();
+        });
+    }
+
+    const qtyInput = document.getElementById('wizard-qty-input');
+    const qtySlider = document.getElementById('wizard-qty-slider');
+    
+    if (qtyInput && qtySlider) {
+        qtyInput.addEventListener('input', (e) => {
+            let val = parseFloat(e.target.value) || 1;
+            if (val > parseFloat(qtySlider.max)) {
+                qtySlider.max = val;
+                const maxLabel = document.getElementById('wizard-slider-max');
+                if (maxLabel) maxLabel.textContent = Math.round(val);
+            }
+            qtySlider.value = val;
+            wizardState.selectedQty = val.toString();
+            
+            document.querySelectorAll('#wizard-qty-chips .suggestion-chip').forEach(c => c.classList.remove('selected'));
+        });
+        
+        qtySlider.addEventListener('input', (e) => {
+            let val = e.target.value;
+            qtyInput.value = val;
+            wizardState.selectedQty = val.toString();
+            
+            document.querySelectorAll('#wizard-qty-chips .suggestion-chip').forEach(c => c.classList.remove('selected'));
         });
     }
 }
@@ -2582,6 +3270,73 @@ function resetForm(formId) {
     }
 }
 
+// BILINGUAL CHATBOT HELPER FUNCTIONS
+function detectMessageLanguage(text) {
+    const textLower = text.toLowerCase();
+    
+    // Keywords for English
+    const enKeywords = ["buy", "sell", "want", "need", "offer", "logistics", "shipping", "transport", "price", "how", "hello", "hi", "help", "thank", "english"];
+    // Keywords for Spanish
+    const esKeywords = ["comprar", "vender", "necesito", "oferta", "logistica", "transporte", "hola", "gracias", "ayuda", "contacto", "seguro"];
+    // Keywords for French
+    const frKeywords = ["acheter", "vendre", "besoin", "offre", "logistique", "transport", "bonjour", "merci", "aide", "securite"];
+    // Keywords for Portuguese
+    const ptKeywords = ["comprar", "vender", "preciso", "necessidade", "oferta", "logistica", "transporte", "ola", "obrigado", "ajuda", "seguro"];
+    
+    let enScore = 0, esScore = 0, frScore = 0, ptScore = 0;
+    
+    enKeywords.forEach(k => { if (textLower.includes(k)) enScore++; });
+    esKeywords.forEach(k => { if (textLower.includes(k)) esScore++; });
+    frKeywords.forEach(k => { if (textLower.includes(k)) frScore++; });
+    ptKeywords.forEach(k => { if (textLower.includes(k)) ptScore++; });
+    
+    if (enScore > 0 && enScore >= esScore && enScore >= frScore && enScore >= ptScore) return 'en';
+    if (esScore > 0 && esScore >= enScore && esScore >= frScore && esScore >= ptScore) return 'es';
+    if (frScore > 0 && frScore >= enScore && frScore >= esScore && frScore >= ptScore) return 'fr';
+    if (ptScore > 0 && ptScore >= enScore && ptScore >= esScore && ptScore >= frScore) return 'pt';
+    
+    return localStorage.getItem('gvcps_lang') || 'pt';
+}
+
+function getChatbotResponse(text) {
+    const lang = detectMessageLanguage(text);
+    const langResponses = UI_TRANSLATIONS[lang] || UI_TRANSLATIONS['pt'];
+    const textLower = text.toLowerCase();
+    
+    if (textLower.includes('comprar') || textLower.includes('necessidade') || textLower.includes('buy') || textLower.includes('need') || textLower.includes('compras') || textLower.includes('acheter') || textLower.includes('besoin')) {
+        return langResponses.bot_buy_response;
+    }
+    if (textLower.includes('vender') || textLower.includes('oferta') || textLower.includes('sell') || textLower.includes('offer') || textLower.includes('vendre') || textLower.includes('offre')) {
+        return langResponses.bot_sell_response;
+    }
+    if (textLower.includes('logistica') || textLower.includes('logistics') || textLower.includes('transporte') || textLower.includes('frete') || textLower.includes('shipping') || textLower.includes('fret') || textLower.includes('port')) {
+        return langResponses.bot_logistics_response;
+    }
+    if (textLower.includes('contacto') || textLower.includes('contact') || textLower.includes('direto') || textLower.includes('direct') || textLower.includes('segur') || textLower.includes('safe') || textLower.includes('whatsapp') || textLower.includes('email')) {
+        return langResponses.secure_negotiation_warning;
+    }
+    
+    return langResponses.bot_default_response;
+}
+
+function initWidgetChatMessages(lang = 'pt') {
+    const area = document.getElementById('widget-chat-messages');
+    if (!area) return;
+    area.innerHTML = '';
+    
+    const welcomeMsg = UI_TRANSLATIONS[lang].bot_welcome;
+    const botName = UI_TRANSLATIONS[lang].bot_name;
+    
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-bubble received';
+    bubble.innerHTML = `
+        <span class="chat-bubble-sender" style="color: var(--primary-light);">${botName}</span>
+        <p>${welcomeMsg}</p>
+        <span class="chat-bubble-time">${lang === 'pt' ? 'Agora' : 'Now'}</span>
+    `;
+    area.appendChild(bubble);
+}
+
 // CHATBOT WIDGET
 function setupChatWidget() {
     const chatFab = document.getElementById('chat-fab');
@@ -2590,7 +3345,6 @@ function setupChatWidget() {
     const chatIcon = document.getElementById('chat-icon');
     const chatForm = document.getElementById('widget-chat-form');
     const chatInput = document.getElementById('widget-chat-input');
-    const messagesContainer = document.getElementById('widget-chat-messages');
     
     if (!chatFab) return;
     
@@ -2627,27 +3381,24 @@ function setupChatWidget() {
             const text = chatInput.value.trim();
             if (!text) return;
             
+            const lang = localStorage.getItem('gvcps_lang') || 'pt';
+            
             // Check anti-contact
             if (detectContactInfo(text)) {
-                alert('NÃO EXPONHA CONTATOS: Para sua segurança no marketplace B2B da GV-CPS, não compartilhe telefones ou emails diretamente no chat.');
+                alert(UI_TRANSLATIONS[lang].alert_no_contacts);
                 return;
             }
             
             // User bubble
-            appendWidgetMessage('Você', text, 'sent');
+            const userLabel = lang === 'pt' ? 'Você' : 'You';
+            appendWidgetMessage(userLabel, text, 'sent');
             chatInput.value = '';
             
             // Delayed bot response simulation
             setTimeout(() => {
-                let botResponse = 'Obrigado pela sua mensagem. Sou o assistente automático da GV-CPS. Toda a nossa comunicação é confidencial e segura.';
-                if (text.toLowerCase().includes('comprar') || text.toLowerCase().includes('necessidade')) {
-                    botResponse = 'Para registar uma necessidade de compra, clique no botão "Publicar Necessidade" na parte superior da página. O formulário é curto e a nossa equipa tratará da intermediação com fornecedores validados.';
-                } else if (text.toLowerCase().includes('vender') || text.toLowerCase().includes('oferta')) {
-                    botResponse = 'Pode cadastrar a sua oferta de fornecimento gratuitamente clicando em "Publicar Oferta". Os fornecedores não pagam taxas de subscrição para expor produtos.';
-                } else if (text.toLowerCase().includes('logistica') || text.toLowerCase().includes('transporte')) {
-                    botResponse = 'A GV-CPS oferece logística integrada opcional. Pode optar por incluir o transporte de mercadorias no faturamento final da proposta.';
-                }
-                appendWidgetMessage('Assistente GV', botResponse, 'received');
+                const botResponse = getChatbotResponse(text);
+                const botName = UI_TRANSLATIONS[lang].bot_name;
+                appendWidgetMessage(botName, botResponse, 'received');
             }, 1000);
         });
     }
@@ -3863,6 +4614,9 @@ function openRequestWizard(preselectedSector = null) {
     document.getElementById('wizard-contact-whatsapp').value = '';
     document.getElementById('wizard-contact-email').value = '';
     document.getElementById('wizard-contact-desc').value = '';
+    if (document.getElementById('wizard-contact-port')) {
+        document.getElementById('wizard-contact-port').value = '';
+    }
     
     // Pre-fill contacts from logged-in user if available
     if (appState && appState.currentUser) {
@@ -3870,14 +4624,22 @@ function openRequestWizard(preselectedSector = null) {
         const fullUser = appState.users[uId];
         if (fullUser) {
             document.getElementById('wizard-contact-email').value = fullUser.email || '';
-            document.getElementById('wizard-contact-whatsapp').value = fullUser.whatsapp || '+258 ';
+            const phoneInput = document.getElementById('wizard-contact-whatsapp');
+            if (phoneInput) {
+                phoneInput.value = fullUser.whatsapp || '+258 ';
+                // Dispara o evento de input para que a bandeira e país sejam sincronizados imediatamente!
+                setTimeout(() => {
+                    phoneInput.dispatchEvent(new Event('input'));
+                }, 50);
+            }
         }
     }
 
     modal.classList.remove('hidden');
     modal.style.display = 'flex';
     
-    if (preselectedSector && GV_CATALOG[preselectedSector]) {
+    const activeCatalog = getCatalog();
+    if (preselectedSector && activeCatalog[preselectedSector]) {
         selectWizardSector(preselectedSector);
     } else {
         wizardState.currentStep = 1;
@@ -3912,13 +4674,17 @@ function renderCategoryChips() {
     if (!container) return;
     container.innerHTML = '';
     
-    const sector = GV_CATALOG[wizardState.selectedSector];
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    const activeCatalog = getCatalog();
+    const sector = activeCatalog[wizardState.selectedSector];
     if (!sector) {
         // Handle "other" or empty sectors
+        const label = lang === 'pt' ? 'Escreva a Categoria Desejada:' : 'Write the Desired Category:';
+        const placeholder = lang === 'pt' ? 'Ex: Construção Civil, Serviços Financeiros...' : 'e.g., Civil Construction, Financial Services...';
         container.innerHTML = `
             <div class="wizard-input-group" style="width: 100%;">
-                <label class="wizard-input-label">Escreva a Categoria Desejada:</label>
-                <input type="text" id="wizard-custom-category" class="wizard-input" placeholder="Ex: Construção Civil, Serviços Financeiros..." oninput="wizardState.selectedCategory = this.value">
+                <label class="wizard-input-label">${label}</label>
+                <input type="text" id="wizard-custom-category" class="wizard-input" placeholder="${placeholder}" oninput="wizardState.selectedCategory = this.value">
             </div>
         `;
         return;
@@ -3943,7 +4709,7 @@ function renderCategoryChips() {
     const otherChip = document.createElement('button');
     otherChip.className = 'suggestion-chip';
     otherChip.style.cssText = 'padding: 12px 24px; border-radius: 12px; font-weight: bold; border-style: dashed; border-color: var(--secondary);';
-    otherChip.textContent = 'Outro (Não listado)';
+    otherChip.textContent = lang === 'pt' ? 'Outro (Não listado)' : 'Other (Not listed)';
     otherChip.onclick = () => {
         wizardState.selectedCategory = 'outro';
         renderProductAndQtyChips();
@@ -3963,7 +4729,9 @@ function renderProductAndQtyChips() {
     prodContainer.innerHTML = '';
     qtyContainer.innerHTML = '';
     
-    const sector = GV_CATALOG[wizardState.selectedSector];
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    const activeCatalog = getCatalog();
+    const sector = activeCatalog[wizardState.selectedSector];
     const cat = sector ? sector.categories[wizardState.selectedCategory] : null;
     
     if (cat) {
@@ -3984,14 +4752,45 @@ function renderProductAndQtyChips() {
             prodContainer.appendChild(chip);
         });
         
-        // Render quantities
+        // Render quantities & configure dynamic slider limits
+        const qtySlider = document.getElementById('wizard-qty-slider');
+        const numericQtys = cat.quantities.map(q => parseFloat(q)).filter(n => !isNaN(n));
+        
+        if (qtySlider && numericQtys.length > 0) {
+            const minVal = Math.min(...numericQtys);
+            const maxVal = Math.max(...numericQtys) * 1.5;
+            
+            qtySlider.min = minVal >= 1 ? minVal : 1;
+            qtySlider.max = Math.ceil(maxVal);
+            qtySlider.step = minVal >= 100 ? 50 : (minVal >= 10 ? 5 : 1);
+            
+            const minLabel = document.getElementById('wizard-slider-min');
+            const maxLabel = document.getElementById('wizard-slider-max');
+            if (minLabel) minLabel.textContent = qtySlider.min;
+            if (maxLabel) maxLabel.textContent = qtySlider.max;
+            
+            // Set initial values
+            qtySlider.value = minVal;
+            document.getElementById('wizard-qty-input').value = minVal;
+            wizardState.selectedQty = minVal.toString();
+        }
+
         cat.quantities.forEach(q => {
             const chip = document.createElement('button');
             chip.className = 'suggestion-chip';
             chip.textContent = q;
             chip.onclick = () => {
-                document.getElementById('wizard-qty-input').value = q;
-                wizardState.selectedQty = q;
+                const num = parseFloat(q) || 1;
+                document.getElementById('wizard-qty-input').value = num;
+                if (qtySlider) {
+                    if (num > parseFloat(qtySlider.max)) {
+                        qtySlider.max = num;
+                        const maxLabel = document.getElementById('wizard-slider-max');
+                        if (maxLabel) maxLabel.textContent = Math.round(num);
+                    }
+                    qtySlider.value = num;
+                }
+                wizardState.selectedQty = num.toString();
                 // Highlight qty chips
                 qtyContainer.querySelectorAll('.suggestion-chip').forEach(c => c.classList.remove('selected'));
                 chip.classList.add('selected');
@@ -3999,30 +4798,48 @@ function renderProductAndQtyChips() {
             qtyContainer.appendChild(chip);
         });
     } else {
-        if (unitBadge) unitBadge.textContent = 'unidades';
+        if (unitBadge) unitBadge.textContent = lang === 'pt' ? 'unidades' : 'units';
         
         // Custom or "outro" inputs
-        prodContainer.innerHTML = '<span class="text-xs text-on-surface-variant">Escreva as especificações do produto abaixo.</span>';
-        qtyContainer.innerHTML = '<span class="text-xs text-on-surface-variant">Escreva a quantidade pretendida abaixo.</span>';
+        const msgSpec = lang === 'pt' ? 'Escreva as especificações do produto abaixo.' : 'Specify product specifications below.';
+        const msgQty = lang === 'pt' ? 'Escreva a quantidade pretendida abaixo.' : 'Specify the desired quantity below.';
+        prodContainer.innerHTML = `<span class="text-xs text-on-surface-variant">${msgSpec}</span>`;
+        qtyContainer.innerHTML = `<span class="text-xs text-on-surface-variant">${msgQty}</span>`;
+        
+        const qtySlider = document.getElementById('wizard-qty-slider');
+        if (qtySlider) {
+            qtySlider.min = 1;
+            qtySlider.max = 5000;
+            qtySlider.step = 10;
+            const minLabel = document.getElementById('wizard-slider-min');
+            const maxLabel = document.getElementById('wizard-slider-max');
+            if (minLabel) minLabel.textContent = '1';
+            if (maxLabel) maxLabel.textContent = '5000';
+            qtySlider.value = 100;
+            document.getElementById('wizard-qty-input').value = 100;
+            wizardState.selectedQty = '100';
+        }
     }
 }
 
 function wizardNextStep() {
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    
     if (wizardState.currentStep === 1) {
         if (!wizardState.selectedSector) {
-            alert('Por favor, selecione um setor para avançar.');
+            alert(lang === 'pt' ? 'Por favor, selecione um setor para avançar.' : 'Please select a sector to proceed.');
             return;
         }
     } else if (wizardState.currentStep === 2) {
         if (wizardState.selectedSector === 'other') {
             const customCat = document.getElementById('wizard-custom-category');
             if (customCat && !customCat.value.trim()) {
-                alert('Por favor, especifique o setor/categoria desejado.');
+                alert(lang === 'pt' ? 'Por favor, especifique o setor/categoria desejado.' : 'Please specify the desired sector/category.');
                 return;
             }
             wizardState.selectedCategory = customCat ? customCat.value.trim() : 'Outro';
         } else if (!wizardState.selectedCategory) {
-            alert('Por favor, selecione uma categoria para avançar.');
+            alert(lang === 'pt' ? 'Por favor, selecione uma categoria para avançar.' : 'Please select a category to proceed.');
             return;
         }
     } else if (wizardState.currentStep === 3) {
@@ -4030,11 +4847,11 @@ function wizardNextStep() {
         const qtyVal = document.getElementById('wizard-qty-input').value.trim();
         
         if (!prodVal) {
-            alert('Por favor, especifique o produto ou serviço pretendido.');
+            alert(lang === 'pt' ? 'Por favor, especifique o produto ou serviço pretendido.' : 'Please specify the desired product or service.');
             return;
         }
         if (!qtyVal) {
-            alert('Por favor, introduza a quantidade/volume.');
+            alert(lang === 'pt' ? 'Por favor, introduza a quantidade/volume.' : 'Please enter the quantity/volume.');
             return;
         }
         
@@ -4053,13 +4870,14 @@ function wizardNextStep() {
         const country = document.getElementById('wizard-contact-country').value;
         const logistics = document.querySelector('input[name="wizard-logistics"]:checked').value;
         const desc = document.getElementById('wizard-contact-desc').value.trim();
+        const port = document.getElementById('wizard-contact-port') ? document.getElementById('wizard-contact-port').value.trim() : '';
         
         if (!whatsapp || whatsapp.length < 5) {
-            alert('Por favor, insira um contacto WhatsApp válido.');
+            alert(lang === 'pt' ? 'Por favor, insira um contacto WhatsApp válido.' : 'Please enter a valid WhatsApp contact.');
             return;
         }
         if (!email || !email.includes('@')) {
-            alert('Por favor, insira um endereço de e-mail corporativo válido.');
+            alert(lang === 'pt' ? 'Por favor, insira um endereço de e-mail corporativo válido.' : 'Please enter a valid corporate email address.');
             return;
         }
         
@@ -4067,36 +4885,80 @@ function wizardNextStep() {
         wizardState.email = email;
         wizardState.country = country;
         wizardState.logistics = logistics;
+        wizardState.port = port || (lang === 'pt' ? 'Não especificado' : 'Not specified');
         wizardState.description = desc;
         
         // Process new B2B requirement push
-        const newId = `req_${appState.requirements.length + 1}`;
-        const sectorLabel = GV_CATALOG[wizardState.selectedSector] ? GV_CATALOG[wizardState.selectedSector].label : 'Serviços';
-        const categoryLabel = (wizardState.selectedCategory === 'outro') ? 'Outro' : wizardState.selectedCategory;
+        const activeCatalog = getCatalog();
+        const sectorLabel = activeCatalog[wizardState.selectedSector] ? activeCatalog[wizardState.selectedSector].label : (lang === 'pt' ? 'Serviços' : 'Services');
+        const categoryLabel = (wizardState.selectedCategory === 'outro') ? (lang === 'pt' ? 'Outro' : 'Other') : wizardState.selectedCategory;
         
-        const finalTitle = `Aquisição de ${wizardState.selectedProduct}`;
-        const finalCategory = `Consultoria para ${sectorLabel} (${categoryLabel})`;
+        const finalTitlePt = `Aquisição de ${wizardState.selectedProduct}`;
+        const finalTitleEn = `Acquisition of ${wizardState.selectedProduct}`;
+        const finalCategoryPt = `Consultoria para ${sectorLabel} (${categoryLabel})`;
+        const finalCategoryEn = `${sectorLabel} Consulting (${categoryLabel})`;
         
-        const finalDesc = wizardState.description || `Solicitação formal de intermediação B2B para o produto/serviço ${wizardState.selectedProduct}. Prazo de entrega pretendido: ${wizardState.urgency}.`;
+        const finalDescPt = `${desc ? desc + ' | ' : ''}Prazo: ${wizardState.urgency} | Porto de Receção: ${wizardState.port}`;
+        const finalDescEn = `${desc ? desc + ' | ' : ''}Term: ${wizardState.urgency} | Receiving Port: ${wizardState.port}`;
         
-        appState.requirements.push({
-            id: newId,
-            title: finalTitle,
-            category: finalCategory,
-            description: finalDesc,
-            quantity: wizardState.selectedQty,
-            country: wizardState.country,
-            logistics: wizardState.logistics,
-            date: new Date().toISOString().split('T')[0],
-            status: 'pendente',
-            owner: appState.currentUser ? appState.currentUser.id : 'buyer_1',
-            assignedConsultant: null,
-            contactWhatsapp: wizardState.whatsapp,
-            contactEmail: wizardState.email
-        });
+        const pushLocalWizard = () => {
+            const newId = `req_${appState.requirements.length + 1}`;
+            appState.requirements.push({
+                id: newId,
+                title: finalTitlePt,
+                titleEn: finalTitleEn,
+                category: finalCategoryPt,
+                categoryEn: finalCategoryEn,
+                description: finalDescPt,
+                descriptionEn: finalDescEn,
+                quantity: wizardState.selectedQty,
+                country: wizardState.country,
+                logistics: wizardState.logistics,
+                date: new Date().toISOString().split('T')[0],
+                status: 'pendente',
+                owner: appState.currentUser ? appState.currentUser.id : 'buyer_1',
+                assignedConsultant: null,
+                contactWhatsapp: wizardState.whatsapp,
+                contactEmail: wizardState.email
+            });
+            saveState();
+        };
+
+        // Check if logged in with real Supabase user
+        if (appState.currentUser && appState.currentUser.id && appState.currentUser.id.includes('-')) {
+            try {
+                await window.gvApi.postRequirement({
+                    buyer_id: appState.currentUser.id,
+                    title: finalTitlePt,
+                    category: finalCategoryPt,
+                    description: finalDescPt,
+                    quantity: parseFloat(wizardState.selectedQty) || 1,
+                    country: wizardState.country,
+                    logistics_included: wizardState.logistics === 'Sim'
+                }, {
+                    email: wizardState.email,
+                    whatsapp: wizardState.whatsapp
+                });
+                
+                await syncMuralFromSupabase();
+            } catch (err) {
+                console.error("Erro ao gravar wizard no Supabase. Gravando local:", err);
+                pushLocalWizard();
+            }
+        } else {
+            pushLocalWizard();
+        }
         
-        saveState();
-        alert('Pedido de serviço B2B registado com sucesso!\n\nAs suas informações de contacto (WhatsApp e E-mail) foram salvas de forma segura e estão visíveis apenas para o Administrador. O seu pedido entrará em análise imediata.');
+        // Exibição proeminente do aviso de contacto via modal estilizado
+        showVisualSuccessModal(
+            lang === 'pt' ? 'Solicitação B2B Registada' : 'B2B Request Registered',
+            lang === 'pt' 
+                ? 'O seu pedido foi encaminhado com sucesso. As suas informações foram salvas em ambiente encriptado e seguro, visíveis exclusivamente para o Administrador geral.'
+                : 'Your request has been successfully submitted. Your information has been saved in an encrypted and secure environment, visible exclusively to the General Administrator.',
+            lang === 'pt' 
+                ? 'Entraremos em contacto pelo WhatsApp ou pelo E-mail'
+                : 'We will contact you via WhatsApp or E-mail'
+        );
         
         closeRequestWizard();
         renderOpportunityWall(); // Refresh lists
@@ -4183,14 +5045,177 @@ function toggleLatestDemands() {
 }
 window.toggleLatestDemands = toggleLatestDemands;
 
-// Auto-init CMS when admin is already logged in on page load
-// Temporarily disabled:
-/*
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(function() {
-        if (appState && appState.currentUser && appState.currentUser.role === 'admin') {
-            initCmsEditor();
+// SUPABASE CLIENT SYNC HELPERS
+async function syncMuralFromSupabase() {
+    if (!window.gvApi) {
+        console.warn("API de conexão do Supabase (gvApi) não está disponível.");
+        return;
+    }
+    try {
+        const items = await window.gvApi.getMural();
+        if (items && items.length > 0) {
+            // Mapping requirements
+            appState.requirements = items.filter(x => x.type === 'need').map(x => ({
+                id: x.id,
+                title: x.title,
+                category: x.category,
+                description: x.description,
+                quantity: x.quantity + (typeof x.quantity === 'number' || !isNaN(x.quantity) ? ' Toneladas' : ''),
+                country: x.country,
+                logistics: x.logisticsIncluded ? 'Sim' : 'Não',
+                date: new Date(x.createdAt).toISOString().split('T')[0],
+                status: x.status || 'pendente',
+                owner: x.ownerId
+            }));
+
+            // Mapping offers
+            appState.offers = items.filter(x => x.type === 'offer').map(x => ({
+                id: x.id,
+                title: x.title,
+                category: x.category,
+                description: x.description,
+                quantity: x.quantity + (typeof x.quantity === 'number' || !isNaN(x.quantity) ? ' Toneladas' : ''),
+                country: x.country,
+                logistics: x.logisticsIncluded ? 'Sim' : 'Não',
+                date: new Date(x.createdAt).toISOString().split('T')[0],
+                status: x.status || 'pendente',
+                owner: x.ownerId
+            }));
+            
+            saveState();
+            
+            // Re-render wall if we are on it
+            const currentView = window.location.hash ? window.location.hash.substring(1) : 'home';
+            if (currentView.startsWith('wall')) {
+                renderOpportunityWall();
+            }
         }
-    }, 400);
-});
-*/
+    } catch (e) {
+        console.error("Erro na sincronização de dados com Supabase:", e);
+    }
+}
+window.syncMuralFromSupabase = syncMuralFromSupabase;
+
+let activeChatSubscription = null;
+async function setupSupabaseChat(matchId, channelType, containerId) {
+    if (!appState.currentUser || !appState.currentUser.id || !appState.currentUser.id.includes('-')) return;
+    try {
+        const rooms = await window.gvApi.getChatRooms(appState.currentUser.id);
+        const activeRoom = rooms.find(r => r.negotiation_id === matchId);
+        if (!activeRoom) return;
+
+        // Load existing messages
+        const dbMsgs = await window.gvApi.getChatMessages(activeRoom.id);
+        
+        // Filter out and update local messages
+        appState.messages = appState.messages.filter(m => m.matchId !== matchId || m.channel !== channelType);
+        dbMsgs.forEach(m => {
+            appState.messages.push({
+                id: m.id,
+                matchId: matchId,
+                senderId: m.sender_id,
+                senderRole: appState.currentUser.id === m.sender_id ? appState.currentUser.role : (appState.currentUser.role === 'consultant' ? 'user' : 'consultant'),
+                text: m.message_text,
+                timestamp: m.created_at,
+                channel: channelType
+            });
+        });
+        saveState();
+
+        // Refresh UI once loaded
+        const area = document.getElementById(`${containerId}-messages-area`);
+        if (area) {
+            // Re-render message list inline without full page redraw
+            area.innerHTML = '';
+            appState.messages.filter(m => m.matchId === matchId && m.channel === channelType).forEach(m => {
+                const isMe = appState.currentUser.id === m.senderId;
+                const bubble = document.createElement('div');
+                bubble.className = `chat-bubble ${isMe ? 'sent' : 'received'}`;
+                bubble.innerHTML = `<p>${m.text}</p>`;
+                area.appendChild(bubble);
+            });
+            area.scrollTop = area.scrollHeight;
+        }
+
+        // Subscribe to real-time changes
+        if (activeChatSubscription) {
+            await window.gvApi.unsubscribe(activeChatSubscription);
+        }
+        activeChatSubscription = window.gvApi.subscribeToMessages(activeRoom.id, (newMsg) => {
+            // Add if not present
+            if (!appState.messages.some(m => m.id === newMsg.id)) {
+                appState.messages.push({
+                    id: newMsg.id,
+                    matchId: matchId,
+                    senderId: newMsg.sender_id,
+                    senderRole: appState.currentUser.id === newMsg.sender_id ? appState.currentUser.role : (appState.currentUser.role === 'consultant' ? 'user' : 'consultant'),
+                    text: newMsg.message_text,
+                    timestamp: newMsg.created_at,
+                    channel: channelType
+                });
+                saveState();
+                
+                // Redraw chat area
+                const refreshArea = document.getElementById(`${containerId}-messages-area`);
+                if (refreshArea) {
+                    const bubble = document.createElement('div');
+                    const isMe = appState.currentUser.id === newMsg.sender_id;
+                    bubble.className = `chat-bubble ${isMe ? 'sent' : 'received'}`;
+                    bubble.innerHTML = `<p>${newMsg.message_text}</p>`;
+                    refreshArea.appendChild(bubble);
+                    refreshArea.scrollTop = refreshArea.scrollHeight;
+                }
+            }
+        });
+    } catch (e) {
+        console.error("Erro no setup do chat Supabase:", e);
+    }
+}
+window.setupSupabaseChat = setupSupabaseChat;
+
+// Modal de sucesso visual com aviso de contacto destacado
+function showVisualSuccessModal(title, text, highlightText) {
+    const modalId = 'dynamic-success-modal';
+    let modal = document.getElementById(modalId);
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = modalId;
+        modal.className = 'fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm';
+        modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px);';
+        document.body.appendChild(modal);
+    }
+    
+    modal.innerHTML = `
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl scale-in-animation border border-slate-100" style="background: white; border-radius: 24px; padding: 32px; max-width: 400px; width: 100%; text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); animation: popScale 0.3s ease-out;">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl" style="width: 64px; height: 64px; background: #ecfdf5; color: #059669; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 32px;">
+                <span class="material-symbols-outlined" style="font-size: 40px; color: #059669;">check_circle</span>
+            </div>
+            <h3 class="font-outfit font-bold text-xl text-slate-800 mb-2" style="font-size: 20px; color: #1e293b; margin-bottom: 8px;">${title}</h3>
+            
+            <p class="text-xs font-semibold text-emerald-700 bg-emerald-50 py-3 px-4 rounded-xl mb-4 border border-emerald-100" style="font-size: 13px; font-weight: 600; color: #047857; background: #f0fdf4; padding: 12px 16px; border-radius: 12px; margin-bottom: 16px; border: 1px solid #d1fae5; line-height: 1.4;">
+                ${highlightText}
+            </p>
+            
+            <p class="text-xs text-slate-500 mb-6" style="font-size: 12px; color: #64748b; margin-bottom: 24px; line-height: 1.5;">${text}</p>
+            
+            <button onclick="document.getElementById('${modalId}').style.display='none'" class="w-full py-3 bg-secondary text-white font-bold text-xs rounded-xl hover:opacity-90 transition active:scale-95 cursor-pointer" style="width: 100%; padding: 12px; background: #00374a; color: white; border: none; border-radius: 12px; font-weight: bold; font-size: 13px; cursor: pointer;">
+                Entendido
+            </button>
+        </div>
+    `;
+    
+    if (!document.getElementById('success-modal-style')) {
+        const style = document.createElement('style');
+        style.id = 'success-modal-style';
+        style.textContent = `
+            @keyframes popScale {
+                0% { transform: scale(0.9); opacity: 0; }
+                100% { transform: scale(1); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    modal.style.display = 'flex';
+}
+window.showVisualSuccessModal = showVisualSuccessModal;

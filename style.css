@@ -2504,33 +2504,151 @@ input:checked + .slider:before {
     transform: scale(1.0) !important;
 }
 
-/* Dynamic Category Themes */
+/* Dynamic Category Themes — Paleta aprovada: espectro de verdes derivados do verde GV #006d3d */
+
+/* 1. Agro & Commodities — Esmeralda Agrícola */
+.cat-theme-agro,
 .cat-theme-commodities {
-    --cat-color: #006d3d;
-    --cat-bg: rgba(0, 109, 61, 0.08);
+    --cat-color:  #059669;
+    --cat-bg:     #ecfdf5;
+    --cat-border: #a7f3d0;
+    --cat-hover:  #047857;
 }
-.cat-theme-logistics {
-    --cat-color: #d97706;
-    --cat-bg: rgba(217, 119, 6, 0.08);
-}
-.cat-theme-tech {
-    --cat-color: #0d9488;
-    --cat-bg: rgba(13, 148, 136, 0.08);
-}
+
+/* 2. Energia & Indústria — Verde Bio-Energia Limão */
 .cat-theme-energy {
-    --cat-color: #b45309;
-    --cat-bg: rgba(180, 83, 9, 0.08);
+    --cat-color:  #65a30d;
+    --cat-bg:     #f7fee7;
+    --cat-border: #d9f99d;
+    --cat-hover:  #4d7c0f;
 }
+
+/* 3. Tecnologia & Inovação — Verde Tech Teal (Accent GV) */
+.cat-theme-tech {
+    --cat-color:  #0d9488;
+    --cat-bg:     #f0fdfa;
+    --cat-border: #99f6e4;
+    --cat-hover:  #0f766e;
+}
+
+/* 4. Logística & Projetos — Verde Petróleo Marítimo */
+.cat-theme-logistics {
+    --cat-color:  #005b60;
+    --cat-bg:     #ecfdf5;
+    --cat-border: #a7f3d0;
+    --cat-hover:  #023840;
+}
+
+/* 5. Consultoria & Serviços — Verde Floresta Corporativo */
 .cat-theme-consulting {
-    --cat-color: #00374a;
-    --cat-bg: rgba(0, 55, 74, 0.08);
+    --cat-color:  #047857;
+    --cat-bg:     #f0fdf4;
+    --cat-border: #bbf7d0;
+    --cat-hover:  #064e3b;
+}
+
+/* Responsive Card Grid — 4 colunas desktop, 2 tablet, 1 mobile */
+.opportunities-grid-layout {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+@media (max-width: 1200px) {
+    .opportunities-grid-layout {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .opportunities-grid-layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+/* Type pills — dark badge top-right (estilo referencia aprovada) */
+.card-type-pill {
+    display: inline-block;
+    background: rgba(2, 56, 64, 0.88);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 6px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+}
+/* Mantemos variantes de cor subtil por tipo */
+.card-type-pill.oferta    { background: rgba(5, 150, 105, 0.88); }
+.card-type-pill.servico   { background: rgba(101, 163, 13, 0.88); }
+.card-type-pill.projeto   { background: rgba(13, 148, 136, 0.88); }
+.card-type-pill.demanda   { background: rgba(2, 56, 64, 0.88); }
+
+/* Card detail row */
+.card-detail-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 12px;
+    color: #475569;
+    padding: 5px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+.card-detail-row:last-of-type {
+    border-bottom: none;
+}
+.card-detail-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #94a3b8;
+    font-weight: 500;
+    white-space: nowrap;
+}
+.card-detail-label .material-symbols-outlined {
+    font-size: 14px;
+    color: var(--cat-color);
+}
+.card-detail-value {
+    font-weight: 700;
+    color: #1e293b;
+    text-align: right;
+    max-width: 55%;
+    word-break: break-word;
+}
+.card-detail-value.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    background: var(--cat-bg);
+    color: var(--cat-color);
+    border: 1px solid var(--cat-border, var(--cat-color));
+}
+
+/* Subcategory label above card title */
+.card-subcategory-label {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cat-color);
+    margin-bottom: 4px;
+    display: block;
 }
 
 /* Category styling utilities */
 .cat-badge {
     color: var(--cat-color) !important;
     background-color: var(--cat-bg) !important;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--cat-border, rgba(0, 0, 0, 0.08)) !important;
 }
 .cat-border-accent {
     border-top: 4px solid var(--cat-color) !important;

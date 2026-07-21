@@ -380,26 +380,26 @@
                         </button>
                         <!-- Switcher Dropdown options for prototype demonstration -->
                         <div class="role-dropdown" id="roleDropdown">
-                            <div class="role-dropdown-header">Escolha o Papel para Simulação</div>
+                            <div class="role-dropdown-header" data-translate-pt="Escolha o Papel para Simulação" data-translate-en="Choose Role for Simulation">Escolha o Papel para Simulação</div>
                             
                             <div class="role-option" data-role="visitor">
-                                <span class="role-name"><span class="role-indicator-dot" style="background-color: var(--outline);"></span> Sair (Visitante)</span>
-                                <span class="role-desc">Voltar à navegação pública corporativa</span>
+                                <span class="role-name"><span class="role-indicator-dot" style="background-color: var(--outline);"></span> <span data-translate-pt="Sair (Visitante)" data-translate-en="Exit (Visitor)">Sair (Visitante)</span></span>
+                                <span class="role-desc" data-translate-pt="Voltar à navegação pública corporativa" data-translate-en="Return to public corporate navigation">Voltar à navegação pública corporativa</span>
                             </div>
                             
                             <div class="role-option" data-role="buyer">
-                                <span class="role-name"><span class="role-indicator-dot" style="background-color: var(--primary-light);"></span> Comprador</span>
-                                <span class="role-desc">Gerir necessidades de compra e ver chats mediados</span>
+                                <span class="role-name"><span class="role-indicator-dot" style="background-color: var(--primary-light);"></span> <span data-translate-pt="Comprador" data-translate-en="Buyer">Comprador</span></span>
+                                <span class="role-desc" data-translate-pt="Gerir necessidades de compra e ver chats mediados" data-translate-en="Manage purchase needs and view mediated chats">Gerir necessidades de compra e ver chats mediados</span>
                             </div>
                             
                             <div class="role-option" data-role="supplier">
-                                <span class="role-name"><span class="role-indicator-dot" style="background-color: var(--secondary);"></span> Fornecedor (Membro)</span>
-                                <span class="role-desc">Publicar ofertas gratuitamente e negociar</span>
+                                <span class="role-name"><span class="role-indicator-dot" style="background-color: var(--secondary);"></span> <span data-translate-pt="Fornecedor (Membro)" data-translate-en="Supplier (Member)">Fornecedor (Membro)</span></span>
+                                <span class="role-desc" data-translate-pt="Publicar ofertas gratuitamente e negociar" data-translate-en="Publish offers for free and negotiate">Publicar ofertas gratuitamente e negociar</span>
                             </div>
                             
                             <div class="role-option" data-role="consultant">
-                                <span class="role-name"><span class="role-indicator-dot" style="background-color: var(--electric-amber);"></span> Consultor Interno</span>
-                                <span class="role-desc">Fazer correspondência (Match) e intermediar chats</span>
+                                <span class="role-name"><span class="role-indicator-dot" style="background-color: var(--electric-amber);"></span> <span data-translate-pt="Consultor Interno" data-translate-en="Internal Consultant">Consultor Interno</span></span>
+                                <span class="role-desc" data-translate-pt="Fazer correspondência (Match) e intermediar chats" data-translate-en="Make matches and intermediate chats">Fazer correspondência (Match) e intermediar chats</span>
                             </div>
                             
                             <div class="role-option" data-role="admin">
@@ -1295,11 +1295,11 @@
                         <label class="block font-label-lg text-label-lg mb-2">Categoria</label>
                         <select class="w-full bg-white border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:outline-none transition-all text-on-surface" id="filter-category">
                             <option value="all">Todas as Categorias</option>
-                            <option value="commodities">Commodities</option>
-                            <option value="logistics">Logística &amp; Supply Chain</option>
-                            <option value="tech">Tecnologia &amp; Inovação</option>
-                            <option value="energy">Energia &amp; Infraestrutura</option>
-                            <option value="consulting">Consultoria</option>
+                            <option value="agro">Agro &amp; Commodities</option>
+                            <option value="energy">Energia &amp; Industria</option>
+                            <option value="tech">Tecnologia &amp; Inovacao</option>
+                            <option value="logistics">Logistica &amp; Projetos</option>
+                            <option value="consulting">Consultoria &amp; Servicos</option>
                         </select>
                     </div>
                     <div class="w-full md:w-1/3">
@@ -1327,7 +1327,7 @@
                 </div>
 
                 <!-- Grid of Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter" id="opportunities-grid">
+                <div class="opportunities-grid-layout" id="opportunities-grid">
                     <!-- Cards will be injected by JS -->
                 </div>
             </div>
@@ -1351,44 +1351,44 @@
                         </div>
                         
                         <div class="detail-main">
-                            <h3 class="detail-section-title">Descrição Comercial Segura</h3>
-                            <p id="detail-desc" class="detail-description">Carregando detalhes comerciais da proposta...</p>
+                            <h3 class="detail-section-title" data-translate-pt="Descrição Comercial Segura" data-translate-en="Secure Commercial Description">Descrição Comercial Segura</h3>
+                            <p id="detail-desc" class="detail-description" data-translate-pt="Carregando detalhes comerciais da proposta..." data-translate-en="Loading commercial details of the proposal...">Carregando detalhes comerciais da proposta...</p>
                         </div>
                         
                         <div class="private-notice-card" style="margin-top: auto;">
                             <span class="material-symbols-outlined">security</span>
-                            <p><strong>Segurança GV-CPS:</strong> Esta proposta é monitorizada de forma confidencial. Não são apresentados dados de contacto das partes neste detalhe.</p>
+                            <p data-translate-pt="&lt;strong&gt;Segurança GV-CPS:&lt;/strong&gt; Esta proposta é monitorizada de forma confidencial. Não são apresentados dados de contacto das partes neste detalhe." data-translate-en="&lt;strong&gt;GV-CPS Security:&lt;/strong&gt; This proposal is confidentially monitored. No contact details of the parties are shown in this detail."><strong>Segurança GV-CPS:</strong> Esta proposta é monitorizada de forma confidencial. Não são apresentados dados de contacto das partes neste detalhe.</p>
                         </div>
                     </div>
                     
                     <!-- Meta specifications side panel -->
                     <div class="contact-info-panel" style="padding: 40px; justify-content: flex-start; gap: 32px; background-color: var(--primary-light);">
-                        <h2 style="font-size: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 12px;">Especificações da Demanda</h2>
+                        <h2 style="font-size: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 12px;" data-translate-pt="Especificações da Demanda" data-translate-en="Requirement Specifications">Especificações da Demanda</h2>
                         
                         <div class="detail-modal-sidebar" style="background-color: rgba(255,255,255,0.06); width: 100%; border: 1px solid rgba(255,255,255,0.1);">
                             <div class="detail-sidebar-stat">
-                                <div class="detail-stat-label" style="color: rgba(255, 255, 255, 0.65);">Categoria de Serviço</div>
+                                <div class="detail-stat-label" style="color: rgba(255, 255, 255, 0.65);" data-translate-pt="Categoria de Serviço" data-translate-en="Service Category">Categoria de Serviço</div>
                                 <div class="detail-stat-value" id="detail-spec-category" style="color: white; font-size: 15px;">Categoria</div>
                             </div>
                             <div class="detail-sidebar-stat">
-                                <div class="detail-stat-label" style="color: rgba(255, 255, 255, 0.65);">Volume/Quantidade</div>
+                                <div class="detail-stat-label" style="color: rgba(255, 255, 255, 0.65);" data-translate-pt="Volume/Quantidade" data-translate-en="Volume/Quantity">Volume/Quantidade</div>
                                 <div class="detail-stat-value" id="detail-spec-quantity" style="color: white; font-size: 15px;">Volume</div>
                             </div>
                             <div class="detail-sidebar-stat">
-                                <div class="detail-stat-label" style="color: rgba(255, 255, 255, 0.65);">País / Destino</div>
+                                <div class="detail-stat-label" style="color: rgba(255, 255, 255, 0.65);" data-translate-pt="País / Destino" data-translate-en="Country / Destination">País / Destino</div>
                                 <div class="detail-stat-value" id="detail-spec-country" style="color: white; font-size: 15px;">Moçambique</div>
                             </div>
                             <div class="detail-sidebar-stat">
-                                <div class="detail-stat-label" style="color: rgba(255, 255, 255, 0.65);">Logística Integrada</div>
+                                <div class="detail-stat-label" style="color: rgba(255, 255, 255, 0.65);" data-translate-pt="Logística Integrada" data-translate-en="Integrated Logistics">Logística Integrada</div>
                                 <div class="detail-stat-value" id="detail-spec-logistics" style="color: white; font-size: 15px;">Sim (Incluída na facturação)</div>
                             </div>
                             <div class="detail-sidebar-stat">
-                                <div class="detail-stat-label" style="color: rgba(255, 255, 255, 0.65);">Data de Publicação</div>
+                                <div class="detail-stat-label" style="color: rgba(255, 255, 255, 0.65);" data-translate-pt="Data de Publicação" data-translate-en="Publication Date">Data de Publicação</div>
                                 <div class="detail-stat-value" id="detail-spec-date" style="color: white; font-size: 15px;">Data</div>
                             </div>
                             <!-- Admin Only Contacts Box -->
                             <div class="detail-sidebar-stat hidden" id="detail-spec-admin-contacts" style="background: rgba(245, 158, 11, 0.1); border: 1px dashed rgba(245, 158, 11, 0.3); border-radius: 8px; padding: 12px; margin-top: 10px;">
-                                <div class="detail-stat-label" style="color: #f59e0b; font-weight: bold; font-size: 11px;">CONTACTO PRIVADO (ADMIN APENAS)</div>
+                                <div class="detail-stat-label" style="color: #f59e0b; font-weight: bold; font-size: 11px;" data-translate-pt="CONTACTO PRIVADO (ADMIN APENAS)" data-translate-en="PRIVATE CONTACT (ADMIN ONLY)">CONTACTO PRIVADO (ADMIN APENAS)</div>
                                 <div class="detail-stat-value" id="detail-spec-whatsapp" style="color: white; font-size: 13px; font-weight: 500; margin-top: 4px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;">WhatsApp: -</div>
                                 <div class="detail-stat-value" id="detail-spec-email" style="color: white; font-size: 13px; font-weight: 500; margin-top: 4px;">Email: -</div>
                             </div>
@@ -1399,7 +1399,7 @@
                         </div>
                         
                         <div style="width: 100%;">
-                            <button id="detail-action-btn" class="btn btn-accent w-full" style="padding: 14px 20px;">Tenho Interesse</button>
+                            <button id="detail-action-btn" class="btn btn-accent w-full" style="padding: 14px 20px;" data-translate-pt="Tenho Interesse" data-translate-en="I'm Interested">Tenho Interesse</button>
                         </div>
                     </div>
                 </div>
@@ -2871,11 +2871,11 @@
                 <div>
                     <h3 class="font-outfit font-bold text-lg text-primary flex items-center gap-2" style="margin:0;">
                         <span class="material-symbols-outlined text-secondary">explore</span>
-                        Requisitar Novo Serviço B2B
+                        <span data-translate-pt="Requisitar Novo Serviço B2B" data-translate-en="Request New B2B Service">Requisitar Novo Serviço B2B</span>
                     </h3>
-                    <p class="text-xs text-on-surface-variant mt-0.5" style="margin:0;">Canal Único de Intermediação Oficial GV-CPS</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5" style="margin:0;" data-translate-pt="Canal Único de Intermediação Oficial GV-CPS" data-translate-en="Official GV-CPS Intermediation Channel">Canal Único de Intermediação Oficial GV-CPS</p>
                 </div>
-                <button onclick="closeRequestWizard()" class="bg-transparent border-none text-on-surface-variant hover:text-on-surface cursor-pointer" title="Fechar">
+                <button onclick="closeRequestWizard()" class="bg-transparent border-none text-on-surface-variant hover:text-on-surface cursor-pointer" title="Fechar" data-translate-pt="Fechar" data-translate-en="Close">
                     <span class="material-symbols-outlined">close</span>
                 </button>
             </div>
@@ -2889,43 +2889,43 @@
                     <div class="wizard-progress-step" id="wstep-dot-4"></div>
                 </div>
                 <div class="flex justify-between text-[10px] text-on-surface-variant font-bold uppercase tracking-wider mt-2 px-1">
-                    <span>Setor</span>
-                    <span>Categoria</span>
-                    <span>Especificação</span>
-                    <span>Contacto</span>
+                    <span data-translate-pt="Setor" data-translate-en="Sector">Setor</span>
+                    <span data-translate-pt="Categoria" data-translate-en="Category">Categoria</span>
+                    <span data-translate-pt="Especificação" data-translate-en="Specification">Especificação</span>
+                    <span data-translate-pt="Contacto" data-translate-en="Contact">Contacto</span>
                 </div>
             </div>
-
+            
             <!-- Body (Steps Panels) -->
             <div class="wizard-body">
                 <!-- STEP 1: SELECT SECTOR -->
                 <div class="wizard-step-panel active" id="wstep-panel-1">
-                    <h4 class="font-outfit font-bold text-sm text-on-surface mb-2" style="margin:0 0 8px;">Selecione o Setor de Atuação:</h4>
-                    <p class="text-xs text-on-surface-variant mb-4" style="margin:0 0 16px;">Selecione o segmento geral que atende à sua necessidade de negócio.</p>
+                    <h4 class="font-outfit font-bold text-sm text-on-surface mb-2" style="margin:0 0 8px;" data-translate-pt="Selecione o Setor de Atuação:" data-translate-en="Select Industry Sector:">Selecione o Setor de Atuação:</h4>
+                    <p class="text-xs text-on-surface-variant mb-4" style="margin:0 0 16px;" data-translate-pt="Selecione o segmento geral que atende à sua necessidade de negócio." data-translate-en="Select the general segment that fits your business needs.">Selecione o segmento geral que atende à sua necessidade de negócio.</p>
                     <div class="sector-grid">
                         <div class="sector-card" id="sector-agro-card" onclick="selectWizardSector('agro')">
                             <div class="sector-card-icon"><span class="material-symbols-outlined text-2xl">agriculture</span></div>
-                            <span class="text-xs font-bold font-outfit">Agronegócio</span>
+                            <span class="text-xs font-bold font-outfit" data-translate-pt="Agronegócio" data-translate-en="Agribusiness">Agronegócio</span>
                         </div>
                         <div class="sector-card" id="sector-oil-card" onclick="selectWizardSector('oil')">
                             <div class="sector-card-icon"><span class="material-symbols-outlined text-2xl">local_gas_station</span></div>
-                            <span class="text-xs font-bold font-outfit">Oil & Gas</span>
+                            <span class="text-xs font-bold font-outfit" data-translate-pt="Oil & Gas" data-translate-en="Oil & Gas">Oil & Gas</span>
                         </div>
                         <div class="sector-card" id="sector-tech-card" onclick="selectWizardSector('tech')">
                             <div class="sector-card-icon"><span class="material-symbols-outlined text-2xl">devices</span></div>
-                            <span class="text-xs font-bold font-outfit">Tecnologia</span>
+                            <span class="text-xs font-bold font-outfit" data-translate-pt="Tecnologia" data-translate-en="Technology">Tecnologia</span>
                         </div>
                         <div class="sector-card" id="sector-logistics-card" onclick="selectWizardSector('logistics')">
                             <div class="sector-card-icon"><span class="material-symbols-outlined text-2xl">local_shipping</span></div>
-                            <span class="text-xs font-bold font-outfit">Logística</span>
+                            <span class="text-xs font-bold font-outfit" data-translate-pt="Logística" data-translate-en="Logistics">Logística</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- STEP 2: SELECT CATEGORY -->
                 <div class="wizard-step-panel" id="wstep-panel-2">
-                    <h4 class="font-outfit font-bold text-sm text-on-surface mb-2" style="margin:0 0 8px;">Qual a categoria específica?</h4>
-                    <p class="text-xs text-on-surface-variant mb-4" style="margin:0 0 16px;">Escolha a categoria estruturada de serviços abaixo.</p>
+                    <h4 class="font-outfit font-bold text-sm text-on-surface mb-2" style="margin:0 0 8px;" data-translate-pt="Qual a categoria específica?" data-translate-en="Which specific category?">Qual a categoria específica?</h4>
+                    <p class="text-xs text-on-surface-variant mb-4" style="margin:0 0 16px;" data-translate-pt="Escolha a categoria estruturada de serviços abaixo." data-translate-en="Choose the structured service category below.">Escolha a categoria estruturada de serviços abaixo.</p>
                     <div class="chip-grid" id="wizard-category-chips">
                         <!-- Rendered by JS -->
                     </div>
@@ -2933,38 +2933,46 @@
 
                 <!-- STEP 3: PRODUCT & QUANTITY -->
                 <div class="wizard-step-panel" id="wstep-panel-3">
-                    <h4 class="font-outfit font-bold text-sm text-on-surface mb-4" style="margin:0 0 16px;">Especifique o Produto e Volume</h4>
+                    <h4 class="font-outfit font-bold text-sm text-on-surface mb-4" style="margin:0 0 16px;" data-translate-pt="Especifique o Produto e Volume" data-translate-en="Specify Product and Volume">Especifique o Produto e Volume</h4>
                     
                     <!-- Products Options -->
                     <div class="wizard-input-group">
-                        <label class="wizard-input-label">Opções Recomendadas (Clique para escolher):</label>
+                        <label class="wizard-input-label" data-translate-pt="Opções Recomendadas (Clique para escolher):" data-translate-en="Recommended Options (Click to select):">Opções Recomendadas (Clique para escolher):</label>
                         <div class="chip-grid" id="wizard-product-chips">
                             <!-- Rendered by JS -->
                         </div>
-                        <input type="text" id="wizard-product-input" class="wizard-input" placeholder="Ou digite outra especificação desejada...">
+                        <input type="text" id="wizard-product-input" class="wizard-input" placeholder="Ou digite outra especificação desejada..." data-translate-pt="Ou digite outra especificação desejada..." data-translate-en="Or type other desired specification...">
                     </div>
 
                     <!-- Quantity Options -->
                     <div class="wizard-input-group mt-6" style="margin-top: 24px;">
-                        <label class="wizard-input-label">Sugestões de Quantidade/Volume:</label>
+                        <label class="wizard-input-label" data-translate-pt="Sugestões de Quantidade/Volume:" data-translate-en="Quantity/Volume Suggestions:">Sugestões de Quantidade/Volume:</label>
                         <div class="chip-grid" id="wizard-qty-chips">
                             <!-- Rendered by JS -->
                         </div>
                         <div class="flex gap-2 items-center" style="display: flex; gap: 8px;">
-                            <input type="text" id="wizard-qty-input" class="wizard-input" placeholder="Escreva a quantidade pretendida...">
-                            <span class="text-xs font-bold text-on-surface-variant px-3 py-3 bg-slate-100 rounded-lg border border-slate-200 shrink-0" id="wizard-unit-badge">unidades</span>
+                            <input type="number" id="wizard-qty-input" class="wizard-input" placeholder="Escreva a quantidade pretendida..." data-translate-pt="Escreva a quantidade pretendida..." data-translate-en="Enter target quantity..." min="1">
+                            <span class="text-xs font-bold text-on-surface-variant px-3 py-3 bg-slate-100 rounded-lg border border-slate-200 shrink-0" id="wizard-unit-badge" data-translate-pt="unidades" data-translate-en="units">unidades</span>
+                        </div>
+                        <!-- Slider Sincronizado -->
+                        <div class="mt-3" style="margin-top: 12px;">
+                            <input type="range" id="wizard-qty-slider" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" min="1" max="1000" value="1" style="width: 100%;">
+                            <div class="flex justify-between text-[10px] text-slate-400 mt-1" style="display: flex; justify-content: space-between; font-size: 10px; color: #94a3b8; margin-top: 4px;">
+                                <span id="wizard-slider-min">1</span>
+                                <span id="wizard-slider-max">1000</span>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Urgency -->
                     <div class="wizard-input-group mt-6" style="margin-top: 24px;">
-                        <label class="wizard-input-label">Prazo Necessário</label>
+                        <label class="wizard-input-label" data-translate-pt="Prazo Necessário" data-translate-en="Required Delivery Time">Prazo Necessário</label>
                         <div class="flex gap-2" style="display: flex; gap: 8px;">
                             <label class="flex-1 flex items-center justify-center gap-2 p-3 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition text-xs font-bold" style="flex:1; display:flex; align-items:center; justify-content:center; padding:12px; border:1px solid #cbd5e1; border-radius:12px; cursor:pointer;">
-                                <input type="radio" name="wizard-urgency" value="Urgente" checked> Urgente (&lt;30 dias)
+                                <input type="radio" name="wizard-urgency" value="Urgente" checked> <span data-translate-pt="Urgente (<30 dias)" data-translate-en="Urgent (<30 days)">Urgente (&lt;30 dias)</span>
                             </label>
                             <label class="flex-1 flex items-center justify-center gap-2 p-3 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition text-xs font-bold" style="flex:1; display:flex; align-items:center; justify-content:center; padding:12px; border:1px solid #cbd5e1; border-radius:12px; cursor:pointer;">
-                                <input type="radio" name="wizard-urgency" value="Normal"> Normal (1-3 meses)
+                                <input type="radio" name="wizard-urgency" value="Normal"> <span data-translate-pt="Normal (1-3 meses)" data-translate-en="Normal (1-3 months)">Normal (1-3 meses)</span>
                             </label>
                         </div>
                     </div>
@@ -2972,36 +2980,66 @@
 
                 <!-- STEP 4: CONTACT & DETAILS -->
                 <div class="wizard-step-panel" id="wstep-panel-4">
-                    <h4 class="font-outfit font-bold text-sm text-on-surface mb-2" style="margin:0 0 8px;">Informações de Contacto Directo</h4>
-                    <p class="text-xs text-on-surface-variant mb-4" style="margin:0 0 16px;">Os seus dados são protegidos por restrição de visualização e são <strong>visíveis exclusivamente para o Administrador</strong> geral.</p>
+                    <h4 class="font-outfit font-bold text-sm text-on-surface mb-2" style="margin:0 0 8px;" data-translate-pt="Informações de Contacto Directo" data-translate-en="Direct Contact Information">Informações de Contacto Directo</h4>
+                    <p class="text-xs text-on-surface-variant mb-4" style="margin:0 0 16px;" data-translate-pt="Os seus dados são protegidos por restrição de visualização e são visíveis exclusivamente para o Administrador geral." data-translate-en="Your details are protected by viewing restrictions and are visible exclusively to the General Administrator.">Os seus dados são protegidos por restrição de visualização e são visíveis exclusivamente para o Administrador geral.</p>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
                         <div class="wizard-input-group">
-                            <label class="wizard-input-label" for="wizard-contact-whatsapp">Contacto WhatsApp</label>
-                            <input type="tel" id="wizard-contact-whatsapp" class="wizard-input" placeholder="Ex: +258 84 123 4567" required>
+                            <label class="wizard-input-label" for="wizard-contact-whatsapp" data-translate-pt="Contacto WhatsApp" data-translate-en="WhatsApp Contact">Contacto WhatsApp</label>
+                            <div style="position: relative; display: flex; align-items: center; width: 100%;">
+                                <span id="whatsapp-flag-badge" style="position: absolute; left: 12px; font-size: 16px; pointer-events: none; transition: all 0.2s;">🇲🇿</span>
+                                <input type="tel" id="wizard-contact-whatsapp" class="wizard-input" style="padding-left: 38px; width: 100%;" placeholder="Ex: +258 84 123 4567" required>
+                            </div>
                         </div>
                         <div class="wizard-input-group">
-                            <label class="wizard-input-label" for="wizard-contact-email">Email Corporativo</label>
+                            <label class="wizard-input-label" for="wizard-contact-email" data-translate-pt="Email Corporativo" data-translate-en="Corporate Email">Email Corporativo</label>
                             <input type="email" id="wizard-contact-email" class="wizard-input" placeholder="Ex: comercial@empresa.com" required>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px;">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-top: 16px;">
                         <div class="wizard-input-group">
-                            <label class="wizard-input-label" for="wizard-contact-country">País de Destino/Origem</label>
+                            <label class="wizard-input-label" for="wizard-contact-country" data-translate-pt="País de Destino/Origem" data-translate-en="Destination/Origin Country">País de Destino/Origem</label>
                             <select id="wizard-contact-country" class="wizard-input">
-                                <option value="Moçambique">Moçambique</option>
-                                <option value="Brasil">Brasil</option>
-                                <option value="Portugal">Portugal</option>
-                                <option value="Emirados Árabes">Emirados Árabes</option>
+                                <option value="Moçambique" data-translate-pt="Moçambique" data-translate-en="Mozambique">Moçambique</option>
+                                <option value="Brasil" data-translate-pt="Brasil" data-translate-en="Brazil">Brasil</option>
+                                <option value="Portugal" data-translate-pt="Portugal" data-translate-en="Portugal">Portugal</option>
+                                <option value="Emirados Árabes" data-translate-pt="Emirados Árabes" data-translate-en="United Arab Emirates">Emirados Árabes</option>
                             </select>
                         </div>
                         <div class="wizard-input-group">
-                            <label class="wizard-input-label">Incluir Logística GV-CPS?</label>
+                            <label class="wizard-input-label" for="wizard-contact-port" data-translate-pt="Porto de Receção/Destino" data-translate-en="Receiving/Destination Port">Porto de Receção/Destino</label>
+                            <input type="text" id="wizard-contact-port" class="wizard-input" placeholder="Ex: Porto de Maputo, Porto de Leixões..." data-translate-pt="Ex: Porto de Maputo, Porto de Leixões..." data-translate-en="e.g., Port of Maputo, Port of Leixões...">
+                        </div>
+                        <div class="wizard-input-group">
+                            <label class="wizard-input-label" data-translate-pt="Incluir Logística GV-CPS?" data-translate-en="Include GV-CPS Logistics?">Incluir Logística GV-CPS?</label>
                             <div class="flex gap-2" style="display: flex; gap: 8px;">
                                 <label class="flex-1 flex items-center gap-1.5 p-2 border border-slate-200 rounded-xl cursor-pointer text-xs" style="flex:1; display:flex; align-items:center; gap:6px; padding:10px; border:1px solid #cbd5e1; border-radius:12px;">
-                                    <input type="radio" name="wizard-logistics" value="Sim" checked> Sim
+                                    <input type="radio" name="wizard-logistics" value="Sim" checked> <span data-translate-pt="Sim" data-translate-en="Yes">Sim</span>
                                 </label>
+                                <label class="flex-1 flex items-center gap-1.5 p-2 border border-slate-200 rounded-xl cursor-pointer text-xs" style="flex:1; display:flex; align-items:center; gap:6px; padding:10px; border:1px solid #cbd5e1; border-radius:12px;">
+                                    <input type="radio" name="wizard-logistics" value="Não"> <span data-translate-pt="Não" data-translate-en="No">Não</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="wizard-input-group mt-2" style="margin-top: 16px;">
+                        <label class="wizard-input-label" for="wizard-contact-desc" data-translate-pt="Especificações Adicionais (Opcional)" data-translate-en="Additional Specifications (Optional)">Especificações Adicionais (Opcional)</label>
+                        <textarea id="wizard-contact-desc" class="wizard-input" rows="2" maxlength="200" placeholder="Informações de suporte ao consultor... (Máx 200 caracteres)" data-translate-pt="Informações de suporte ao consultor... (Máx 200 caracteres)" data-translate-en="Support information for the consultant... (Max 200 chars)"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="wizard-footer">
+                <button onclick="wizardPrevStep()" id="wizard-btn-prev" class="px-5 py-3 border border-outline-variant rounded-xl bg-white hover:bg-slate-50 font-bold text-xs text-slate-700 cursor-pointer disabled:opacity-50 disabled:pointer-events-none transition" disabled data-translate-pt="Voltar" data-translate-en="Back">
+                    Voltar
+                </button>
+                <button onclick="wizardNextStep()" id="wizard-btn-next" class="px-6 py-3 bg-secondary text-white font-bold text-xs rounded-xl hover:opacity-90 active:scale-95 transition cursor-pointer" style="border:none;" data-translate-pt="Avançar" data-translate-en="Next">
+                    Avançar
+                </button>
+            </div>                            </label>
                                 <label class="flex-1 flex items-center gap-1.5 p-2 border border-slate-200 rounded-xl cursor-pointer text-xs" style="flex:1; display:flex; align-items:center; gap:6px; padding:10px; border:1px solid #cbd5e1; border-radius:12px;">
                                     <input type="radio" name="wizard-logistics" value="Não"> Não
                                 </label>
@@ -3039,8 +3077,8 @@
                         <span class="material-symbols-outlined" style="font-size: 20px;">support_agent</span>
                     </div>
                     <div>
-                        <h4 class="font-bold" style="font-size:14px; font-family: var(--font-heading);">Suporte GV-CPS</h4>
-                        <p style="font-size: 10px; color: rgba(255,255,255,0.7);">Assistente em tempo real</p>
+                        <h4 class="font-bold" style="font-size:14px; font-family: var(--font-heading);" data-translate-pt="Suporte GV-CPS" data-translate-en="GV-CPS Support">Suporte GV-CPS</h4>
+                        <p style="font-size: 10px; color: rgba(255,255,255,0.7);" data-translate-pt="Assistente em tempo real" data-translate-en="Real-time Assistant">Assistente em tempo real</p>
                     </div>
                 </div>
                 <button id="close-chat" style="background: none; border: none; color: white; cursor: pointer;">
@@ -3051,16 +3089,16 @@
             <!-- Widget Message area -->
             <div id="widget-chat-messages" style="flex-grow: 1; padding: 16px; overflow-y: auto; background-color: var(--surface-low); display: flex; flex-direction: column; gap: 12px;">
                 <div class="chat-bubble received">
-                    <span class="chat-bubble-sender" style="color: var(--primary-light);">Assistente GV</span>
-                    <p>Olá! Seja bem-vindo ao portal GV-CPS. Como posso ajudar com a intermediação comercial da sua empresa hoje?</p>
-                    <span class="chat-bubble-time">Agora</span>
+                    <span class="chat-bubble-sender" style="color: var(--primary-light);" data-translate-pt="Assistente GV" data-translate-en="GV Assistant">Assistente GV</span>
+                    <p data-translate-pt="Olá! Seja bem-vindo ao portal GV-CPS. Como posso ajudar com a intermediação comercial da sua empresa hoje?" data-translate-en="Hello! Welcome to the GV-CPS portal. How can I help with your company's commercial intermediation today?">Olá! Seja bem-vindo ao portal GV-CPS. Como posso ajudar com a intermediação comercial da sua empresa hoje?</p>
+                    <span class="chat-bubble-time" data-translate-pt="Agora" data-translate-en="Now">Agora</span>
                 </div>
             </div>
             
             <!-- Widget Input Form -->
             <div style="padding: 12px 16px; background-color: var(--surface); border-top: 1px solid var(--outline-variant);">
                 <form id="widget-chat-form" style="display: flex; gap: 8px;">
-                    <input type="text" id="widget-chat-input" class="form-input" style="border-radius: var(--radius-full); padding: 8px 16px; font-size:13px;" placeholder="Digite a sua mensagem...">
+                    <input type="text" id="widget-chat-input" class="form-input" style="border-radius: var(--radius-full); padding: 8px 16px; font-size:13px;" placeholder="Digite a sua mensagem..." data-translate-pt="Digite a sua mensagem..." data-translate-en="Type your message...">
                     <button type="submit" class="btn btn-primary" style="border-radius: var(--radius-full); width: 36px; height: 36px; padding:0; flex-shrink: 0;">
                         <span class="material-symbols-outlined" style="font-size: 20px;">send</span>
                     </button>
@@ -3114,6 +3152,17 @@
                 </div>
 
                 <!-- Link Highlight Section -->
+                <div>
+                    <button onclick="toggleLinkHighlight()" id="acc-links-btn" class="acc-option-btn" style="width: 100%; padding: 10px 8px; border: 1px solid var(--outline-variant); background: var(--surface); color: var(--on-surface); font-size: 11px; font-weight: 600; border-radius: var(--radius-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s;">
+                        <span class="material-symbols-outlined" style="font-size: 20px;">link</span>
+                        <span data-translate-pt="Realçar Links" data-translate-en="Highlight Links">Realçar Links</span>
+                    </button>
+                </div>
+
+                <!-- Text Size Section -->
+                <div>
+                    <span style="font-size: 10px; font-weight: bold; color: var(--outline); text-transform: uppercase; display: block; margin-bottom: 6px;" data-translate-pt="Tamanho do Texto" data-translate-en="Text Size">Tamanho do Texto</span>
+                    <div style="display: flex; gap: 8px; align-items: center;">
                         <button onclick="changeTextSize('decrease')" class="acc-zoom-btn" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--outline-variant); background: var(--surface); border-radius: var(--radius-lg); cursor: pointer; color: var(--on-surface); font-size: 16px; font-weight: bold; transition: all 0.2s;">A-</button>
                         <button onclick="changeTextSize('reset')" class="acc-zoom-btn" style="flex: 1; height: 36px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--outline-variant); background: var(--surface); border-radius: var(--radius-lg); cursor: pointer; color: var(--on-surface); font-size: 11px; font-weight: bold; transition: all 0.2s;" data-translate-pt="Normal" data-translate-en="Normal">Normal</button>
                         <button onclick="changeTextSize('increase')" class="acc-zoom-btn" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--outline-variant); background: var(--surface); border-radius: var(--radius-lg); cursor: pointer; color: var(--on-surface); font-size: 16px; font-weight: bold; transition: all 0.2s;">A+</button>
@@ -3133,29 +3182,29 @@
         <div class="max-container footer-grid">
             <div class="footer-col">
                 <h3 class="footer-logo">GV-CPS</h3>
-                <p class="footer-desc">Global View — Consultoria & Prestação de Serviços. Ponte comercial e aduaneira segura que conecta Moçambique ao resto do comércio global.</p>
+                <p class="footer-desc" data-translate-pt="Global View — Consultoria & Prestação de Serviços. Ponte comercial e aduaneira segura que conecta Moçambique ao resto do comércio global." data-translate-en="Global View — Consulting & Services. Secure commercial and customs bridge connecting Mozambique to the rest of global trade.">Global View — Consultoria & Prestação de Serviços. Ponte comercial e aduaneira segura que conecta Moçambique ao resto do comércio global.</p>
             </div>
             <div class="footer-col">
-                <h4>Marketplace B2B</h4>
+                <h4 data-translate-pt="Marketplace B2B" data-translate-en="B2B Marketplace">Marketplace B2B</h4>
                 <ul class="footer-links">
-                    <li><a href="#wall">Mural de Oportunidades</a></li>
-                    <li><a href="javascript:void(0)" onclick="openRequestWizard()">Fazer Procura (Compra)</a></li>
-                    <li><a href="#publish-offer">Publicar Oferta (Venda)</a></li>
+                    <li><a href="#wall" data-translate-pt="Mural de Oportunidades" data-translate-en="Opportunity Wall">Mural de Oportunidades</a></li>
+                    <li><a href="javascript:void(0)" onclick="openRequestWizard()" data-translate-pt="Fazer Procura (Compra)" data-translate-en="Make Request (Buy)">Fazer Procura (Compra)</a></li>
+                    <li><a href="#publish-offer" data-translate-pt="Publicar Oferta (Venda)" data-translate-en="Publish Offer (Sell)">Publicar Oferta (Venda)</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Legal & Suporte</h4>
+                <h4 data-translate-pt="Legal & Suporte" data-translate-en="Legal & Support">Legal & Suporte</h4>
                 <ul class="footer-links">
-                    <li><a href="#home">Termos de Intermediação</a></li>
-                    <li><a href="#home">Regra de Contato Seguro</a></li>
-                    <li><a href="#home">Políticas de Privacidade</a></li>
+                    <li><a href="#home" data-translate-pt="Termos de Intermediação" data-translate-en="Intermediation Terms">Termos de Intermediação</a></li>
+                    <li><a href="#home" data-translate-pt="Regra de Contato Seguro" data-translate-en="Secure Contact Rule">Regra de Contato Seguro</a></li>
+                    <li><a href="#home" data-translate-pt="Políticas de Privacidade" data-translate-en="Privacy Policies">Políticas de Privacidade</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Newsletter</h4>
-                <p style="font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 16px;">Inscreva-se para receber novos lotes de commodities e licitações no seu email.</p>
-                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Inscrição realizada! Você receberá atualizações do Mural.'); this.reset();">
-                    <input type="email" class="newsletter-input" placeholder="Seu e-mail corporativo" required>
+                <h4 data-translate-pt="Newsletter" data-translate-en="Newsletter">Newsletter</h4>
+                <p style="font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 16px;" data-translate-pt="Inscreva-se para receber novos lotes de commodities e licitações no seu email." data-translate-en="Subscribe to receive new batches of commodities and tenders in your email.">Inscreva-se para receber novos lotes de commodities e licitações no seu email.</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); alert(localStorage.getItem('gvcps_lang') === 'en' ? 'Subscription successful! You will receive updates.' : 'Inscrição realizada! Você receberá atualizações.'); this.reset();">
+                    <input type="email" class="newsletter-input" placeholder="Seu e-mail corporativo" data-translate-pt="Seu e-mail corporativo" data-translate-en="Your corporate email" required>
                     <button type="submit" class="newsletter-btn">
                         <span class="material-symbols-outlined" style="color: white;">send</span>
                     </button>
@@ -3163,7 +3212,7 @@
             </div>
         </div>
         <div class="max-container footer-bottom">
-            <p>© 2026 GV-CPS. Todos os direitos reservados. Sede Central: Maputo, Moçambique.</p>
+            <p data-translate-pt="© 2026 GV-CPS. Todos os direitos reservados. Sede Central: Maputo, Moçambique." data-translate-en="© 2026 GV-CPS. All rights reserved. Headquarters: Maputo, Mozambique.">© 2026 GV-CPS. Todos os direitos reservados. Sede Central: Maputo, Moçambique.</p>
             <div class="footer-socials">
                 <a href="#home" title="LinkedIn"><span class="material-symbols-outlined">share</span></a>
                 <a href="#home" title="Global View"><span class="material-symbols-outlined">language</span></a>
@@ -3196,6 +3245,8 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
