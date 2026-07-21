@@ -79,6 +79,18 @@ O protótipo da plataforma de intermediação B2B da **Global View (GV-CPS)** en
     - Preenche automaticamente os dados de contacto caso o utilizador esteja autenticado.
 *   **Deploy Atualizado**: Alterações enviadas para produção no Vercel via GitHub `6f0f63f`.
 
+### Sessão: 21 de Julho de 2026 (Correção de Deploy & Feedback Visual)
+*   **Diagnóstico Visual & Correção dos Filtros do Mural (`#wall`)**:
+    *   A partir das capturas de tela fornecidas pelo utilizador, identificou-se que as tags `<option>` da barra de filtros (`#filter-category`, `#filter-country`, `#sort-by`) não possuíam os atributos `data-translate-pt`/`data-translate-en`, mantendo os textos em Português quando o idioma estava em Inglês.
+    *   Corrigida a função `getCategoryDetails(category)` em `app.js` para retornar rótulos bilíngues de badges (`Agro & Commodities`, `Energy & Industry`, `Technology & Innovation`, `Logistics & Projects`, `Consulting & Services`) e sub-rótulos em maiúsculas (`AGRICULTURAL MARKET`, `PROJECT MANAGEMENT`, `PROFESSIONAL SERVICES`) dinamicamente no idioma ativo.
+    *   Implementado o fallback inteligente em `getTranslatedField` para traduzir 100% dos títulos do mural (`title`) mesmo em instâncias recarregadas do `localStorage`.
+*   **Diagnóstico e Solução do Botão de Acessibilidade (`#accessibility-fab`)**:
+    *   Identificada a causa da aparente "não abertura" do painel: a função `toggleAccessibilityMenu` estava a ser acionada duas vezes consecutivas no mesmo clique (uma pela chamada inline `onclick` no HTML e outra pelo `fab.onclick` no JS), abrindo e fechando o painel em menos de 1 milissegundo.
+    *   Adicionado o mecanismo de debounce anti-duplicação (`lastAccToggleTime < 250ms`) em `app.js`, garantindo que o clique alterna o painel exatamente uma vez de forma fluida.
+*   **Deploy Atualizado**:
+    *   Ficheiros enviados para o Vercel via GitHub `327c43a`.
+    *   **URL Correta do Deploy**: [https://global-view-eight.vercel.app](https://global-view-eight.vercel.app)
+
 ### Sessão: 21 de Julho de 2026
     *   Identificada e corrigida uma duplicação/corrupção crítica na estrutura de fechamento de tags HTML do modal do wizard em `index.html` que corrompia a árvore DOM.
     *   Atualizada a função `toggleAccessibilityMenu(e)` em `app.js` para tratar interrupção de propagação (`e.stopPropagation()`) e checar visibilidade por classe e CSS computado, garantindo abertura e fecho imediato ao clicar no FAB ou fora do painel.
