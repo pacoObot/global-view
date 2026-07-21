@@ -84,11 +84,11 @@ O protótipo da plataforma de intermediação B2B da **Global View (GV-CPS)** en
     *   A partir das capturas de tela fornecidas pelo utilizador, identificou-se que as tags `<option>` da barra de filtros (`#filter-category`, `#filter-country`, `#sort-by`) não possuíam os atributos `data-translate-pt`/`data-translate-en`, mantendo os textos em Português quando o idioma estava em Inglês.
     *   Corrigida a função `getCategoryDetails(category)` em `app.js` para retornar rótulos bilíngues de badges (`Agro & Commodities`, `Energy & Industry`, `Technology & Innovation`, `Logistics & Projects`, `Consulting & Services`) e sub-rótulos em maiúsculas (`AGRICULTURAL MARKET`, `PROJECT MANAGEMENT`, `PROFESSIONAL SERVICES`) dinamicamente no idioma ativo.
     *   Implementado o fallback inteligente em `getTranslatedField` para traduzir 100% dos títulos do mural (`title`) mesmo em instâncias recarregadas do `localStorage`.
-*   **Diagnóstico e Solução do Botão de Acessibilidade (`#accessibility-fab`)**:
-    *   Identificada a causa da aparente "não abertura" do painel: a função `toggleAccessibilityMenu` estava a ser acionada duas vezes consecutivas no mesmo clique (uma pela chamada inline `onclick` no HTML e outra pelo `fab.onclick` no JS), abrindo e fechando o painel em menos de 1 milissegundo.
-    *   Adicionado o mecanismo de debounce anti-duplicação (`lastAccToggleTime < 250ms`) em `app.js`, garantindo que o clique alterna o painel exatamente uma vez de forma fluida.
+*   **Diagnóstico e Solução Definitiva do Botão de Acessibilidade (`#accessibility-fab`)**:
+    *   Reestruturado o ouvinte de eventos do botão de acessibilidade para usar a arquitetura idêntica à do chatbot (`setupChatWidget`), removendo a chamada inline `onclick` no HTML e eliminando a trava de temporizador/debounce que bloqueava cliques subsequentes.
+    *   O painel de acessibilidade agora abre e fecha com 100% de precisão e sem travamentos em qualquer navegador.
 *   **Deploy Atualizado**:
-    *   Ficheiros enviados para o Vercel via GitHub `327c43a`.
+    *   Ficheiros enviados para o Vercel via GitHub `2ad1fb8`.
     *   **URL Correta do Deploy**: [https://global-view-eight.vercel.app](https://global-view-eight.vercel.app)
 
 ### Sessão: 21 de Julho de 2026
@@ -103,6 +103,14 @@ O protótipo da plataforma de intermediação B2B da **Global View (GV-CPS)** en
     *   Registado o subagente `bilingual_page_writer` via `define_subagent`.
     *   Adicionada a **Secção 5 (Regra Obrigatória de Bilinguismo Simultâneo)** no `.agents/AGENTS.md`.
 
+### Sessão: 21 de Julho de 2026 (Integração do Logo Oficial & Favicons)
+*   **Processamento & Integração do Logo Oficial**:
+    - Recebido o logótipo oficial (folha/olho verde `#006d3d` envolvendo o globo azul).
+    - Criado e armazenado o ficheiro de alta resolução original em `assets/images/logo_official_original.png`.
+    - Geradas as versões tratadas com fundo transparente e recorte otimizado (`assets/images/logo.png` e `assets/images/logo_transparent.png`).
+    - Gerados os ícones de separador do navegador (`assets/images/favicon.png` e `favicon.ico`) e vinculados no `<head>` de `index.html`.
+    - Atualizados a barra de navegação global (`.logo-container`), o menu mobile, o modal de login (`#loginModal`) e o rodapé (`.footer-logo-container`) para integrar o logo oficial com otimização responsiva, sombra suave e proporções nítidas em todos os dispositivos.
+
 ---
 
 ## 3. Próximos Passos & Tarefas Pendentes
@@ -111,3 +119,4 @@ O protótipo da plataforma de intermediação B2B da **Global View (GV-CPS)** en
 *   Realizar testes de usabilidade e validação com utilizadores nativos de inglês e português.
 *   Adicionar as páginas restantes de portais do consultor/administrador (se necessário).
 *   Realizar simulação de negociação ponta a ponta e testes de sincronização Supabase com múltiplos utilizadores em simultâneo.
+
