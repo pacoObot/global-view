@@ -1103,14 +1103,14 @@ function setLanguage(lang) {
 
 // ACCESSIBILITY CONTROL PANEL HANDLERS
 function initAccessibility() {
-    // Attach clean click listener matching chat-fab
+    // Attach direct click handler matching chat-fab
     const fab = document.getElementById('accessibility-fab');
     if (fab) {
-        fab.onclick = null;
-        fab.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleAccessibilityMenu(e);
-        });
+        fab.onclick = function(e) {
+            const evt = e || window.event;
+            if (evt && evt.stopPropagation) evt.stopPropagation();
+            toggleAccessibilityMenu(evt);
+        };
     }
     
     // Attach outside click listener to close accessibility panel safely

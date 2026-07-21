@@ -3029,12 +3029,6 @@
                                 <label class="flex-1 flex items-center gap-1.5 p-2 border border-slate-200 rounded-xl cursor-pointer text-xs" style="flex:1; display:flex; align-items:center; gap:6px; padding:10px; border:1px solid #cbd5e1; border-radius:12px;">
                                     <input type="radio" name="wizard-logistics" value="Sim" checked> <span data-translate-pt="Sim" data-translate-en="Yes">Sim</span>
                                 </label>
-                                <label class="flex-1 flex items-center gap-1.5 p-2 border border-slate-200 rounded-xl cursor-pointer text-xs" style="flex:1; display:flex; align-items:center; gap:6px; padding:10px; border:1px solid #cbd5e1; border-radius:12px;">
-                                    <input type="radio" name="wizard-logistics" value="Não"> <span data-translate-pt="Não" data-translate-en="No">Não</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="wizard-input-group mt-2" style="margin-top: 16px;">
                         <label class="wizard-input-label" for="wizard-contact-desc" data-translate-pt="Especificações Adicionais (Opcional)" data-translate-en="Additional Specifications (Optional)">Especificações Adicionais (Opcional)</label>
@@ -3055,10 +3049,10 @@
         </div>
     </div>
 
-    <!-- FLOATING CHATBOT WIDGET -->
-    <div class="chatbot-widget-container" style="position: fixed; bottom: 24px; right: 24px; z-index: 10000; display: flex; flex-direction: column; align-items: flex-end; gap: 16px;">
+    <!-- FLOATING CHATBOT & ACCESSIBILITY WIDGETS -->
+    <div class="chatbot-widget-container" style="position: fixed; bottom: 24px; right: 24px; z-index: 10000; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; pointer-events: none;">
         <!-- Chatbot Window -->
-        <div id="chat-window" class="hidden" style="display: none; width: 360px; height: 480px; background-color: var(--surface); border: 1px solid var(--outline-variant); border-radius: var(--radius-2xl); box-shadow: var(--shadow-lg); flex-direction: column; overflow: hidden;">
+        <div id="chat-window" class="hidden" style="display: none; width: 360px; height: 480px; background-color: var(--surface); border: 1px solid var(--outline-variant); border-radius: var(--radius-2xl); box-shadow: var(--shadow-lg); flex-direction: column; overflow: hidden; pointer-events: auto;">
             <!-- Widget Header -->
             <div style="background-color: var(--primary); padding: 16px; display: flex; justify-content: space-between; align-items: center; color: white;">
                 <div style="display: flex; align-items: center; gap: 10px;">
@@ -3094,14 +3088,9 @@
                 </form>
             </div>
         </div>
-        
-        <!-- FAB Floating Button (Chat) -->
-        <button id="chat-fab" class="btn btn-primary" style="position: fixed; bottom: 84px; right: 24px; z-index: 10001; width: 48px; height: 48px; border-radius: var(--radius-full); padding: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center;">
-            <span class="material-symbols-outlined" id="chat-icon" style="font-size: 24px; pointer-events: none;">chat</span>
-        </button>
 
         <!-- Accessibility Panel -->
-        <div id="accessibility-panel" class="hidden" style="display: none; position: fixed; bottom: 84px; right: 24px; z-index: 10005; width: 290px; background-color: var(--surface); border: 1px solid var(--outline-variant); border-radius: var(--radius-2xl); box-shadow: 0 12px 36px rgba(0,0,0,0.22); flex-direction: column; overflow: hidden;">
+        <div id="accessibility-panel" class="hidden" style="display: none; width: 290px; background-color: var(--surface); border: 1px solid var(--outline-variant); border-radius: var(--radius-2xl); box-shadow: var(--shadow-lg); flex-direction: column; overflow: hidden; pointer-events: auto;">
             <!-- Panel Header -->
             <div style="background-color: var(--primary); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; color: white;">
                 <div style="display: flex; align-items: center; gap: 8px;">
@@ -3160,8 +3149,13 @@
             </div>
         </div>
         
+        <!-- FAB Floating Button (Chat) -->
+        <button id="chat-fab" class="btn btn-primary" style="width: 48px; height: 48px; border-radius: var(--radius-full); padding: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; pointer-events: auto; cursor: pointer;">
+            <span class="material-symbols-outlined" id="chat-icon" style="font-size: 24px; pointer-events: none;">chat</span>
+        </button>
+
         <!-- Accessibility FAB -->
-        <button id="accessibility-fab" class="btn" style="position: fixed; bottom: 24px; right: 24px; z-index: 10002; width: 48px; height: 48px; border-radius: var(--radius-full); padding: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; background-color: var(--secondary); color: white; border: none; cursor: pointer; transition: all 0.2s;">
+        <button id="accessibility-fab" class="btn" style="width: 48px; height: 48px; border-radius: var(--radius-full); padding: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; background-color: var(--secondary); color: white; border: none; cursor: pointer; transition: all 0.2s; pointer-events: auto;">
             <span class="material-symbols-outlined" style="font-size: 24px; pointer-events: none;">accessibility</span>
         </button>
     </div>
