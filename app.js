@@ -1162,23 +1162,24 @@ function toggleAccessibilityMenu(e) {
     const panel = document.getElementById('accessibility-panel');
     if (!panel) return;
     
-    const isHidden = panel.classList.contains('hidden') || panel.style.display === 'none';
+    const isHidden = panel.classList.contains('hidden') || panel.style.display === 'none' || getComputedStyle(panel).display === 'none';
     if (isHidden) {
         // Close chat window if open
         const chatWindow = document.getElementById('chat-window');
         if (chatWindow) {
-            chatWindow.style.display = 'none';
             chatWindow.classList.add('hidden');
+            chatWindow.style.setProperty('display', 'none', 'important');
             const chatIcon = document.getElementById('chat-icon');
             if (chatIcon) chatIcon.textContent = 'chat';
         }
-        panel.style.display = 'flex';
         panel.classList.remove('hidden');
+        panel.style.setProperty('display', 'flex', 'important');
     } else {
-        panel.style.display = 'none';
         panel.classList.add('hidden');
+        panel.style.setProperty('display', 'none', 'important');
     }
 }
+window.toggleAccessibilityMenu = toggleAccessibilityMenu;
 
 function toggleDarkMode() {
     const isDark = document.body.classList.toggle('dark-theme');

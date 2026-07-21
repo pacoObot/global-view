@@ -3050,115 +3050,113 @@
     </div>
 
     <!-- FLOATING CHATBOT & ACCESSIBILITY WIDGETS -->
-    <div class="chatbot-widget-container" style="position: fixed; bottom: 24px; right: 24px; z-index: 10000; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; pointer-events: none;">
-        <!-- Chatbot Window -->
-        <div id="chat-window" class="hidden" style="display: none; width: 360px; height: 480px; background-color: var(--surface); border: 1px solid var(--outline-variant); border-radius: var(--radius-2xl); box-shadow: var(--shadow-lg); flex-direction: column; overflow: hidden; pointer-events: auto;">
-            <!-- Widget Header -->
-            <div style="background-color: var(--primary); padding: 16px; display: flex; justify-content: space-between; align-items: center; color: white;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 32px; height: 32px; background-color: white; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: var(--primary);">
-                        <span class="material-symbols-outlined" style="font-size: 20px;">support_agent</span>
-                    </div>
-                    <div>
-                        <h4 class="font-bold" style="font-size:14px; font-family: var(--font-heading);" data-translate-pt="Suporte GV-CPS" data-translate-en="GV-CPS Support">Suporte GV-CPS</h4>
-                        <p style="font-size: 10px; color: rgba(255,255,255,0.7);" data-translate-pt="Assistente em tempo real" data-translate-en="Real-time Assistant">Assistente em tempo real</p>
-                    </div>
+    <!-- Chatbot Window -->
+    <div id="chat-window" class="hidden" style="display: none; position: fixed; bottom: 144px; right: 24px; z-index: 10005; width: 360px; height: 480px; background-color: var(--surface); border: 1px solid var(--outline-variant); border-radius: var(--radius-2xl); box-shadow: var(--shadow-lg); flex-direction: column; overflow: hidden;">
+        <!-- Widget Header -->
+        <div style="background-color: var(--primary); padding: 16px; display: flex; justify-content: space-between; align-items: center; color: white;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 32px; height: 32px; background-color: white; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                    <span class="material-symbols-outlined" style="font-size: 20px;">support_agent</span>
                 </div>
-                <button id="close-chat" style="background: none; border: none; color: white; cursor: pointer;">
-                    <span class="material-symbols-outlined">close</span>
-                </button>
-            </div>
-            
-            <!-- Widget Message area -->
-            <div id="widget-chat-messages" style="flex-grow: 1; padding: 16px; overflow-y: auto; background-color: var(--surface-low); display: flex; flex-direction: column; gap: 12px;">
-                <div class="chat-bubble received">
-                    <span class="chat-bubble-sender" style="color: var(--primary-light);" data-translate-pt="Assistente GV" data-translate-en="GV Assistant">Assistente GV</span>
-                    <p data-translate-pt="Olá! Seja bem-vindo ao portal GV-CPS. Como posso ajudar com a intermediação comercial da sua empresa hoje?" data-translate-en="Hello! Welcome to the GV-CPS portal. How can I help with your company's commercial intermediation today?">Olá! Seja bem-vindo ao portal GV-CPS. Como posso ajudar com a intermediação comercial da sua empresa hoje?</p>
-                    <span class="chat-bubble-time" data-translate-pt="Agora" data-translate-en="Now">Agora</span>
+                <div>
+                    <h4 class="font-bold" style="font-size:14px; font-family: var(--font-heading);" data-translate-pt="Suporte GV-CPS" data-translate-en="GV-CPS Support">Suporte GV-CPS</h4>
+                    <p style="font-size: 10px; color: rgba(255,255,255,0.7);" data-translate-pt="Assistente em tempo real" data-translate-en="Real-time Assistant">Assistente em tempo real</p>
                 </div>
             </div>
-            
-            <!-- Widget Input Form -->
-            <div style="padding: 12px 16px; background-color: var(--surface); border-top: 1px solid var(--outline-variant);">
-                <form id="widget-chat-form" style="display: flex; gap: 8px;">
-                    <input type="text" id="widget-chat-input" class="form-input" style="border-radius: var(--radius-full); padding: 8px 16px; font-size:13px;" placeholder="Digite a sua mensagem..." data-translate-pt="Digite a sua mensagem..." data-translate-en="Type your message...">
-                    <button type="submit" class="btn btn-primary" style="border-radius: var(--radius-full); width: 36px; height: 36px; padding:0; flex-shrink: 0;">
-                        <span class="material-symbols-outlined" style="font-size: 20px;">send</span>
-                    </button>
-                </form>
-            </div>
+            <button id="close-chat" style="background: none; border: none; color: white; cursor: pointer;">
+                <span class="material-symbols-outlined">close</span>
+            </button>
         </div>
-
-        <!-- Accessibility Panel -->
-        <div id="accessibility-panel" class="hidden" style="display: none; width: 290px; background-color: var(--surface); border: 1px solid var(--outline-variant); border-radius: var(--radius-2xl); box-shadow: var(--shadow-lg); flex-direction: column; overflow: hidden; pointer-events: auto;">
-            <!-- Panel Header -->
-            <div style="background-color: var(--primary); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; color: white;">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <span class="material-symbols-outlined" style="font-size: 20px;">accessibility</span>
-                    <h4 class="font-bold" style="font-size:13px; font-family: var(--font-heading);" data-translate-pt="Acessibilidade" data-translate-en="Accessibility">Acessibilidade</h4>
-                </div>
-                <button onclick="toggleAccessibilityMenu(event)" style="background: none; border: none; color: white; cursor: pointer; display: flex; align-items: center;">
-                    <span class="material-symbols-outlined" style="font-size: 18px;">close</span>
-                </button>
-            </div>
-            
-            <!-- Panel Options -->
-            <div style="padding: 16px; display: flex; flex-direction: column; gap: 14px; background-color: var(--surface-low);">
-                <!-- Language Toggle Section -->
-                <div>
-                    <span style="font-size: 10px; font-weight: bold; color: var(--outline); text-transform: uppercase; display: block; margin-bottom: 6px;" data-translate-pt="Idioma" data-translate-en="Language">Idioma</span>
-                    <div style="display: flex; gap: 8px;">
-                        <button id="btn-lang-pt" onclick="setLanguage('pt')" style="flex: 1; padding: 8px; border: none; background: var(--secondary); color: white; font-weight: bold; font-size: 12px; border-radius: var(--radius-lg); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px;">
-                            <span>🇵🇹</span> PT
-                        </button>
-                        <button id="btn-lang-en" onclick="setLanguage('en')" style="flex: 1; padding: 8px; border: 1px solid var(--outline-variant); background: transparent; color: var(--on-surface-variant); font-weight: bold; font-size: 12px; border-radius: var(--radius-lg); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px;">
-                            <span>🇬🇧</span> EN
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Contrast & Dark Mode Section -->
-                <div style="display: flex; gap: 8px;">
-                    <button onclick="toggleDarkMode()" id="acc-dark-btn" class="acc-option-btn" style="flex: 1; padding: 10px 8px; border: 1px solid var(--outline-variant); background: var(--surface); color: var(--on-surface); font-size: 11px; font-weight: 600; border-radius: var(--radius-lg); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: all 0.2s;">
-                        <span class="material-symbols-outlined" style="font-size: 20px;">dark_mode</span>
-                        <span data-translate-pt="Modo Escuro" data-translate-en="Dark Mode">Modo Escuro</span>
-                    </button>
-                    <button onclick="toggleContrast()" id="acc-contrast-btn" class="acc-option-btn" style="flex: 1; padding: 10px 8px; border: 1px solid var(--outline-variant); background: var(--surface); color: var(--on-surface); font-size: 11px; font-weight: 600; border-radius: var(--radius-lg); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: all 0.2s;">
-                        <span class="material-symbols-outlined" style="font-size: 20px;">contrast</span>
-                        <span data-translate-pt="Alto Contraste" data-translate-en="High Contrast">Alto Contraste</span>
-                    </button>
-                </div>
-
-                <!-- Link Highlight Section -->
-                <div>
-                    <button onclick="toggleLinkHighlight()" id="acc-links-btn" class="acc-option-btn" style="width: 100%; padding: 10px 8px; border: 1px solid var(--outline-variant); background: var(--surface); color: var(--on-surface); font-size: 11px; font-weight: 600; border-radius: var(--radius-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s;">
-                        <span class="material-symbols-outlined" style="font-size: 20px;">link</span>
-                        <span data-translate-pt="Realçar Links" data-translate-en="Highlight Links">Realçar Links</span>
-                    </button>
-                </div>
-
-                <!-- Text Size Section -->
-                <div>
-                    <span style="font-size: 10px; font-weight: bold; color: var(--outline); text-transform: uppercase; display: block; margin-bottom: 6px;" data-translate-pt="Tamanho do Texto" data-translate-en="Text Size">Tamanho do Texto</span>
-                    <div style="display: flex; gap: 8px; align-items: center;">
-                        <button onclick="changeTextSize('decrease')" class="acc-zoom-btn" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--outline-variant); background: var(--surface); border-radius: var(--radius-lg); cursor: pointer; color: var(--on-surface); font-size: 16px; font-weight: bold; transition: all 0.2s;">A-</button>
-                        <button onclick="changeTextSize('reset')" class="acc-zoom-btn" style="flex: 1; height: 36px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--outline-variant); background: var(--surface); border-radius: var(--radius-lg); cursor: pointer; color: var(--on-surface); font-size: 11px; font-weight: bold; transition: all 0.2s;" data-translate-pt="Normal" data-translate-en="Normal">Normal</button>
-                        <button onclick="changeTextSize('increase')" class="acc-zoom-btn" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--outline-variant); background: var(--surface); border-radius: var(--radius-lg); cursor: pointer; color: var(--on-surface); font-size: 16px; font-weight: bold; transition: all 0.2s;">A+</button>
-                    </div>
-                </div>
+        
+        <!-- Widget Message area -->
+        <div id="widget-chat-messages" style="flex-grow: 1; padding: 16px; overflow-y: auto; background-color: var(--surface-low); display: flex; flex-direction: column; gap: 12px;">
+            <div class="chat-bubble received">
+                <span class="chat-bubble-sender" style="color: var(--primary-light);" data-translate-pt="Assistente GV" data-translate-en="GV Assistant">Assistente GV</span>
+                <p data-translate-pt="Olá! Seja bem-vindo ao portal GV-CPS. Como posso ajudar com a intermediação comercial da sua empresa hoje?" data-translate-en="Hello! Welcome to the GV-CPS portal. How can I help with your company's commercial intermediation today?">Olá! Seja bem-vindo ao portal GV-CPS. Como posso ajudar com a intermediação comercial da sua empresa hoje?</p>
+                <span class="chat-bubble-time" data-translate-pt="Agora" data-translate-en="Now">Agora</span>
             </div>
         </div>
         
-        <!-- FAB Floating Button (Chat) -->
-        <button id="chat-fab" class="btn btn-primary" style="width: 48px; height: 48px; border-radius: var(--radius-full); padding: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; pointer-events: auto; cursor: pointer;">
-            <span class="material-symbols-outlined" id="chat-icon" style="font-size: 24px; pointer-events: none;">chat</span>
-        </button>
-
-        <!-- Accessibility FAB -->
-        <button id="accessibility-fab" class="btn" style="width: 48px; height: 48px; border-radius: var(--radius-full); padding: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; background-color: var(--secondary); color: white; border: none; cursor: pointer; transition: all 0.2s; pointer-events: auto;">
-            <span class="material-symbols-outlined" style="font-size: 24px; pointer-events: none;">accessibility</span>
-        </button>
+        <!-- Widget Input Form -->
+        <div style="padding: 12px 16px; background-color: var(--surface); border-top: 1px solid var(--outline-variant);">
+            <form id="widget-chat-form" style="display: flex; gap: 8px;">
+                <input type="text" id="widget-chat-input" class="form-input" style="border-radius: var(--radius-full); padding: 8px 16px; font-size:13px;" placeholder="Digite a sua mensagem..." data-translate-pt="Digite a sua mensagem..." data-translate-en="Type your message...">
+                <button type="submit" class="btn btn-primary" style="border-radius: var(--radius-full); width: 36px; height: 36px; padding:0; flex-shrink: 0;">
+                    <span class="material-symbols-outlined" style="font-size: 20px;">send</span>
+                </button>
+            </form>
+        </div>
     </div>
+
+    <!-- Accessibility Panel -->
+    <div id="accessibility-panel" class="hidden" style="display: none; position: fixed; bottom: 80px; right: 24px; z-index: 10006; width: 290px; background-color: var(--surface); border: 1px solid var(--outline-variant); border-radius: var(--radius-2xl); box-shadow: 0 12px 36px rgba(0,0,0,0.22); flex-direction: column; overflow: hidden;">
+        <!-- Panel Header -->
+        <div style="background-color: var(--primary); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; color: white;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="material-symbols-outlined" style="font-size: 20px;">accessibility</span>
+                <h4 class="font-bold" style="font-size:13px; font-family: var(--font-heading);" data-translate-pt="Acessibilidade" data-translate-en="Accessibility">Acessibilidade</h4>
+            </div>
+            <button onclick="toggleAccessibilityMenu(event)" style="background: none; border: none; color: white; cursor: pointer; display: flex; align-items: center;">
+                <span class="material-symbols-outlined" style="font-size: 18px;">close</span>
+            </button>
+        </div>
+        
+        <!-- Panel Options -->
+        <div style="padding: 16px; display: flex; flex-direction: column; gap: 14px; background-color: var(--surface-low);">
+            <!-- Language Toggle Section -->
+            <div>
+                <span style="font-size: 10px; font-weight: bold; color: var(--outline); text-transform: uppercase; display: block; margin-bottom: 6px;" data-translate-pt="Idioma" data-translate-en="Language">Idioma</span>
+                <div style="display: flex; gap: 8px;">
+                    <button id="btn-lang-pt" onclick="setLanguage('pt')" style="flex: 1; padding: 8px; border: none; background: var(--secondary); color: white; font-weight: bold; font-size: 12px; border-radius: var(--radius-lg); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                        <span>🇵🇹</span> PT
+                    </button>
+                    <button id="btn-lang-en" onclick="setLanguage('en')" style="flex: 1; padding: 8px; border: 1px solid var(--outline-variant); background: transparent; color: var(--on-surface-variant); font-weight: bold; font-size: 12px; border-radius: var(--radius-lg); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                        <span>🇬🇧</span> EN
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Contrast & Dark Mode Section -->
+            <div style="display: flex; gap: 8px;">
+                <button onclick="toggleDarkMode()" id="acc-dark-btn" class="acc-option-btn" style="flex: 1; padding: 10px 8px; border: 1px solid var(--outline-variant); background: var(--surface); color: var(--on-surface); font-size: 11px; font-weight: 600; border-radius: var(--radius-lg); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: all 0.2s;">
+                    <span class="material-symbols-outlined" style="font-size: 20px;">dark_mode</span>
+                    <span data-translate-pt="Modo Escuro" data-translate-en="Dark Mode">Modo Escuro</span>
+                </button>
+                <button onclick="toggleContrast()" id="acc-contrast-btn" class="acc-option-btn" style="flex: 1; padding: 10px 8px; border: 1px solid var(--outline-variant); background: var(--surface); color: var(--on-surface); font-size: 11px; font-weight: 600; border-radius: var(--radius-lg); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: all 0.2s;">
+                    <span class="material-symbols-outlined" style="font-size: 20px;">contrast</span>
+                    <span data-translate-pt="Alto Contraste" data-translate-en="High Contrast">Alto Contraste</span>
+                </button>
+            </div>
+
+            <!-- Link Highlight Section -->
+            <div>
+                <button onclick="toggleLinkHighlight()" id="acc-links-btn" class="acc-option-btn" style="width: 100%; padding: 10px 8px; border: 1px solid var(--outline-variant); background: var(--surface); color: var(--on-surface); font-size: 11px; font-weight: 600; border-radius: var(--radius-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s;">
+                    <span class="material-symbols-outlined" style="font-size: 20px;">link</span>
+                    <span data-translate-pt="Realçar Links" data-translate-en="Highlight Links">Realçar Links</span>
+                </button>
+            </div>
+
+            <!-- Text Size Section -->
+            <div>
+                <span style="font-size: 10px; font-weight: bold; color: var(--outline); text-transform: uppercase; display: block; margin-bottom: 6px;" data-translate-pt="Tamanho do Texto" data-translate-en="Text Size">Tamanho do Texto</span>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <button onclick="changeTextSize('decrease')" class="acc-zoom-btn" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--outline-variant); background: var(--surface); border-radius: var(--radius-lg); cursor: pointer; color: var(--on-surface); font-size: 16px; font-weight: bold; transition: all 0.2s;">A-</button>
+                    <button onclick="changeTextSize('reset')" class="acc-zoom-btn" style="flex: 1; height: 36px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--outline-variant); background: var(--surface); border-radius: var(--radius-lg); cursor: pointer; color: var(--on-surface); font-size: 11px; font-weight: bold; transition: all 0.2s;" data-translate-pt="Normal" data-translate-en="Normal">Normal</button>
+                    <button onclick="changeTextSize('increase')" class="acc-zoom-btn" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--outline-variant); background: var(--surface); border-radius: var(--radius-lg); cursor: pointer; color: var(--on-surface); font-size: 16px; font-weight: bold; transition: all 0.2s;">A+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- FAB Floating Button (Chat) -->
+    <button id="chat-fab" class="btn btn-primary" style="position: fixed; bottom: 84px; right: 24px; z-index: 10001; width: 48px; height: 48px; border-radius: var(--radius-full); padding: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; cursor: pointer;">
+        <span class="material-symbols-outlined" id="chat-icon" style="font-size: 24px; pointer-events: none;">chat</span>
+    </button>
+
+    <!-- Accessibility FAB -->
+    <button id="accessibility-fab" onclick="toggleAccessibilityMenu(event)" class="btn" style="position: fixed; bottom: 24px; right: 24px; z-index: 10002; width: 48px; height: 48px; border-radius: var(--radius-full); padding: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; background-color: var(--secondary); color: white; border: none; cursor: pointer; transition: all 0.2s;">
+        <span class="material-symbols-outlined" style="font-size: 24px; pointer-events: none;">accessibility</span>
+    </button>
 
     <!-- GLOBAL PUBLIC FOOTER -->
     <footer class="app-footer">
