@@ -2863,6 +2863,18 @@
         </div>
     </div>
 
+    <!-- OPPORTUNITY DETAIL SPLIT MODAL (PC / Mobile) -->
+    <div id="opportunityDetailModal" class="opp-modal-overlay hidden" onclick="closeOpportunityDetailModal()">
+        <div class="opp-modal-card" onclick="event.stopPropagation();">
+            <button class="opp-modal-close-btn" onclick="closeOpportunityDetailModal()" title="Fechar">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <div id="opp-modal-split-container" class="opp-modal-split">
+                <!-- Dynamically populated by app.js -->
+            </div>
+        </div>
+    </div>
+
     <!-- GUIDED SERVICE REQUEST WIZARD MODAL -->
     <div id="serviceWizardModal" class="wizard-modal hidden" onclick="closeRequestWizard()">
         <div class="wizard-card" onclick="event.stopPropagation();">
@@ -3037,29 +3049,6 @@
                     Voltar
                 </button>
                 <button onclick="wizardNextStep()" id="wizard-btn-next" class="px-6 py-3 bg-secondary text-white font-bold text-xs rounded-xl hover:opacity-90 active:scale-95 transition cursor-pointer" style="border:none;" data-translate-pt="Avançar" data-translate-en="Next">
-                    Avançar
-                </button>
-            </div>                            </label>
-                                <label class="flex-1 flex items-center gap-1.5 p-2 border border-slate-200 rounded-xl cursor-pointer text-xs" style="flex:1; display:flex; align-items:center; gap:6px; padding:10px; border:1px solid #cbd5e1; border-radius:12px;">
-                                    <input type="radio" name="wizard-logistics" value="Não"> Não
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="wizard-input-group mt-2" style="margin-top: 16px;">
-                        <label class="wizard-input-label" for="wizard-contact-desc">Especificações Adicionais (Opcional)</label>
-                        <textarea id="wizard-contact-desc" class="wizard-input" rows="2" maxlength="200" placeholder="Informações de suporte ao consultor... (Máx 200 caracteres)"></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Footer -->
-            <div class="wizard-footer">
-                <button onclick="wizardPrevStep()" id="wizard-btn-prev" class="px-5 py-3 border border-outline-variant rounded-xl bg-white hover:bg-slate-50 font-bold text-xs text-slate-700 cursor-pointer disabled:opacity-50 disabled:pointer-events-none transition" disabled>
-                    Voltar
-                </button>
-                <button onclick="wizardNextStep()" id="wizard-btn-next" class="px-6 py-3 bg-secondary text-white font-bold text-xs rounded-xl hover:opacity-90 active:scale-95 transition cursor-pointer" style="border:none;">
                     Avançar
                 </button>
             </div>

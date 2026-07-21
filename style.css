@@ -2953,5 +2953,194 @@ body {
     outline: none;
 }
 
+/* =====================================================================
+   2-BUTTON CARD ACTIONS & SPLIT-VIEW DETAIL MODAL
+   ===================================================================== */
+
+/* 2-Button footer inside opportunity card */
+.card-actions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.btn-card-details {
+    padding: 10px 8px;
+    border-radius: 10px;
+    border: 1.5px solid var(--cat-color);
+    background: var(--cat-bg);
+    color: var(--cat-color);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+.btn-card-details:hover {
+    background: var(--cat-color);
+    color: #ffffff;
+}
+
+.btn-card-interest {
+    padding: 10px 8px;
+    border-radius: 10px;
+    border: none;
+    background: var(--cat-color);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.18);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+.btn-card-interest:hover {
+    background: var(--cat-hover, #023840);
+    transform: translateY(-1px);
+}
+.btn-card-interest:active {
+    transform: scale(0.97);
+}
+
+/* Opportunity Detail Modal Overlay */
+.opp-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9990;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeInModal 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.opp-modal-overlay.hidden {
+    display: none !important;
+}
+
+@keyframes fadeInModal {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Opportunity Detail Split Modal Card */
+.opp-modal-card {
+    background: #ffffff;
+    border-radius: 20px;
+    width: 920px;
+    max-width: 96vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    position: relative;
+}
+
+.dark-theme .opp-modal-card {
+    background: #111c21;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #f1f5f9;
+}
+
+/* Split View Grid (Desktop: 2 columns | Mobile: 1 column) */
+.opp-modal-split {
+    display: grid;
+    grid-template-columns: 42% 58%;
+    min-height: 520px;
+}
+
+@media (max-width: 860px) {
+    .opp-modal-split {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Left Hero Column (PC) */
+.opp-modal-hero {
+    position: relative;
+    background: #0f172a;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px;
+}
+
+.opp-modal-hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+    transition: transform 0.6s ease;
+}
+
+.opp-modal-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.2) 40%, rgba(2, 56, 64, 0.95) 100%);
+}
+
+.opp-modal-hero-badges {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.opp-modal-hero-footer {
+    position: relative;
+    z-index: 2;
+    color: #ffffff;
+}
+
+/* Right Details Content Column (PC) */
+.opp-modal-content {
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.opp-modal-close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 10;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.opp-modal-close-btn:hover {
+    background: #023840;
+    color: #ffffff;
+}
+
+
 
 

@@ -1051,17 +1051,28 @@ function setLanguage(lang) {
     initWidgetChatMessages(lang);
     
     // Re-render current page
-    const currentView = window.location.hash ? window.location.hash.substring(1).split('?')[0] : 'home';
+    const hashParts = window.location.hash ? window.location.hash.substring(1).split('?') : ['home'];
+    const currentView = hashParts[0] || 'home';
+    const urlParams = new URLSearchParams(hashParts[1] || '');
+    const tab = urlParams.get('tab') || 'dashboard';
+    const id = urlParams.get('id');
+    const type = urlParams.get('type');
+
     if (currentView === 'home') {
         renderHomepage();
         renderMarketExplorer();
     } else if (currentView === 'wall') {
         renderOpportunityWall();
-    } else if (currentView === 'detail') {
-        const urlParams = new URLSearchParams(window.location.hash.split('?')[1] || '');
-        const id = urlParams.get('id');
-        const type = urlParams.get('type');
-        if (id && type) renderDetailView(id, type);
+    } else if (currentView === 'detail' && id && type) {
+        renderDetailView(id, type);
+    } else if (currentView === 'buyer-portal') {
+        renderBuyerPortal(tab, id);
+    } else if (currentView === 'supplier-portal') {
+        renderSupplierPortal(tab, id);
+    } else if (currentView === 'consultant-portal') {
+        renderConsultantPortal(tab, id);
+    } else if (currentView === 'admin-portal') {
+        renderAdminPortal(tab);
     }
 }
 
@@ -1099,11 +1110,12 @@ function initAccessibility() {
     }
 }
 
-function toggleAccessibilityMenu() {
+function toggleAccessibilityMenu(e) {
+    if (e && e.stopPropagation) e.stopPropagation();
     const panel = document.getElementById('accessibility-panel');
     if (!panel) return;
     
-    const isHidden = panel.style.display === 'none';
+    const isHidden = panel.classList.contains('hidden') || panel.style.display === 'none' || getComputedStyle(panel).display === 'none';
     if (isHidden) {
         // Close chat window if open
         const chatWindow = document.getElementById('chat-window');
@@ -1710,24 +1722,28 @@ function createOpportunityCard(item) {
                 </div>
             </div>
 
-            <!-- CTA Button -->
-            <div style="padding:0 18px 20px;">
+            <!-- 2-Button Action Bar -->
+            <div class="card-actions-grid" style="margin-top: 12px;">
                 <button
-                    onclick="event.stopPropagation(); window.location.hash='detail?id=${item.id}&type=${item.type}'"
-                    style="width:100%;padding:12px;border-radius:12px;border:none;cursor:pointer;font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#fff;background-color:var(--cat-color);box-shadow:0 4px 10px -2px rgba(0,0,0,0.18);transition:background-color 0.2s,transform 0.15s;display:flex;align-items:center;justify-content:center;gap:8px;"
-                    onmouseover="this.style.backgroundColor='var(--cat-hover)'"
-                    onmouseout="this.style.backgroundColor='var(--cat-color)'"
-                    onmousedown="this.style.transform='scale(0.97)'"
-                    onmouseup="this.style.transform='scale(1)'"
+                    onclick="event.stopPropagation(); openOpportunityDetailModal('${item.id}', '${item.type}')"
+                    class="btn-card-details"
                 >
-                    ${labelInterest}
-                    <span style="font-size:13px;transition:transform 0.2s;" class="arrow-icon">&rarr;</span>
+                    <span class="material-symbols-outlined" style="font-size:14px;">info</span>
+                    ${lang === 'pt' ? 'Detalhes' : 'Details'}
+                </button>
+                <button
+                    onclick="event.stopPropagation(); startGuidedNegotiation('${item.id}', '${item.type}')"
+                    class="btn-card-interest"
+                >
+                    <span class="material-symbols-outlined" style="font-size:14px;">handshake</span>
+                    ${lang === 'pt' ? 'Interesse' : 'Interest'}
                 </button>
             </div>
+        </div>
     `;
 
     card.addEventListener('click', () => {
-        window.location.hash = `detail?id=${item.id}&type=${item.type}`;
+        openOpportunityDetailModal(item.id, item.type);
     });
 
     return card;
@@ -2702,33 +2718,54 @@ function renderTimeline(elementId, item) {
     const el = document.getElementById(elementId);
     if (!el) return;
     
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
     const statusOrder = ['pendente', 'analise', 'atendimento', 'concluida'];
     const currentIndex = statusOrder.indexOf(item.status);
+    
+    const t = lang === 'en' ? {
+        s1Title: 'Registered Publication',
+        s1Desc: 'The proposal was successfully submitted to the GV-CPS platform and is awaiting review.',
+        s2Title: 'Technical & Compliance Review',
+        s2Desc: 'A specialized consultant reviews documentation, origin, and restrictions of the proposal.',
+        s3Title: 'Intermediation & Mediated Chat',
+        s3Desc: 'GV-CPS handles the commercial and logistics bridge securely, opening the mediated chat room.',
+        s4Title: 'Deal Completion',
+        s4Desc: 'Commercial terms finalized, contracts signed, and logistics dispatched by GV-CPS.'
+    } : {
+        s1Title: 'Publicação Registada',
+        s1Desc: 'A proposta foi submetida com sucesso à plataforma GV-CPS e aguarda análise.',
+        s2Title: 'Análise Técnica e Conformidade',
+        s2Desc: 'Um consultor especializado analisa a documentação, origem e restrições da proposta.',
+        s3Title: 'Intermediação & Chat Mediado',
+        s3Desc: 'GV-CPS realiza a ponte comercial e logística de forma segura, abrindo a sala de chat mediado.',
+        s4Title: 'Conclusão do Negócio',
+        s4Desc: 'Termos comerciais finalizados, contratos assinados e logística despachada pela GV-CPS.'
+    };
     
     el.innerHTML = `
         <div class="timeline-item ${currentIndex >= 0 ? 'completed' : ''} ${item.status === 'pendente' ? 'active' : ''}">
             <div class="timeline-marker"></div>
-            <div class="timeline-item-title">Publicação Registada</div>
+            <div class="timeline-item-title">${t.s1Title}</div>
             <div class="timeline-item-date">${formatDate(item.date)}</div>
-            <div class="timeline-item-desc">A proposta foi submetida com sucesso à plataforma GV-CPS e aguarda análise.</div>
+            <div class="timeline-item-desc">${t.s1Desc}</div>
         </div>
         <div class="timeline-item ${currentIndex >= 1 ? 'completed' : ''} ${item.status === 'analise' ? 'active' : ''}">
             <div class="timeline-marker"></div>
-            <div class="timeline-item-title">Análise Técnica e Conformidade</div>
+            <div class="timeline-item-title">${t.s2Title}</div>
             <div class="timeline-item-date">${currentIndex >= 1 ? formatDate(item.date) : '--'}</div>
-            <div class="timeline-item-desc">Um consultor especializado analisa a documentação, origem e restrições da proposta.</div>
+            <div class="timeline-item-desc">${t.s2Desc}</div>
         </div>
         <div class="timeline-item ${currentIndex >= 2 ? 'completed' : ''} ${item.status === 'atendimento' ? 'active' : ''}">
             <div class="timeline-marker"></div>
-            <div class="timeline-item-title">Intermediação & Chat Mediado</div>
+            <div class="timeline-item-title">${t.s3Title}</div>
             <div class="timeline-item-date">${currentIndex >= 2 ? formatDate(item.date) : '--'}</div>
-            <div class="timeline-item-desc">GV-CPS realiza a ponte comercial e logística de forma segura, abrindo a sala de chat mediado.</div>
+            <div class="timeline-item-desc">${t.s3Desc}</div>
         </div>
         <div class="timeline-item ${currentIndex >= 3 ? 'completed' : ''} ${item.status === 'concluida' ? 'active' : ''}">
             <div class="timeline-marker"></div>
-            <div class="timeline-item-title">Conclusão do Negócio</div>
+            <div class="timeline-item-title">${t.s4Title}</div>
             <div class="timeline-item-date">${currentIndex >= 3 ? formatDate(item.date) : '--'}</div>
-            <div class="timeline-item-desc">Termos comerciais finalizados, contratos assinados e logística despachada pela GV-CPS.</div>
+            <div class="timeline-item-desc">${t.s4Desc}</div>
         </div>
     `;
 }
@@ -2737,11 +2774,20 @@ function renderPortalChat(containerId, matchId, channelType) {
     const el = document.getElementById(containerId);
     if (!el) return;
     
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
     const match = appState.matches.find(m => m.id === matchId);
     const msgs = appState.messages.filter(m => m.matchId === matchId && m.channel === channelType);
     
-    const otherPartyLabel = channelType === 'buyer' ? 'Comprador (Cliente)' : 'Fornecedor (Membro)';
     const consultantObj = appState.users[match.consultantId];
+    const headerTitle = lang === 'en' ? 'Shielded Intermediation (GV-CPS)' : 'Intermediação Segura (GV-CPS)';
+    const consultantLabel = lang === 'en' ? 'Assigned Consultant' : 'Consultor Responsável';
+    const statusLabel = match.status === 'fechado' 
+        ? (lang === 'en' ? 'DEAL CLOSED' : 'NEGÓCIO FECHADO') 
+        : (lang === 'en' ? 'IN PROGRESS' : 'EM CURSO');
+    const warningText = lang === 'en'
+        ? 'Shielded Negotiation: Direct contact between buyer and supplier is protected under commercial confidentiality.'
+        : 'Negociação Segura: O contacto direto entre comprador e fornecedor é protegido sob sigilo comercial.';
+    const placeholderText = lang === 'en' ? 'Write a secure message...' : 'Escreva uma mensagem segura...';
     
     el.innerHTML = `
         <div class="portal-chat-card">
@@ -2749,19 +2795,19 @@ function renderPortalChat(containerId, matchId, channelType) {
                 <div class="portal-chat-title-info">
                     <span class="material-symbols-outlined" style="color: var(--secondary);">security</span>
                     <div>
-                        <h4 class="font-bold" style="font-size: 14px; margin-bottom: 2px;">Intermediação Segura (GV-CPS)</h4>
+                        <h4 class="font-bold" style="font-size: 14px; margin-bottom: 2px;">${headerTitle}</h4>
                         <p class="portal-chat-subtitle" style="font-size: 11px; color: #006d3d; font-weight: 600; display: flex; align-items: center; gap: 4px;">
                             <span style="display: inline-block; width: 6px; height: 6px; background-color: #25D366; border-radius: 50%;"></span>
-                            Consultor Responsável: ${consultantObj.name}
+                            ${consultantLabel}: ${consultantObj ? consultantObj.name : 'GV-CPS'}
                         </p>
                     </div>
                 </div>
-                <span class="portal-chat-badge" style="background-color: ${match.status === 'fechado' ? 'rgba(0, 109, 61, 0.1)' : 'rgba(217, 119, 6, 0.1)'}; color: ${match.status === 'fechado' ? '#006d3d' : '#d97706'}; font-weight: bold; font-size: 10px; padding: 4px 8px; border-radius: var(--radius-sm);">${match.status === 'fechado' ? 'NEGÓCIO FECHADO' : 'EM CURSO'}</span>
+                <span class="portal-chat-badge" style="background-color: ${match.status === 'fechado' ? 'rgba(0, 109, 61, 0.1)' : 'rgba(217, 119, 6, 0.1)'}; color: ${match.status === 'fechado' ? '#006d3d' : '#d97706'}; font-weight: bold; font-size: 10px; padding: 4px 8px; border-radius: var(--radius-sm);">${statusLabel}</span>
             </div>
             
             <div class="bg-primary/5 text-primary text-xs font-semibold px-4 py-2 border-b border-outline-variant/30 text-center flex items-center justify-center gap-1.5" style="font-size: 10px; background-color: rgba(0, 55, 74, 0.05); color: var(--primary); border-bottom: 1px solid rgba(0, 0, 0, 0.05); font-weight: 600;">
                 <span class="material-symbols-outlined" style="font-size: 13px; color: var(--primary);">lock</span>
-                Negociação Segura: O contacto direto entre comprador e fornecedor é protegido sob sigilo comercial.
+                ${warningText}
             </div>
             
             <div class="portal-chat-messages" id="${containerId}-messages-area" style="padding: 16px;">
@@ -2770,7 +2816,7 @@ function renderPortalChat(containerId, matchId, channelType) {
             
             <div class="portal-chat-input-area" style="padding: 12px 16px; border-top: 1px solid var(--outline-variant);">
                 <form class="portal-chat-form" id="${containerId}-form" onsubmit="event.preventDefault(); sendChatMessage('${matchId}', '${channelType}', '${containerId}-input-field')">
-                    <input type="text" class="portal-chat-input" id="${containerId}-input-field" placeholder="Escreva uma mensagem segura..." ${match.status === 'fechado' ? 'disabled' : ''}>
+                    <input type="text" class="portal-chat-input" id="${containerId}-input-field" placeholder="${placeholderText}" ${match.status === 'fechado' ? 'disabled' : ''}>
                     <button type="submit" class="portal-chat-send-btn" ${match.status === 'fechado' ? 'disabled' : ''}>
                         <span class="material-symbols-outlined">send</span>
                     </button>
@@ -2791,7 +2837,7 @@ function renderPortalChat(containerId, matchId, channelType) {
     }
     
     if (msgs.length === 0) {
-        area.innerHTML = `<div class="text-center py-6 opacity-60 font-italic">Sem mensagens. Escreva algo para iniciar a intermediação.</div>`;
+        area.innerHTML = `<div class="text-center py-6 opacity-60 font-italic">${lang === 'en' ? 'No messages. Write something to start intermediation.' : 'Sem mensagens. Escreva algo para iniciar a intermediação.'}</div>`;
     } else {
         msgs.forEach(m => {
             const senderObj = appState.users[m.senderId] || { name: 'Sistema' };
@@ -3455,14 +3501,34 @@ function formatTime(isoStr) {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
-function formatStatusPT(status) {
-    const map = {
+function formatStatus(status) {
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    const mapPT = {
         'pendente': 'Pendente',
         'analise': 'Em Análise',
         'atendimento': 'Em Atendimento',
-        'concluida': 'Concluída'
+        'concluida': 'Concluída',
+        'negociacao': 'Em Negociação',
+        'revisao': 'Em Revisão',
+        'fechado': 'Concluído / Fechado',
+        'cancelado': 'Cancelado'
     };
+    const mapEN = {
+        'pendente': 'Pending',
+        'analise': 'Under Review',
+        'atendimento': 'In Progress',
+        'concluida': 'Completed',
+        'negociacao': 'In Negotiation',
+        'revisao': 'In Review',
+        'fechado': 'Completed / Closed',
+        'cancelado': 'Cancelled'
+    };
+    const map = lang === 'en' ? mapEN : mapPT;
     return map[status] || status;
+}
+
+function formatStatusPT(status) {
+    return formatStatus(status);
 }
 
 // Launch app on load
@@ -4653,6 +4719,278 @@ function closeRequestWizard() {
         modal.style.display = 'none';
     }
 }
+
+function startGuidedNegotiation(opportunityId, type) {
+    const list = type === 'oferta' ? appState.offers : appState.requirements;
+    let item = list.find(x => x.id === opportunityId);
+    if (!item) {
+        item = appState.requirements.find(x => x.id === opportunityId) || appState.offers.find(x => x.id === opportunityId);
+    }
+    
+    // Close detail modal if open
+    closeOpportunityDetailModal();
+
+    if (!item) {
+        openRequestWizard();
+        return;
+    }
+
+    const modal = document.getElementById('serviceWizardModal');
+    if (!modal) return;
+
+    const { code: catCode, label: catLabel } = getCategoryDetails(item.category);
+    
+    // Map canonical category code to catalog sector key
+    const sectorMap = {
+        'agro': 'commodities',
+        'energy': 'energy',
+        'tech': 'tech',
+        'logistics': 'logistics',
+        'consulting': 'consulting'
+    };
+    const sectorKey = sectorMap[catCode] || 'commodities';
+    
+    const titleText = getTranslatedField(item, 'title');
+    const qtyText = getTranslatedField(item, 'quantity');
+    const countryText = getTranslatedField(item, 'country');
+
+    wizardState = {
+        currentStep: 4,
+        selectedSector: sectorKey,
+        selectedCategory: catLabel,
+        selectedProduct: titleText,
+        selectedQty: qtyText || '100',
+        urgency: 'Curto Prazo (30 dias)',
+        whatsapp: '',
+        email: '',
+        country: countryText || 'Moçambique',
+        logistics: item.logistics || 'Sim',
+        description: `Oportunidade Ref: ${item.id}`
+    };
+
+    // Pre-fill wizard inputs
+    const prodInput = document.getElementById('wizard-product-input');
+    if (prodInput) prodInput.value = titleText;
+    const qtyInput = document.getElementById('wizard-qty-input');
+    if (qtyInput) qtyInput.value = qtyText;
+    const countrySelect = document.getElementById('wizard-contact-country');
+    if (countrySelect && countryText) {
+        countrySelect.value = countryText;
+    }
+    
+    // Pre-fill user contacts if logged in
+    if (appState && appState.currentUser) {
+        const uId = appState.currentUser.id;
+        const fullUser = appState.users[uId];
+        if (fullUser) {
+            const emailInput = document.getElementById('wizard-contact-email');
+            if (emailInput) emailInput.value = fullUser.email || '';
+            const phoneInput = document.getElementById('wizard-contact-whatsapp');
+            if (phoneInput) {
+                phoneInput.value = fullUser.whatsapp || '+258 ';
+                setTimeout(() => {
+                    phoneInput.dispatchEvent(new Event('input'));
+                }, 50);
+            }
+        }
+    }
+
+    modal.classList.remove('hidden');
+    modal.style.display = 'flex';
+
+    updateWizardUI();
+}
+
+function openOpportunityDetailModal(id, type) {
+    const list = type === 'oferta' ? appState.offers : appState.requirements;
+    let item = list.find(x => x.id === id);
+    if (!item) {
+        item = appState.requirements.find(x => x.id === id) || appState.offers.find(x => x.id === id);
+    }
+    if (!item) return;
+
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    const { code: catCode, label: catLabel, icon: catIcon, sublabel: catSublabel } = getCategoryDetails(item.category);
+
+    const titleText = getTranslatedField(item, 'title');
+    const countryText = getTranslatedField(item, 'country');
+    const qtyText = getTranslatedField(item, 'quantity');
+    const descText = getTranslatedField(item, 'description') || (lang === 'pt' ? 'Sem descrição adicional fornecida.' : 'No additional description provided.');
+
+    // Image mapping per category
+    const imgMap = {
+        agro: [
+            'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80',
+            'https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&w=1200&q=80'
+        ],
+        energy: [
+            'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
+            'https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1200&q=80'
+        ],
+        tech: [
+            'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80',
+            'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80'
+        ],
+        logistics: [
+            'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80',
+            'https://images.unsplash.com/photo-1519003300449-424ad0405076?auto=format&fit=crop&w=1200&q=80'
+        ],
+        consulting: [
+            'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80',
+            'https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1200&q=80'
+        ]
+    };
+    const imgPool = imgMap[catCode] || imgMap.consulting;
+    const imgUrl = imgPool[item.id.charCodeAt(item.id.length - 1) % imgPool.length];
+
+    // Country flag
+    let flag = '🌐';
+    const c = countryText.toLowerCase();
+    if (c.includes('moçambique') || c.includes('mozambique')) flag = '🇲🇿';
+    else if (c.includes('brasil') || c.includes('brazil')) flag = '🇧🇷';
+    else if (c.includes('portugal')) flag = '🇵🇹';
+    else if (c.includes('china')) flag = '🇨🇳';
+    else if (c.includes('emirados') || c.includes('árabes') || c.includes('dubai')) flag = '🇦🇪';
+
+    // Type badge
+    const typeRaw = item.type || 'procura';
+    const typePill = typeRaw === 'oferta' ? 'oferta' : (item.serviceType === 'servico' ? 'servico' : (item.serviceType === 'projeto' ? 'projeto' : 'demanda'));
+    const typeLabels = {
+        demanda: lang === 'pt' ? 'DEMANDA' : 'DEMAND',
+        oferta: lang === 'pt' ? 'OFERTA' : 'OFFER',
+        servico: lang === 'pt' ? 'SERVIÇO' : 'SERVICE',
+        projeto: lang === 'pt' ? 'PROJETO' : 'PROJECT'
+    };
+    const typeLabel = typeLabels[typePill] || 'DEMANDA';
+
+    const isLog = item.logistics === 'Sim';
+    const logLabel = isLog
+        ? (lang === 'pt' ? 'CIF Incluído' : 'CIF Included')
+        : (lang === 'pt' ? 'Não Incluída' : 'Not Included');
+
+    const labelVol = (catCode === 'logistics' || catCode === 'consulting') ? (lang === 'pt' ? 'Escopo' : 'Scope') : (lang === 'pt' ? 'Volume' : 'Volume');
+    const labelCountryKey = catCode === 'logistics' ? (lang === 'pt' ? 'Destino' : 'Destination') : (lang === 'pt' ? 'País Destino' : 'Country');
+    const labelTerms = catCode === 'logistics' ? (lang === 'pt' ? 'Regime' : 'Regime') : (lang === 'pt' ? 'Logística' : 'Logistics');
+    const labelDate = lang === 'pt' ? 'Data' : 'Date';
+    const labelStatus = lang === 'pt' ? 'Estado' : 'Status';
+    const btnInterestText = lang === 'pt' ? 'Tenho Interesse / Iniciar Negociação' : 'I am Interested / Start Negotiation';
+    const btnCloseText = lang === 'pt' ? 'Fechar' : 'Close';
+
+    const container = document.getElementById('opp-modal-split-container');
+    if (!container) return;
+
+    container.innerHTML = `
+        <!-- Left Hero Column (PC) -->
+        <div class="opp-modal-hero cat-theme-${catCode}">
+            <img src="${imgUrl}" alt="${titleText}" class="opp-modal-hero-img">
+            <div class="opp-modal-hero-overlay"></div>
+
+            <div class="opp-modal-hero-badges">
+                <span class="cat-badge" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:0.06em;backdrop-filter:blur(8px);">
+                    <span class="material-symbols-outlined" style="font-size:14px;">${catIcon}</span>
+                    ${catLabel}
+                </span>
+                <span class="card-type-pill ${typePill}">${typeLabel}</span>
+            </div>
+
+            <div class="opp-modal-hero-footer">
+                <div style="background: rgba(2, 56, 64, 0.88); backdrop-filter: blur(8px); padding: 14px 16px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; gap: 10px;">
+                    <span class="material-symbols-outlined" style="color: #0d9488; font-size: 24px;">verified_user</span>
+                    <div>
+                        <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #99f6e4; display: block;">Intermediação Exclusiva GV-CPS</span>
+                        <span style="font-size: 10px; color: #cbd5e1; font-weight: 500;">Sigilo Comercial & Proteção de Dados Garantidos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Content Column (PC) -->
+        <div class="opp-modal-content cat-theme-${catCode}">
+            <div>
+                <span class="card-subcategory-label">${catSublabel}</span>
+                <h2 style="font-size: 20px; font-weight: 800; color: #0f172a; margin: 0 0 16px; line-height: 1.3;">${titleText}</h2>
+
+                <!-- Specs Grid -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;">
+                    <div class="card-detail-row">
+                        <span class="card-detail-label">
+                            <span class="material-symbols-outlined">inventory_2</span>
+                            ${labelVol}:
+                        </span>
+                        <span class="card-detail-value">${qtyText}</span>
+                    </div>
+                    <div class="card-detail-row">
+                        <span class="card-detail-label">
+                            <span class="material-symbols-outlined">public</span>
+                            ${labelCountryKey}:
+                        </span>
+                        <span class="card-detail-value" style="display:flex;align-items:center;gap:4px;">
+                            ${countryText} <span style="font-size:14px;line-height:1;">${flag}</span>
+                        </span>
+                    </div>
+                    <div class="card-detail-row">
+                        <span class="card-detail-label">
+                            <span class="material-symbols-outlined">${isLog ? 'local_shipping' : 'remove_circle_outline'}</span>
+                            ${labelTerms}:
+                        </span>
+                        <span class="card-detail-value tag">${isLog ? '&#10003; ' : ''}${logLabel}</span>
+                    </div>
+                    <div class="card-detail-row">
+                        <span class="card-detail-label">
+                            <span class="material-symbols-outlined">calendar_today</span>
+                            ${labelDate}:
+                        </span>
+                        <span class="card-detail-value" style="color:#64748b;font-weight:500;">${formatDate(item.date)}</span>
+                    </div>
+                    <div class="card-detail-row" style="border:none;padding-bottom:0;">
+                        <span class="card-detail-label">
+                            <span class="material-symbols-outlined">verified</span>
+                            ${labelStatus}:
+                        </span>
+                        <span class="card-detail-value tag">${formatStatus(item.status || 'pendente')}</span>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <h4 style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; margin: 0 0 6px;">
+                        ${lang === 'pt' ? 'Descrição & Especificações' : 'Description & Specifications'}
+                    </h4>
+                    <p style="font-size: 13px; color: #334155; line-height: 1.6; margin: 0; background: #ffffff; padding: 12px 14px; border-radius: 10px; border: 1px solid #f1f5f9;">
+                        ${descText}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Footer Action Bar -->
+            <div style="display: flex; gap: 12px; align-items: center; padding-top: 16px; border-top: 1px solid #f1f5f9;">
+                <button onclick="closeOpportunityDetailModal()" style="padding: 12px 20px; border-radius: 12px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; font-weight: 700; font-size: 12px; cursor: pointer; transition: all 0.2s;">
+                    ${btnCloseText}
+                </button>
+                <button onclick="startGuidedNegotiation('${item.id}', '${item.type}')" style="flex: 1; padding: 13px 20px; border-radius: 12px; border: none; background: var(--cat-color); color: #ffffff; font-weight: 800; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 12px -2px rgba(0,0,0,0.2); transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;" onmouseover="this.style.backgroundColor='var(--cat-hover)'" onmouseout="this.style.backgroundColor='var(--cat-color)'">
+                    <span>${btnInterestText}</span>
+                    <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+                </button>
+            </div>
+        </div>
+    `;
+
+    const modal = document.getElementById('opportunityDetailModal');
+    if (modal) {
+        modal.classList.remove('hidden');
+    }
+}
+
+function closeOpportunityDetailModal() {
+    const modal = document.getElementById('opportunityDetailModal');
+    if (modal) {
+        modal.classList.add('hidden');
+    }
+}
+
+window.startGuidedNegotiation = startGuidedNegotiation;
+window.openOpportunityDetailModal = openOpportunityDetailModal;
+window.closeOpportunityDetailModal = closeOpportunityDetailModal;
 
 function selectWizardSector(sectorCode) {
     wizardState.selectedSector = sectorCode;
