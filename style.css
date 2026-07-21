@@ -187,21 +187,33 @@ header.app-header .header-content {
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     cursor: pointer;
+    user-select: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.logo-container:hover {
+    opacity: 0.95;
+    transform: translateY(-1px);
 }
 
 .logo-img {
-    height: 36px;
+    height: 40px;
     width: auto;
+    max-width: 140px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.06));
+    transition: all 0.2s ease;
 }
 
 .logo-text {
     font-family: var(--font-heading);
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--on-primary);
-    letter-spacing: -0.01em;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
 }
 
 nav.main-nav {
