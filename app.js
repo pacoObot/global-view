@@ -230,14 +230,30 @@ function getTranslatedField(item, field) {
     const lang = localStorage.getItem('gvcps_lang') || 'pt';
     if (lang === 'en') {
         const enVal = item[field + 'En'] || item[field + '_en'];
-        if (enVal !== undefined) return enVal;
+        if (enVal !== undefined && enVal !== null && enVal !== '') return enVal;
+        
+        // Automatic fallbacks for titles
+        if (field === 'title') {
+            const t = item.title || '';
+            if (t.includes('Óleo de Soja')) return 'Refined Soybean Oil Importation';
+            if (t.includes('Subestação')) return 'Preventive Maintenance of Electrical Substation';
+            if (t.includes('Tradução Juramentada')) return 'Sworn Translation of Commercial Contracts (EN-PT)';
+            if (t.includes('Minério de Ferro')) return '62% Iron Ore Acquisition';
+            if (t.includes('Licenciamento Ambiental')) return 'Environmental Licensing Consulting';
+            if (t.includes('Servidores Rack')) return 'Supply of 2U Dual Xeon Rack Servers';
+            if (t.includes('Açúcar ICUMSA')) return 'ICUMSA 45 Sugar Supply';
+            if (t.includes('Transformadores')) return 'Three-Phase Transformers 33kV';
+            if (t.includes('Solução ERP')) return 'Cloud ERP Software Solution';
+            if (t.includes('Cabotagem')) return 'Mozambique Coastal Shipping Service';
+            if (t.includes('Despacho Aduaneiro')) return 'Customs Clearance at Maputo Port';
+        }
         
         // Automatic fallbacks for common fields
         if (field === 'category') {
             const cat = (item.category || '').toLowerCase();
-            if (cat.includes('agropecuária') || cat.includes('agronegócio')) {
+            if (cat.includes('agropecuária') || cat.includes('agronegócio') || cat.includes('agro')) {
                 return 'Agribusiness & Commodities Consulting';
-            } else if (cat.includes('projectos') || cat.includes('avaliação')) {
+            } else if (cat.includes('projectos') || cat.includes('projetos') || cat.includes('avaliação')) {
                 return 'Project Evaluation & Monitoring';
             } else if (cat.includes('tradução')) {
                 return 'Document Translation (PT/EN/FR)';
@@ -264,6 +280,7 @@ function getTranslatedField(item, field) {
             if (q.includes('nível industrial')) return 'Industrial Level';
             if (q.includes('fluxo contínuo')) return 'Continuous Flow';
             if (q.includes('lote industrial')) return 'Industrial Batch';
+            if (q.includes('unidades')) return q.replace('unidades', 'Units');
         }
         if (field === 'logistics') {
             const l = (item.logistics || '').toLowerCase();
@@ -1138,7 +1155,13 @@ function initAccessibility() {
     }
 }
 
+let lastAccToggleTime = 0;
+
 function toggleAccessibilityMenu(e) {
+    const now = Date.now();
+    if (now - lastAccToggleTime < 250) return; // Prevent double toggling from inline + JS listener
+    lastAccToggleTime = now;
+
     const evt = e || window.event;
     if (evt && evt.stopPropagation) evt.stopPropagation();
     
@@ -1569,12 +1592,14 @@ function renderOpportunityWall(params = {}) {
 
 // Central category details — 5 canonical categories derived from GV-CPS green palette
 function getCategoryDetails(category) {
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
     const cat = (category || '').toLowerCase();
+    
     // Default: Consultoria & Servicos
-    let code    = 'consulting';
-    let label   = 'Consultoria & Servicos';
-    let icon    = 'business_center';
-    let sublabel = 'SERVICOS PROFISSIONAIS';
+    let code     = 'consulting';
+    let label    = lang === 'en' ? 'Consulting & Services' : 'Consultoria & Serviços';
+    let icon     = 'business_center';
+    let sublabel = lang === 'en' ? 'PROFESSIONAL SERVICES' : 'SERVIÇOS PROFISSIONAIS';
 
     if (
         cat.includes('agro') || cat.includes('caju') || cat.includes('soja') ||
@@ -1583,9 +1608,9 @@ function getCategoryDetails(category) {
         cat.includes('fertiliz') || cat.includes('castanha') || cat.includes('mercado agr')
     ) {
         code     = 'agro';
-        label    = 'Agro & Commodities';
+        label    = lang === 'en' ? 'Agro & Commodities' : 'Agro & Commodities';
         icon     = 'agriculture';
-        sublabel = 'MERCADO AGRICOLA';
+        sublabel = lang === 'en' ? 'AGRICULTURAL MARKET' : 'MERCADO AGRÍCOLA';
     } else if (
         cat.includes('energia') || cat.includes('energy') || cat.includes('solar') ||
         cat.includes('petróleo') || cat.includes('gás') || cat.includes('elétrica') ||
@@ -1593,9 +1618,9 @@ function getCategoryDetails(category) {
         cat.includes('renovável') || cat.includes('fotovolt') || cat.includes('infraestrutura industrial')
     ) {
         code     = 'energy';
-        label    = 'Energia & Industria';
+        label    = lang === 'en' ? 'Energy & Industry' : 'Energia & Indústria';
         icon     = 'bolt';
-        sublabel = 'INFRAESTRUTURA INDUSTRIAL';
+        sublabel = lang === 'en' ? 'INDUSTRIAL INFRASTRUCTURE' : 'INFRAESTRUTURA INDUSTRIAL';
     } else if (
         cat.includes('tecnologia') || cat.includes('tech') || cat.includes('informática') ||
         cat.includes('inovação') || cat.includes('data center') || cat.includes('redes') ||
@@ -1603,9 +1628,9 @@ function getCategoryDetails(category) {
         cat.includes('iot') || cat.includes('conectividade') || cat.includes('servidores')
     ) {
         code     = 'tech';
-        label    = 'Tecnologia & Inovacao';
+        label    = lang === 'en' ? 'Technology & Innovation' : 'Tecnologia & Inovação';
         icon     = 'devices';
-        sublabel = 'SOFTWARE CORPORATIVO';
+        sublabel = lang === 'en' ? 'ENTERPRISE SOFTWARE' : 'SOFTWARE CORPORATIVO';
     } else if (
         cat.includes('logística') || cat.includes('logistics') || cat.includes('supply') ||
         cat.includes('frete') || cat.includes('avaliação') || cat.includes('monitoria') ||
@@ -1613,9 +1638,9 @@ function getCategoryDetails(category) {
         cat.includes('marítimo') || cat.includes('terrestre') || cat.includes('infraestrutura')
     ) {
         code     = 'logistics';
-        label    = 'Logistica & Projetos';
+        label    = lang === 'en' ? 'Logistics & Projects' : 'Logística & Projetos';
         icon     = 'local_shipping';
-        sublabel = 'GESTAO DE PROJECTOS';
+        sublabel = lang === 'en' ? 'PROJECT MANAGEMENT' : 'GESTÃO DE PROJETOS';
     }
 
     return { code, label, icon, sublabel };
