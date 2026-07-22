@@ -111,6 +111,31 @@ O protótipo da plataforma de intermediação B2B da **Global View (GV-CPS)** en
     - Gerados os ícones de separador do navegador (`assets/images/favicon.png` e `favicon.ico`) e vinculados no `<head>` de `index.html`.
     - Atualizados a barra de navegação global (`.logo-container`), o menu mobile, o modal de login (`#loginModal`) e o rodapé (`.footer-logo-container`) para integrar o logo oficial com otimização responsiva, sombra suave e proporções nítidas em todos os dispositivos.
 
+### Sessão: 21 de Julho de 2026 (Otimização da Navbar, Acessibilidade & Remoção de Secção)
+*   **Correção Definitiva do Botão de Acessibilidade (`#accessibility-fab`)**:
+    - Eliminada a duplicação de handlers (removido o `onclick` inline redundante do HTML), permitindo que o gestor de eventos em `app.js` abra e feche o painel de acessibilidade com um único clique limpo.
+*   **Navbar com Fundo Claro Glassmorphic**:
+    - Atualizada a `header.app-header` em `style.css` para um fundo claro com efeito de vidro fosco (`rgba(255, 255, 255, 0.96)` com `backdrop-filter: blur(12px)` e borda inferior sutil).
+    - Eliminado o conflito de cores: o logótipo oficial (folha verde + globo azul) e a tipografia azul petróleo (`#00374a`) ganharam contraste máximo e nitidez total.
+    - Atualizados os links de navegação (`nav.main-nav a`) e o seletor de papéis para combinar harmoniosamente com a nova estética da barra.
+*   **Remoção de Secção Antiga & Preservação do Rodapé**:
+    - Removida a secção de prova social (`#cms-wrap-social` / "Confiança Consolidada no Mercado") em `index.html`.
+*   **Preservação dos Dois Botões Flutuantes & Rodapé**:
+    - Verificados e mantidos ativos o botão do Chatbot (`#chat-fab` a `bottom: 84px` com janela `#chat-window`) e o botão de Acessibilidade (`#accessibility-fab` a `bottom: 24px` com painel `#accessibility-panel`).
+*   **Correção de Estrutura DOM & Desalinhamento de Tags**:
+    - Identificado e corrigido o desbalanceamento de tags no [index.html](file:///home/paco/Projectos/Global%20View/index.html) (`section#view-home` não fechada e `div.grid` em `services-section` sem fecho), o qual aprisionava a árvore DOM e impedia o rodapé e os botões flutuantes de renderizarem corretamente na página inicial.
+*   **Sincronização Bilíngue Completa (Português & Inglês)**:
+    - Adicionados os atributos `data-translate-pt` e `data-translate-en` a **100% dos elementos visíveis** no [index.html](file:///home/paco/Projectos/Global%20View/index.html) e renderizações dinâmicas em [app.js](file:///home/paco/Projectos/Global%20View/app.js).
+    - Ajustados os títulos principais do Hero Slider para expressões diretas em Português e Inglês:
+      - **Slide 1**: *"Oportunidades Globais"* ⇄ *"Global Opportunities"*
+      - **Slide 2**: *"Suporte Logístico"* ⇄ *"Logistics Support"*
+*   **Atualização da Tipografia Oficial do Logotipo**:
+    - Adicionada a tipografia oficial completa da empresa ao lado do ícone no cabeçalho, rodapé e menu mobile em [index.html](file:///home/paco/Projectos/Global%20View/index.html) e [style.css](file:///home/paco/Projectos/Global%20View/style.css):
+      - Linha superior: **GLOBAL VIEW** (azul oceano `#1f6e9c` em negrito).
+      - Linha inferior: **Consultoria & Prestação de Serviços, Lda** (cinza escuro `#1e293b` / *"Consulting & Services, Ltd"* em inglês).
+*   **Publicação e Deploy no Vercel**:
+    - Commit e push do estado atual do projeto contendo as correções de acessibilidade, sincronização bilíngue PT/EN 100%, logótipo oficial completo e servidor local validado.
+
 ---
 
 ## 3. Próximos Passos & Tarefas Pendentes
@@ -119,4 +144,5 @@ O protótipo da plataforma de intermediação B2B da **Global View (GV-CPS)** en
 *   Realizar testes de usabilidade e validação com utilizadores nativos de inglês e português.
 *   Adicionar as páginas restantes de portais do consultor/administrador (se necessário).
 *   Realizar simulação de negociação ponta a ponta e testes de sincronização Supabase com múltiplos utilizadores em simultâneo.
+
 
