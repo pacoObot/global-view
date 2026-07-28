@@ -21,6 +21,21 @@ O protótipo da plataforma de intermediação B2B da **Global View (GV-CPS)** en
 *   **Avisos de Intermediação Segura**: Incluídas faixas destacadas informando que o chat de negociação é mediado pelo consultor da Global View sob sigilo comercial.
 *   **Refinamento do Slider Hero**: Transições Ken Burns suaves (zoom de fundo) com um overlay de gradiente para contraste do texto.
 
+### Sessão: 28 de Julho de 2026
+*   **Correção do Modal Guia de Requisição B2B (`#serviceWizardModal`) & Ativação dos Botões**:
+    - **Restabelecimento do Elemento Modal `#serviceWizardModal`**: Corrigida a estrutura HTML do modal que havia perdido a tag de abertura durante a limpeza de preview cards, restaurando a abertura imediata ao clicar em "Requisitar Novo Serviço B2B", "Tenho Interesse" e "Iniciar Negociação".
+    - **Mapeamento de Países em `startGuidedNegotiation`**: Atualizada a função para converter o nome do país no código ISO correspondente no seletor global (`#wizard-contact-country`) com bandeira e DDI automáticos.
+    - **Simplificação e Suporte Global**: Mantido o fluxo simplificado do wizard sem cartões visuais desnecessários e com catálogo global de países agrupado por continentes.
+    - **Bilinguismo 100% PT / EN**: Funcionamento total em Português e Inglês.
+
+### Sessão: 22 de Julho de 2026
+*   **Restauração do Layout Limpo do Modal B2B (`#serviceWizardModal`) & Fotos Contextuais**:
+    - **Dimensões & Responsividade (`max-width: 1100px`, `width: 95%`)**: Eliminado o split-screen de 2 colunas laterais permanentes que espremia o formulário e desalinhava os botões. O modal foi restaurado para um card único centralizado elegante (`max-width: 1100px`, `width: 95%` responsivo para margens fluidas no mobile, `padding: 32px` no desktop e altura dinâmica `auto`/`fit-content`).
+    - **Imagem de Referência Orgânica no Passo 3 (`#step3-visual-preview`)**: Foto de alta qualidade do subproduto/variedade selecionado exibida diretamente dentro do fluxo do Passo 3, logo abaixo dos chips de variadades (ex: *Ureia Granulada 46% N*, *Ácido Sulfúrico 98%*, *Açúcar ICUMSA 45*, *Diesel EN590*).
+    - **Card de Resumo & Confirmação Final no Passo 4 (`#step4-final-card-summary`)**: Card completo da requisição gerada exibido antes do envio com foto, variedade, volume, cálculo de sacos/big bags, porto de descarga e dados corporativos.
+    - **Seletor Internacional de Países (Bandeiras & DDI Automático)**: Mantida a lista internacional abrangente de países com bandeiras emoji (🇲🇿, 🇿🇦, 🇧🇷, 🇵🇹, 🇦🇪, 🇺🇸, 🇬🇧, 🇨🇳, 🇮🇳, 🇩🇪, 🇦🇴...) e preenchimento automático do DDI no campo WhatsApp.
+    - **Bilinguismo 100% PT / EN**: Todos os componentes e resumos atualizados simultaneamente sem redundâncias em Português e Inglês.
+
 ### Sessão: 21 de Julho de 2026
 *   **Reestruturação de Categorias (4 → 5)**: Definidas e aprovadas as 5 categorias canónicas do sistema, agrupando os serviços complementares da empresa em grupos lógicos e perceptíveis para o cliente:
     1. `agro` — Agro & Commodities (`#166534` — Verde Agrícola)
@@ -133,12 +148,68 @@ O protótipo da plataforma de intermediação B2B da **Global View (GV-CPS)** en
     - Adicionada a tipografia oficial completa da empresa ao lado do ícone no cabeçalho, rodapé e menu mobile em [index.html](file:///home/paco/Projectos/Global%20View/index.html) e [style.css](file:///home/paco/Projectos/Global%20View/style.css):
       - Linha superior: **GLOBAL VIEW** (azul oceano `#1f6e9c` em negrito).
       - Linha inferior: **Consultoria & Prestação de Serviços, Lda** (cinza escuro `#1e293b` / *"Consulting & Services, Ltd"* em inglês).
-*   **Publicação e Deploy no Vercel**:
-    - Commit e push do estado atual do projeto contendo as correções de acessibilidade, sincronização bilíngue PT/EN 100%, logótipo oficial completo e servidor local validado.
+*   **Refinamento do Modal de Requisição B2B (`#serviceWizardModal`)**:
+    - Expansão da largura para **`920px`** em ecrãs desktop (PC) com grelha espaçosa e responsiva em [style.css](file:///home/paco/Projectos/Global%20View/style.css).
+    - Implementação de subcategorias e especificações finas/derivados (ex: *Ureia Granulada 46% N*, *Ureia Perlada*, *Ácido Sulfúrico 98% Concentrado*, *Ácido Sulfúrico 70% Bateria*) em [app.js](file:///home/paco/Projectos/Global%20View/app.js) e [index.html](file:///home/paco/Projectos/Global%20View/index.html).
+    - Adição de seleção de formato de acondicionamento/embalagem inteligente por estado físico (Sacos 50kg, Big Bags 1.000kg, ISO Tank Container 24.000L, IBC Tote 1.000L, Camião/Navio Tanque a Granel).
+    - Realocação do campo **Porto de Descarga / Destino Final** para o Passo 3 (Especificação do Produto & Logística).
+    - Preservada a paridade **100% bilíngue (Português / Inglês)** em todos os novos componentes e seletores.
+
+### Sessão: 22 de Julho de 2026 (Correção de Contraste & Redesign do Header no Trust Center)
+*   **Redesign do Mini Hero (Proporção & Imagem de Fundo de Segurança)**:
+    - Reestruturado o Mini Hero do Trust Center (`#view-trust`) para espelhar rigorosamente o layout e dimensões do hero do Mural de Oportunidades (`#view-wall`): altura `py-16 mb-12`, alinhamento `max-w-container-max` com preenchimento lateral responsivo.
+    - Adicionada imagem de fundo de alta definição focada em segurança corporativa digital (`Unsplash corporate security/vault`) com opacidade de 40% e gradiente escuro horizontal (`from-slate-950/90 via-slate-900/70 to-slate-950/80`).
+    - Incluído badge de garantia operacional (`Garantia Operacional 100%` / `100% Operational Guarantee`), título **"Centro de Confiança"** / **"Trust Center"** e um selo visual à direita de *"Intermediação Segura & Sigilo Comercial Total"*.
+*   **Novo Cabeçalho da Secção de Comparação**:
+    - Atualizado o título principal para **"Por que a Global View é Segura?"** (PT) / **"Why Global View is Safe?"** (EN).
+    - Substituída a introdução por um resumo conciso e direto: *"A GV-CPS atua como intermediário único e garantidor de todas as transações, eliminando riscos de fraude e garantindo segurança total."*
+*   **Remoção de Referências "Ex: GBO"**:
+    - Removida a menção "(Ex: GBO)" do card da esquerda, alterando o título para **"Diretórios B2B Comuns"** / **"Common B2B Directories"**.
+*   **Correção de Visibilidade do Card "Nossa Abordagem: GV-CPS"**:
+    - Identificada a causa raiz da falta de visibilidade / efeito "desfocado" no card da direita: a variável CSS `--primary-dark` não estava definida no `:root` de [style.css](file:///home/paco/Projectos/Global%20View/style.css) nem na configuração do Tailwind em [index.html](file:///home/paco/Projectos/Global%20View/index.html), o que fazia o `style="background-color: var(--primary-dark);"` falhar e renderizar com fundo transparente/branco sob texto branco/claro.
+    - Adicionada a variável `--primary-dark: #002533;` no `:root` do [style.css](file:///home/paco/Projectos/Global%20View/style.css) e `"primary-dark": "var(--primary-dark)"` na configuração Tailwind do [index.html](file:///home/paco/Projectos/Global%20View/index.html).
+    - Atualizados os estilos e classes de contraste do card em [index.html](file:///home/paco/Projectos/Global%20View/index.html): fundo azul petróleo escuro com fallback `#002533`, texto branco nítido (`text-white`, `text-slate-100`), ícones esmeralda brilhante (`text-emerald-400`) e caixa de chamada final em verde translúcido com relevo (`bg-emerald-950/70` e `border-emerald-500/30`).
+    - Mantido o alinhamento **100% bilíngue (PT/EN)** em todos os textos e destaques do card.
+
+### Sessão: 28 de Julho de 2026 (Security Hardening Completo)
+*   **Auditoria de Segurança Completa**: Realizada auditoria aprofundada de todos os ficheiros do protótipo, identificando 7 vulnerabilidades (2 críticas, 2 altas, 2 médias, 1 baixa).
+*   **[NEW] Módulo de Segurança (`security.js`)**:
+    - Criado módulo centralizado exportando `window.gvSecurity` com funções de sanitização XSS (`sanitize`, `sanitizeAttr`), rate limiting (`checkRateLimit`, `resetRateLimit`), proteção de dados (`clearSensitiveData`, `sanitizeStateForStorage`) e anti-tampering (`preventFrameEmbedding`, `isDomainAuthorized`).
+    - Auto-inicializa proteções contra iframe embedding e verifica domínio autorizado no carregamento.
+    - Carregado no [index.html](file:///home/paco/Projectos/Global%20View/index.html) antes de `supabase-client.js` e `app.js`.
+*   **Remoção de Credenciais Hardcoded**:
+    - Eliminada a password de teste `gvcps123` da função `fillMockCreds()` em [app.js](file:///home/paco/Projectos/Global%20View/app.js). A função agora apenas preenche o e-mail e foca o campo de password para digitação manual.
+*   **Proteção Anti-XSS (57 instâncias sanitizadas)**:
+    - Aplicado `gvSecurity.sanitize()` a todos os pontos de injeção `innerHTML` que interpolam dados do utilizador ou da base de dados em [app.js](file:///home/paco/Projectos/Global%20View/app.js).
+    - Funções modificadas: `createOpportunityCard`, `renderDetailView`, `renderBuyerPortal`, `renderSupplierPortal`, `renderConsultantPortal`, `renderAdminPortal`, `renderPortalChat`, `renderPortalWall`, `inspectMatch`.
+*   **Rate Limiting no Login (5 tentativas / 15 min)**:
+    - Adicionada verificação `gvSecurity.checkRateLimit('login', 5, 900000)` no início de `handleMockLogin()`. Após 5 tentativas falhadas, o utilizador é bloqueado por 15 minutos com aviso bilíngue.
+    - Reset automático do contador após login bem-sucedido.
+*   **Proteção de Dados no localStorage**:
+    - Função `saveState()` agora usa `gvSecurity.sanitizeStateForStorage()` para excluir campos sensíveis (email, contactos, whatsapp) antes de gravar no localStorage.
+*   **Headers de Segurança HTTP (Anti-Phishing/Clonagem)**:
+    - Adicionados 7 headers de segurança ao [vercel.json](file:///home/paco/Projectos/Global%20View/vercel.json):
+      - `X-Frame-Options: DENY` (anti-clickjacking)
+      - `X-Content-Type-Options: nosniff` (anti-MIME sniffing)
+      - `X-XSS-Protection: 1; mode=block`
+      - `Referrer-Policy: strict-origin-when-cross-origin`
+      - `Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()`
+      - `Content-Security-Policy` (restritivo, autoriza apenas CDNs confiáveis)
+      - `Strict-Transport-Security` (HSTS com preload)
+*   **Restrição de RLS no Supabase (Perfis)**:
+    - Política `"Leitura pública de perfis"` (`USING (true)`) substituída por `"Leitura de perfis por autenticados"` (`USING (auth.uid() IS NOT NULL)`) em [supabase_schema.sql](file:///home/paco/Projectos/Global%20View/supabase_schema.sql).
+    - Utilizadores anónimos já não podem enumerar todos os perfis do sistema (incluindo roles admin/consultant).
+*   **Traduções de Segurança (PT/EN)**:
+    - Adicionadas entradas `rate_limit_warning`, `login_blocked`, `security_warning` ao dicionário `UI_TRANSLATIONS` em ambos os idiomas.
 
 ---
 
 ## 3. Próximos Passos & Tarefas Pendentes
+
+### Segurança (Fase Seguinte):
+*   Integrar **Cloudflare Turnstile** (CAPTCHA) no formulário de login — adiado para próxima sessão.
+*   Implementar **autenticação com Google OAuth** via Supabase Auth para escalabilidade futura.
+*   Aplicar a política RLS atualizada diretamente no Supabase Dashboard (o ficheiro `.sql` foi atualizado mas a migração na BD remota precisa de ser executada manualmente).
 
 ### Outras Tarefas:
 *   Realizar testes de usabilidade e validação com utilizadores nativos de inglês e português.

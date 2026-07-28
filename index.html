@@ -188,6 +188,7 @@
                         "surface-container-low": "var(--surface-low)",
                         "surface-container-highest": "var(--surface-container-highest)",
                         "primary": "var(--primary)",
+                        "primary-dark": "var(--primary-dark)",
                         "surface-tint": "#36647a",
                         "surface": "var(--surface)",
                         "on-secondary-container": "var(--on-secondary-container)",
@@ -413,7 +414,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
     </header>
 
@@ -985,31 +985,37 @@
 
         <!-- CENTRO DE CONFIANÇA / TRUST CENTER VIEW -->
         <section id="view-trust" class="view-section">
-            <!-- Hero -->
-            <div class="relative py-20 bg-slate-900 text-white overflow-hidden text-center">
-                <div class="absolute inset-0 opacity-20">
-                    <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1920&q=80" alt="Trust Center Background">
-                    <div class="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950"></div>
+            <!-- Mini Hero Header -->
+            <div class="relative bg-slate-900 text-white overflow-hidden py-16 mb-12">
+                <!-- Background Image & Overlay -->
+                <div class="absolute inset-0 z-0 opacity-40">
+                    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1920&q=80" alt="Trust Center Security Background" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/70 to-slate-950/80"></div>
                 </div>
-                <div class="relative z-10 max-w-3xl mx-auto px-4">
-                    <span class="inline-block bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-outfit font-bold text-xs uppercase px-3 py-1.5 rounded-full backdrop-blur-md mb-4" data-translate-pt="Ambiente Comercial 100% Intermediado" data-translate-en="100% Intermediated Commercial Environment">
-                        Ambiente Comercial 100% Intermediado
-                    </span>
-                    <h1 class="font-outfit font-bold text-3xl md:text-5xl text-white mb-4" data-translate-pt="Centro de Confiança &amp; Segurança" data-translate-en="Trust &amp; Safety Center">
-                        Centro de Confiança &amp; Segurança
-                    </h1>
-                    <p class="font-outfit text-slate-300 text-base md:text-lg max-w-2xl mx-auto leading-relaxed" data-translate-pt="Descubra como a GV-CPS elimina fraudes, protege pagamentos e garante conformidade jurídica total nos portos de Moçambique." data-translate-en="Discover how GV-CPS eliminates fraud, protects payments, and guarantees full legal compliance in Mozambique's ports.">
-                        Descubra como a GV-CPS elimina fraudes, protege pagamentos e garante conformidade jurídica total nos portos de Moçambique.
-                    </p>
+                
+                <div class="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                    <div class="max-w-2xl text-left">
+                        <span class="inline-block bg-emerald-500/20 text-[#34d399] px-3 py-1 rounded-full text-xs font-bold mb-3 border border-emerald-500/30" data-translate-pt="Garantia Operacional 100%" data-translate-en="100% Operational Guarantee">
+                            Garantia Operacional 100%
+                        </span>
+                        <h1 class="font-headline-xl text-white mb-4" data-translate-pt="Centro de Confiança" data-translate-en="Trust Center">Centro de Confiança</h1>
+                        <p class="text-white/80 font-body-lg" data-translate-pt="Ambiente comercial blindado onde a GV-CPS atua como intermediária única e garantidora de todas as transações." data-translate-en="Shielded commercial environment where GV-CPS acts as the sole intermediary and guarantor of all transactions.">Ambiente comercial blindado onde a GV-CPS atua como intermediária única e garantidora de todas as transações.</p>
+                    </div>
+                    <div class="flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 px-6 py-4 rounded-2xl shrink-0">
+                        <span class="material-symbols-outlined text-emerald-400 text-3xl">verified_user</span>
+                        <div>
+                            <div class="text-white font-bold text-sm" data-translate-pt="Intermediação Segura" data-translate-en="Secure Intermediation">Intermediação Segura</div>
+                            <div class="text-xs text-white/70" data-translate-pt="Sigilo Comercial Total" data-translate-en="Total Business Privacy">Sigilo Comercial Total</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- GBO vs GV-CPS Comparison Section -->
-            <div class="py-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-                <div class="text-center mb-16">
-                    <span class="text-secondary font-label-md tracking-widest uppercase" data-translate-pt="Diferencial Estratégico" data-translate-en="Strategic Difference">Diferencial Estratégico</span>
-                    <h2 class="font-headline-lg text-primary mt-2" data-translate-pt="Por que a GV-CPS é Totalmente Segura?" data-translate-en="Why is GV-CPS Completely Safe?">Por que a GV-CPS é Totalmente Segura?</h2>
-                    <p class="text-on-surface-variant max-w-xl mx-auto mt-2 text-sm" data-translate-pt="Ao contrário dos diretórios B2B abertos que partilham contactos e deixam o risco para si, a GV-CPS atua como intermediário único e garantidor." data-translate-en="Unlike open B2B directories that share contact info and leave the risk to you, GV-CPS acts as the sole intermediary and guarantor.">Ao contrário dos diretórios B2B abertos que partilham contactos e deixam o risco para si, a GV-CPS atua como intermediário único e garantidor.</p>
+            <!-- Standard vs GV-CPS Comparison Section -->
+            <div class="py-12 md:py-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="font-headline-lg text-primary mt-2" data-translate-pt="Por que a Global View é Segura?" data-translate-en="Why Global View is Safe?">Por que a Global View é Segura?</h2>
+                    <p class="text-on-surface-variant max-w-xl mx-auto mt-2 text-sm leading-relaxed" data-translate-pt="A GV-CPS atua como intermediário único e garantidor de todas as transações, eliminando riscos de fraude e garantindo segurança total." data-translate-en="GV-CPS acts as the sole intermediary and guarantor of all transactions, eliminating fraud risks and ensuring complete safety.">A GV-CPS atua como intermediário único e garantidor de todas as transações, eliminando riscos de fraude e garantindo segurança total.</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
@@ -1020,7 +1026,7 @@
                                 <span class="w-10 h-10 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center font-bold">
                                     <span class="material-symbols-outlined text-xl">gavel</span>
                                 </span>
-                                <h3 class="headline-sm text-slate-800 m-0 font-bold" data-translate-pt="Diretórios B2B Comuns (Ex: GBO)" data-translate-en="Common B2B Directories (e.g., GBO)">Diretórios B2B Comuns (Ex: GBO)</h3>
+                                <h3 class="headline-sm text-slate-800 m-0 font-bold" data-translate-pt="Diretórios B2B Comuns" data-translate-en="Common B2B Directories">Diretórios B2B Comuns</h3>
                             </div>
                             <ul class="space-y-4 text-sm text-slate-650 list-none p-0">
                                 <li class="flex items-start gap-3">
@@ -1047,18 +1053,18 @@
                     </div>
 
                     <!-- Right: GV-CPS Intermediated Security -->
-                    <div class="bg-primary text-white p-8 rounded-2xl flex flex-col justify-between shadow-lg relative overflow-hidden" style="background-color: var(--primary-dark);">
-                        <div class="absolute top-0 right-0 opacity-5 w-40 h-40 transform translate-x-10 -translate-y-10">
+                    <div class="p-8 rounded-2xl flex flex-col justify-between shadow-xl relative overflow-hidden border border-emerald-500/20 text-white" style="background-color: var(--primary-dark, #002533); color: #ffffff;">
+                        <div class="absolute top-0 right-0 opacity-10 w-40 h-40 transform translate-x-10 -translate-y-10 text-emerald-400">
                             <span class="material-symbols-outlined text-[160px]">shield</span>
                         </div>
-                        <div>
+                        <div class="relative z-10">
                             <div class="flex items-center gap-3 mb-6">
-                                <span class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center font-bold">
+                                <span class="w-10 h-10 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 flex items-center justify-center font-bold">
                                     <span class="material-symbols-outlined text-xl">shield</span>
                                 </span>
                                 <h3 class="headline-sm text-white m-0 font-bold" data-translate-pt="Nossa Abordagem: GV-CPS" data-translate-en="Our Approach: GV-CPS">Nossa Abordagem: GV-CPS</h3>
                             </div>
-                            <ul class="space-y-4 text-sm text-slate-200 list-none p-0">
+                            <ul class="space-y-4 text-sm text-slate-100 list-none p-0">
                                 <li class="flex items-start gap-3">
                                     <span class="material-symbols-outlined text-emerald-400 shrink-0 text-[18px] mt-0.5">check_circle</span>
                                     <span data-translate-pt="<strong>Intermediação de Chat Blindada:</strong> Filtros anti-contacto automáticos e consultoria humana evitam vazamento de dados." data-translate-en="<strong>Shielded Chat Intermediation:</strong> Automatic anti-contact filters and human consulting prevent data leaks."><strong>Intermediação de Chat Blindada:</strong> Filtros anti-contacto automáticos e consultoria humana evitam vazamento de dados.</span>
@@ -1069,7 +1075,7 @@
                                 </li>
                                 <li class="flex items-start gap-3">
                                     <span class="material-symbols-outlined text-emerald-400 shrink-0 text-[18px] mt-0.5">check_circle</span>
-                                    <span data-translate-pt="<strong>Logística &amp; Faturamento Integrados:</strong> Coordenamos o frete e emitimos a faturação final GV-CPS consolidando mercadorias." data-translate-en="<strong>Integrated Logistics &amp; Billing:</strong> We coordinate freight and issue final GV-CPS billing consolidating merchandise."><strong>Logística &amp; Faturamento Integrados:</strong> Coordenamos o frete e emitimos a faturação final GV-CPS consolidando mercadorias.</span>
+                                    <span data-translate-pt="<strong>Logística &amp; Faturamento Integrados:</strong> Coordenamos o frete e emitimos a faturação final GV-CPS consolidando mercadorias." data-translate-en="<strong>Integrated Logistics &amp; Billing:</strong> We coordinate freight and issue final GV-CPS billing consolidating merchandise."><strong>Integrated Logistics &amp; Billing:</strong> We coordinate freight and issue final GV-CPS billing consolidating merchandise.</span>
                                 </li>
                                 <li class="flex items-start gap-3">
                                     <span class="material-symbols-outlined text-emerald-400 shrink-0 text-[18px] mt-0.5">check_circle</span>
@@ -2842,7 +2848,7 @@
             </div>
             
             <!-- Progress Bar -->
-            <div class="px-8 pt-4">
+            <div class="px-2 pt-4">
                 <div class="wizard-progress-bar">
                     <div class="wizard-progress-step active" id="wstep-dot-1"></div>
                     <div class="wizard-progress-step" id="wstep-dot-2"></div>
@@ -2857,8 +2863,8 @@
                 </div>
             </div>
             
-            <!-- Body (Steps Panels) -->
-            <div class="wizard-body">
+            <!-- Body (Unified Step Panels) -->
+            <div class="wizard-body mt-4">
                 <!-- STEP 1: SELECT SECTOR -->
                 <div class="wizard-step-panel active" id="wstep-panel-1">
                     <h4 class="font-outfit font-bold text-sm text-on-surface mb-2" style="margin:0 0 8px;" data-translate-pt="Selecione o Setor de Atuação:" data-translate-en="Select Industry Sector:">Selecione o Setor de Atuação:</h4>
@@ -2892,32 +2898,70 @@
                     </div>
                 </div>
 
-                <!-- STEP 3: PRODUCT & QUANTITY -->
+                <!-- STEP 3: PRODUCT SPECIFICATION, PACKAGING & LOGISTICS -->
                 <div class="wizard-step-panel" id="wstep-panel-3">
-                    <h4 class="font-outfit font-bold text-sm text-on-surface mb-4" style="margin:0 0 16px;" data-translate-pt="Especifique o Produto e Volume" data-translate-en="Specify Product and Volume">Especifique o Produto e Volume</h4>
+                    <h4 class="font-outfit font-bold text-sm text-on-surface mb-2" style="margin:0 0 8px;" data-translate-pt="Especificação do Produto, Acondicionamento &amp; Porto de Destino" data-translate-en="Product Specification, Packaging &amp; Destination Port">Especificação do Produto, Acondicionamento &amp; Porto de Destino</h4>
+                    <p class="text-xs text-on-surface-variant mb-4" style="margin:0 0 16px;" data-translate-pt="Personalize a variedade exata, o formato de embalagem/contentor e o local de entrega pretendido." data-translate-en="Customize exact variety, packaging/container format, and target delivery port.">Personalize a variedade exata, o formato de embalagem/contentor e o local de entrega pretendido.</p>
                     
-                    <!-- Products Options -->
+                    <!-- 1. Products & Varieties Container -->
                     <div class="wizard-input-group">
-                        <label class="wizard-input-label" data-translate-pt="Opções Recomendadas (Clique para escolher):" data-translate-en="Recommended Options (Click to select):">Opções Recomendadas (Clique para escolher):</label>
+                        <label class="wizard-input-label" data-translate-pt="1. Selecione o Produto Principal:" data-translate-en="1. Select Main Product:">1. Selecione o Produto Principal:</label>
                         <div class="chip-grid" id="wizard-product-chips">
-                            <!-- Rendered by JS -->
+                            <!-- Rendered dynamically by app.js -->
                         </div>
-                        <input type="text" id="wizard-product-input" class="wizard-input" placeholder="Ou digite outra especificação desejada..." data-translate-pt="Ou digite outra especificação desejada..." data-translate-en="Or type other desired specification...">
+                        
+                        <!-- Dynamic Subcategory / Derivative Variety Container -->
+                        <div id="wizard-derivative-container" class="derivative-badge-container" style="display: none;">
+                            <div class="derivative-badge-title">
+                                <span class="material-symbols-outlined text-sm" style="font-size: 16px;">tune</span>
+                                <span id="derivative-title-text" data-translate-pt="2. Selecione a Variedade Específica / Grau Técnico:" data-translate-en="2. Select Specific Variety / Technical Grade:">2. Selecione a Variedade Específica / Grau Técnico:</span>
+                            </div>
+                            <div class="chip-grid" id="wizard-derivative-chips" style="margin-top: 6px; margin-bottom: 0;">
+                                <!-- Rendered dynamically by app.js -->
+                            </div>
+                        </div>
+
+                        <input type="text" id="wizard-product-input" class="wizard-input mt-2" placeholder="Ou digite outra especificação customizada..." data-translate-pt="Ou digite outra especificação customizada..." data-translate-en="Or type other custom specification...">
                     </div>
 
-                    <!-- Quantity Options -->
-                    <div class="wizard-input-group mt-6" style="margin-top: 24px;">
-                        <label class="wizard-input-label" data-translate-pt="Sugestões de Quantidade/Volume:" data-translate-en="Quantity/Volume Suggestions:">Sugestões de Quantidade/Volume:</label>
-                        <div class="chip-grid" id="wizard-qty-chips">
-                            <!-- Rendered by JS -->
+                    <!-- 2. Packaging / Container Format -->
+                    <div class="wizard-input-group mt-4" style="margin-top: 20px;">
+                        <label class="wizard-input-label" data-translate-pt="3. Formato de Acondicionamento / Embalagem Pretendido:" data-translate-en="3. Target Packaging / Container Format:">3. Formato de Acondicionamento / Embalagem Pretendido:</label>
+                        <div class="packaging-grid" id="wizard-packaging-cards">
+                            <!-- Rendered dynamically by app.js -->
                         </div>
+                        <input type="text" id="wizard-packaging-custom" class="wizard-input" placeholder="Outro tipo de embalagem customizada ou observação..." data-translate-pt="Outro tipo de embalagem customizada ou observação..." data-translate-en="Other custom packaging or technical note..." style="margin-top: 6px;">
+                    </div>
+
+                    <!-- 3. Quantity & Volume Input (ON TOP) with Suggestions (BELOW) -->
+                    <div class="wizard-input-group mt-4" style="margin-top: 20px;">
+                        <label class="wizard-input-label" data-translate-pt="4. Quantidade &amp; Volume Pretendido:" data-translate-en="4. Target Quantity &amp; Volume:">4. Quantidade &amp; Volume Pretendido:</label>
+                        
+                        <!-- Input & Unit Selector ON TOP -->
                         <div class="flex gap-2 items-center" style="display: flex; gap: 8px;">
-                            <input type="number" id="wizard-qty-input" class="wizard-input" placeholder="Escreva a quantidade pretendida..." data-translate-pt="Escreva a quantidade pretendida..." data-translate-en="Enter target quantity..." min="1">
-                            <span class="text-xs font-bold text-on-surface-variant px-3 py-3 bg-slate-100 rounded-lg border border-slate-200 shrink-0" id="wizard-unit-badge" data-translate-pt="unidades" data-translate-en="units">unidades</span>
+                            <input type="number" id="wizard-qty-input" class="wizard-input" placeholder="Digite a quantidade..." data-translate-pt="Digite a quantidade..." data-translate-en="Enter quantity..." min="1">
+                            <select id="wizard-unit-select" class="wizard-input shrink-0" style="width: auto; min-width: 140px; font-weight: 700;">
+                                <option value="Toneladas (TN)" data-translate-pt="Toneladas (TN)" data-translate-en="Tons (TN)">Toneladas (TN)</option>
+                                <option value="Sacos (50kg)" data-translate-pt="Sacos (50kg)" data-translate-en="Bags (50kg)">Sacos (50kg)</option>
+                                <option value="Big Bags (1 TN)" data-translate-pt="Big Bags (1 TN)" data-translate-en="Big Bags (1 TN)">Big Bags (1 TN)</option>
+                                <option value="ISO Tank (24.000 L)" data-translate-pt="ISO Tank (24.000 L)" data-translate-en="ISO Tank (24,000 L)">ISO Tank (24.000 L)</option>
+                                <option value="Litros (L)" data-translate-pt="Litros (L)" data-translate-en="Liters (L)">Litros (L)</option>
+                                <option value="Contentores (20ft)" data-translate-pt="Contentores (20ft)" data-translate-en="Containers (20ft)">Contentores (20ft)</option>
+                                <option value="Unidades" data-translate-pt="Unidades" data-translate-en="Units">Unidades</option>
+                            </select>
                         </div>
+                        
+                        <!-- Suggestions UNDERNEATH (Below) -->
+                        <div class="mt-2" style="margin-top: 10px;">
+                            <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider" data-translate-pt="Sugestões Rápidas de Volume:" data-translate-en="Quick Volume Suggestions:">Sugestões Rápidas de Volume:</span>
+                            <div class="chip-grid" id="wizard-qty-chips" style="margin-top: 6px; margin-bottom: 4px;">
+                                <!-- Rendered by JS below the input -->
+                            </div>
+                        </div>
+
                         <!-- Slider Sincronizado -->
-                        <div class="mt-3" style="margin-top: 12px;">
-                            <input type="range" id="wizard-qty-slider" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" min="1" max="1000" value="1" style="width: 100%;">
+                        <div class="mt-2" style="margin-top: 8px;">
+                            <input type="range" id="wizard-qty-slider" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" min="1" max="1000" value="1" style="width: 100%;" oninput="document.getElementById('wizard-qty-input').value = this.value;">
                             <div class="flex justify-between text-[10px] text-slate-400 mt-1" style="display: flex; justify-content: space-between; font-size: 10px; color: #94a3b8; margin-top: 4px;">
                                 <span id="wizard-slider-min">1</span>
                                 <span id="wizard-slider-max">1000</span>
@@ -2925,9 +2969,28 @@
                         </div>
                     </div>
 
+                    <!-- 4. Destination Port & Delivery Details -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 20px;">
+                        <div class="wizard-input-group" style="margin-bottom: 0;">
+                            <label class="wizard-input-label" for="wizard-contact-port" data-translate-pt="5. Porto de Descarga / Destino Final:" data-translate-en="5. Discharge Port / Final Destination:">5. Porto de Descarga / Destino Final:</label>
+                            <input type="text" id="wizard-contact-port" class="wizard-input" placeholder="Ex: Porto de Maputo, Santos, Rotterdam, Jebel Ali..." data-translate-pt="Ex: Porto de Maputo, Santos, Rotterdam, Jebel Ali..." data-translate-en="e.g. Port of Maputo, Santos, Rotterdam, Jebel Ali...">
+                        </div>
+                        <div class="wizard-input-group" style="margin-bottom: 0;">
+                            <label class="wizard-input-label" data-translate-pt="6. Incluir Serviço Logístico GV-CPS?" data-translate-en="6. Include GV-CPS Logistics Service?">6. Incluir Serviço Logístico GV-CPS?</label>
+                            <div class="flex gap-2" style="display: flex; gap: 8px;">
+                                <label class="flex-1 flex items-center gap-1.5 p-3 border border-slate-200 rounded-xl cursor-pointer text-xs font-bold" style="flex:1; display:flex; align-items:center; gap:6px; padding:12px; border:1px solid #cbd5e1; border-radius:12px;">
+                                    <input type="radio" name="wizard-logistics" value="Sim" checked> <span data-translate-pt="Sim (Solução Completa)" data-translate-en="Yes (Full Solution)">Sim (Solução Completa)</span>
+                                </label>
+                                <label class="flex-1 flex items-center gap-1.5 p-3 border border-slate-200 rounded-xl cursor-pointer text-xs font-bold" style="flex:1; display:flex; align-items:center; gap:6px; padding:12px; border:1px solid #cbd5e1; border-radius:12px;">
+                                    <input type="radio" name="wizard-logistics" value="Não"> <span data-translate-pt="Apenas Produto" data-translate-en="Product Only">Apenas Produto</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Urgency -->
-                    <div class="wizard-input-group mt-6" style="margin-top: 24px;">
-                        <label class="wizard-input-label" data-translate-pt="Prazo Necessário" data-translate-en="Required Delivery Time">Prazo Necessário</label>
+                    <div class="wizard-input-group mt-4" style="margin-top: 20px; margin-bottom: 0;">
+                        <label class="wizard-input-label" data-translate-pt="Prazo de Entrega Necessário:" data-translate-en="Required Delivery Deadline:">Prazo de Entrega Necessário:</label>
                         <div class="flex gap-2" style="display: flex; gap: 8px;">
                             <label class="flex-1 flex items-center justify-center gap-2 p-3 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition text-xs font-bold" style="flex:1; display:flex; align-items:center; justify-content:center; padding:12px; border:1px solid #cbd5e1; border-radius:12px; cursor:pointer;">
                                 <input type="radio" name="wizard-urgency" value="Urgente" checked> <span data-translate-pt="Urgente (<30 dias)" data-translate-en="Urgent (<30 days)">Urgente (&lt;30 dias)</span>
@@ -2939,14 +3002,14 @@
                     </div>
                 </div>
 
-                <!-- STEP 4: CONTACT & DETAILS -->
+                <!-- STEP 4: CONTACT & SUBMIT -->
                 <div class="wizard-step-panel" id="wstep-panel-4">
-                    <h4 class="font-outfit font-bold text-sm text-on-surface mb-2" style="margin:0 0 8px;" data-translate-pt="Informações de Contacto Directo" data-translate-en="Direct Contact Information">Informações de Contacto Directo</h4>
-                    <p class="text-xs text-on-surface-variant mb-4" style="margin:0 0 16px;" data-translate-pt="Os seus dados são protegidos por restrição de visualização e são visíveis exclusivamente para o Administrador geral." data-translate-en="Your details are protected by viewing restrictions and are visible exclusively to the General Administrator.">Os seus dados são protegidos por restrição de visualização e são visíveis exclusivamente para o Administrador geral.</p>
+                    <h4 class="font-outfit font-bold text-sm text-on-surface mb-2" style="margin:0 0 8px;" data-translate-pt="Informações de Contacto Directo &amp; Empresa" data-translate-en="Direct Contact &amp; Company Details">Informações de Contacto Directo &amp; Empresa</h4>
+                    <p class="text-xs text-on-surface-variant mb-4" style="margin:0 0 16px;" data-translate-pt="Os seus dados são protegidos por restrição de visualização e são visíveis exclusivamente para o Administrador geral GV-CPS." data-translate-en="Your details are protected by viewing restrictions and are visible exclusively to the General GV-CPS Administrator.">Os seus dados são protegidos por restrição de visualização e são visíveis exclusivamente para o Administrador geral GV-CPS.</p>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
                         <div class="wizard-input-group">
-                            <label class="wizard-input-label" for="wizard-contact-whatsapp" data-translate-pt="Contacto WhatsApp" data-translate-en="WhatsApp Contact">Contacto WhatsApp</label>
+                            <label class="wizard-input-label" for="wizard-contact-whatsapp" data-translate-pt="Contacto WhatsApp / Telefone" data-translate-en="WhatsApp / Phone Contact">Contacto WhatsApp / Telefone</label>
                             <div style="position: relative; display: flex; align-items: center; width: 100%;">
                                 <span id="whatsapp-flag-badge" style="position: absolute; left: 12px; font-size: 16px; pointer-events: none; transition: all 0.2s;">🇲🇿</span>
                                 <input type="tel" id="wizard-contact-whatsapp" class="wizard-input" style="padding-left: 38px; width: 100%;" placeholder="Ex: +258 84 123 4567" required>
@@ -2958,40 +3021,118 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-top: 16px;">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-top: 16px;">
                         <div class="wizard-input-group">
-                            <label class="wizard-input-label" for="wizard-contact-country" data-translate-pt="País de Destino/Origem" data-translate-en="Destination/Origin Country">País de Destino/Origem</label>
-                            <select id="wizard-contact-country" class="wizard-input">
-                                <option value="Moçambique" data-translate-pt="Moçambique" data-translate-en="Mozambique">Moçambique</option>
-                                <option value="Brasil" data-translate-pt="Brasil" data-translate-en="Brazil">Brasil</option>
-                                <option value="Portugal" data-translate-pt="Portugal" data-translate-en="Portugal">Portugal</option>
-                                <option value="Emirados Árabes" data-translate-pt="Emirados Árabes" data-translate-en="United Arab Emirates">Emirados Árabes</option>
+                            <label class="wizard-input-label" for="wizard-contact-country" data-translate-pt="País de Origem / Sede" data-translate-en="Country of Origin / HQ">País de Origem / Sede</label>
+                            <select id="wizard-contact-country" class="wizard-input" onchange="onWizardCountryChange(this.value)">
+                                <optgroup label="África / Africa">
+                                    <option value="MZ" data-flag="🇲🇿" data-ddi="+258" selected data-translate-pt="🇲🇿 Moçambique (+258)" data-translate-en="🇲🇿 Mozambique (+258)">🇲🇿 Moçambique (+258)</option>
+                                    <option value="ZA" data-flag="🇿🇦" data-ddi="+27" data-translate-pt="🇿🇦 África do Sul (+27)" data-translate-en="🇿🇦 South Africa (+27)">🇿🇦 África do Sul (+27)</option>
+                                    <option value="AO" data-flag="🇦🇴" data-ddi="+244" data-translate-pt="🇦🇴 Angola (+244)" data-translate-en="🇦🇴 Angola (+244)">🇦🇴 Angola (+244)</option>
+                                    <option value="CV" data-flag="🇨🇻" data-ddi="+238" data-translate-pt="🇨🇻 Cabo Verde (+238)" data-translate-en="🇨🇻 Cape Verde (+238)">🇨🇻 Cabo Verde (+238)</option>
+                                    <option value="GW" data-flag="🇬🇼" data-ddi="+245" data-translate-pt="🇬🇼 Guiné-Bissau (+245)" data-translate-en="🇬🇼 Guinea-Bissau (+245)">🇬🇼 Guiné-Bissau (+245)</option>
+                                    <option value="ST" data-flag="🇸🇹" data-ddi="+239" data-translate-pt="🇸🇹 São Tomé e Príncipe (+239)" data-translate-en="🇸🇹 Sao Tome &amp; Principe (+239)">🇸🇹 São Tomé e Príncipe (+239)</option>
+                                    <option value="NG" data-flag="🇳🇬" data-ddi="+234" data-translate-pt="🇳🇬 Nigéria (+234)" data-translate-en="🇳🇬 Nigeria (+234)">🇳🇬 Nigéria (+234)</option>
+                                    <option value="GH" data-flag="🇬🇭" data-ddi="+233" data-translate-pt="🇬🇭 Gana (+233)" data-translate-en="🇬🇭 Ghana (+233)">🇬🇭 Gana (+233)</option>
+                                    <option value="CI" data-flag="🇨🇮" data-ddi="+225" data-translate-pt="🇨🇮 Costa do Marfim (+225)" data-translate-en="🇨🇮 Ivory Coast (+225)">🇨🇮 Costa do Marfim (+225)</option>
+                                    <option value="SN" data-flag="🇸🇳" data-ddi="+221" data-translate-pt="🇸🇳 Senegal (+221)" data-translate-en="🇸🇳 Senegal (+221)">🇸🇳 Senegal (+221)</option>
+                                    <option value="KE" data-flag="🇰🇪" data-ddi="+254" data-translate-pt="🇰🇪 Quénia (+254)" data-translate-en="🇰🇪 Kenya (+254)">🇰🇪 Quénia (+254)</option>
+                                    <option value="TZ" data-flag="🇹🇿" data-ddi="+255" data-translate-pt="🇹🇿 Tanzânia (+255)" data-translate-en="🇹🇿 Tanzania (+255)">🇹🇿 Tanzânia (+255)</option>
+                                    <option value="UG" data-flag="🇺🇬" data-ddi="+256" data-translate-pt="🇺🇬 Uganda (+256)" data-translate-en="🇺🇬 Uganda (+256)">🇺🇬 Uganda (+256)</option>
+                                    <option value="RW" data-flag="🇷🇼" data-ddi="+250" data-translate-pt="🇷🇼 Ruanda (+250)" data-translate-en="🇷🇼 Rwanda (+250)">🇷🇼 Ruanda (+250)</option>
+                                    <option value="ZM" data-flag="🇿🇲" data-ddi="+260" data-translate-pt="🇿🇲 Zâmbia (+260)" data-translate-en="🇿🇲 Zambia (+260)">🇿🇲 Zâmbia (+260)</option>
+                                    <option value="ZW" data-flag="🇿🇼" data-ddi="+263" data-translate-pt="🇿🇼 Zimbábue (+263)" data-translate-en="🇿🇼 Zimbabwe (+263)">🇿🇼 Zimbábue (+263)</option>
+                                    <option value="BW" data-flag="🇧🇼" data-ddi="+267" data-translate-pt="🇧🇼 Botsuana (+267)" data-translate-en="🇧🇼 Botswana (+267)">🇧🇼 Botsuana (+267)</option>
+                                    <option value="NA" data-flag="🇳🇦" data-ddi="+264" data-translate-pt="🇳🇦 Namíbia (+264)" data-translate-en="🇳🇦 Namibia (+264)">🇳🇦 Namíbia (+264)</option>
+                                    <option value="MG" data-flag="🇲🇬" data-ddi="+261" data-translate-pt="🇲🇬 Madagáscar (+261)" data-translate-en="🇲🇬 Madagascar (+261)">🇲🇬 Madagáscar (+261)</option>
+                                    <option value="MW" data-flag="🇲🇼" data-ddi="+265" data-translate-pt="🇲🇼 Malaui (+265)" data-translate-en="🇲🇼 Malawi (+265)">🇲🇼 Malaui (+265)</option>
+                                    <option value="SZ" data-flag="🇸🇿" data-ddi="+268" data-translate-pt="🇸🇿 Essuatíni (+268)" data-translate-en="🇸🇿 Eswatini (+268)">🇸🇿 Essuatíni (+268)</option>
+                                    <option value="LS" data-flag="🇱🇸" data-ddi="+266" data-translate-pt="🇱🇸 Lesoto (+266)" data-translate-en="🇱🇸 Lesotho (+266)">🇱🇸 Lesoto (+266)</option>
+                                    <option value="CD" data-flag="🇨🇩" data-ddi="+243" data-translate-pt="🇨🇩 Rep. Dem. do Congo (+243)" data-translate-en="🇨🇩 DR Congo (+243)">🇨🇩 Rep. Dem. do Congo (+243)</option>
+                                    <option value="CG" data-flag="🇨🇬" data-ddi="+242" data-translate-pt="🇨🇬 Rep. do Congo (+242)" data-translate-en="🇨🇬 Rep. of Congo (+242)">🇨🇬 Rep. do Congo (+242)</option>
+                                    <option value="CM" data-flag="🇨🇲" data-ddi="+237" data-translate-pt="🇨🇲 Camarões (+237)" data-translate-en="🇨🇲 Cameroon (+237)">🇨🇲 Camarões (+237)</option>
+                                    <option value="ET" data-flag="🇪🇹" data-ddi="+251" data-translate-pt="🇪🇹 Etiópia (+251)" data-translate-en="🇪🇹 Ethiopia (+251)">🇪🇹 Etiópia (+251)</option>
+                                    <option value="EG" data-flag="🇪🇬" data-ddi="+20" data-translate-pt="🇪🇬 Egito (+20)" data-translate-en="🇪🇬 Egypt (+20)">🇪🇬 Egito (+20)</option>
+                                    <option value="MA" data-flag="🇲🇦" data-ddi="+212" data-translate-pt="🇲🇦 Marrocos (+212)" data-translate-en="🇲🇦 Morocco (+212)">🇲🇦 Marrocos (+212)</option>
+                                    <option value="DZ" data-flag="🇩🇿" data-ddi="+213" data-translate-pt="🇩🇿 Argélia (+213)" data-translate-en="🇩🇿 Algeria (+213)">🇩🇿 Argélia (+213)</option>
+                                    <option value="TN" data-flag="🇹🇳" data-ddi="+216" data-translate-pt="🇹🇳 Tunísia (+216)" data-translate-en="🇹🇳 Tunisia (+216)">🇹🇳 Tunísia (+216)</option>
+                                </optgroup>
+                                <optgroup label="Américas / Americas">
+                                    <option value="BR" data-flag="🇧🇷" data-ddi="+55" data-translate-pt="🇧🇷 Brasil (+55)" data-translate-en="🇧🇷 Brazil (+55)">🇧🇷 Brasil (+55)</option>
+                                    <option value="US" data-flag="🇺🇸" data-ddi="+1" data-translate-pt="🇺🇸 Estados Unidos (+1)" data-translate-en="🇺🇸 United States (+1)">🇺🇸 Estados Unidos (+1)</option>
+                                    <option value="CA" data-flag="🇨🇦" data-ddi="+1" data-translate-pt="🇨🇦 Canadá (+1)" data-translate-en="🇨🇦 Canada (+1)">🇨🇦 Canadá (+1)</option>
+                                    <option value="MX" data-flag="🇲🇽" data-ddi="+52" data-translate-pt="🇲🇽 México (+52)" data-translate-en="🇲🇽 Mexico (+52)">🇲🇽 México (+52)</option>
+                                    <option value="AR" data-flag="🇦🇷" data-ddi="+54" data-translate-pt="🇦🇷 Argentina (+54)" data-translate-en="🇦🇷 Argentina (+54)">🇦🇷 Argentina (+54)</option>
+                                    <option value="CL" data-flag="🇨🇱" data-ddi="+56" data-translate-pt="🇨🇱 Chile (+56)" data-translate-en="🇨🇱 Chile (+56)">🇨🇱 Chile (+56)</option>
+                                    <option value="CO" data-flag="🇨🇴" data-ddi="+57" data-translate-pt="🇨🇴 Colômbia (+57)" data-translate-en="🇨🇴 Colombia (+57)">🇨🇴 Colômbia (+57)</option>
+                                    <option value="PE" data-flag="🇵🇪" data-ddi="+51" data-translate-pt="🇵🇪 Peru (+51)" data-translate-en="🇵🇪 Peru (+51)">🇵🇪 Peru (+51)</option>
+                                    <option value="UY" data-flag="🇺🇾" data-ddi="+598" data-translate-pt="🇺🇾 Uruguai (+598)" data-translate-en="🇺🇾 Uruguay (+598)">🇺🇾 Uruguai (+598)</option>
+                                    <option value="PY" data-flag="🇵🇾" data-ddi="+595" data-translate-pt="🇵🇾 Paraguai (+595)" data-translate-en="🇵🇾 Paraguay (+595)">🇵🇾 Paraguai (+595)</option>
+                                    <option value="BO" data-flag="🇧🇴" data-ddi="+591" data-translate-pt="🇧🇴 Bolívia (+591)" data-translate-en="🇧🇴 Bolivia (+591)">🇧🇴 Bolívia (+591)</option>
+                                    <option value="EC" data-flag="🇪🇨" data-ddi="+593" data-translate-pt="🇪🇨 Equador (+593)" data-translate-en="🇪🇨 Ecuador (+593)">🇪🇨 Equador (+593)</option>
+                                    <option value="VE" data-flag="🇻🇪" data-ddi="+58" data-translate-pt="🇻🇪 Venezuela (+58)" data-translate-en="🇻🇪 Venezuela (+58)">🇻🇪 Venezuela (+58)</option>
+                                </optgroup>
+                                <optgroup label="Europa / Europe">
+                                    <option value="PT" data-flag="🇵🇹" data-ddi="+351" data-translate-pt="🇵🇹 Portugal (+351)" data-translate-en="🇵🇹 Portugal (+351)">🇵🇹 Portugal (+351)</option>
+                                    <option value="GB" data-flag="🇬🇧" data-ddi="+44" data-translate-pt="🇬🇧 Reino Unido (+44)" data-translate-en="🇬🇧 United Kingdom (+44)">🇬🇧 Reino Unido (+44)</option>
+                                    <option value="DE" data-flag="🇩🇪" data-ddi="+49" data-translate-pt="🇩🇪 Alemanha (+49)" data-translate-en="🇩🇪 Germany (+49)">🇩🇪 Alemanha (+49)</option>
+                                    <option value="FR" data-flag="🇫🇷" data-ddi="+33" data-translate-pt="🇫🇷 França (+33)" data-translate-en="🇫🇷 France (+33)">🇫🇷 França (+33)</option>
+                                    <option value="IT" data-flag="🇮🇹" data-ddi="+39" data-translate-pt="🇮🇹 Itália (+39)" data-translate-en="🇮🇹 Italy (+39)">🇮🇹 Itália (+39)</option>
+                                    <option value="ES" data-flag="🇪🇸" data-ddi="+34" data-translate-pt="🇪🇸 Espanha (+34)" data-translate-en="🇪🇸 Spain (+34)">🇪🇸 Espanha (+34)</option>
+                                    <option value="NL" data-flag="🇳🇱" data-ddi="+31" data-translate-pt="🇳🇱 Países Baixos (+31)" data-translate-en="🇳🇱 Netherlands (+31)">🇳🇱 Países Baixos (+31)</option>
+                                    <option value="BE" data-flag="🇧🇪" data-ddi="+32" data-translate-pt="🇧🇪 Bélgica (+32)" data-translate-en="🇧🇪 Belgium (+32)">🇧🇪 Bélgica (+32)</option>
+                                    <option value="CH" data-flag="🇨🇭" data-ddi="+41" data-translate-pt="🇨🇭 Suíça (+41)" data-translate-en="🇨🇭 Switzerland (+41)">🇨🇭 Suíça (+41)</option>
+                                    <option value="SE" data-flag="🇸🇪" data-ddi="+46" data-translate-pt="🇸🇪 Suécia (+46)" data-translate-en="🇸🇪 Sweden (+46)">🇸🇪 Suécia (+46)</option>
+                                    <option value="NO" data-flag="🇳🇴" data-ddi="+47" data-translate-pt="🇳🇴 Noruega (+47)" data-translate-en="🇳🇴 Norway (+47)">🇳🇴 Noruega (+47)</option>
+                                    <option value="DK" data-flag="🇩🇰" data-ddi="+45" data-translate-pt="🇩🇰 Dinamarca (+45)" data-translate-en="🇩🇰 Denmark (+45)">🇩🇰 Dinamarca (+45)</option>
+                                    <option value="PL" data-flag="🇵🇱" data-ddi="+48" data-translate-pt="🇵🇱 Polónia (+48)" data-translate-en="🇵🇱 Poland (+48)">🇵🇱 Polónia (+48)</option>
+                                    <option value="AT" data-flag="🇦🇹" data-ddi="+43" data-translate-pt="🇦🇹 Áustria (+43)" data-translate-en="🇦🇹 Austria (+43)">🇦🇹 Áustria (+43)</option>
+                                    <option value="TR" data-flag="🇹🇷" data-ddi="+90" data-translate-pt="🇹🇷 Turquia (+90)" data-translate-en="🇹🇷 Turkey (+90)">🇹🇷 Turquia (+90)</option>
+                                    <option value="RU" data-flag="🇷🇺" data-ddi="+7" data-translate-pt="🇷🇺 Rússia (+7)" data-translate-en="🇷🇺 Russia (+7)">🇷🇺 Rússia (+7)</option>
+                                </optgroup>
+                                <optgroup label="Ásia &amp; Médio Oriente / Asia &amp; Middle East">
+                                    <option value="AE" data-flag="🇦🇪" data-ddi="+971" data-translate-pt="🇦🇪 Emirados Árabes (+971)" data-translate-en="🇦🇪 United Arab Emirates (+971)">🇦🇪 Emirados Árabes (+971)</option>
+                                    <option value="CN" data-flag="🇨🇳" data-ddi="+86" data-translate-pt="🇨🇳 China (+86)" data-translate-en="🇨🇳 China (+86)">🇨🇳 China (+86)</option>
+                                    <option value="IN" data-flag="🇮🇳" data-ddi="+91" data-translate-pt="🇮🇳 Índia (+91)" data-translate-en="🇮🇳 India (+91)">🇮🇳 Índia (+91)</option>
+                                    <option value="SA" data-flag="🇸🇦" data-ddi="+966" data-translate-pt="🇸🇦 Arábia Saudita (+966)" data-translate-en="🇸🇦 Saudi Arabia (+966)">🇸🇦 Arábia Saudita (+966)</option>
+                                    <option value="QA" data-flag="🇶🇦" data-ddi="+974" data-translate-pt="🇶🇦 Catar (+974)" data-translate-en="🇶🇦 Qatar (+974)">🇶🇦 Catar (+974)</option>
+                                    <option value="KW" data-flag="🇰🇼" data-ddi="+965" data-translate-pt="🇰🇼 Kuwait (+965)" data-translate-en="🇰🇼 Kuwait (+965)">🇰🇼 Kuwait (+965)</option>
+                                    <option value="OM" data-flag="🇴🇲" data-ddi="+968" data-translate-pt="🇴🇲 Omã (+968)" data-translate-en="🇴🇲 Oman (+968)">🇴🇲 Omã (+968)</option>
+                                    <option value="BH" data-flag="🇧🇭" data-ddi="+973" data-translate-pt="🇧🇭 Barém (+973)" data-translate-en="🇧🇭 Bahrain (+973)">🇧🇭 Barém (+973)</option>
+                                    <option value="IL" data-flag="🇮🇱" data-ddi="+972" data-translate-pt="🇮🇱 Israel (+972)" data-translate-en="🇮🇱 Israel (+972)">🇮🇱 Israel (+972)</option>
+                                    <option value="JP" data-flag="🇯🇵" data-ddi="+81" data-translate-pt="🇯🇵 Japão (+81)" data-translate-en="🇯🇵 Japan (+81)">🇯🇵 Japão (+81)</option>
+                                    <option value="KR" data-flag="🇰🇷" data-ddi="+82" data-translate-pt="🇰🇷 Coreia do Sul (+82)" data-translate-en="🇰🇷 South Korea (+82)">🇰🇷 Coreia do Sul (+82)</option>
+                                    <option value="SG" data-flag="🇸🇬" data-ddi="+65" data-translate-pt="🇸🇬 Singapura (+65)" data-translate-en="🇸🇬 Singapore (+65)">🇸🇬 Singapura (+65)</option>
+                                    <option value="MY" data-flag="🇲🇾" data-ddi="+60" data-translate-pt="🇲🇾 Malásia (+60)" data-translate-en="🇲🇾 Malaysia (+60)">🇲🇾 Malásia (+60)</option>
+                                    <option value="TH" data-flag="🇹🇭" data-ddi="+66" data-translate-pt="🇹🇭 Tailândia (+66)" data-translate-en="🇹🇭 Thailand (+66)">🇹🇭 Tailândia (+66)</option>
+                                    <option value="ID" data-flag="🇮🇩" data-ddi="+62" data-translate-pt="🇮🇩 Indonésia (+62)" data-translate-en="🇮🇩 Indonesia (+62)">🇮🇩 Indonésia (+62)</option>
+                                    <option value="VN" data-flag="🇻🇳" data-ddi="+84" data-translate-pt="🇻🇳 Vietnã (+84)" data-translate-en="🇻🇳 Vietnam (+84)">🇻🇳 Vietnã (+84)</option>
+                                    <option value="TL" data-flag="🇹🇱" data-ddi="+670" data-translate-pt="🇹🇱 Timor-Leste (+670)" data-translate-en="🇹🇱 East Timor (+670)">🇹🇱 Timor-Leste (+670)</option>
+                                    <option value="MO" data-flag="🇲🇴" data-ddi="+853" data-translate-pt="🇲🇴 Macau (+853)" data-translate-en="🇲🇴 Macau (+853)">🇲🇴 Macau (+853)</option>
+                                </optgroup>
+                                <optgroup label="Oceania">
+                                    <option value="AU" data-flag="🇦🇺" data-ddi="+61" data-translate-pt="🇦🇺 Austrália (+61)" data-translate-en="🇦🇺 Australia (+61)">🇦🇺 Austrália (+61)</option>
+                                    <option value="NZ" data-flag="🇳🇿" data-ddi="+64" data-translate-pt="🇳🇿 Nova Zelândia (+64)" data-translate-en="🇳🇿 New Zealand (+64)">🇳🇿 Nova Zelândia (+64)</option>
+                                </optgroup>
+                                <option value="OTHER" data-flag="🌐" data-ddi="+" data-translate-pt="🌐 Outro País" data-translate-en="🌐 Other Country">🌐 Outro País</option>
                             </select>
                         </div>
                         <div class="wizard-input-group">
-                            <label class="wizard-input-label" for="wizard-contact-port" data-translate-pt="Porto de Receção/Destino" data-translate-en="Receiving/Destination Port">Porto de Receção/Destino</label>
-                            <input type="text" id="wizard-contact-port" class="wizard-input" placeholder="Ex: Porto de Maputo, Porto de Leixões..." data-translate-pt="Ex: Porto de Maputo, Porto de Leixões..." data-translate-en="e.g., Port of Maputo, Port of Leixões...">
+                            <label class="wizard-input-label" for="wizard-contact-company" data-translate-pt="Nome da Empresa / Organização" data-translate-en="Company / Organization Name">Nome da Empresa / Organização</label>
+                            <input type="text" id="wizard-contact-company" class="wizard-input" placeholder="Ex: International Trading Ltd" data-translate-pt="Ex: International Trading Ltd" data-translate-en="e.g. International Trading Ltd">
                         </div>
-                        <div class="wizard-input-group">
-                            <label class="wizard-input-label" data-translate-pt="Incluir Logística GV-CPS?" data-translate-en="Include GV-CPS Logistics?">Incluir Logística GV-CPS?</label>
-                            <div class="flex gap-2" style="display: flex; gap: 8px;">
-                                <label class="flex-1 flex items-center gap-1.5 p-2 border border-slate-200 rounded-xl cursor-pointer text-xs" style="flex:1; display:flex; align-items:center; gap:6px; padding:10px; border:1px solid #cbd5e1; border-radius:12px;">
-                                    <input type="radio" name="wizard-logistics" value="Sim" checked> <span data-translate-pt="Sim" data-translate-en="Yes">Sim</span>
-                                </label>
-                            </div>
-                        </div>
+                    </div>
 
                     <div class="wizard-input-group mt-2" style="margin-top: 16px;">
-                        <label class="wizard-input-label" for="wizard-contact-desc" data-translate-pt="Especificações Adicionais (Opcional)" data-translate-en="Additional Specifications (Optional)">Especificações Adicionais (Opcional)</label>
-                        <textarea id="wizard-contact-desc" class="wizard-input" rows="2" maxlength="200" placeholder="Informações de suporte ao consultor... (Máx 200 caracteres)" data-translate-pt="Informações de suporte ao consultor... (Máx 200 caracteres)" data-translate-en="Support information for the consultant... (Max 200 chars)"></textarea>
+                        <label class="wizard-input-label" for="wizard-contact-desc" data-translate-pt="Instruções ou Observações Adicionais (Opcional)" data-translate-en="Additional Instructions or Notes (Optional)">Instruções ou Observações Adicionais (Opcional)</label>
+                        <textarea id="wizard-contact-desc" class="wizard-input" rows="2" maxlength="300" placeholder="Informações de apoio à equipa da GV-CPS... (Máx 300 caracteres)" data-translate-pt="Informações de apoio à equipa da GV-CPS... (Máx 300 caracteres)" data-translate-en="Support information for the GV-CPS team... (Max 300 chars)"></textarea>
                     </div>
-                </div>
                 </div>
             </div>
 
             <!-- Footer -->
-            <div class="wizard-footer">
-                <button onclick="wizardPrevStep()" id="wizard-btn-prev" class="px-5 py-3 border border-outline-variant rounded-xl bg-white hover:bg-slate-50 font-bold text-xs text-slate-700 cursor-pointer disabled:opacity-50 disabled:pointer-events-none transition" disabled data-translate-pt="Voltar" data-translate-en="Back">
+            <div class="wizard-footer mt-4 flex justify-between items-center pt-4 border-t border-slate-200">
+                <button onclick="wizardPrevStep()" id="wizard-btn-prev" class="px-5 py-3 border border-slate-300 rounded-xl bg-white hover:bg-slate-50 font-bold text-xs text-slate-700 cursor-pointer disabled:opacity-50 disabled:pointer-events-none transition" disabled data-translate-pt="Voltar" data-translate-en="Back">
                     Voltar
                 </button>
                 <button onclick="wizardNextStep()" id="wizard-btn-next" class="px-6 py-3 bg-secondary text-white font-bold text-xs rounded-xl hover:opacity-90 active:scale-95 transition cursor-pointer" style="border:none;" data-translate-pt="Avançar" data-translate-en="Next">
@@ -3188,6 +3329,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="security.js"></script>
     <script src="supabase-client.js"></script>
     <script src="app.js"></script>
 </body>

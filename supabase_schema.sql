@@ -201,8 +201,9 @@ ALTER TABLE public.chat_rooms ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.chat_messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.internal_notes ENABLE ROW LEVEL SECURITY;
 
--- 1. Perfis Públicos (profiles)
-CREATE POLICY "Leitura pública de perfis" ON public.profiles FOR SELECT USING (true);
+-- 1. Perfis Públicos (profiles) — RESTRITO a utilizadores autenticados
+-- NOTA: Utilizadores anónimos NÃO podem listar perfis (protege roles admin/consultant)
+CREATE POLICY "Leitura de perfis por autenticados" ON public.profiles FOR SELECT USING (auth.uid() IS NOT NULL);
 CREATE POLICY "Escrita de perfis por Admins ou próprio" ON public.profiles FOR ALL USING (auth.uid() = id OR public.is_admin());
 
 -- 2. Perfis Privados (profile_contacts)

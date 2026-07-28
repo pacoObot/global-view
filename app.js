@@ -51,6 +51,9 @@ const UI_TRANSLATIONS = {
         status_analise: "Em Análise",
         status_atendimento: "Em Atendimento",
         status_concluida: "Concluída",
+        rate_limit_warning: "Demasiadas tentativas. Aguarde antes de tentar novamente.",
+        login_blocked: "Acesso temporariamente bloqueado por segurança.",
+        security_warning: "Aviso de Segurança",
     },
     en: {
         secure_intermediation: "Secure Intermediation (GV-CPS)",
@@ -100,6 +103,9 @@ const UI_TRANSLATIONS = {
         status_analise: "Under Review",
         status_atendimento: "In Progress",
         status_concluida: "Completed",
+        rate_limit_warning: "Too many attempts. Please wait before trying again.",
+        login_blocked: "Access temporarily blocked for security.",
+        security_warning: "Security Warning",
     }
 };
 
@@ -158,6 +164,12 @@ const GV_CATALOG_EN = {
                 unit: 'Liters', 
                 products: ['Premium Hydraulic Oil ISO 68', 'Industrial Lithium Grease', 'Stationary Engine Additives', 'Drilling Fluids'], 
                 quantities: ['200 Liters (1 Drum)', '1000 Liters', '5000 Liters'] 
+            },
+            quimicos: { 
+                label: 'Chemicals & Industrial Acids', 
+                unit: 'ISO Tank / Liters', 
+                products: ['Sulphuric Acid 98% Concentrated', 'Hydrochloric Acid', 'Caustic Soda / Sodium Hydroxide', 'Methanol / Industrial Solvents'], 
+                quantities: ['20,000 Liters (1 ISO Tank)', '40,000 Liters (2 ISO Tanks)', '100,000 Liters', '250,000 Liters'] 
             },
             servicos: { 
                 label: 'Technical Services', 
@@ -646,7 +658,8 @@ function initApp() {
 }
 
 function saveState() {
-    localStorage.setItem(STATE_KEY, JSON.stringify(appState));
+    const safeState = window.gvSecurity ? window.gvSecurity.sanitizeStateForStorage(appState) : appState;
+    localStorage.setItem(STATE_KEY, JSON.stringify(safeState));
 }
 
 // Toggle Mobile Navigation Menu Drawer
@@ -882,11 +895,22 @@ function closeLoginModal() {
 
 function fillMockCreds(email) {
     document.getElementById('login-email').value = email;
-    document.getElementById('login-password').value = 'gvcps123';
+    document.getElementById('login-password').value = '';
+    document.getElementById('login-password').focus();
 }
 
 async function handleMockLogin(event) {
     event.preventDefault();
+    // Security: Rate limiting — máximo 5 tentativas por 15 minutos
+    const rateCheck = window.gvSecurity ? window.gvSecurity.checkRateLimit('login', 5, 15 * 60 * 1000) : { allowed: true };
+    if (!rateCheck.allowed) {
+        const lang = localStorage.getItem('gvcps_lang') || 'pt';
+        const msg = lang === 'en'
+            ? `Too many login attempts. Please wait ${rateCheck.resetInSeconds} seconds before trying again.`
+            : `Demasiadas tentativas de login. Aguarde ${rateCheck.resetInSeconds} segundos antes de tentar novamente.`;
+        alert(msg);
+        return;
+    }
     const email = document.getElementById('login-email').value.trim();
     const password = document.getElementById('login-password').value;
     
@@ -913,6 +937,8 @@ async function handleMockLogin(event) {
         };
         
         saveState();
+        // Security: Reset rate limiter após login bem-sucedido
+        if (window.gvSecurity) window.gvSecurity.resetRateLimit('login');
         updateSwitcherUI();
         closeLoginModal();
         
@@ -1364,7 +1390,7 @@ function renderMarketExplorer() {
                         <span class="material-symbols-outlined text-[18px]">${catIcon}</span>
                     </span>
                     <div class="min-w-0">
-                        <span class="block truncate font-bold text-sm text-slate-800" title="${titleText}">${titleText}</span>
+                        <span class="block truncate font-bold text-sm text-slate-800" title="${gvSecurity.sanitize(titleText)}">${gvSecurity.sanitize(titleText)}</span>
                         <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mt-0.5">${item.id}</span>
                     </div>
                 </div>
@@ -1379,7 +1405,7 @@ function renderMarketExplorer() {
                 </div>
             </td>
             <td class="py-4 px-6 text-slate-600 font-bold">
-                ${qtyText}
+                ${gvSecurity.sanitize(qtyText)}
             </td>
             <td class="py-4 px-6 text-center">
                 <button class="btn btn-primary btn-sm" style="padding: 6px 12px; font-size: 11px; background-color: var(--primary); border: none; color: white; font-weight: bold; border-radius: var(--radius-md); cursor: pointer;">
@@ -1731,7 +1757,7 @@ function createOpportunityCard(item) {
         <div class="relative overflow-hidden" style="height:180px;">
             <img
                 src="${imgUrl}"
-                alt="${titleText}"
+                alt="${gvSecurity.sanitize(titleText)}"
                 loading="lazy"
                 style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;"
                 onmouseover="this.style.transform='scale(1.05)'"
@@ -1759,8 +1785,8 @@ function createOpportunityCard(item) {
 
             <!-- Subcategory + Title -->
             <div>
-                <span class="card-subcategory-label">${catSublabel}</span>
-                <h3 style="margin:0;font-size:14px;font-weight:800;line-height:1.35;color:#0f172a;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;" title="${titleText}">${titleText}</h3>
+                <span class="card-subcategory-label">${gvSecurity.sanitize(catSublabel)}</span>
+                <h3 style="margin:0;font-size:14px;font-weight:800;line-height:1.35;color:#0f172a;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;" title="${gvSecurity.sanitize(titleText)}">${gvSecurity.sanitize(titleText)}</h3>
             </div>
 
             <!-- Detail rows -->
@@ -1770,7 +1796,7 @@ function createOpportunityCard(item) {
                         <span class="material-symbols-outlined">inventory_2</span>
                         ${labelVol}:
                     </span>
-                    <span class="card-detail-value">${qtyText}</span>
+                    <span class="card-detail-value">${gvSecurity.sanitize(qtyText)}</span>
                 </div>
                 <div class="card-detail-row">
                     <span class="card-detail-label">
@@ -1778,7 +1804,7 @@ function createOpportunityCard(item) {
                         ${labelCountryKey}:
                     </span>
                     <span class="card-detail-value" style="display:flex;align-items:center;gap:4px;">
-                        ${countryText} <span style="font-size:14px;line-height:1;">${flag}</span>
+                        ${gvSecurity.sanitize(countryText)} <span style="font-size:14px;line-height:1;">${flag}</span>
                     </span>
                 </div>
                 <div class="card-detail-row">
@@ -1865,8 +1891,8 @@ function renderDetailView(id, type) {
             adminContactsDiv.classList.remove('hidden');
             const whatsappVal = item.contactWhatsapp || '-';
             const emailVal = item.contactEmail || '-';
-            document.getElementById('detail-spec-whatsapp').innerHTML = `WhatsApp: <strong>${whatsappVal}</strong>`;
-            document.getElementById('detail-spec-email').innerHTML = `Email: <strong>${emailVal}</strong>`;
+            document.getElementById('detail-spec-whatsapp').innerHTML = `WhatsApp: <strong>${gvSecurity.sanitize(whatsappVal)}</strong>`;
+            document.getElementById('detail-spec-email').innerHTML = `Email: <strong>${gvSecurity.sanitize(emailVal)}</strong>`;
         } else {
             adminContactsDiv.classList.add('hidden');
         }
@@ -1931,8 +1957,8 @@ function renderBuyerPortal(tab, activeId) {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td class="py-4 px-6 font-bold text-slate-800">#${r.id.split('_')[1]}</td>
-                <td class="py-4 px-6"><a href="#buyer-portal?tab=detail&id=${r.id}" class="text-gvTeal font-bold hover:underline">${r.title}</a></td>
-                <td class="py-4 px-6"><span class="px-2 py-1 bg-slate-100 rounded text-[11px] font-medium text-slate-600">${r.quantity}</span></td>
+                <td class="py-4 px-6"><a href="#buyer-portal?tab=detail&id=${r.id}" class="text-gvTeal font-bold hover:underline">${gvSecurity.sanitize(r.title)}</a></td>
+                <td class="py-4 px-6"><span class="px-2 py-1 bg-slate-100 rounded text-[11px] font-medium text-slate-600">${gvSecurity.sanitize(r.quantity)}</span></td>
                 <td class="py-4 px-6"><span class="status-badge ${r.status}">${formatStatusPT(r.status)}</span></td>
                 <td class="py-4 px-6 text-right">
                     <a href="#buyer-portal?tab=detail&id=${r.id}" class="inline-flex items-center gap-1 text-xs font-bold text-gvTeal hover:text-gvTeal-light hover:underline">
@@ -1985,7 +2011,7 @@ function renderBuyerPortal(tab, activeId) {
                         <div class="w-10 h-10 rounded-full ${avatarBg} flex items-center justify-center font-bold text-xs shrink-0">${initials}</div>
                         <div class="overflow-hidden w-full">
                             <div class="flex justify-between items-start">
-                                <h4 class="font-bold text-xs text-slate-800 truncate">${r.title}</h4>
+                                <h4 class="font-bold text-xs text-slate-800 truncate">${gvSecurity.sanitize(r.title)}</h4>
                                 <span class="text-[9px] text-slate-400">${formatDate(r.date)}</span>
                             </div>
                             <p class="text-slate-500 text-[11px] truncate mt-0.5">${subtitle}</p>
@@ -2124,8 +2150,8 @@ function renderSupplierPortal(tab, activeId) {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td><strong>#${o.id.split('_')[1]}</strong></td>
-                <td><a href="#supplier-portal?tab=detail&id=${o.id}" class="text-primary font-bold hover:underline">${o.title}</a></td>
-                <td><span class="label-sm">${o.quantity}</span></td>
+                <td><a href="#supplier-portal?tab=detail&id=${o.id}" class="text-primary font-bold hover:underline">${gvSecurity.sanitize(o.title)}</a></td>
+                <td><span class="label-sm">${gvSecurity.sanitize(o.quantity)}</span></td>
                 <td><span class="status-badge ${o.status}">${formatStatusPT(o.status)}</span></td>
                 <td>
                     <a href="#supplier-portal?tab=detail&id=${o.id}" class="btn btn-ghost" style="padding: 4px 8px; font-size: 11px; text-transform: none;">
@@ -2238,25 +2264,25 @@ function renderPortalWall(role) {
             btn.textContent = 'Solicitar Intermediação';
             btn.onclick = (e) => {
                 e.stopPropagation();
-                alert(`Intermediação Solicitada!\n\nA Global View (GV-CPS) registou o seu interesse na proposta "${item.title}".\nO nosso consultor técnico iniciará a validação do match nas próximas horas e contactará via Chat ou WhatsApp.`);
+                alert(`Intermediação Solicitada!\n\nA Global View (GV-CPS) registou o seu interesse na proposta "${gvSecurity.sanitize(item.title)}".\nO nosso consultor técnico iniciará a validação do match nas próximas horas e contactará via Chat ou WhatsApp.`);
                 
                 // Add simulated notification
                 const newId = `not_${appState.notifications.length + 1}`;
                 appState.notifications.push({
                     id: newId,
                     userId: appState.currentUser.id,
-                    text: `Você solicitou intermediação para a proposta: ${item.title}`,
+                    text: `Você solicitou intermediação para a proposta: ${gvSecurity.sanitize(item.title)}`,
                     date: new Date().toISOString().split('T')[0],
                     read: false
                 });
                 saveState();
                 
-                simulateWhatsAppNotification(appState.currentUser.id, `Recebemos o seu interesse em "${item.title}". O consultor Carlos já foi notificado.`);
+                simulateWhatsAppNotification(appState.currentUser.id, `Recebemos o seu interesse em "${gvSecurity.sanitize(item.title)}". O consultor Carlos já foi notificado.`);
             };
         }
         
         card.onclick = () => {
-            alert(`Detalhes Confidenciais da Proposta:\n\nTítulo: ${item.title}\nCategoria: ${item.category}\nQuantidade: ${item.quantity}\nOrigem/Destino: ${item.country}\nLogística: ${item.logistics === 'Sim' ? 'Sim (Incluída na facturação)' : 'Não'}\n\nDescrição do Lote:\n${item.description}\n\n(Lembre-se: Para segurança jurídica das contrapartes, toda a negociação é mediada e fiscalizada pela GV-CPS)`);
+            alert(`Detalhes Confidenciais da Proposta:\n\nTítulo: ${gvSecurity.sanitize(item.title)}\nCategoria: ${gvSecurity.sanitize(item.category)}\nQuantidade: ${gvSecurity.sanitize(item.quantity)}\nOrigem/Destino: ${gvSecurity.sanitize(item.country)}\nLogística: ${item.logistics === 'Sim' ? 'Sim (Incluída na facturação)' : 'Não'}\n\nDescrição do Lote:\n${gvSecurity.sanitize(item.description)}\n\n(Lembre-se: Para segurança jurídica das contrapartes, toda a negociação é mediada e fiscalizada pela GV-CPS)`);
         };
 
         grid.appendChild(card);
@@ -2304,8 +2330,8 @@ function renderConsultantPortal(tab, activeId) {
                 reqTbody.innerHTML += `
                     <tr>
                         <td><strong>#${r.id.split('_')[1]}</strong></td>
-                        <td>${r.title}</td>
-                        <td>${buyerObj.name}</td>
+                        <td>${gvSecurity.sanitize(r.title)}</td>
+                        <td>${gvSecurity.sanitize(buyerObj.name)}</td>
                         <td><span class="status-badge ${r.status}">${formatStatusPT(r.status)}</span></td>
                         <td>
                             <button class="btn btn-ghost btn-sm" onclick="window.location.hash='consultant-portal?tab=matching&id=${r.id}'" style="padding: 4px 8px; font-size: 11px;">
@@ -2332,9 +2358,9 @@ function renderConsultantPortal(tab, activeId) {
                 matchTbody.innerHTML += `
                     <tr>
                         <td><strong>#${m.id.split('_')[1]}</strong></td>
-                        <td><span class="body-sm font-bold">${req.title}</span> <br><span class="label-sm opacity-50">vs ${off.title}</span></td>
-                        <td>${buyerObj.name}</td>
-                        <td>${suppObj.name}</td>
+                        <td><span class="body-sm font-bold">${gvSecurity.sanitize(req.title)}</span> <br><span class="label-sm opacity-50">vs ${gvSecurity.sanitize(off.title)}</span></td>
+                        <td>${gvSecurity.sanitize(buyerObj.name)}</td>
+                        <td>${gvSecurity.sanitize(suppObj.name)}</td>
                         <td><span class="status-badge active">${m.status.toUpperCase()}</span></td>
                         <td>
                             <a href="#consultant-portal?tab=negotiation&id=${m.id}" class="btn btn-primary" style="padding: 4px 8px; font-size: 11px; text-transform: none;">
@@ -2365,11 +2391,11 @@ function renderConsultantPortal(tab, activeId) {
                     <span class="status-badge ${req.status}">${formatStatusPT(req.status)}</span>
                     <span class="label-sm">${req.id.toUpperCase()}</span>
                 </div>
-                <h3 class="headline-sm text-primary mb-2">${req.title}</h3>
-                <p class="body-sm text-on-surface-variant mb-4">${req.description}</p>
+                <h3 class="headline-sm text-primary mb-2">${gvSecurity.sanitize(req.title)}</h3>
+                <p class="body-sm text-on-surface-variant mb-4">${gvSecurity.sanitize(req.description)}</p>
                 <div class="grid grid-cols-2 gap-2 text-xs">
-                    <div>Volume: <strong>${req.quantity}</strong></div>
-                    <div>País: <strong>${req.country}</strong></div>
+                    <div>Volume: <strong>${gvSecurity.sanitize(req.quantity)}</strong></div>
+                    <div>País: <strong>${gvSecurity.sanitize(req.country)}</strong></div>
                     <div>Logística: <strong>${req.logistics === 'Sim' ? 'GV Intermedia' : 'Parceira'}</strong></div>
                     <div>Cliente: <strong>${appState.users[req.owner].name}</strong></div>
                 </div>
@@ -2395,13 +2421,13 @@ function renderConsultantPortal(tab, activeId) {
             card.className = `match-select-card ${isSelected ? 'selected' : ''}`;
             card.innerHTML = `
                 <div class="match-select-card-header">
-                    <span class="match-select-card-title">${o.title}</span>
+                    <span class="match-select-card-title">${gvSecurity.sanitize(o.title)}</span>
                     <span class="status-badge ${o.status}" style="font-size: 9px; padding: 2px 6px;">${formatStatusPT(o.status)}</span>
                 </div>
-                <p class="body-sm text-on-surface-variant line-clamp-2 mb-2" style="font-size: 12px;">${o.description}</p>
+                <p class="body-sm text-on-surface-variant line-clamp-2 mb-2" style="font-size: 12px;">${gvSecurity.sanitize(o.description)}</p>
                 <div class="match-select-card-meta">
-                    <span>Vol: <strong>${o.quantity}</strong></span>
-                    <span>País: <strong>${o.country}</strong></span>
+                    <span>Vol: <strong>${gvSecurity.sanitize(o.quantity)}</strong></span>
+                    <span>País: <strong>${gvSecurity.sanitize(o.country)}</strong></span>
                     <span>Fornecedor: <strong>${appState.users[o.owner].name}</strong></span>
                 </div>
             `;
@@ -2414,8 +2440,8 @@ function renderConsultantPortal(tab, activeId) {
                 document.getElementById('matching-selected-offer-id').value = o.id;
                 document.getElementById('match-action-panel-box').style.display = 'flex';
                 document.getElementById('match-summary-text').innerHTML = `
-                    Deseja iniciar negociação mediada ligando a necessidade <strong>#${req.id.split('_')[1]}</strong> (${req.title}) 
-                    à oferta do fornecedor <strong>#${o.id.split('_')[1]}</strong> (${o.title})?
+                    Deseja iniciar negociação mediada ligando a necessidade <strong>#${req.id.split('_')[1]}</strong> (${gvSecurity.sanitize(req.title)}) 
+                    à oferta do fornecedor <strong>#${o.id.split('_')[1]}</strong> (${gvSecurity.sanitize(o.title)})?
                 `;
             });
             
@@ -2455,7 +2481,7 @@ function renderConsultantPortal(tab, activeId) {
                 matchId: newMatchId,
                 senderId: consultantId,
                 senderRole: 'consultant',
-                text: `Olá ${appState.users[req.owner].name}. Identificamos uma oferta de fornecedor compatível para a sua necessidade "${req.title}". Sou o seu consultor dedicado para esta intermediação comercial.`,
+                text: `Olá ${appState.users[req.owner].name}. Identificamos uma oferta de fornecedor compatível para a sua necessidade "${gvSecurity.sanitize(req.title)}". Sou o seu consultor dedicado para esta intermediação comercial.`,
                 timestamp: new Date().toISOString(),
                 channel: 'buyer'
             });
@@ -2465,7 +2491,7 @@ function renderConsultantPortal(tab, activeId) {
                 matchId: newMatchId,
                 senderId: consultantId,
                 senderRole: 'consultant',
-                text: `Olá ${appState.users[off.owner].name}. Identificamos uma demanda de comprador ativa na nossa plataforma correspondente à sua oferta "${off.title}". Vou guiar a intermediação dos termos comerciais e de logística.`,
+                text: `Olá ${appState.users[off.owner].name}. Identificamos uma demanda de comprador ativa na nossa plataforma correspondente à sua oferta "${gvSecurity.sanitize(off.title)}". Vou guiar a intermediação dos termos comerciais e de logística.`,
                 timestamp: new Date().toISOString(),
                 channel: 'supplier'
             });
@@ -2492,9 +2518,9 @@ function renderConsultantPortal(tab, activeId) {
         const off = appState.offers.find(o => o.id === match.offerId) || { title: '?' };
         
         document.getElementById('consultant-negotiation-deal-title').innerHTML = `
-            Negociação #${match.id.split('_')[1]}: <span style="color: var(--primary-light);">${req.title}</span> 
+            Negociação #${match.id.split('_')[1]}: <span style="color: var(--primary-light);">${gvSecurity.sanitize(req.title)}</span> 
             <span style="font-weight: normal; color: var(--on-surface-variant); font-size: 16px;">vs</span> 
-            <span style="color: var(--secondary);">${off.title}</span>
+            <span style="color: var(--secondary);">${gvSecurity.sanitize(off.title)}</span>
         `;
         
         // Render the double chats side-by-side
@@ -2603,7 +2629,7 @@ function renderAdminPortal(tab) {
                         <span class="status-badge pendente">Pendente</span>
                         <span class="label-sm">${r.date}</span>
                     </div>
-                    <h4 class="font-bold text-primary mb-1">${r.title}</h4>
+                    <h4 class="font-bold text-primary mb-1">${gvSecurity.sanitize(r.title)}</h4>
                     <p class="body-sm text-on-surface-variant mb-4" style="font-size: 12.5px;">${r.description.substring(0, 100)}...</p>
                     
                     <div class="flex gap-2 items-center">
@@ -2653,10 +2679,10 @@ function renderAdminPortal(tab) {
                     tr.innerHTML = `
                         <td class="py-4 px-6 font-bold text-slate-800">#${m.id.split('_')[1]}</td>
                         <td class="py-4 px-6">
-                            <div class="font-bold text-slate-900">${req.title}</div>
-                            <div class="text-[10px] text-slate-450 mt-0.5">vs ${off.title}</div>
+                            <div class="font-bold text-slate-900">${gvSecurity.sanitize(req.title)}</div>
+                            <div class="text-[10px] text-slate-450 mt-0.5">vs ${gvSecurity.sanitize(off.title)}</div>
                         </td>
-                        <td class="py-4 px-6 font-semibold text-slate-700">${consultantObj.name}</td>
+                        <td class="py-4 px-6 font-semibold text-slate-700">${gvSecurity.sanitize(consultantObj.name)}</td>
                         <td class="py-4 px-6">${statusBadge}</td>
                         <td class="py-4 px-6 text-right">
                             <div class="flex gap-2 justify-end">
@@ -2700,7 +2726,7 @@ function renderAdminPortal(tab) {
                     tr.innerHTML = `
                         <td class="py-4 px-6 font-bold text-slate-800">#${m.id.split('_')[1]}</td>
                         <td class="py-4 px-6">
-                            <div class="font-bold text-slate-900">${req.title}</div>
+                            <div class="font-bold text-slate-900">${gvSecurity.sanitize(req.title)}</div>
                             <div class="text-[10px] text-slate-450 mt-0.5">Comprador: #${req.owner} | Fornecedor: #${off.owner}</div>
                         </td>
                         <td class="py-4 px-6 font-bold text-gvTeal">${price}</td>
@@ -2769,7 +2795,7 @@ window.assignRequirement = function(reqId) {
         appState.notifications.push({
             id: `not_${appState.notifications.length + 1}`,
             userId: req.owner,
-            text: `Sua requisição "${req.title}" foi atribuída a um consultor e está em análise.`,
+            text: `Sua requisição "${gvSecurity.sanitize(req.title)}" foi atribuída a um consultor e está em análise.`,
             date: new Date().toISOString().split('T')[0],
             read: false
         });
@@ -2921,7 +2947,7 @@ function renderPortalChat(containerId, matchId, channelType) {
             const bubble = document.createElement('div');
             bubble.className = `chat-bubble ${isMe ? 'sent' : 'received'}`;
             
-            let messageContentHTML = `<p>${m.text}</p>`;
+            let messageContentHTML = `<p>${gvSecurity.sanitize(m.text)}</p>`;
             
             if (m.proposalData) {
                 const pd = m.proposalData;
@@ -3982,9 +4008,9 @@ window.openAdminInspectChatModal = function(matchId) {
     
     document.getElementById('inspect-match-id').textContent = `#${match.id}`;
     document.getElementById('inspect-match-title').innerHTML = `
-        <span class="font-bold text-gvTeal">${req.title}</span> 
+        <span class="font-bold text-gvTeal">${gvSecurity.sanitize(req.title)}</span> 
         <span class="text-slate-400 font-normal">vs</span> 
-        <span class="font-bold text-emerald-700">${off.title}</span>
+        <span class="font-bold text-emerald-700">${gvSecurity.sanitize(off.title)}</span>
     `;
     
     document.getElementById('inspect-buyer-name').textContent = buyerObj.name;
@@ -4025,7 +4051,7 @@ window.openAdminInspectChatModal = function(matchId) {
                     <strong class="text-[10px] text-gvTeal uppercase tracking-wider">${sender.name} (${sender.role.toUpperCase()})</strong>
                     <span class="text-[9px] text-slate-400">${formatTime(m.timestamp)}</span>
                 </div>
-                <p>${m.text}</p>
+                <p>${gvSecurity.sanitize(m.text)}</p>
             `;
             buyerArea.appendChild(bubble);
         });
@@ -4051,7 +4077,7 @@ window.openAdminInspectChatModal = function(matchId) {
                     <strong class="text-[10px] text-emerald-700 uppercase tracking-wider">${sender.name} (${sender.role.toUpperCase()})</strong>
                     <span class="text-[9px] text-slate-400">${formatTime(m.timestamp)}</span>
                 </div>
-                <p>${m.text}</p>
+                <p>${gvSecurity.sanitize(m.text)}</p>
             `;
             supplierArea.appendChild(bubble);
         });
@@ -4259,7 +4285,7 @@ window.adminApproveMatchPayment = function(matchId) {
                 appState.notifications.push({
                     id: `not_${appState.notifications.length + 1}`,
                     userId: req.owner,
-                    text: `NEGÓCIO CONCLUÍDO: Pagamento para "${req.title}" aprovado pela administração.`,
+                    text: `NEGÓCIO CONCLUÍDO: Pagamento para "${gvSecurity.sanitize(req.title)}" aprovado pela administração.`,
                     date: new Date().toISOString().split('T')[0],
                     read: false
                 });
@@ -4269,7 +4295,7 @@ window.adminApproveMatchPayment = function(matchId) {
                 appState.notifications.push({
                     id: `not_${appState.notifications.length + 1}`,
                     userId: off.owner,
-                    text: `NEGÓCIO CONCLUÍDO: Faturamento para "${off.title}" aprovado pela administração.`,
+                    text: `NEGÓCIO CONCLUÍDO: Faturamento para "${gvSecurity.sanitize(off.title)}" aprovado pela administração.`,
                     date: new Date().toISOString().split('T')[0],
                     read: false
                 });
@@ -4649,6 +4675,12 @@ const GV_CATALOG = {
                 products: ['Óleo Hidráulico ISO 68 Premium', 'Graxa Industrial de Lítio', 'Aditivos para Motores Estacionários', 'Fluidos de Perfuração'], 
                 quantities: ['200 Litros (1 Tambor)', '1000 Litros', '5000 Litros'] 
             },
+            quimicos: { 
+                label: 'Químicos & Ácidos Industriais', 
+                unit: 'ISO Tank / Litros', 
+                products: ['Ácido Sulfúrico 98% Concentrado', 'Ácido Clorídrico', 'Soda Cáustica / Hidróxido de Sódio', 'Metanol / Solventes Industriais'], 
+                quantities: ['20.000 Litros (1 ISO Tank)', '40.000 Litros (2 ISO Tanks)', '100.000 Litros', '250.000 Litros'] 
+            },
             servicos: { 
                 label: 'Serviços Técnicos', 
                 unit: 'Projeto', 
@@ -4720,12 +4752,17 @@ let wizardState = {
     selectedSector: '',
     selectedCategory: '',
     selectedProduct: '',
+    selectedGrade: '',
+    packagingType: '',
     selectedQty: '',
+    selectedUnit: 'Toneladas (TN)',
     urgency: 'Urgente',
     whatsapp: '',
     email: '',
     country: 'Moçambique',
+    company: '',
     logistics: 'Sim',
+    port: '',
     description: ''
 };
 
@@ -4739,24 +4776,32 @@ function openRequestWizard(preselectedSector = null) {
         selectedSector: '',
         selectedCategory: '',
         selectedProduct: '',
+        selectedGrade: '',
+        packagingType: '',
         selectedQty: '',
+        selectedUnit: 'Toneladas (TN)',
         urgency: 'Urgente',
         whatsapp: '',
         email: '',
         country: 'Moçambique',
+        company: '',
         logistics: 'Sim',
+        port: '',
         description: ''
     };
     
     // Clear inputs in form
-    document.getElementById('wizard-product-input').value = '';
-    document.getElementById('wizard-qty-input').value = '';
-    document.getElementById('wizard-contact-whatsapp').value = '';
-    document.getElementById('wizard-contact-email').value = '';
-    document.getElementById('wizard-contact-desc').value = '';
-    if (document.getElementById('wizard-contact-port')) {
-        document.getElementById('wizard-contact-port').value = '';
-    }
+    if (document.getElementById('wizard-product-input')) document.getElementById('wizard-product-input').value = '';
+    if (document.getElementById('wizard-qty-input')) document.getElementById('wizard-qty-input').value = '';
+    if (document.getElementById('wizard-contact-whatsapp')) document.getElementById('wizard-contact-whatsapp').value = '';
+    if (document.getElementById('wizard-contact-email')) document.getElementById('wizard-contact-email').value = '';
+    if (document.getElementById('wizard-contact-desc')) document.getElementById('wizard-contact-desc').value = '';
+    if (document.getElementById('wizard-contact-company')) document.getElementById('wizard-contact-company').value = '';
+    if (document.getElementById('wizard-contact-port')) document.getElementById('wizard-contact-port').value = '';
+    if (document.getElementById('wizard-packaging-custom')) document.getElementById('wizard-packaging-custom').value = '';
+    
+    const derivativeContainer = document.getElementById('wizard-derivative-container');
+    if (derivativeContainer) derivativeContainer.style.display = 'none';
     
     // Pre-fill contacts from logged-in user if available
     if (appState && appState.currentUser) {
@@ -4850,7 +4895,16 @@ function startGuidedNegotiation(opportunityId, type) {
     if (qtyInput) qtyInput.value = qtyText;
     const countrySelect = document.getElementById('wizard-contact-country');
     if (countrySelect && countryText) {
-        countrySelect.value = countryText;
+        let codeFound = 'MZ';
+        const cLower = countryText.toLowerCase();
+        for (const [code, info] of Object.entries(GLOBAL_COUNTRIES)) {
+            if (info.namePt.toLowerCase().includes(cLower) || info.nameEn.toLowerCase().includes(cLower) || cLower.includes(info.namePt.toLowerCase())) {
+                codeFound = code;
+                break;
+            }
+        }
+        countrySelect.value = codeFound;
+        onWizardCountryChange(codeFound);
     }
     
     // Pre-fill user contacts if logged in
@@ -4957,7 +5011,7 @@ function openOpportunityDetailModal(id, type) {
     container.innerHTML = `
         <!-- Left Hero Column (PC) -->
         <div class="opp-modal-hero cat-theme-${catCode}">
-            <img src="${imgUrl}" alt="${titleText}" class="opp-modal-hero-img">
+            <img src="${imgUrl}" alt="${gvSecurity.sanitize(titleText)}" class="opp-modal-hero-img">
             <div class="opp-modal-hero-overlay"></div>
 
             <div class="opp-modal-hero-badges">
@@ -4982,8 +5036,8 @@ function openOpportunityDetailModal(id, type) {
         <!-- Right Content Column (PC) -->
         <div class="opp-modal-content cat-theme-${catCode}">
             <div>
-                <span class="card-subcategory-label">${catSublabel}</span>
-                <h2 style="font-size: 20px; font-weight: 800; color: #0f172a; margin: 0 0 16px; line-height: 1.3;">${titleText}</h2>
+                <span class="card-subcategory-label">${gvSecurity.sanitize(catSublabel)}</span>
+                <h2 style="font-size: 20px; font-weight: 800; color: #0f172a; margin: 0 0 16px; line-height: 1.3;">${gvSecurity.sanitize(titleText)}</h2>
 
                 <!-- Specs Grid -->
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;">
@@ -4992,7 +5046,7 @@ function openOpportunityDetailModal(id, type) {
                             <span class="material-symbols-outlined">inventory_2</span>
                             ${labelVol}:
                         </span>
-                        <span class="card-detail-value">${qtyText}</span>
+                        <span class="card-detail-value">${gvSecurity.sanitize(qtyText)}</span>
                     </div>
                     <div class="card-detail-row">
                         <span class="card-detail-label">
@@ -5000,7 +5054,7 @@ function openOpportunityDetailModal(id, type) {
                             ${labelCountryKey}:
                         </span>
                         <span class="card-detail-value" style="display:flex;align-items:center;gap:4px;">
-                            ${countryText} <span style="font-size:14px;line-height:1;">${flag}</span>
+                            ${gvSecurity.sanitize(countryText)} <span style="font-size:14px;line-height:1;">${flag}</span>
                         </span>
                     </div>
                     <div class="card-detail-row">
@@ -5131,10 +5185,305 @@ function renderCategoryChips() {
     container.appendChild(otherChip);
 }
 
+const GLOBAL_COUNTRIES = {
+    // África / Africa
+    'MZ': { namePt: 'Moçambique', nameEn: 'Mozambique', flag: '🇲🇿', ddi: '+258', port: 'Porto de Maputo' },
+    'ZA': { namePt: 'África do Sul', nameEn: 'South Africa', flag: '🇿🇦', ddi: '+27', port: 'Port of Durban' },
+    'AO': { namePt: 'Angola', nameEn: 'Angola', flag: '🇦🇴', ddi: '+244', port: 'Porto de Luanda' },
+    'CV': { namePt: 'Cabo Verde', nameEn: 'Cape Verde', flag: '🇨🇻', ddi: '+238', port: 'Porto da Praia' },
+    'GW': { namePt: 'Guiné-Bissau', nameEn: 'Guinea-Bissau', flag: '🇬🇼', ddi: '+245', port: 'Porto de Bissau' },
+    'ST': { namePt: 'São Tomé e Príncipe', nameEn: 'Sao Tome & Principe', flag: '🇸🇹', ddi: '+239', port: 'Porto de Ana Chaves' },
+    'NG': { namePt: 'Nigéria', nameEn: 'Nigeria', flag: '🇳🇬', ddi: '+234', port: 'Port of Lagos' },
+    'GH': { namePt: 'Gana', nameEn: 'Ghana', flag: '🇬🇭', ddi: '+233', port: 'Port of Tema' },
+    'CI': { namePt: 'Costa do Marfim', nameEn: 'Ivory Coast', flag: '🇨🇮', ddi: '+225', port: 'Port d\'Abidjan' },
+    'SN': { namePt: 'Senegal', nameEn: 'Senegal', flag: '🇸🇳', ddi: '+221', port: 'Port de Dakar' },
+    'KE': { namePt: 'Quénia', nameEn: 'Kenya', flag: '🇰🇪', ddi: '+254', port: 'Port of Mombasa' },
+    'TZ': { namePt: 'Tanzânia', nameEn: 'Tanzania', flag: '🇹🇿', ddi: '+255', port: 'Port of Dar es Salaam' },
+    'UG': { namePt: 'Uganda', nameEn: 'Uganda', flag: '🇺🇬', ddi: '+256', port: 'Port of Mombasa (Transito)' },
+    'RW': { namePt: 'Ruanda', nameEn: 'Rwanda', flag: '🇷🇼', ddi: '+250', port: 'Kigali Dry Port' },
+    'ZM': { namePt: 'Zâmbia', nameEn: 'Zambia', flag: '🇿🇲', ddi: '+260', port: 'Lusaka Dry Port' },
+    'ZW': { namePt: 'Zimbábue', nameEn: 'Zimbabwe', flag: '🇿🇼', ddi: '+263', port: 'Harare Dry Port' },
+    'BW': { namePt: 'Botsuana', nameEn: 'Botswana', flag: '🇧🇼', ddi: '+267', port: 'Gaborone Dry Port' },
+    'NA': { namePt: 'Namíbia', nameEn: 'Namibia', flag: '🇳🇦', ddi: '+264', port: 'Port of Walvis Bay' },
+    'MG': { namePt: 'Madagáscar', nameEn: 'Madagascar', flag: '🇲🇬', ddi: '+261', port: 'Port of Toamasina' },
+    'MW': { namePt: 'Malaui', nameEn: 'Malawi', flag: '🇲🇼', ddi: '+265', port: 'Blantyre Inland Container Depot' },
+    'SZ': { namePt: 'Essuatíni', nameEn: 'Eswatini', flag: '🇸🇿', ddi: '+268', port: 'Matsapha Inland Depot' },
+    'LS': { namePt: 'Lesoto', nameEn: 'Lesotho', flag: '🇱🇸', ddi: '+266', port: 'Maseru Depot' },
+    'CD': { namePt: 'Rep. Dem. do Congo', nameEn: 'DR Congo', flag: '🇨🇩', ddi: '+243', port: 'Port de Matadi' },
+    'CG': { namePt: 'Rep. do Congo', nameEn: 'Rep. of Congo', flag: '🇨🇬', ddi: '+242', port: 'Port de Pointe-Noire' },
+    'CM': { namePt: 'Camarões', nameEn: 'Cameroon', flag: '🇨🇲', ddi: '+237', port: 'Port de Douala' },
+    'ET': { namePt: 'Etiópia', nameEn: 'Ethiopia', flag: '🇪🇹', ddi: '+251', port: 'Port of Djibouti (Transit)' },
+    'EG': { namePt: 'Egito', nameEn: 'Egypt', flag: '🇪🇬', ddi: '+20', port: 'Port Said' },
+    'MA': { namePt: 'Marrocos', nameEn: 'Morocco', flag: '🇲🇦', ddi: '+212', port: 'Tanger Med Port' },
+    'DZ': { namePt: 'Argélia', nameEn: 'Algeria', flag: '🇩🇿', ddi: '+213', port: 'Port d\'Alger' },
+    'TN': { namePt: 'Tunísia', nameEn: 'Tunisia', flag: '🇹🇳', ddi: '+216', port: 'Port de Rades' },
+
+    // Américas / Americas
+    'BR': { namePt: 'Brasil', nameEn: 'Brazil', flag: '🇧🇷', ddi: '+55', port: 'Porto de Santos' },
+    'US': { namePt: 'Estados Unidos', nameEn: 'United States', flag: '🇺🇸', ddi: '+1', port: 'Port of Houston' },
+    'CA': { namePt: 'Canadá', nameEn: 'Canada', flag: '🇨🇦', ddi: '+1', port: 'Port of Vancouver' },
+    'MX': { namePt: 'México', nameEn: 'Mexico', flag: '🇲🇽', ddi: '+52', port: 'Puerto de Veracruz' },
+    'AR': { namePt: 'Argentina', nameEn: 'Argentina', flag: '🇦🇷', ddi: '+54', port: 'Puerto de Buenos Aires' },
+    'CL': { namePt: 'Chile', nameEn: 'Chile', flag: '🇨🇱', ddi: '+56', port: 'Puerto de Valparaíso' },
+    'CO': { namePt: 'Colômbia', nameEn: 'Colombia', flag: '🇨🇴', ddi: '+57', port: 'Puerto de Cartagena' },
+    'PE': { namePt: 'Peru', nameEn: 'Peru', flag: '🇵🇪', ddi: '+51', port: 'Puerto del Callao' },
+    'UY': { namePt: 'Uruguai', nameEn: 'Uruguay', flag: '🇺🇾', ddi: '+598', port: 'Puerto de Montevideo' },
+    'PY': { namePt: 'Paraguai', nameEn: 'Paraguay', flag: '🇵🇾', ddi: '+595', port: 'Puerto de Asunción' },
+    'BO': { namePt: 'Bolívia', nameEn: 'Bolivia', flag: '🇧🇴', ddi: '+591', port: 'Puerto Arica (Transit)' },
+    'EC': { namePt: 'Equador', nameEn: 'Ecuador', flag: '🇪🇨', ddi: '+593', port: 'Puerto de Guayaquil' },
+    'VE': { namePt: 'Venezuela', nameEn: 'Venezuela', flag: '🇻🇪', ddi: '+58', port: 'Puerto Cabello' },
+
+    // Europa / Europe
+    'PT': { namePt: 'Portugal', nameEn: 'Portugal', flag: '🇵🇹', ddi: '+351', port: 'Porto de Sines' },
+    'GB': { namePt: 'Reino Unido', nameEn: 'United Kingdom', flag: '🇬🇧', ddi: '+44', port: 'Port of Felixstowe' },
+    'DE': { namePt: 'Alemanha', nameEn: 'Germany', flag: '🇩🇪', ddi: '+49', port: 'Port of Hamburg' },
+    'FR': { namePt: 'França', nameEn: 'France', flag: '🇫🇷', ddi: '+33', port: 'Port de Le Havre' },
+    'IT': { namePt: 'Itália', nameEn: 'Italy', flag: '🇮🇹', ddi: '+39', port: 'Porto di Genova' },
+    'ES': { namePt: 'Espanha', nameEn: 'Spain', flag: '🇪🇸', ddi: '+34', port: 'Puerto de Valencia' },
+    'NL': { namePt: 'Países Baixos', nameEn: 'Netherlands', flag: '🇳🇱', ddi: '+31', port: 'Port of Rotterdam' },
+    'BE': { namePt: 'Bélgica', nameEn: 'Belgium', flag: '🇧🇪', ddi: '+32', port: 'Port of Antwerp' },
+    'CH': { namePt: 'Suíça', nameEn: 'Switzerland', flag: '🇨🇭', ddi: '+41', port: 'Port of Basel' },
+    'SE': { namePt: 'Suécia', nameEn: 'Sweden', flag: '🇸🇪', ddi: '+46', port: 'Port of Gothenburg' },
+    'NO': { namePt: 'Noruega', nameEn: 'Norway', flag: '🇳🇴', ddi: '+47', port: 'Port of Oslo' },
+    'DK': { namePt: 'Dinamarca', nameEn: 'Denmark', flag: '🇩🇰', ddi: '+45', port: 'Port of Copenhagen' },
+    'PL': { namePt: 'Polónia', nameEn: 'Poland', flag: '🇵🇱', ddi: '+48', port: 'Port of Gdansk' },
+    'AT': { namePt: 'Áustria', nameEn: 'Austria', flag: '🇦🇹', ddi: '+43', port: 'Vienna Cargo Terminal' },
+    'TR': { namePt: 'Turquia', nameEn: 'Turkey', flag: '🇹🇷', ddi: '+90', port: 'Port of Ambarli' },
+    'RU': { namePt: 'Rússia', nameEn: 'Russia', flag: '🇷🇺', ddi: '+7', port: 'Port of St. Petersburg' },
+
+    // Ásia & Médio Oriente / Asia & Middle East
+    'AE': { namePt: 'Emirados Árabes', nameEn: 'United Arab Emirates', flag: '🇦🇪', ddi: '+971', port: 'Jebel Ali Port' },
+    'CN': { namePt: 'China', nameEn: 'China', flag: '🇨🇳', ddi: '+86', port: 'Port of Shanghai' },
+    'IN': { namePt: 'Índia', nameEn: 'India', flag: '🇮🇳', ddi: '+91', port: 'Mundra Port' },
+    'SA': { namePt: 'Arábia Saudita', nameEn: 'Saudi Arabia', flag: '🇸🇦', ddi: '+966', port: 'Jeddah Islamic Port' },
+    'QA': { namePt: 'Catar', nameEn: 'Qatar', flag: '🇶🇦', ddi: '+974', port: 'Hamad Port' },
+    'KW': { namePt: 'Kuwait', nameEn: 'Kuwait', flag: '🇰🇼', ddi: '+965', port: 'Shuwaikh Port' },
+    'OM': { namePt: 'Omã', nameEn: 'Oman', flag: '🇴🇲', ddi: '+968', port: 'Sohar Port' },
+    'BH': { namePt: 'Barém', nameEn: 'Bahrain', flag: '🇧🇭', ddi: '+973', port: 'Khalifa Bin Salman Port' },
+    'IL': { namePt: 'Israel', nameEn: 'Israel', flag: '🇮🇱', ddi: '+972', port: 'Port of Haifa' },
+    'JP': { namePt: 'Japão', nameEn: 'Japan', flag: '🇯🇵', ddi: '+81', port: 'Port of Tokyo' },
+    'KR': { namePt: 'Coreia do Sul', nameEn: 'South Korea', flag: '🇰🇷', ddi: '+82', port: 'Port of Busan' },
+    'SG': { namePt: 'Singapura', nameEn: 'Singapore', flag: '🇸🇬', ddi: '+65', port: 'Port of Singapore' },
+    'MY': { namePt: 'Malásia', nameEn: 'Malaysia', flag: '🇲🇾', ddi: '+60', port: 'Port Klang' },
+    'TH': { namePt: 'Tailândia', nameEn: 'Thailand', flag: '🇹🇭', ddi: '+66', port: 'Laem Chabang Port' },
+    'ID': { namePt: 'Indonésia', nameEn: 'Indonesia', flag: '🇮🇩', ddi: '+62', port: 'Tanjung Priok Port' },
+    'VN': { namePt: 'Vietnã', nameEn: 'Vietnam', flag: '🇻🇳', ddi: '+84', port: 'Cat Lai Port' },
+    'TL': { namePt: 'Timor-Leste', nameEn: 'East Timor', flag: '🇹🇱', ddi: '+670', port: 'Porto de Dili' },
+    'MO': { namePt: 'Macau', nameEn: 'Macau', flag: '🇲🇴', ddi: '+853', port: 'Porto de Macau' },
+
+    // Oceania
+    'AU': { namePt: 'Austrália', nameEn: 'Australia', flag: '🇦🇺', ddi: '+61', port: 'Port of Melbourne' },
+    'NZ': { namePt: 'Nova Zelândia', nameEn: 'New Zealand', flag: '🇳🇿', ddi: '+64', port: 'Port of Auckland' },
+
+    'OTHER': { namePt: 'Outro País', nameEn: 'Other Country', flag: '🌐', ddi: '+', port: 'Porto Internacional' }
+};
+
+const PRODUCT_SPEC_DICTIONARY = {
+    'Ureia Prilada 46%': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Ureia Granulada 46% N', 'Ureia Perlada (Prilled 46%)', 'Ureia Grau Técnico (Industrial)', 'Ureia Automotiva ARLA 32 / AdBlue'],
+            en: ['Granular Urea 46% N', 'Prilled Urea 46%', 'Technical Grade Urea (Industrial)', 'Automotive Urea ARLA 32 / AdBlue']
+        }
+    },
+    'Prilled Urea 46%': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Ureia Granulada 46% N', 'Ureia Perlada (Prilled 46%)', 'Ureia Grau Técnico (Industrial)', 'Ureia Automotiva ARLA 32 / AdBlue'],
+            en: ['Granular Urea 46% N', 'Prilled Urea 46%', 'Technical Grade Urea (Industrial)', 'Automotive Urea ARLA 32 / AdBlue']
+        }
+    },
+    'Ácido Sulfúrico 98% Concentrado': {
+        state: 'liquid',
+        derivatives: {
+            pt: ['Ácido Sulfúrico 98% Concentrado (Industrial)', 'Ácido Sulfúrico 70% (Bateria/Eletrolítico)', 'Ácido Sulfúrico 93% Grau Técnico', 'Oleum (Ácido Fumegante 20% SO3)'],
+            en: ['Sulphuric Acid 98% Concentrated (Industrial)', 'Sulphuric Acid 70% (Battery/Electrolyte Grade)', 'Sulphuric Acid 93% Technical Grade', 'Oleum (Fuming Acid 20% SO3)']
+        }
+    },
+    'Sulphuric Acid 98% Concentrated': {
+        state: 'liquid',
+        derivatives: {
+            pt: ['Ácido Sulfúrico 98% Concentrado (Industrial)', 'Ácido Sulfúrico 70% (Bateria/Eletrolítico)', 'Ácido Sulfúrico 93% Grau Técnico', 'Oleum (Ácido Fumegante 20% SO3)'],
+            en: ['Sulphuric Acid 98% Concentrated (Industrial)', 'Sulphuric Acid 70% (Battery/Electrolyte Grade)', 'Sulphuric Acid 93% Technical Grade', 'Oleum (Fuming Acid 20% SO3)']
+        }
+    },
+    'Açúcar Refinado ICUMSA 45': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Açúcar Refinado Branco ICUMSA 45', 'Açúcar VHP (Very High Polarization)', 'Açúcar Mascavado Orgânico'],
+            en: ['Refined White Sugar ICUMSA 45', 'VHP Sugar (Very High Polarization)', 'Organic Brown Sugar']
+        }
+    },
+    'Refined Cane Sugar ICUMSA 45': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Açúcar Refinado Branco ICUMSA 45', 'Açúcar VHP (Very High Polarization)', 'Açúcar Mascavado Orgânico'],
+            en: ['Refined White Sugar ICUMSA 45', 'VHP Sugar (Very High Polarization)', 'Organic Brown Sugar']
+        }
+    },
+    'Óleo Hidráulico ISO 68 Premium': {
+        state: 'liquid',
+        derivatives: {
+            pt: ['Óleo Hidráulico ISO VG 68', 'Óleo Hidráulico ISO VG 46', 'Óleo para Engrenagens ISO 220', 'Solvente Mineral/White Spirit'],
+            en: ['Hydraulic Oil ISO VG 68', 'Hydraulic Oil ISO VG 46', 'Industrial Gear Oil ISO 220', 'Mineral Solvent/White Spirit']
+        }
+    },
+    'Premium Hydraulic Oil ISO 68': {
+        state: 'liquid',
+        derivatives: {
+            pt: ['Óleo Hidráulico ISO VG 68', 'Óleo Hidráulico ISO VG 46', 'Óleo para Engrenagens ISO 220', 'Solvente Mineral/White Spirit'],
+            en: ['Hydraulic Oil ISO VG 68', 'Hydraulic Oil ISO VG 46', 'Industrial Gear Oil ISO 220', 'Mineral Solvent/White Spirit']
+        }
+    }
+};
+
+function onWizardCountryChange(code) {
+    const info = GLOBAL_COUNTRIES[code] || GLOBAL_COUNTRIES['OTHER'];
+    const flagBadge = document.getElementById('whatsapp-flag-badge');
+    const whatsappInput = document.getElementById('wizard-contact-whatsapp');
+    const portInput = document.getElementById('wizard-contact-port');
+    
+    if (flagBadge) flagBadge.textContent = info.flag;
+    if (whatsappInput && info.ddi !== '+') {
+        if (!whatsappInput.value || whatsappInput.value.startsWith('+')) {
+            whatsappInput.value = info.ddi + ' ';
+        }
+    }
+    if (portInput && (!portInput.value || portInput.value.trim() === '')) {
+        portInput.value = info.port;
+    }
+}
+
+function renderPackagingCards(stateType = 'solid') {
+    const container = document.getElementById('wizard-packaging-cards');
+    if (!container) return;
+    container.innerHTML = '';
+    
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    let options = [];
+    
+    if (stateType === 'liquid') {
+        options = [
+            {
+                id: 'iso_tank',
+                icon: 'local_shipping',
+                title: lang === 'pt' ? 'ISO Tank Container' : 'ISO Tank Container',
+                sub: lang === 'pt' ? '20.000–26.000 L (Perigosos/Ácidos)' : '20,000–26,000 L (Hazmat/Acids)'
+            },
+            {
+                id: 'ibc_container',
+                icon: 'grid_view',
+                title: lang === 'pt' ? 'IBC Container (1.000 L)' : 'IBC Tote (1,000 L)',
+                sub: lang === 'pt' ? 'Tanque PEAD com Armação de Aço' : 'HDPE Tank with Steel Frame'
+            },
+            {
+                id: 'tambor_200l',
+                icon: 'oil_barrel',
+                title: lang === 'pt' ? 'Tambores (200 L)' : 'Drums (200 L)',
+                sub: lang === 'pt' ? 'Tambor PEAD / Aço Revestido' : 'HDPE / Steel Coated Drum'
+            },
+            {
+                id: 'tanque_granel',
+                icon: 'water_drop',
+                title: lang === 'pt' ? 'Cisternas a Granel' : 'Bulk Liquid Tanker',
+                sub: lang === 'pt' ? 'Camião / Navio Tanque Dedicado' : 'Dedicated Bulk Tanker Truck/Vessel'
+            }
+        ];
+    } else {
+        options = [
+            {
+                id: 'sacos_50kg',
+                icon: 'backpack',
+                title: lang === 'pt' ? 'Sacos de 50 kg' : 'Bags of 50 kg',
+                sub: lang === 'pt' ? 'Sacos de Polipropileno Tecido' : 'Woven Polypropylene Bags'
+            },
+            {
+                id: 'big_bags_1tn',
+                icon: 'inventory_2',
+                title: lang === 'pt' ? 'Big Bags (1.000 kg)' : 'Big Bags (1,000 kg)',
+                sub: lang === 'pt' ? '1 Tonelada com Válvula de Carga' : '1 Ton with Discharge Spout'
+            },
+            {
+                id: 'sacos_25kg',
+                icon: 'shopping_bag',
+                title: lang === 'pt' ? 'Sacos de 25 kg' : 'Bags of 25 kg',
+                sub: lang === 'pt' ? 'Embalagem Paletizada' : 'Palletized Packaging'
+            },
+            {
+                id: 'granel_bulk',
+                icon: 'directions_boat',
+                title: lang === 'pt' ? 'A Granel (Bulk)' : 'Bulk Cargo',
+                sub: lang === 'pt' ? 'Camião ou Navio Granelero' : 'Bulk Truck or Vessel'
+            }
+        ];
+    }
+    
+    options.forEach((opt, idx) => {
+        const card = document.createElement('div');
+        card.className = `packaging-card ${idx === 0 ? 'selected' : ''}`;
+        card.innerHTML = `
+            <div class="packaging-card-icon"><span class="material-symbols-outlined">${opt.icon}</span></div>
+            <div class="packaging-card-info">
+                <span class="packaging-card-title">${opt.title}</span>
+                <span class="packaging-card-subtitle">${opt.sub}</span>
+            </div>
+        `;
+        if (idx === 0) wizardState.packagingType = opt.title;
+        
+        card.onclick = () => {
+            container.querySelectorAll('.packaging-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            wizardState.packagingType = opt.title;
+        };
+        container.appendChild(card);
+    });
+}
+
+function selectWizardProduct(pName) {
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    const prodInput = document.getElementById('wizard-product-input');
+    if (prodInput) prodInput.value = pName;
+    wizardState.selectedProduct = pName;
+    
+    const info = PRODUCT_SPEC_DICTIONARY[pName];
+    const derivContainer = document.getElementById('wizard-derivative-container');
+    const derivChips = document.getElementById('wizard-derivative-chips');
+    
+    if (info && info.derivatives) {
+        const list = info.derivatives[lang] || info.derivatives['pt'];
+        if (derivContainer && derivChips && list && list.length > 0) {
+            derivChips.innerHTML = '';
+            list.forEach((der, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = `derivative-chip ${idx === 0 ? 'selected' : ''}`;
+                btn.innerHTML = `<span class="material-symbols-outlined text-xs">check_circle</span> ${der}`;
+                if (idx === 0) wizardState.selectedGrade = der;
+                btn.onclick = () => {
+                    derivChips.querySelectorAll('.derivative-chip').forEach(c => c.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    wizardState.selectedGrade = der;
+                };
+                derivChips.appendChild(btn);
+            });
+            derivContainer.style.display = 'block';
+        } else if (derivContainer) {
+            derivContainer.style.display = 'none';
+        }
+        renderPackagingCards(info.state || 'solid');
+    } else {
+        if (derivContainer) derivContainer.style.display = 'none';
+        wizardState.selectedGrade = '';
+        const catKey = wizardState.selectedCategory;
+        const isLiquidCat = (catKey === 'lubrificantes' || catKey === 'quimicos' || wizardState.selectedSector === 'oil');
+        renderPackagingCards(isLiquidCat ? 'liquid' : 'solid');
+    }
+}
+
 function renderProductAndQtyChips() {
     const prodContainer = document.getElementById('wizard-product-chips');
     const qtyContainer = document.getElementById('wizard-qty-chips');
-    const unitBadge = document.getElementById('wizard-unit-badge');
+    const unitSelect = document.getElementById('wizard-unit-select');
     
     if (!prodContainer || !qtyContainer) return;
     
@@ -5147,22 +5496,34 @@ function renderProductAndQtyChips() {
     const cat = sector ? sector.categories[wizardState.selectedCategory] : null;
     
     if (cat) {
-        if (unitBadge) unitBadge.textContent = cat.unit;
+        // Auto select unit if available
+        if (unitSelect && cat.unit) {
+            for (let i = 0; i < unitSelect.options.length; i++) {
+                if (unitSelect.options[i].value.toLowerCase().includes(cat.unit.toLowerCase())) {
+                    unitSelect.selectedIndex = i;
+                    break;
+                }
+            }
+        }
         
         // Render products
-        cat.products.forEach(p => {
+        cat.products.forEach((p, idx) => {
             const chip = document.createElement('button');
-            chip.className = 'suggestion-chip';
+            chip.type = 'button';
+            chip.className = `suggestion-chip ${idx === 0 ? 'selected' : ''}`;
             chip.textContent = p;
             chip.onclick = () => {
-                document.getElementById('wizard-product-input').value = p;
-                wizardState.selectedProduct = p;
-                // Highlight product chips
                 prodContainer.querySelectorAll('.suggestion-chip').forEach(c => c.classList.remove('selected'));
                 chip.classList.add('selected');
+                selectWizardProduct(p);
             };
             prodContainer.appendChild(chip);
         });
+
+        // Trigger first product selection by default
+        if (cat.products.length > 0) {
+            selectWizardProduct(cat.products[0]);
+        }
         
         // Render quantities & configure dynamic slider limits
         const qtySlider = document.getElementById('wizard-qty-slider');
@@ -5183,17 +5544,18 @@ function renderProductAndQtyChips() {
             
             // Set initial values
             qtySlider.value = minVal;
-            document.getElementById('wizard-qty-input').value = minVal;
+            if (document.getElementById('wizard-qty-input')) document.getElementById('wizard-qty-input').value = minVal;
             wizardState.selectedQty = minVal.toString();
         }
 
         cat.quantities.forEach(q => {
             const chip = document.createElement('button');
+            chip.type = 'button';
             chip.className = 'suggestion-chip';
             chip.textContent = q;
             chip.onclick = () => {
                 const num = parseFloat(q) || 1;
-                document.getElementById('wizard-qty-input').value = num;
+                if (document.getElementById('wizard-qty-input')) document.getElementById('wizard-qty-input').value = num;
                 if (qtySlider) {
                     if (num > parseFloat(qtySlider.max)) {
                         qtySlider.max = num;
@@ -5203,20 +5565,18 @@ function renderProductAndQtyChips() {
                     qtySlider.value = num;
                 }
                 wizardState.selectedQty = num.toString();
-                // Highlight qty chips
                 qtyContainer.querySelectorAll('.suggestion-chip').forEach(c => c.classList.remove('selected'));
                 chip.classList.add('selected');
             };
             qtyContainer.appendChild(chip);
         });
     } else {
-        if (unitBadge) unitBadge.textContent = lang === 'pt' ? 'unidades' : 'units';
-        
         // Custom or "outro" inputs
         const msgSpec = lang === 'pt' ? 'Escreva as especificações do produto abaixo.' : 'Specify product specifications below.';
         const msgQty = lang === 'pt' ? 'Escreva a quantidade pretendida abaixo.' : 'Specify the desired quantity below.';
         prodContainer.innerHTML = `<span class="text-xs text-on-surface-variant">${msgSpec}</span>`;
         qtyContainer.innerHTML = `<span class="text-xs text-on-surface-variant">${msgQty}</span>`;
+        renderPackagingCards('solid');
         
         const qtySlider = document.getElementById('wizard-qty-slider');
         if (qtySlider) {
@@ -5228,7 +5588,7 @@ function renderProductAndQtyChips() {
             if (minLabel) minLabel.textContent = '1';
             if (maxLabel) maxLabel.textContent = '5000';
             qtySlider.value = 100;
-            document.getElementById('wizard-qty-input').value = 100;
+            if (document.getElementById('wizard-qty-input')) document.getElementById('wizard-qty-input').value = 100;
             wizardState.selectedQty = '100';
         }
     }
@@ -5257,6 +5617,10 @@ async function wizardNextStep() {
     } else if (wizardState.currentStep === 3) {
         const prodVal = document.getElementById('wizard-product-input').value.trim();
         const qtyVal = document.getElementById('wizard-qty-input').value.trim();
+        const unitVal = document.getElementById('wizard-unit-select') ? document.getElementById('wizard-unit-select').value : 'Toneladas (TN)';
+        const customPack = document.getElementById('wizard-packaging-custom') ? document.getElementById('wizard-packaging-custom').value.trim() : '';
+        const portVal = document.getElementById('wizard-contact-port') ? document.getElementById('wizard-contact-port').value.trim() : '';
+        const logisticsVal = document.querySelector('input[name="wizard-logistics"]:checked') ? document.querySelector('input[name="wizard-logistics"]:checked').value : 'Sim';
         
         if (!prodVal) {
             alert(lang === 'pt' ? 'Por favor, especifique o produto ou serviço pretendido.' : 'Please specify the desired product or service.');
@@ -5268,7 +5632,10 @@ async function wizardNextStep() {
         }
         
         wizardState.selectedProduct = prodVal;
-        wizardState.selectedQty = qtyVal;
+        wizardState.selectedQty = `${qtyVal} ${unitVal}`;
+        if (customPack) wizardState.packagingType = customPack;
+        wizardState.port = portVal || (lang === 'pt' ? 'Porto de Maputo (A combinar)' : 'Port of Maputo (TBD)');
+        wizardState.logistics = logisticsVal;
         wizardState.urgency = document.querySelector('input[name="wizard-urgency"]:checked').value;
         
         // Auto navigate to step 4
@@ -5280,9 +5647,8 @@ async function wizardNextStep() {
         const whatsapp = document.getElementById('wizard-contact-whatsapp').value.trim();
         const email = document.getElementById('wizard-contact-email').value.trim();
         const country = document.getElementById('wizard-contact-country').value;
-        const logistics = document.querySelector('input[name="wizard-logistics"]:checked').value;
+        const company = document.getElementById('wizard-contact-company') ? document.getElementById('wizard-contact-company').value.trim() : '';
         const desc = document.getElementById('wizard-contact-desc').value.trim();
-        const port = document.getElementById('wizard-contact-port') ? document.getElementById('wizard-contact-port').value.trim() : '';
         
         if (!whatsapp || whatsapp.length < 5) {
             alert(lang === 'pt' ? 'Por favor, insira um contacto WhatsApp válido.' : 'Please enter a valid WhatsApp contact.');
@@ -5296,8 +5662,7 @@ async function wizardNextStep() {
         wizardState.whatsapp = whatsapp;
         wizardState.email = email;
         wizardState.country = country;
-        wizardState.logistics = logistics;
-        wizardState.port = port || (lang === 'pt' ? 'Não especificado' : 'Not specified');
+        wizardState.company = company;
         wizardState.description = desc;
         
         // Process new B2B requirement push
@@ -5305,13 +5670,19 @@ async function wizardNextStep() {
         const sectorLabel = activeCatalog[wizardState.selectedSector] ? activeCatalog[wizardState.selectedSector].label : (lang === 'pt' ? 'Serviços' : 'Services');
         const categoryLabel = (wizardState.selectedCategory === 'outro') ? (lang === 'pt' ? 'Outro' : 'Other') : wizardState.selectedCategory;
         
-        const finalTitlePt = `Aquisição de ${wizardState.selectedProduct}`;
-        const finalTitleEn = `Acquisition of ${wizardState.selectedProduct}`;
+        const gradeSuffix = wizardState.selectedGrade ? ` (${wizardState.selectedGrade})` : '';
+        const finalTitlePt = `Aquisição de ${wizardState.selectedProduct}${gradeSuffix}`;
+        const finalTitleEn = `Acquisition of ${wizardState.selectedProduct}${gradeSuffix}`;
         const finalCategoryPt = `Consultoria para ${sectorLabel} (${categoryLabel})`;
         const finalCategoryEn = `${sectorLabel} Consulting (${categoryLabel})`;
         
-        const finalDescPt = `${desc ? desc + ' | ' : ''}Prazo: ${wizardState.urgency} | Porto de Receção: ${wizardState.port}`;
-        const finalDescEn = `${desc ? desc + ' | ' : ''}Term: ${wizardState.urgency} | Receiving Port: ${wizardState.port}`;
+        const packInfo = wizardState.packagingType ? ` | Embalagem: ${wizardState.packagingType}` : '';
+        const packInfoEn = wizardState.packagingType ? ` | Packaging: ${wizardState.packagingType}` : '';
+        const companyInfo = company ? ` | Empresa: ${company}` : '';
+        const companyInfoEn = company ? ` | Company: ${company}` : '';
+        
+        const finalDescPt = `${desc ? desc + ' | ' : ''}Porto de Descarga: ${wizardState.port}${packInfo}${companyInfo} | Prazo: ${wizardState.urgency}`;
+        const finalDescEn = `${desc ? desc + ' | ' : ''}Discharge Port: ${wizardState.port}${packInfoEn}${companyInfoEn} | Term: ${wizardState.urgency}`;
         
         const pushLocalWizard = () => {
             const newId = `req_${appState.requirements.length + 1}`;
@@ -5363,13 +5734,13 @@ async function wizardNextStep() {
         
         // Exibição proeminente do aviso de contacto via modal estilizado
         showVisualSuccessModal(
-            lang === 'pt' ? 'Solicitação B2B Registada' : 'B2B Request Registered',
+            lang === 'pt' ? 'Solicitação B2B Registada com Sucesso' : 'B2B Request Successfully Registered',
             lang === 'pt' 
-                ? 'O seu pedido foi encaminhado com sucesso. As suas informações foram salvas em ambiente encriptado e seguro, visíveis exclusivamente para o Administrador geral.'
-                : 'Your request has been successfully submitted. Your information has been saved in an encrypted and secure environment, visible exclusively to the General Administrator.',
+                ? 'O seu pedido foi encaminhado com sucesso! O resumo completo da sua solicitação está guardado na sua conta e estará disponível para consulta assim que fizer login no sistema Global View.'
+                : 'Your request has been successfully submitted! The full summary of your request is saved in your account and will be available for viewing as soon as you log in to the Global View system.',
             lang === 'pt' 
-                ? 'Entraremos em contacto pelo WhatsApp ou pelo E-mail'
-                : 'We will contact you via WhatsApp or E-mail'
+                ? 'Consulte a sua conta de utilizador ou aguarde o contacto do nosso consultor.'
+                : 'Check your user account or wait for contact from our consultant.'
         );
         
         closeRequestWizard();
@@ -5543,7 +5914,7 @@ async function setupSupabaseChat(matchId, channelType, containerId) {
                 const isMe = appState.currentUser.id === m.senderId;
                 const bubble = document.createElement('div');
                 bubble.className = `chat-bubble ${isMe ? 'sent' : 'received'}`;
-                bubble.innerHTML = `<p>${m.text}</p>`;
+                bubble.innerHTML = `<p>${gvSecurity.sanitize(m.text)}</p>`;
                 area.appendChild(bubble);
             });
             area.scrollTop = area.scrollHeight;
