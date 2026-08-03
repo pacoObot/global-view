@@ -186,18 +186,15 @@
      * Proteção adicional contra clickjacking (complementa X-Frame-Options).
      */
     function preventFrameEmbedding() {
+        var host = window.location.hostname;
+        if (host === 'localhost' || host === '127.0.0.1') return;
         if (window.self !== window.top) {
             try {
                 // Tentar escapar do iframe
                 window.top.location = window.self.location;
             } catch (e) {
-                // Se bloqueado por CORS, exibir aviso
-                document.body.innerHTML =
-                    '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:Outfit,sans-serif;background:#0f172a;color:#f1f5f9;text-align:center;padding:2rem;">' +
-                    '<div>' +
-                    '<h1 style="color:#ef4444;font-size:2rem;margin-bottom:1rem;">⚠️ Acesso Não Autorizado</h1>' +
-                    '<p style="font-size:1.1rem;color:#94a3b8;">Este site não pode ser exibido num iframe.<br>Aceda diretamente a <strong>global-view-eight.vercel.app</strong></p>' +
-                    '</div></div>';
+                // Em produção se bloqueado por CORS, exibir aviso
+                console.warn('Clickjacking protection: Frame embedding detected.');
             }
         }
     }

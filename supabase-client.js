@@ -29,6 +29,20 @@
         },
 
         /**
+         * Inicia o fluxo de login com Google OAuth
+         */
+        loginWithGoogle: async () => {
+            const { data, error } = await supabaseClient.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: window.location.origin + '/'
+                }
+            });
+            if (error) throw error;
+            return data;
+        },
+
+        /**
          * Realiza logout do utilizador
          */
         logout: async () => {
