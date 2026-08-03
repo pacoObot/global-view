@@ -15,6 +15,102 @@ O protótipo da plataforma de intermediação B2B da **Global View (GV-CPS)** en
 
 ## 2. Histórico de Alterações Recentes
 
+### Sessão: 03 de Agosto de 2026 (Gaveta de Documentos + Respostas estilo WhatsApp)
+* **Gaveta de Documentos Partilhados (Chat File Drawer)**:
+  - Adicionado botão de atalho `folder_open` no cabeçalho do chat do Comprador, Consultor e Fornecedor.
+  - Implementado painel lateral deslizante (`#-docs-drawer`) que desliza da direita sobre a janela do chat.
+  - O painel possui abas filtradas: **Todos**, **Docs** (PDFs/Ficheiros), **Média** (Imagens/Vídeos) e **Cotações** (Propostas).
+  - Inclui barra de pesquisa em tempo real para encontrar documentos pelo título.
+  - Ao clicar em qualquer ficheiro na gaveta, o chat faz scroll automático suave e destaca temporariamente a mensagem correspondente em contexto.
+* **Respostas estilo WhatsApp (Message Reply)**:
+  - Adicionado botão de acção de seta de resposta (`reply`) que surge ao passar o cursor sobre qualquer bolha de chat.
+  - Clicar no botão activa o "Modo Resposta": apresenta uma barra de pré-visualização contendo o remetente e um snippet da mensagem que está a ser respondida por cima do campo de entrada de texto, com opção de cancelar (`close`).
+  - Ao enviar, a nova mensagem armazena a propriedade `replyToId`.
+  - Mensagens com resposta renderizam um bloco de citação no topo da bolha com design diferenciado, que ao ser clicado faz scroll e pisca a mensagem original com animação de destaque sutil.
+
+### Sessão: 03 de Agosto de 2026 (Cards de Ação Inteligentes + Fix de Ecrã em Branco)
+* **Fix Crítico — Ecrã em Branco no Tab de Chats**:
+  - Identificada e corrigida `TypeError` que deixava a página completamente em branco ao navegar para `#buyer-portal?tab=detail`: o JS tentava atualizar IDs DOM inexistentes (`buyer-detail-title`, `buyer-detail-desc`, etc.) causando crash silencioso.
+  - Substituídas as referências por acesso aos IDs corretos que existem no HTML (`buyer-chat-header-title`, `buyer-chat-header-subtitle`, `buyer-chat-header-avatar`, `buyer-detail-status`) com verificações de nulidade.
+* **Sistema de Cards de Ação Inteligentes (`ACTION_CARD_DEFS`)**:
+  - Criado dicionário central `ACTION_CARD_DEFS` em `app.js` mapeando cada `actionType` (`quote`, `status`, `contract`) a cor, ícone, textos PT/EN e botão de resposta do consultor.
+  - **Envio único**: `sendChatQuickAction` verifica se já existe uma mensagem com aquele `actionType` na conversa antes de enviar. Se sim, faz scroll + highlight com anel pulsante colorido em vez de reenviar o card. Toast de feedback ao utilizador.
+  - **Cards visuais distintos por tipo**:
+    - 🟢 Teal `#0d9488` — Pedido de Cotação (`quote`)
+    - 🟡 Âmbar `#d97706` — Ponto de Situação (`status`)
+    - 🟣 Violeta `#7c3aed` — Minuta de Contrato (`contract`)
+  - **Botão de resposta do consultor**: No lado do consultor/admin, o card exibe o CTA correspondente ("Enviar Cotação", "Responder Status", "Enviar Minuta") como botão colorido dentro do card.
+  - **Funções de resposta do consultor**: `openSendQuoteForm`, `sendConsultantStatusReply`, `sendConsultantContractDraft` para fechar o ciclo de ação.
+  - **Retrocompatibilidade**: Detecção legacy por texto para mensagens antigas.
+
+
+* **Integração de Google OAuth**:
+  - Adicionado o método `loginWithGoogle` em `window.gvApi` em `supabase-client.js` que aciona `signInWithOAuth` usando o provedor `google` e redireciona de volta para a raiz do site.
+* **Componente Visual de Login no Modal**:
+  - Inserido botão estético "Entrar com o Google" / "Sign in with Google" com logótipo oficial do Google (SVG) no modal `#loginModal` em `index.html`.
+  - Adicionado divisor horizontal estilizado ("ou" / "or") para segmentar logins e manter o visual premium.
+  - Implementada conformidade total com a **Regra 5 (Bilinguismo simultâneo)** usando atributos `data-translate-pt` e `data-translate-en` em todos os novos elementos.
+* **Gestão de Estado de Sessão e Logout Integrado**:
+  - Modificada a inicialização (`initApp`) em `app.js` para ser assíncrona, validando sessões Supabase/Google activas na carga do ecrã e preenchendo automaticamente o painel do utilizador.
+  - Criado o sinalizador de autenticação real (`appState.isRealAuth`) para evitar conflitos de simulação local com logins reais.
+  - Atualizado o seletor de papéis em `app.js` para que ao selecionar "Sair (Visitante)" seja chamado o método `logout` real do Supabase e eliminados os dados locais sensíveis de forma segura via `gvSecurity.clearSensitiveData()`.
+
+### Sessão: 03 de Agosto de 2026 (Cards Modernos de Ações Rápidas, Detalhes em Popup & Chat Completo)
+* **Funcionalidades de Chat Completo**:
+  - Menu de Anexos (`+`) com opções dropdown: **Ficheiro**, **Imagem** e **Vídeo**. Integração com input de arquivo oculto e barra de progresso simulada com feedback visual.
+  - Gravação de Áudio Simulada: Botão de microfone (`mic`) que substitui a área de entrada por um indicador de gravação com cronômetro em tempo real, opções de Cancelar e Enviar.
+  - Visualizadores de Mídia Injetados: Bolhas de chat formatadas especificamente para cada tipo de anexo (waveform e reprodutor de áudio, miniaturas modernas com botão de download para imagens, vídeos e documentos).
+* **Visão Completa do Chat (Fullscreen Toggle)**:
+  - Adicionado um botão de expansão (`toggleBuyerChatFullscreen`) no cabeçalho do chat (exclusivo para desktops). Ao ser clicado, oculta a barra lateral de conversas e expande a janela ativa para ocupar toda a largura útil do ecrã (`lg:col-span-3`).
+* **Cards Modernos para Ações Rápidas**:
+  - As mensagens disparadas pelos botões de ações rápidas (chips) agora entram na conversa no formato de **Cards B2B estruturados e estruturados**, contendo ícone correspondente, cabeçalho de estado, descrição esteticamente organizada e um selo de segurança pulsante "Mediado com Segurança pela GV-CPS".
+* **Exclusão de Botão de Logística Redundante**:
+  - Removido o chip rápido "Confirmar Logística" das opções de chat do comprador, visto que a logística integrada da GV-CPS já está incluída e ativa por padrão nos fluxos.
+* **Retorno dos Detalhes ao Popup Cockpit Largo**:
+  - Revertido o comportamento da ficha técnica de detalhes, que agora abre como um **popup cockpit centralizado e largo (max-w-4xl)** com um layout de duas colunas (especificações e documentos associados à esquerda, timeline detalhada de progresso à direita) com efeito de transição de escala.
+* **Remoção de Cabeçalhos e Banners Redundantes**:
+  - Eliminado o cabeçalho interno duplicado e a barra de aviso de sigilo redundante do chat (`renderPortalChat`) quando visualizado no Portal do Comprador, deixando apenas o cabeçalho superior unificado e o novo banner escuro com pipeline.
+* **Slide-over Drawer Lateral de Detalhes**:
+  - Removido o modal de ecrã centrado e implantada uma gaveta lateral deslizante (`buyer-requirement-details-drawer`) que desliza suavemente da direita com especificações da necessidade, Incoterms (CIF/FOB) e documentos para download (pdf).
+* **Banner de Segurança & Pipeline de Negociação**:
+  - Inserido um cabeçalho de segurança escuro (`#buyer-chat-safety-banner`) no topo do chat ativo contendo aviso de sigilo comercial e um pipeline visual de progresso dinâmico (Solicitado ➔ Cotação ➔ Logística ➔ Contrato) ativado com base no estado da negociação.
+* **Chips Rápidos com Envio Imediato**:
+  - Chips com ícones profissionais vectoriais que disparam a mensagem imediata de cotação, termos e logística pelo chat ao clicar.
+* **Sincronização de Estado**:
+  - Implementada a verificação no carregamento do ecrã (`initApp`) que valida e injeta automaticamente os matches e mensagens padrão em `appState`, prevenindo discrepâncias decorrentes de caches antigas no `localStorage`.
+* **Fix Crítico de Exceção JS & Proteção Anti-Ecrã em Branco**:
+* **Fix Crítico de Exceção JS & Proteção Anti-Ecrã em Branco**:
+  - Resolvido o problema onde a tentativa de aceder a propriedades de `match` não encontrado na função `renderPortalChat` causava um erro `TypeError` não capturado, interrompendo o router e deixando todas as secções em `display: none` (ecrã em branco).
+  - Inseridas verificações defensivas de nulidade (`if (!match) return`) em `renderPortalChat` e sanitização no `formatDate`.
+  - Envolvida a execução das vistas em `navigate()` com um bloco `try...catch` de contenção, garantindo que o portal é SEMPRE exibido na tela sem falhas.
+* **Redesenho com Layout Familiar de Chat (WhatsApp/Intercom Style)**:
+  - Transformação da aba de **Negociações e Chats (`#buyer-detail-tab`)** no Portal do Comprador para que a área principal seja a janela de conversa direta.
+  - Cabeçalho do chat contendo avatar com iniciais da necessidade, nome do requisito, indicador de status, identificação do consultor mediador GV-CPS e o botão destacado **`[ ℹ️ Ver Detalhes do Negócio ]`**.
+* **Modal Flutuante de Especificações & Progresso (`#buyer-requirement-details-modal`)**:
+  - Abertura de modal/drawer flutuante ao clicar em "Ver Detalhes do Negócio", exibindo alerta de **Logística Integrada pela GV-CPS**, ficha técnica (categoria, volume, destino, logística na faturação, data) e a linha do tempo (*Timeline*) de progresso comercial.
+* **Chips de Sugestões Rápidas de Mensagem (Quick Action Chips)**:
+  - Conjunto de botões de atalho acima da caixa de texto do chat para envio ou preenchimento com 1 clique: `📄 Solicitar Cotação Formal`, `🚚 Confirmar Logística Integrada`, `🤝 Ponto de Situação` e `📋 Pedir Minuta do Contrato`.
+* **Pesquisa de Negociações & Responsividade Completa**:
+  - Inserção do campo de pesquisa `#buyer-chat-search-input` para filtragem em tempo real na coluna lateral de conversas.
+  - Responsividade total para Mobile (alternância entre lista e conversa com botão "Voltar"), Tablet e Desktop.
+* **Manutenção da Paridade Bilíngue (100% PT / EN)**:
+  - Marcação de todos os elementos e botões com `data-translate-pt` e `data-translate-en` e suporte no JS.
+
+### Sessão: 03 de Agosto de 2026 (Redesenho da Página de Comunicação / Contactos)
+* **Redesenho com Dados Oficiais Reais**:
+  - Reconstrução da página de **Comunicação / Contactos (`#view-contact`)** em `index.html` com base na estrutura do modelo visual de referência fornecido pelo utilizador.
+  - Integração dos dados oficiais reais da empresa extraídos do documento `PERFIL DA EMPRESA da GV-CPS.pdf` (Sede na Rua de Kassuende, nº 270, Maputo - Moçambique, telefones +258 84 900 9090 / 82 900 9090 / 87 880 9090, e-mail `globalviewmoz@gmail.com`).
+  - Removido o termo *"Hub de Relacionamento"* conforme instrução explícita do utilizador.
+* **Grelha Principal & Formulário Elevado**:
+  - Coluna esquerda ("Onde estamos?"): Exibição da Sede Central de Maputo, contactos telefónicos/e-mail, horário de funcionamento e destaque para o card de **Intermediação Blindada** (Regra de Ouro da GV-CPS).
+  - Coluna direita ("Fala Connosco"): Formulário em card elevado com campos de Nome Completo, E-mail Corporativo, Telemóvel/WhatsApp, Assunto de Interesse (Intermediação B2B, Consultoria, Logística, Tecnologia), Mensagem e Checkbox de Privacidade.
+* **Mapa Dinâmico & Localização Seleccionada**:
+  - Secção de mapa (OpenStreetMap) focado nas coordenadas exatas da Rua de Kassuende em Maputo.
+  - Card suspenso *"LOCALIZAÇÃO SELECCIONADA"* com botões *"Partilhar"* (copia endereço para a área de transferência) e *"Ver no Maps"* (link para Google Maps).
+* **Manutenção da Paridade Bilíngue (100% PT / EN)**:
+  - Marcação de todos os elementos visíveis com `data-translate-pt` e `data-translate-en`.
+  - Funções de apoio no `app.js` (`handleContactPageSubmit` e `shareContactLocation`) com sanitização anti-XSS (`gvSecurity.sanitize`) e modal de confirmação visual bilíngue (`showVisualSuccessModal`).
+
 ### Sessão: 16 de Julho de 2026
 *   **Cores Dinâmicas por Categoria**: Implementado mapeamento usando variáveis CSS (`--cat-color` e `--cat-bg`) para os setores (Agro: verde, Logística: âmbar/laranja, Tecnologia: teal, Energia: bronze, Consultoria: azul petróleo).
 *   **Redirecionamentos de Rota e Login Automático**: Adicionado comportamento em que usuários não-autenticados que tentem entrar em rotas restritas (como `#buyer-portal`) são redirecionados à homepage, o modal de login abre sozinho e os dados de teste são preenchidos conforme o papel desejado.
@@ -22,11 +118,17 @@ O protótipo da plataforma de intermediação B2B da **Global View (GV-CPS)** en
 *   **Refinamento do Slider Hero**: Transições Ken Burns suaves (zoom de fundo) com um overlay de gradiente para contraste do texto.
 
 ### Sessão: 28 de Julho de 2026
-*   **Correção do Modal Guia de Requisição B2B (`#serviceWizardModal`) & Ativação dos Botões**:
-    - **Restabelecimento do Elemento Modal `#serviceWizardModal`**: Corrigida a estrutura HTML do modal que havia perdido a tag de abertura durante a limpeza de preview cards, restaurando a abertura imediata ao clicar em "Requisitar Novo Serviço B2B", "Tenho Interesse" e "Iniciar Negociação".
-    - **Mapeamento de Países em `startGuidedNegotiation`**: Atualizada a função para converter o nome do país no código ISO correspondente no seletor global (`#wizard-contact-country`) com bandeira e DDI automáticos.
-    - **Simplificação e Suporte Global**: Mantido o fluxo simplificado do wizard sem cartões visuais desnecessários e com catálogo global de países agrupado por continentes.
-    - **Bilinguismo 100% PT / EN**: Funcionamento total em Português e Inglês.
+*   **Remoção do Slider de Quantidade no Wizard B2B**:
+    - **Remoção de Markup**: Removido o input `type="range"` (`#wizard-qty-slider`) e as labels de mínimo/máximo correspondentes no Passo 3, mantendo apenas a inserção numérica direta e os chips de sugestões rápidas posicionados abaixo do campo.
+    - **Proteção no Código JS**: Adicionados tratamentos de nulidade em `app.js` (`qtySlider` checks) para garantir que a inserção numérica e a seleção de chips rápidos funcionem perfeitamente sem erros de JavaScript.
+*   **Grelha 2x2 Responsiva & Cores Premium no Passo 1 do Wizard B2B**:
+    - **Nova Grelha 2x2**: Redesenhado o Passo 1 do assistente (Seleção do Setor) para dispor as opções (*Agronegócio*, *Oil & Gas*, *Tecnologia*, *Logística*) numa grelha harmoniosa 2x2 em vez de esticar ou empilhar em largura inteira.
+    - **Identidade Visual por Setor**: Cada setor recebeu cores exclusivas de hover e seleção (Verde Floresta para Agro, Bronze para Oil & Gas, Azul-Teal para Tecnologia e Laranja Quente para Logística) aplicadas à borda, fundo, ícone e sombras de relevo, respeitando o Design System e o bilinguismo.
+*   **Reinício do Servidor & Ajuste de Proteção Iframe (`security.js`)**:
+    - **Servidor Reiniciado**: Servidor HTTP local desligado e relançado em `http://localhost:3000`.
+    - **Ajuste em `preventFrameEmbedding` (`security.js`)**: Adicionada exceção para ambientes de desenvolvimento local (`localhost` e `127.0.0.1`), permitindo que a aplicação seja visualizada em painéis de pré-visualização e frames sem sobrescrever o DOM ou bloquear os cliques dos botões de categorias ("Requisitar") da página inicial.
+    - **Abertura Imediata por Categoria**: Confirmado funcionamento dos botões `openRequestWizard('agro')`, `openRequestWizard('oil')`, `openRequestWizard('tech')` e `openRequestWizard('logistics')`.
+    - **Bilinguismo 100% PT / EN**: Suporte completo simultâneo em Português e Inglês.
 
 ### Sessão: 22 de Julho de 2026
 *   **Restauração do Layout Limpo do Modal B2B (`#serviceWizardModal`) & Fotos Contextuais**:
@@ -201,6 +303,9 @@ O protótipo da plataforma de intermediação B2B da **Global View (GV-CPS)** en
     - Utilizadores anónimos já não podem enumerar todos os perfis do sistema (incluindo roles admin/consultant).
 *   **Traduções de Segurança (PT/EN)**:
     - Adicionadas entradas `rate_limit_warning`, `login_blocked`, `security_warning` ao dicionário `UI_TRANSLATIONS` em ambos os idiomas.
+*   **Limpeza & Ajustes no Trust Center**:
+    - Removido o subtítulo descriptivo do mini hero ("Ambiente comercial blindado onde a GV-CPS atua como intermediária única e garantidora de todas as transações.") para uma interface mais limpa e focada.
+    - Alterado o badge "Garantia Operacional 100%" para apenas "Garantia Operacional" / "Operational Guarantee" (eliminado "100%").
 
 ---
 

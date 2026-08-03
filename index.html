@@ -995,11 +995,10 @@
                 
                 <div class="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                     <div class="max-w-2xl text-left">
-                        <span class="inline-block bg-emerald-500/20 text-[#34d399] px-3 py-1 rounded-full text-xs font-bold mb-3 border border-emerald-500/30" data-translate-pt="Garantia Operacional 100%" data-translate-en="100% Operational Guarantee">
-                            Garantia Operacional 100%
+                        <span class="inline-block bg-emerald-500/20 text-[#34d399] px-3 py-1 rounded-full text-xs font-bold mb-3 border border-emerald-500/30" data-translate-pt="Garantia Operacional" data-translate-en="Operational Guarantee">
+                            Garantia Operacional
                         </span>
                         <h1 class="font-headline-xl text-white mb-4" data-translate-pt="Centro de Confiança" data-translate-en="Trust Center">Centro de Confiança</h1>
-                        <p class="text-white/80 font-body-lg" data-translate-pt="Ambiente comercial blindado onde a GV-CPS atua como intermediária única e garantidora de todas as transações." data-translate-en="Shielded commercial environment where GV-CPS acts as the sole intermediary and guarantor of all transactions.">Ambiente comercial blindado onde a GV-CPS atua como intermediária única e garantidora de todas as transações.</p>
                     </div>
                     <div class="flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 px-6 py-4 rounded-2xl shrink-0">
                         <span class="material-symbols-outlined text-emerald-400 text-3xl">verified_user</span>
@@ -1137,81 +1136,254 @@
 
         <!-- COMUNICAÇÃO / CONTACTOS VIEW -->
         <section id="view-contact" class="view-section">
-            <div class="pt-24 pb-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-                <div class="text-center mb-16">
-                    <span class="text-secondary font-label-md tracking-widest uppercase">Comunicação</span>
-                    <h1 class="font-headline-lg text-primary mt-2">Fale Connosco</h1>
-                    <p class="text-on-surface-variant max-w-xl mx-auto mt-2 text-sm">Entre em contacto com os nossos consultores em Maputo ou utilize a nossa integração direta no WhatsApp.</p>
+            <!-- Hero Header Section -->
+            <div class="relative bg-gradient-to-r from-[#002533] via-[#00374a] to-[#004e66] text-white overflow-hidden py-16 mb-12 shadow-md">
+                <div class="absolute inset-0 z-0 opacity-20">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80" alt="Comunicação Hero" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#002533] via-transparent to-[#002533]/80"></div>
                 </div>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                    <!-- Contact Form -->
-                    <div class="bg-white p-8 rounded-2xl border border-outline-variant shadow-sm">
-                        <h3 class="headline-sm text-primary mb-6">Mensagem Segura</h3>
-                        <form onsubmit="event.preventDefault(); alert('Mensagem enviada com sucesso! A nossa equipa entrará em contacto dentro de 24 horas via E-mail ou WhatsApp.'); this.reset();" style="display: flex; flex-direction: column; gap: 16px;">
-                            <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
-                                <label style="font-size: 13px; font-weight: 600; color: var(--primary);">Seu Nome Comercial</label>
-                                <input type="text" class="form-input" style="padding: 10px 14px;" placeholder="Ex: João da Silva" required>
-                            </div>
-                            <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
-                                <label style="font-size: 13px; font-weight: 600; color: var(--primary);">E-mail Corporativo</label>
-                                <input type="email" class="form-input" style="padding: 10px 14px;" placeholder="Ex: joao@empresa.com" required>
-                            </div>
-                            <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
-                                <label style="font-size: 13px; font-weight: 600; color: var(--primary);">Telemóvel (Com WhatsApp)</label>
-                                <input type="tel" class="form-input" style="padding: 10px 14px;" placeholder="Ex: +258 84 000 0000" required>
-                            </div>
-                            <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
-                                <label style="font-size: 13px; font-weight: 600; color: var(--primary);">Assunto de Interesse</label>
-                                <select class="form-select" style="padding: 10px 14px;" required>
-                                    <option>Consultoria de Trading & Commodities</option>
-                                    <option>Petróleo & Gás (Conteúdo Local)</option>
-                                    <option>Agropecuária & Agronegócios</option>
-                                    <option>Outros Assuntos de Negócio</option>
-                                </select>
-                            </div>
-                            <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
-                                <label style="font-size: 13px; font-weight: 600; color: var(--primary);">Detalhes da Mensagem</label>
-                                <textarea class="form-textarea" rows="4" style="padding: 10px 14px;" placeholder="Descreva brevemente a sua procura. Evite colocar dados sensíveis ou alvarás." required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-full" style="padding: 12px; margin-top: 10px;">Enviar Mensagem</button>
-                        </form>
+                <div class="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center">
+                    <span class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-emerald-300 text-xs font-semibold tracking-wider uppercase border border-white/10 mb-4"
+                          data-translate-pt="COMUNICAÇÃO INSTITUCIONAL" data-translate-en="INSTITUTIONAL COMMUNICATION">
+                        <span class="material-symbols-outlined text-sm">connect_without_contact</span> COMUNICAÇÃO INSTITUCIONAL
+                    </span>
+                    <h1 class="font-headline-lg text-white font-bold tracking-tight"
+                        data-translate-pt="Fale Connosco" data-translate-en="Contact Us">
+                        Fale Connosco
+                    </h1>
+                    <p class="text-slate-200 max-w-2xl mx-auto mt-3 text-base leading-relaxed"
+                       data-translate-pt="A nossa equipa de consultores está pronta para atender às suas solicitações e intermediar os seus negócios B2B em qualquer ponto do mundo."
+                       data-translate-en="Our team of consultants is ready to assist your requests and intermediate your B2B transactions anywhere in the world.">
+                        A nossa equipa de consultores está pronta para atender às suas solicitações e intermediar os seus negócios B2B em qualquer ponto do mundo.
+                    </p>
+
+                    <!-- Channel Quick Action Pills Bar -->
+                    <div class="flex flex-wrap items-center justify-center gap-4 mt-8">
+                        <button onclick="document.getElementById('chat-fab').click();" class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white px-5 py-2.5 rounded-xl font-medium text-sm transition-all shadow-md hover:scale-105 border-none cursor-pointer">
+                            <span class="material-symbols-outlined text-lg">chat</span>
+                            <span data-translate-pt="Chatbot WhatsApp" data-translate-en="WhatsApp Chatbot">Chatbot WhatsApp</span>
+                        </button>
+                        <a href="mailto:globalviewmoz@gmail.com" class="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white px-5 py-2.5 rounded-xl font-medium text-sm backdrop-blur-md transition-all border border-white/20 hover:scale-105 no-underline">
+                            <span class="material-symbols-outlined text-lg">mail</span>
+                            <span>globalviewmoz@gmail.com</span>
+                        </a>
+                        <a href="tel:+258849009090" class="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white px-5 py-2.5 rounded-xl font-medium text-sm backdrop-blur-md transition-all border border-white/20 hover:scale-105 no-underline">
+                            <span class="material-symbols-outlined text-lg">call</span>
+                            <span>+258 84 900 9090</span>
+                        </a>
                     </div>
+                </div>
+            </div>
+
+            <div class="pb-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
                     
-                    <!-- Omnichannel & Address Details -->
-                    <div style="display: flex; flex-direction: column; gap: 24px;">
-                        <div style="background-color: #25D366; color: white; padding: 32px; border-radius: var(--radius-2xl); position: relative; overflow: hidden; box-shadow: var(--shadow-md);">
-                            <div style="position: absolute; right: -20px; bottom: -20px; font-size: 120px; opacity: 0.15; font-family: var(--font-heading);" class="material-symbols-outlined">forum</div>
-                            <h3 class="headline-sm text-white mb-3" style="display: flex; align-items: center; gap: 8px;">
-                                <span style="font-size: 28px;">💬</span> WhatsApp Integrado GV
-                            </h3>
-                            <p class="body-sm text-white/90 mb-6 leading-relaxed">
-                                Sabia que toda a nossa comunicação comercial e alertas de matches também são enviados automaticamente para o seu WhatsApp? Nosso chatbot unificado atende nos dois canais de forma sincronizada.
-                            </p>
-                            <button onclick="document.getElementById('chat-fab').click();" class="bg-white text-[#25D366] px-6 py-3 rounded-xl font-label-md hover:scale-105 transition-transform border-none cursor-pointer flex items-center gap-2 font-bold shadow-sm">
-                                Falar no Chatbot Agora
-                            </button>
-                        </div>
+                    <!-- Left Column: Onde estamos & Informação de Atendimento (5 cols) -->
+                    <div class="lg:col-span-5 flex flex-col gap-8">
                         
-                        <div class="bg-white p-8 rounded-2xl border border-outline-variant shadow-sm">
-                            <h3 class="headline-sm text-primary mb-6">Sede Central da GV-CPS</h3>
-                            <div style="display: flex; flex-direction: column; gap: 16px; font-size: 14px;">
-                                <div style="display: flex; gap: 12px; align-items: flex-start;">
-                                    <span class="material-symbols-outlined text-secondary" style="margin-top: 2px;">location_on</span>
-                                    <span>Avenida Julius Nyerere, Edifício Corporate, Maputo, Moçambique</span>
+                        <!-- Unit / Office Location Card -->
+                        <div class="bg-white p-8 rounded-3xl border border-outline-variant shadow-md">
+                            <h2 class="headline-sm text-primary mb-2 flex items-center gap-2"
+                                data-translate-pt="Onde estamos?" data-translate-en="Where are we?">
+                                <span class="material-symbols-outlined text-[#006d3d]">location_on</span> Onde estamos?
+                            </h2>
+                            <p class="body-sm text-on-surface-variant mb-6"
+                               data-translate-pt="Nossa sede está localizada no centro executivo de Maputo para atendimento institucional e negociações."
+                               data-translate-en="Our headquarters is located in Maputo's executive center for institutional service and negotiations.">
+                                Nossa sede está localizada no centro executivo de Maputo para atendimento institucional e negociações.
+                            </p>
+
+                            <!-- Address Box -->
+                            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 mb-6 flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-[#00374a] text-white flex items-center justify-center shrink-0">
+                                    <span class="material-symbols-outlined">domain</span>
                                 </div>
-                                <div style="display: flex; gap: 12px; align-items: flex-start;">
-                                    <span class="material-symbols-outlined text-secondary" style="margin-top: 2px;">mail</span>
-                                    <span>contacto@gv-cps.com</span>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 text-base mb-1"
+                                        data-translate-pt="Sede Central Global View" data-translate-en="Global View Headquarters">
+                                        Sede Central Global View
+                                    </h4>
+                                    <p class="text-sm text-slate-600 leading-snug">
+                                        Rua de Kassuende, nº 270<br>
+                                        <span class="font-medium text-slate-800">Maputo – Moçambique</span>
+                                    </p>
                                 </div>
-                                <div style="display: flex; gap: 12px; align-items: flex-start;">
-                                    <span class="material-symbols-outlined text-secondary" style="margin-top: 2px;">phone</span>
-                                    <span>+258 21 000 000 / +258 84 123 4567</span>
+                            </div>
+
+                            <!-- Direct Support Contacts -->
+                            <div class="space-y-4 text-sm">
+                                <div class="flex items-center gap-3 text-slate-700">
+                                    <span class="material-symbols-outlined text-[#006d3d] text-xl">phone_in_talk</span>
+                                    <div>
+                                        <span class="block text-xs font-semibold text-slate-500 uppercase tracking-wider"
+                                              data-translate-pt="Linhas de Atendimento" data-translate-en="Support Lines">Linhas de Atendimento</span>
+                                        <span class="font-medium text-slate-900">+258 84 900 9090 / 82 900 9090 / 87 880 9090</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-3 text-slate-700">
+                                    <span class="material-symbols-outlined text-[#006d3d] text-xl">mark_email_read</span>
+                                    <div>
+                                        <span class="block text-xs font-semibold text-slate-500 uppercase tracking-wider"
+                                              data-translate-pt="E-mail Oficial" data-translate-en="Official E-mail">E-mail Oficial</span>
+                                        <a href="mailto:globalviewmoz@gmail.com" class="font-medium text-primary hover:underline">globalviewmoz@gmail.com</a>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-3 text-slate-700">
+                                    <span class="material-symbols-outlined text-[#006d3d] text-xl">schedule</span>
+                                    <div>
+                                        <span class="block text-xs font-semibold text-slate-500 uppercase tracking-wider"
+                                              data-translate-pt="Horário de Funcionamento" data-translate-en="Business Hours">Horário de Funcionamento</span>
+                                        <span class="font-medium text-slate-900"
+                                              data-translate-pt="Segunda a Sexta: 08:00 – 17:00 (CAT)"
+                                              data-translate-en="Monday to Friday: 08:00 – 17:00 (CAT)">Segunda a Sexta: 08:00 – 17:00 (CAT)</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Shielded Mediation Notice Card -->
+                        <div class="bg-gradient-to-br from-[#002533] to-[#00374a] text-white p-7 rounded-3xl border border-white/10 shadow-md relative overflow-hidden">
+                            <div class="absolute -right-4 -bottom-4 font-mono text-8xl text-white/5 select-none pointer-events-none">GV</div>
+                            <h4 class="font-bold text-lg text-white mb-2 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-emerald-400">shield_lock</span>
+                                <span data-translate-pt="Intermediação Blindada" data-translate-en="Shielded Mediation">Intermediação Blindada</span>
+                            </h4>
+                            <p class="text-xs text-slate-200 leading-relaxed mb-4"
+                               data-translate-pt="A Global View (GV-CPS) é a única intermediária autorizada. Toda a comunicação e negociação B2B ocorrem exclusivamente na plataforma sob sigilo comercial e sem exposição de dados diretos entre comprador e fornecedor."
+                               data-translate-en="Global View (GV-CPS) is the sole authorized intermediary. All B2B communication and negotiation occur exclusively on the platform under commercial confidentiality without direct contact exposure between buyer and supplier.">
+                                A Global View (GV-CPS) é a única intermediária autorizada. Toda a comunicação e negociação B2B ocorrem exclusivamente na plataforma sob sigilo comercial e sem exposição de dados diretos entre comprador e fornecedor.
+                            </p>
+                            <span class="inline-flex items-center gap-1.5 text-xs text-emerald-300 font-medium">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                <span data-translate-pt="Garantia Operacional GV-CPS" data-translate-en="GV-CPS Operational Guarantee">Garantia Operacional GV-CPS</span>
+                            </span>
+                        </div>
+
                     </div>
+
+                    <!-- Right Column: Fala Connosco Form (7 cols) -->
+                    <div class="lg:col-span-7">
+                        <div class="bg-white p-8 md:p-10 rounded-3xl border border-outline-variant shadow-xl">
+                            <div class="mb-8">
+                                <h3 class="headline-sm text-primary font-bold text-2xl"
+                                    data-translate-pt="Fala Connosco" data-translate-en="Talk to Us">
+                                    Fala Connosco
+                                </h3>
+                                <p class="text-on-surface-variant text-sm mt-1.5"
+                                   data-translate-pt="Preencha o formulário e a nossa equipa de consultores entrará em contacto num prazo de 24h."
+                                   data-translate-en="Fill out the form and our team of consultants will contact you within 24 hours.">
+                                    Preencha o formulário e a nossa equipa de consultores entrará em contacto num prazo de 24h.
+                                </p>
+                            </div>
+
+                            <form id="contact-page-form" onsubmit="handleContactPageSubmit(event);" class="space-y-5">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div class="form-group flex flex-col gap-1.5">
+                                        <label class="text-xs font-bold text-slate-700 uppercase tracking-wider"
+                                               data-translate-pt="Seu Nome Completo *" data-translate-en="Your Full Name *">
+                                            Seu Nome Completo *
+                                        </label>
+                                        <input type="text" id="contact-form-name" class="form-input w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#006d3d] focus:ring-2 focus:ring-[#006d3d]/20 transition-all text-sm outline-none"
+                                               placeholder="Ex: Carlos Mateus" required>
+                                    </div>
+                                    <div class="form-group flex flex-col gap-1.5">
+                                        <label class="text-xs font-bold text-slate-700 uppercase tracking-wider"
+                                               data-translate-pt="E-mail Corporativo *" data-translate-en="Corporate Email *">
+                                            E-mail Corporativo *
+                                        </label>
+                                        <input type="email" id="contact-form-email" class="form-input w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#006d3d] focus:ring-2 focus:ring-[#006d3d]/20 transition-all text-sm outline-none"
+                                               placeholder="Ex: carlos@empresa.com" required>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div class="form-group flex flex-col gap-1.5">
+                                        <label class="text-xs font-bold text-slate-700 uppercase tracking-wider"
+                                               data-translate-pt="Telemóvel / WhatsApp *" data-translate-en="Phone / WhatsApp *">
+                                            Telemóvel / WhatsApp *
+                                        </label>
+                                        <input type="tel" id="contact-form-phone" class="form-input w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#006d3d] focus:ring-2 focus:ring-[#006d3d]/20 transition-all text-sm outline-none"
+                                               placeholder="Ex: +258 84 000 0000" required>
+                                    </div>
+                                    <div class="form-group flex flex-col gap-1.5">
+                                        <label class="text-xs font-bold text-slate-700 uppercase tracking-wider"
+                                               data-translate-pt="Assunto Principal *" data-translate-en="Main Subject *">
+                                            Assunto Principal *
+                                        </label>
+                                        <select id="contact-form-subject" class="form-select w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#006d3d] focus:ring-2 focus:ring-[#006d3d]/20 transition-all text-sm outline-none bg-white" required>
+                                            <option value="b2b" data-translate-pt="Intermediação B2B (Commodities, Agro, Oil & Gas)" data-translate-en="B2B Intermediation (Commodities, Agro, Oil & Gas)">Intermediação B2B (Commodities, Agro, Oil & Gas)</option>
+                                            <option value="consulting" data-translate-pt="Consultoria Económico-Jurídica & Conteúdo Local" data-translate-en="Legal-Economic & Local Content Consulting">Consultoria Económico-Jurídica & Conteúdo Local</option>
+                                            <option value="logistics" data-translate-pt="Suporte Logístico & Gestão de Projetos" data-translate-en="Logistics Support & Project Management">Suporte Logístico & Gestão de Projetos</option>
+                                            <option value="tech" data-translate-pt="Tecnologia de Informação & Inovação" data-translate-en="Information Technology & Innovation">Tecnologia de Informação & Inovação</option>
+                                            <option value="general" data-translate-pt="Outros Assuntos Corporativos" data-translate-en="Other Corporate Matters">Outros Assuntos Corporativos</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group flex flex-col gap-1.5">
+                                    <label class="text-xs font-bold text-slate-700 uppercase tracking-wider"
+                                           data-translate-pt="Como podemos ajudar? *" data-translate-en="How can we help? *">
+                                        Como podemos ajudar? *
+                                    </label>
+                                    <textarea id="contact-form-message" rows="4" class="form-textarea w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#006d3d] focus:ring-2 focus:ring-[#006d3d]/20 transition-all text-sm outline-none"
+                                              placeholder="Descreva brevemente o seu requisito ou necessidade de consultoria..." required></textarea>
+                                </div>
+
+                                <div class="flex items-start gap-3 pt-2">
+                                    <input type="checkbox" id="contact-form-privacy" class="mt-1 w-4 h-4 text-[#006d3d] rounded border-slate-300 focus:ring-[#006d3d] cursor-pointer" required>
+                                    <label for="contact-form-privacy" class="text-xs text-slate-600 leading-normal cursor-pointer select-none"
+                                           data-translate-pt="Concordo com o processamento dos meus dados para fins de contacto institucional na GV-CPS sob sigilo corporativo."
+                                           data-translate-en="I agree with the processing of my data for institutional contact purposes at GV-CPS under corporate secrecy.">
+                                        Concordo com o processamento dos meus dados para fins de contacto institucional na GV-CPS sob sigilo corporativo.
+                                    </label>
+                                </div>
+
+                                <button type="submit" class="w-full bg-[#006d3d] hover:bg-[#00552f] text-white font-bold py-3.5 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2 text-sm uppercase tracking-wider border-none cursor-pointer mt-4">
+                                    <span data-translate-pt="ENVIAR MENSAGEM" data-translate-en="SEND MESSAGE">ENVIAR MENSAGEM</span>
+                                    <span class="material-symbols-outlined text-base">send</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
+
+                <!-- Map & Selected Location Card Section -->
+                <div class="mt-16 relative rounded-3xl overflow-hidden shadow-xl border border-slate-200 bg-slate-900" style="min-height: 440px;">
+                    <!-- Floating Overlay Location Details Card -->
+                    <div id="contact-selected-location-card" class="absolute top-6 left-6 z-20 bg-white/95 backdrop-blur-md p-6 rounded-2xl border border-slate-200 shadow-2xl max-w-sm w-full">
+                        <span class="inline-block text-[10px] font-bold tracking-widest text-[#006d3d] uppercase bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 mb-2"
+                              data-translate-pt="LOCALIZAÇÃO SELECCIONADA" data-translate-en="SELECTED LOCATION">
+                            LOCALIZAÇÃO SELECCIONADA
+                        </span>
+                        <h3 id="contact-selected-unit-title" class="font-bold text-slate-900 text-lg mb-1"
+                            data-translate-pt="Sede Central GV-CPS (Maputo)" data-translate-en="GV-CPS Headquarters (Maputo)">
+                            Sede Central GV-CPS (Maputo)
+                        </h3>
+                        <p id="contact-selected-unit-address" class="text-xs text-slate-600 mb-4 leading-relaxed">
+                            Rua de Kassuende, nº 270, Maputo, Moçambique
+                        </p>
+                        
+                        <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
+                            <button onclick="shareContactLocation();" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold py-2 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-colors border-none cursor-pointer">
+                                <span class="material-symbols-outlined text-sm">share</span>
+                                <span data-translate-pt="Partilhar" data-translate-en="Share">Partilhar</span>
+                            </button>
+                            <a id="contact-google-maps-link" href="https://maps.google.com/?q=Rua+de+Kassuende+270+Maputo+Mozambique" target="_blank" class="flex-1 bg-[#00374a] hover:bg-[#002533] text-white font-semibold py-2 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-colors no-underline">
+                                <span class="material-symbols-outlined text-sm">open_in_new</span>
+                                <span data-translate-pt="Ver no Maps" data-translate-en="View on Maps">Ver no Maps</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Map Iframe (Maputo Rua de Kassuende) -->
+                    <iframe id="contact-map-iframe" class="w-full h-full absolute inset-0 border-0" style="min-height: 440px; filter: contrast(1.05);"
+                            src="https://www.openstreetmap.org/export/embed.html?bbox=32.5800%2C-25.9750%2C32.5950%2C-25.9620&amp;layer=mapnik&amp;marker=-25.9685%2C32.5875"
+                            allowfullscreen loading="lazy"></iframe>
+                </div>
+
             </div>
         </section>
 
@@ -1710,73 +1882,255 @@
                     
                     <!-- TAB 2: Detail, Timeline and Chat -->
                     <div id="buyer-detail-tab" style="display: none;" class="w-full">
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[600px] md:h-[650px] overflow-hidden rounded-2xl border border-slate-200 bg-white">
+                        <div id="buyer-chat-grid-container" class="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:gap-6 h-[calc(100vh-140px)] min-h-[580px] max-h-[750px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                            
                             <!-- Left: List of active chats/requirements -->
-                            <div id="buyer-chat-list-column" class="bg-white p-4 space-y-3 overflow-y-auto lg:border-r border-slate-200 h-full block lg:block">
-                                <div class="px-2 mb-2">
-                                    <h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Suas Negociações</h3>
-                                    <p class="text-[10px] text-slate-500 mt-0.5">Selecione para abrir o chat mediado.</p>
+                            <div id="buyer-chat-list-column" class="bg-white p-3 md:p-4 space-y-3 overflow-y-auto lg:border-r border-slate-200 h-full block lg:block">
+                                <div class="px-2 mb-1 flex items-center justify-between">
+                                    <div>
+                                        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider" data-translate-pt="Suas Negociações" data-translate-en="Your Negotiations">Suas Negociações</h3>
+                                        <p class="text-[11px] text-slate-500 mt-0.5" data-translate-pt="Selecione para abrir a conversa." data-translate-en="Select to open conversation.">Selecione para abrir a conversa.</p>
+                                    </div>
+                                    <span class="px-2 py-0.5 bg-gvTeal/10 text-gvTeal rounded-full text-[10px] font-bold" id="buyer-chat-count-badge">0</span>
                                 </div>
+
+                                <!-- Search input for chats -->
+                                <div class="relative px-1 mb-2">
+                                    <span class="material-symbols-outlined absolute left-3 top-2.5 text-slate-400 text-sm">search</span>
+                                    <input type="text" id="buyer-chat-search-input" onkeyup="filterBuyerChatList()" placeholder="Pesquisar conversa..." data-translate-pt-placeholder="Pesquisar conversa..." data-translate-en-placeholder="Search negotiation..." class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-gvTeal transition">
+                                </div>
+
                                 <div id="buyer-chat-list-container" class="space-y-2">
                                     <!-- Injected dynamically: List of requirements with status -->
                                 </div>
                             </div>
                             
-                            <!-- Right: Conversation and details pane -->
+                            <!-- Right: Active Conversation Window -->
                             <div id="buyer-chat-content-column" class="lg:col-span-2 flex flex-col justify-between overflow-hidden h-full relative bg-slate-50 hidden lg:flex">
-                                <!-- Back button for mobile -->
-                                <div class="lg:hidden p-3 bg-white border-b border-slate-200 flex items-center shrink-0">
-                                    <button onclick="goBackToChatList()" class="flex items-center gap-1.5 text-xs font-bold text-slate-650 hover:text-slate-900 transition focus:outline-none">
-                                        <span class="material-symbols-outlined text-sm">arrow_back</span>
-                                        <span>Voltar para Conversas</span>
-                                    </button>
-                                </div>
                                 
-                                <!-- Detailed active requirement details + chat -->
-                                <div class="flex-1 overflow-y-auto p-4 md:p-6 space-y-6" id="buyer-active-chat-content">
-                                    <!-- Details & timeline -->
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <!-- Details -->
-                                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
-                                            <div class="flex items-center justify-between">
-                                                <h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Detalhes Registados</h3>
-                                                <span id="buyer-detail-status" class="status-badge atendimento">Em Atendimento</span>
-                                            </div>
-                                            <h2 class="text-base font-black text-slate-900 leading-tight" id="buyer-detail-title">Óleo de Soja Refinado</h2>
-                                            <p class="text-xs text-slate-600 leading-relaxed" id="buyer-detail-desc">Descrição da necessidade comercial.</p>
-                                            
-                                            <div class="grid grid-cols-2 gap-2 text-xs border-t border-slate-100 pt-3 text-slate-500">
-                                                <div>Categoria: <strong class="text-slate-800 font-semibold block mt-0.5" id="buyer-detail-category">-</strong></div>
-                                                <div>Volume: <strong class="text-slate-800 font-semibold block mt-0.5" id="buyer-detail-quantity">-</strong></div>
-                                                <div>Destino: <strong class="text-slate-800 font-semibold block mt-0.5" id="buyer-detail-country">-</strong></div>
-                                                <div>Logística: <strong class="text-slate-800 font-semibold block mt-0.5" id="buyer-detail-logistics">-</strong></div>
-                                                <div class="col-span-2 mt-1">Data de Cadastro: <strong class="text-slate-800 font-semibold block mt-0.5" id="buyer-detail-date">-</strong></div>
+                                <!-- Active Chat Interface -->
+                                <div id="buyer-active-chat-content" class="flex-1 flex flex-col overflow-hidden h-full">
+                                    <!-- Chat Header with Details Button -->
+                                    <div class="p-3 md:p-4 bg-white border-b border-slate-200 flex items-center justify-between shrink-0 shadow-xs gap-3">
+                                        <div class="flex items-center gap-3 min-w-0">
+                                            <button onclick="goBackToChatList()" class="lg:hidden text-slate-600 hover:text-slate-900 p-1.5 rounded-lg hover:bg-slate-100 transition shrink-0">
+                                                <span class="material-symbols-outlined text-xl">arrow_back</span>
+                                            </button>
+                                            <div class="w-9 h-9 rounded-full bg-gvTeal text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs" id="buyer-chat-header-avatar">GV</div>
+                                            <div class="truncate">
+                                                <div class="flex items-center gap-2">
+                                                    <h3 class="font-bold text-xs md:text-sm text-slate-900 truncate" id="buyer-chat-header-title">Negociação</h3>
+                                                    <span id="buyer-detail-status" class="status-badge atendimento text-[10px] py-0.5 px-2">Em Atendimento</span>
+                                                </div>
+                                                <p class="text-[11px] text-slate-500 truncate mt-0.5 flex items-center gap-1">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block shrink-0"></span>
+                                                    <span id="buyer-chat-header-subtitle">Consultor: Carlos Mendes (Intermediação GV-CPS)</span>
+                                                </p>
                                             </div>
                                         </div>
-                                        
-                                        <!-- Timeline -->
-                                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
-                                            <h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Estado do Negócio (Progresso)</h3>
-                                            <div class="timeline" id="buyer-timeline">
-                                                <!-- Timeline markers injected -->
-                                            </div>
+
+                                        <!-- Botões de Ação do Cabeçalho -->
+                                        <div class="flex items-center gap-2 shrink-0">
+                                            <!-- Botão: Pasta de Ficheiros/Gaveta de Documentos -->
+                                            <button onclick="toggleChatDocumentDrawer('buyer-chat-box')" class="inline-flex items-center justify-center w-8.5 h-8.5 bg-slate-100 hover:bg-slate-200 text-slate-650 rounded-xl transition cursor-pointer border border-slate-200 shadow-xs" id="buyer-chat-docs-btn" title="Documentos Partilhados" data-translate-pt-title="Documentos Partilhados" data-translate-en-title="Shared Documents">
+                                                <span class="material-symbols-outlined text-sm font-semibold" style="font-size:16px;">folder_open</span>
+                                            </button>
+
+                                            <!-- Botão: Visão Completa / Minimizar (Desktop Only) -->
+                                            <button onclick="toggleBuyerChatFullscreen()" class="hidden lg:inline-flex items-center justify-center w-8.5 h-8.5 bg-slate-100 hover:bg-slate-200 text-slate-650 rounded-xl transition cursor-pointer border border-slate-200 shadow-xs" id="buyer-chat-fullscreen-btn" title="Visão Completa" data-translate-pt-title="Visão Completa" data-translate-en-title="Full Screen View">
+                                                <span class="material-symbols-outlined text-sm font-semibold" id="buyer-chat-fullscreen-icon" style="font-size:16px;">open_in_full</span>
+                                            </button>
+
+                                            <!-- Button: Ver Detalhes do Negócio -->
+                                            <button onclick="openBuyerRequirementDetailsModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gvTeal/10 hover:bg-gvTeal/20 text-gvTeal font-bold text-xs rounded-xl transition border border-gvTeal/20 shadow-xs cursor-pointer">
+                                                <span class="material-symbols-outlined text-base">info</span>
+                                                <span class="hidden sm:inline" data-translate-pt="Ver Detalhes do Negócio" data-translate-en="View Deal Details">Ver Detalhes do Negócio</span>
+                                                <span class="sm:hidden" data-translate-pt="Detalhes" data-translate-en="Details">Detalhes</span>
+                                            </button>
                                         </div>
                                     </div>
                                     
-                                    <!-- Chat Box Container -->
-                                    <div id="buyer-chat-card-container" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
-                                        <div id="buyer-chat-box">
-                                            <!-- Injected dynamically -->
+                                    <!-- BANNER DE SEGURANÇA E PIPELINE -->
+                                    <div id="buyer-chat-safety-banner" class="bg-[#00374a] text-white p-3 md:p-4 shrink-0 border-b border-slate-700/30 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+                                        <!-- left side info -->
+                                        <div class="flex items-start gap-2.5 max-w-md">
+                                            <span class="material-symbols-outlined text-amber-500 shrink-0 mt-0.5 text-base md:text-lg">security</span>
+                                            <div>
+                                                <div class="flex items-center gap-2">
+                                                    <span class="bg-[#006d3d] text-[9px] text-white font-bold px-2 py-0.5 rounded-full uppercase" data-translate-pt="EM CURSO" data-translate-en="IN PROGRESS">EM CURSO</span>
+                                                    <h4 class="font-bold text-xs" data-translate-pt="Negociação Blindada" data-translate-en="Shielded Negotiation">Negociação Blindada</h4>
+                                                </div>
+                                                <p class="text-[10px] text-slate-350 mt-0.5 leading-relaxed" data-translate-pt="O contacto direto entre as partes é protegido sob sigilo comercial. Todas as propostas e pagamentos devem ser mediados pela GV-CPS." data-translate-en="Direct contact between parties is protected under commercial secrecy. All proposals and payments must be mediated by GV-CPS.">O contacto direto entre as partes é protegido sob sigilo comercial. Todas as propostas e pagamentos devem ser mediados pela GV-CPS.</p>
+                                            </div>
+                                        </div>
+                                        <!-- right side pipeline -->
+                                        <div class="flex items-center justify-between gap-1 w-full md:w-auto md:justify-end text-[10px] bg-black/20 p-2 rounded-xl border border-white/5 shrink-0">
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="w-4 h-4 rounded-full bg-[#006d3d] text-white flex items-center justify-center font-bold text-[9px]" id="pipeline-step-1-badge">1</span>
+                                                <span class="font-bold text-slate-200" data-translate-pt="Solicitado" data-translate-en="Requested">Solicitado</span>
+                                            </div>
+                                            <span class="text-slate-650 font-bold shrink-0">➔</span>
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="w-4 h-4 rounded-full bg-slate-600 text-white flex items-center justify-center font-bold text-[9px]" id="pipeline-step-2-badge">2</span>
+                                                <span class="text-slate-400 font-semibold" id="pipeline-step-2-label" data-translate-pt="Cotação" data-translate-en="Quotation">Cotação</span>
+                                            </div>
+                                            <span class="text-slate-650 font-bold shrink-0">➔</span>
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="w-4 h-4 rounded-full bg-slate-600 text-white flex items-center justify-center font-bold text-[9px]" id="pipeline-step-3-badge">3</span>
+                                                <span class="text-slate-400 font-semibold" id="pipeline-step-3-label" data-translate-pt="Logística" data-translate-en="Logistics">Logística</span>
+                                            </div>
+                                            <span class="text-slate-650 font-bold shrink-0">➔</span>
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="w-4 h-4 rounded-full bg-slate-600 text-white flex items-center justify-center font-bold text-[9px]" id="pipeline-step-4-badge">4</span>
+                                                <span class="text-slate-400 font-semibold" id="pipeline-step-4-label" data-translate-pt="Contrato" data-translate-en="Contract">Contrato</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Chat Box Container (Full Height Messages + Quick Chips + Input) -->
+                                    <div id="buyer-chat-card-container" class="flex-1 flex flex-col overflow-hidden bg-slate-50 relative">
+                                        <div id="buyer-chat-box" class="flex-1 flex flex-col overflow-hidden h-full">
+                                            <!-- Injected dynamically via renderPortalChat -->
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Placeholder when no requirement is selected -->
-                                <div id="buyer-chat-placeholder" class="hidden flex-1 p-6 flex flex-col items-center justify-center text-center">
-                                    <span class="material-symbols-outlined text-[48px] mb-2 text-slate-300">inbox</span>
-                                    <h4 class="font-bold text-slate-700 text-sm">Nenhuma Negociação Selecionada</h4>
-                                    <p class="text-xs text-slate-550 max-w-xs mt-1">Selecione uma das suas negociações na barra lateral para ver o progresso e conversar com o consultor.</p>
+                                <div id="buyer-chat-placeholder" class="hidden flex-1 p-6 flex flex-col items-center justify-center text-center bg-slate-50">
+                                    <span class="material-symbols-outlined text-[56px] mb-3 text-slate-300">forum</span>
+                                    <h4 class="font-bold text-slate-800 text-sm md:text-base" data-translate-pt="Nenhuma Negociação Selecionada" data-translate-en="No Negotiation Selected">Nenhuma Negociação Selecionada</h4>
+                                    <p class="text-xs text-slate-500 max-w-xs mt-1 leading-relaxed" data-translate-pt="Selecione uma das suas negociações na barra lateral para iniciar a conversa mediada com a GV-CPS." data-translate-en="Select one of your negotiations from the sidebar to start mediated chat with GV-CPS.">Selecione uma das suas negociações na barra lateral para iniciar a conversa mediada com a GV-CPS.</p>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal: Detalhes do Negócio & Progresso Cockpit (Buyer Portal) -->
+                    <div id="buyer-requirement-details-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden items-center justify-center p-4 transition-all duration-300">
+                        <!-- Drawer Body as Centered Popup Card -->
+                        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-100 overflow-hidden transform scale-95 opacity-0 transition-all duration-300" id="buyer-requirement-details-drawer">
+                            <!-- Header -->
+                            <div class="p-4 md:p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/80 shrink-0">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-xl bg-gvTeal/10 text-gvTeal flex items-center justify-center font-bold shrink-0">
+                                        <span class="material-symbols-outlined text-lg">description</span>
+                                    </div>
+                                    <div class="min-w-0">
+                                        <h3 class="font-bold text-sm md:text-base text-slate-900 truncate" id="buyer-modal-detail-title">Detalhes do Negócio</h3>
+                                        <p class="text-[11px] text-slate-500 flex items-center gap-1.5 mt-0.5">
+                                            <span class="font-medium" data-translate-pt="Estado:" data-translate-en="Status:">Estado:</span>
+                                            <span id="buyer-modal-detail-status" class="status-badge atendimento text-[10px] py-0.5 px-2">Em Atendimento</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <button onclick="closeBuyerRequirementDetailsModal()" class="w-8 h-8 rounded-full bg-slate-200/60 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition focus:outline-none cursor-pointer shrink-0">
+                                    <span class="material-symbols-outlined text-lg">close</span>
+                                </button>
+                            </div>
+
+                            <!-- Body Scrollable (Two-column layout on Desktop) -->
+                            <div class="p-4 md:p-6 overflow-y-auto flex-1 text-xs no-scrollbar">
+                                <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+                                    
+                                    <!-- Left Column: Specs and Documents -->
+                                    <div class="lg:col-span-3 space-y-5">
+                                        <!-- Alert Logistics Integrated -->
+                                        <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3.5 flex items-start gap-2.5 text-emerald-900">
+                                            <span class="material-symbols-outlined text-emerald-600 shrink-0 text-xl">local_shipping</span>
+                                            <div>
+                                                <h4 class="font-bold text-xs text-emerald-950" data-translate-pt="Logística Integrada pela GV-CPS" data-translate-en="Logistics Integrated by GV-CPS">Logística Integrada pela GV-CPS</h4>
+                                                <p class="text-[10px] text-emerald-850 mt-0.5 leading-relaxed" data-translate-pt="A gestão comercial e o despacho logístico estão incluídos e coordenados diretamente pela GV-CPS." data-translate-en="Commercial management and logistics dispatch are included and coordinated directly by GV-CPS.">A gestão comercial e o despacho logístico estão incluídos e coordenados diretamente pela GV-CPS.</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Specifications Grid -->
+                                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                                            <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider" data-translate-pt="Ficha Técnica da Necessidade" data-translate-en="Requirement Specifications">Ficha Técnica da Necessidade</h4>
+                                            <p class="text-xs text-slate-700 leading-relaxed font-medium" id="buyer-modal-detail-desc">-</p>
+                                            
+                                            <div class="grid grid-cols-2 gap-3.5 border-t border-slate-200 pt-3 text-slate-600">
+                                                <div class="col-span-2">
+                                                    <span class="text-[10px] text-slate-400 block uppercase" data-translate-pt="Categoria" data-translate-en="Category">Categoria</span>
+                                                    <strong class="text-slate-800 font-semibold text-xs mt-0.5 block" id="buyer-modal-detail-category">-</strong>
+                                                </div>
+                                                <div>
+                                                    <span class="text-[10px] text-slate-400 block uppercase" data-translate-pt="Volume / Qtd" data-translate-en="Volume / Qty">Volume / Qtd</span>
+                                                    <strong class="text-slate-800 font-semibold text-xs mt-0.5 block" id="buyer-modal-detail-quantity">-</strong>
+                                                </div>
+                                                <div>
+                                                    <span class="text-[10px] text-slate-400 block uppercase" data-translate-pt="Destino" data-translate-en="Destination">Destino</span>
+                                                    <strong class="text-slate-800 font-semibold text-xs mt-0.5 block" id="buyer-modal-detail-country">-</strong>
+                                                </div>
+                                                <div>
+                                                    <span class="text-[10px] text-slate-400 block uppercase" data-translate-pt="Serviço de Logística" data-translate-en="Logistics Service">Serviço de Logística</span>
+                                                    <strong class="text-emerald-700 font-bold text-xs mt-0.5 block flex items-center gap-1">
+                                                        <span class="material-symbols-outlined text-sm">check_circle</span>
+                                                        <span id="buyer-modal-detail-logistics">Incluída na Facturação</span>
+                                                    </strong>
+                                                </div>
+                                                <div>
+                                                    <span class="text-[10px] text-slate-400 block uppercase" data-translate-pt="Incoterm" data-translate-en="Incoterm">Incoterm</span>
+                                                    <strong class="text-slate-800 font-semibold text-xs mt-0.5 block" id="buyer-modal-detail-incoterm">CIF (Porto de Beira)</strong>
+                                                </div>
+                                                <div>
+                                                    <span class="text-[10px] text-slate-400 block uppercase" data-translate-pt="Data de Registo" data-translate-en="Registration Date">Data de Registo</span>
+                                                    <strong class="text-slate-800 font-semibold text-xs mt-0.5 block" id="buyer-modal-detail-date">-</strong>
+                                                </div>
+                                                <div>
+                                                    <span class="text-[10px] text-slate-400 block uppercase" data-translate-pt="Intermediário" data-translate-en="Mediator">Intermediário</span>
+                                                    <strong class="text-gvTeal font-bold text-xs mt-0.5 block">GV-CPS (Protegido)</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Associated Documents -->
+                                        <div class="space-y-2.5">
+                                            <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider" data-translate-pt="Documentos Associados" data-translate-en="Associated Documents">Documentos Associados</h4>
+                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                <div class="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100/75 transition">
+                                                    <div class="flex items-center gap-2 min-w-0">
+                                                        <span class="material-symbols-outlined text-rose-600 text-lg shrink-0">picture_as_pdf</span>
+                                                        <div class="truncate">
+                                                            <span class="font-bold text-slate-850 block truncate text-[11px]" id="doc-spec-filename">Ficha_Especificacao_Tecnica.pdf</span>
+                                                            <span class="text-[9px] text-slate-450 block" data-translate-pt="Gerado pelo Comprador • 1.2 MB" data-translate-en="Generated by Buyer • 1.2 MB">Gerado pelo Comprador • 1.2 MB</span>
+                                                        </div>
+                                                    </div>
+                                                    <button onclick="alert('Download iniciado')" class="text-gvTeal hover:text-gvTeal-light p-1 rounded-lg transition shrink-0 cursor-pointer">
+                                                        <span class="material-symbols-outlined text-lg">download</span>
+                                                    </button>
+                                                </div>
+                                                <div class="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100/75 transition">
+                                                    <div class="flex items-center gap-2 min-w-0">
+                                                        <span class="material-symbols-outlined text-rose-600 text-lg shrink-0">picture_as_pdf</span>
+                                                        <div class="truncate">
+                                                            <span class="font-bold text-slate-850 block truncate text-[11px]">Termos_Intermediacao_GVCPS.pdf</span>
+                                                            <span class="text-[9px] text-slate-450 block" data-translate-pt="Termos Comerciais e Sigilo • 450 KB" data-translate-en="Commercial Terms & Confidentiality • 450 KB">Termos Comerciais e Sigilo • 450 KB</span>
+                                                        </div>
+                                                    </div>
+                                                    <button onclick="alert('Download iniciado')" class="text-gvTeal hover:text-gvTeal-light p-1 rounded-lg transition shrink-0 cursor-pointer">
+                                                        <span class="material-symbols-outlined text-lg">download</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Right Column: Deal Progress Timeline -->
+                                    <div class="lg:col-span-2 space-y-4">
+                                        <h4 class="text-[10px] font-bold text-slate-450 uppercase tracking-wider" data-translate-pt="Progresso do Negócio" data-translate-en="Deal Progress Timeline">Progresso do Negócio</h4>
+                                        <div class="bg-white p-4 rounded-xl border border-slate-200 h-full max-h-[500px] overflow-y-auto">
+                                            <div class="timeline" id="buyer-modal-timeline">
+                                                <!-- Timeline markers injected -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- Footer -->
+                            <div class="p-3.5 border-t border-slate-100 bg-slate-50 flex justify-end shrink-0">
+                                <button onclick="closeBuyerRequirementDetailsModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white font-bold text-[11px] rounded-xl transition cursor-pointer" data-translate-pt="Fechar" data-translate-en="Close">Fechar</button>
                             </div>
                         </div>
                     </div>
@@ -2776,23 +3130,39 @@
             
             <div class="text-center">
                 <img src="assets/images/logo_official.png?v=20260721" alt="GV-CPS Logo" style="height: 52px; width: auto; margin: 0 auto 12px; display: block; object-fit: contain;">
-                <h3 class="headline-sm text-primary" style="font-weight: 700;">Acesso ao Painel Restrito</h3>
-                <p class="text-on-surface-variant text-xs mt-1">Coloque as suas credenciais ou escolha um perfil de simulação.</p>
+                <h3 class="headline-sm text-primary" style="font-weight: 700;" data-translate-pt="Acesso ao Painel Restrito" data-translate-en="Access to Restricted Panel">Acesso ao Painel Restrito</h3>
+                <p class="text-on-surface-variant text-xs mt-1" data-translate-pt="Coloque as suas credenciais ou escolha um perfil de simulação." data-translate-en="Enter your credentials or choose a simulation profile.">Coloque as suas credenciais ou escolha um perfil de simulação.</p>
             </div>
             
             <form id="mock-login-form" onsubmit="handleMockLogin(event)" style="display: flex; flex-direction: column; gap: 16px;">
                 <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
-                    <label style="font-size: 12px; font-weight: 600; color: var(--primary); text-align: left;">E-mail Corporativo</label>
-                    <input type="email" id="login-email" class="form-input" style="padding: 10px 14px; border-radius: var(--radius-lg);" placeholder="nome@empresa.com" required>
+                    <label style="font-size: 12px; font-weight: 600; color: var(--primary); text-align: left;" data-translate-pt="E-mail Corporativo" data-translate-en="Corporate Email">E-mail Corporativo</label>
+                    <input type="email" id="login-email" class="form-input" style="padding: 10px 14px; border-radius: var(--radius-lg);" placeholder="nome@empresa.com" data-translate-pt="nome@empresa.com" data-translate-en="name@company.com" required>
                 </div>
                 
                 <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
-                    <label style="font-size: 12px; font-weight: 600; color: var(--primary); text-align: left;">Palavra-passe</label>
-                    <input type="password" id="login-password" class="form-input" style="padding: 10px 14px; border-radius: var(--radius-lg);" placeholder="••••••••" required>
+                    <label style="font-size: 12px; font-weight: 600; color: var(--primary); text-align: left;" data-translate-pt="Palavra-passe" data-translate-en="Password">Palavra-passe</label>
+                    <input type="password" id="login-password" class="form-input" style="padding: 10px 14px; border-radius: var(--radius-lg);" placeholder="••••••••" data-translate-pt="••••••••" data-translate-en="••••••••" required>
                 </div>
                 
-                <button type="submit" class="btn btn-secondary w-full" style="padding: 12px; font-weight: bold; border-radius: var(--radius-xl); cursor: pointer; border: none;">Aceder com Segurança</button>
+                <button type="submit" class="btn btn-secondary w-full" style="padding: 12px; font-weight: bold; border-radius: var(--radius-xl); cursor: pointer; border: none;" data-translate-pt="Aceder com Segurança" data-translate-en="Access Securely">Aceder com Segurança</button>
             </form>
+
+            <div style="display: flex; align-items: center; gap: 8px; margin: 8px 0;">
+                <div style="flex: 1; height: 1px; background-color: rgba(0,0,0,0.08);"></div>
+                <span style="font-size: 11px; color: var(--outline); font-weight: bold; text-transform: uppercase;" data-translate-pt="ou" data-translate-en="or">ou</span>
+                <div style="flex: 1; height: 1px; background-color: rgba(0,0,0,0.08);"></div>
+            </div>
+
+            <button id="btnGoogleLogin" onclick="handleGoogleLogin()" class="btn w-full" style="padding: 12px; font-weight: bold; border-radius: var(--radius-xl); cursor: pointer; border: 1px solid var(--outline-variant); background-color: white; color: var(--on-surface); display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+                </svg>
+                <span data-translate-pt="Entrar com o Google" data-translate-en="Sign in with Google">Entrar com o Google</span>
+            </button>
             
             <div class="border-t border-outline-variant/30 pt-4" style="border-top: 1px solid rgba(0,0,0,0.08);">
                 <div style="font-size: 11px; font-weight: bold; color: var(--outline); text-transform: uppercase; margin-bottom: 12px; text-align: center; tracking-widest">Perfis Rápidos para Demonstração</div>
@@ -2935,7 +3305,7 @@
 
                     <!-- 3. Quantity & Volume Input (ON TOP) with Suggestions (BELOW) -->
                     <div class="wizard-input-group mt-4" style="margin-top: 20px;">
-                        <label class="wizard-input-label" data-translate-pt="4. Quantidade &amp; Volume Pretendido:" data-translate-en="4. Target Quantity &amp; Volume:">4. Quantidade &amp; Volume Pretendido:</label>
+                            <label class="wizard-input-label" data-translate-pt="4. Quantidade &amp; Volume Pretendido:" data-translate-en="4. Target Quantity &amp; Volume:">4. Quantidade &amp; Volume Pretendido:</label>
                         
                         <!-- Input & Unit Selector ON TOP -->
                         <div class="flex gap-2 items-center" style="display: flex; gap: 8px;">
@@ -2958,16 +3328,9 @@
                                 <!-- Rendered by JS below the input -->
                             </div>
                         </div>
-
-                        <!-- Slider Sincronizado -->
-                        <div class="mt-2" style="margin-top: 8px;">
-                            <input type="range" id="wizard-qty-slider" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" min="1" max="1000" value="1" style="width: 100%;" oninput="document.getElementById('wizard-qty-input').value = this.value;">
-                            <div class="flex justify-between text-[10px] text-slate-400 mt-1" style="display: flex; justify-content: space-between; font-size: 10px; color: #94a3b8; margin-top: 4px;">
-                                <span id="wizard-slider-min">1</span>
-                                <span id="wizard-slider-max">1000</span>
-                            </div>
-                        </div>
                     </div>
+
+
 
                     <!-- 4. Destination Port & Delivery Details -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 20px;">
@@ -2976,15 +3339,13 @@
                             <input type="text" id="wizard-contact-port" class="wizard-input" placeholder="Ex: Porto de Maputo, Santos, Rotterdam, Jebel Ali..." data-translate-pt="Ex: Porto de Maputo, Santos, Rotterdam, Jebel Ali..." data-translate-en="e.g. Port of Maputo, Santos, Rotterdam, Jebel Ali...">
                         </div>
                         <div class="wizard-input-group" style="margin-bottom: 0;">
-                            <label class="wizard-input-label" data-translate-pt="6. Incluir Serviço Logístico GV-CPS?" data-translate-en="6. Include GV-CPS Logistics Service?">6. Incluir Serviço Logístico GV-CPS?</label>
-                            <div class="flex gap-2" style="display: flex; gap: 8px;">
-                                <label class="flex-1 flex items-center gap-1.5 p-3 border border-slate-200 rounded-xl cursor-pointer text-xs font-bold" style="flex:1; display:flex; align-items:center; gap:6px; padding:12px; border:1px solid #cbd5e1; border-radius:12px;">
-                                    <input type="radio" name="wizard-logistics" value="Sim" checked> <span data-translate-pt="Sim (Solução Completa)" data-translate-en="Yes (Full Solution)">Sim (Solução Completa)</span>
-                                </label>
-                                <label class="flex-1 flex items-center gap-1.5 p-3 border border-slate-200 rounded-xl cursor-pointer text-xs font-bold" style="flex:1; display:flex; align-items:center; gap:6px; padding:12px; border:1px solid #cbd5e1; border-radius:12px;">
-                                    <input type="radio" name="wizard-logistics" value="Não"> <span data-translate-pt="Apenas Produto" data-translate-en="Product Only">Apenas Produto</span>
-                                </label>
+                            <label class="wizard-input-label" data-translate-pt="6. Intermediação &amp; Logística:" data-translate-en="6. Intermediation &amp; Logistics:">6. Intermediação &amp; Logística:</label>
+                            <div class="flex items-center gap-2 p-3 bg-emerald-50 border border-emerald-300 rounded-xl text-emerald-800 font-bold text-xs cursor-pointer hover:bg-emerald-100 transition-colors" onclick="showLogisticsInfoModal()" title="Clique para ver detalhes do acompanhamento logístico GV-CPS">
+                                <span class="material-symbols-outlined text-emerald-600 text-lg">check_circle</span>
+                                <span data-translate-pt="Logística Incluída" data-translate-en="Logistics Included">Logística Incluída</span>
+                                <span class="material-symbols-outlined text-emerald-600 text-sm ml-auto">info</span>
                             </div>
+                            <input type="hidden" id="wizard-logistics-hidden" name="wizard-logistics" value="Sim">
                         </div>
                     </div>
 

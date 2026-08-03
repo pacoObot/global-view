@@ -2067,20 +2067,38 @@ function renderBuyerPortal(tab, activeId) {
             }
         }
         
-        // Render Detail Panel HTML
-        document.getElementById('buyer-detail-title').textContent = req.title;
-        document.getElementById('buyer-detail-status').className = `status-badge ${req.status}`;
-        document.getElementById('buyer-detail-status').textContent = formatStatusPT(req.status);
-        
-        document.getElementById('buyer-detail-desc').textContent = req.description;
-        document.getElementById('buyer-detail-category').textContent = req.category;
-        document.getElementById('buyer-detail-quantity').textContent = req.quantity;
-        document.getElementById('buyer-detail-country').textContent = req.country;
-        document.getElementById('buyer-detail-logistics').textContent = req.logistics === 'Sim' ? 'Sim (Incluída na facturação)' : 'Não';
-        document.getElementById('buyer-detail-date').textContent = formatDate(req.date);
-        
-        // Timeline Rendering
-        renderTimeline('buyer-timeline', req);
+        // Render Detail Panel HTML — use only IDs that actually exist in the HTML
+        const headerTitleEl = document.getElementById('buyer-chat-header-title');
+        const headerSubtitleEl = document.getElementById('buyer-chat-header-subtitle');
+        const headerAvatarEl = document.getElementById('buyer-chat-header-avatar');
+        const headerStatusEl = document.getElementById('buyer-detail-status');
+        const countBadgeEl = document.getElementById('buyer-chat-count-badge');
+
+        if (headerTitleEl) headerTitleEl.textContent = req.title;
+        if (headerStatusEl) {
+            headerStatusEl.className = `status-badge ${req.status}`;
+            headerStatusEl.textContent = formatStatusPT(req.status);
+        }
+
+        const matchForHeader = appState.matches.find(m => m.requirementId === req.id);
+        if (headerSubtitleEl) {
+            if (matchForHeader) {
+                const cons = appState.users[matchForHeader.consultantId];
+                headerSubtitleEl.textContent = `Consultor: ${cons ? cons.name : 'GV-CPS'} (Intermediação GV-CPS)`;
+            } else {
+                headerSubtitleEl.textContent = 'Aguardando consultor GV-CPS...';
+            }
+        }
+
+        // Avatar initials
+        if (headerAvatarEl) {
+            const words = req.title.replace('Importação de ', '').replace('Aquisição de ', '').split(' ');
+            const initials = ((words[0] ? words[0][0] : '') + (words[1] ? words[1][0] : '')).toUpperCase() || 'GV';
+            headerAvatarEl.textContent = initials;
+        }
+
+        // Update count badge
+        if (countBadgeEl) countBadgeEl.textContent = reqs.length;
         
         // Chat Mediated section
         const chatContainer = document.getElementById('buyer-chat-card-container');
@@ -2854,7 +2872,7 @@ function renderTimeline(elementId, item) {
             <div class="timeline-marker"></div>
             <div class="timeline-item-title">${t.s2Title}</div>
             <div class="timeline-item-date">${currentIndex >= 1 ? formatDate(item.date) : '--'}</div>
-            <div class="timeline-item-desc">${t.s2Desc}</div>
+                            <div class="timeline-item-desc">${t.s2Desc}</div>
         </div>
         <div class="timeline-item ${currentIndex >= 2 ? 'completed' : ''} ${item.status === 'atendimento' ? 'active' : ''}">
             <div class="timeline-marker"></div>
@@ -2871,15 +2889,214 @@ function renderTimeline(elementId, item) {
     `;
 }
 
+// === ACTION CARD DEFINITIONS ===
+// Each actionType maps to a color, icon, labels, and consultant CTA.
+const ACTION_CARD_DEFS = {
+    quote: {
+        icon: 'request_quote',
+        bg: 'rgba(13,148,136,0.07)',
+        border: 'rgba(13,148,136,0.25)',
+        accent: '#0d9488',
+        headerBg: 'rgba(13,148,136,0.12)',
+        pt: { title: 'PEDIDO DE COTAÇÃO', label: 'A Processar', desc: 'Solicito a cotação formal e detalhada para esta necessidade, com a logística integrada pela GV-CPS, valores CIF e prazo de entrega.' },
+        en: { title: 'QUOTE REQUESTED', label: 'Processing', desc: 'I request the formal detailed quotation for this requirement, including GV-CPS integrated logistics, CIF value and delivery timeline.' },
+        consultantBtnPt: 'Enviar Cotação',
+        consultantBtnEn: 'Send Quotation',
+        consultantBtnIcon: 'send',
+        consultantBtnAction: 'openSendQuoteForm'
+    },
+    status: {
+        icon: 'query_stats',
+        bg: 'rgba(217,119,6,0.07)',
+        border: 'rgba(217,119,6,0.25)',
+        accent: '#d97706',
+        headerBg: 'rgba(217,119,6,0.12)',
+        pt: { title: 'PONTO DE SITUAÇÃO', label: 'Em Análise', desc: 'Solicito uma atualização do estado das negociações com os fornecedores qualificados para esta necessidade.' },
+        en: { title: 'STATUS UPDATE', label: 'Under Review', desc: 'Please provide a status update on the progress with qualified suppliers for this requirement.' },
+        consultantBtnPt: 'Responder Status',
+        consultantBtnEn: 'Reply Status',
+        consultantBtnIcon: 'forum',
+        consultantBtnAction: 'sendConsultantStatusReply'
+    },
+    contract: {
+        icon: 'description',
+        bg: 'rgba(109,40,217,0.07)',
+        border: 'rgba(109,40,217,0.25)',
+        accent: '#7c3aed',
+        headerBg: 'rgba(109,40,217,0.10)',
+        pt: { title: 'MINUTA DE CONTRATO', label: 'Sob Análise Jurídica', desc: 'Solicito o envio da minuta do contrato comercial sob intermediação oficial da GV-CPS, para análise antes da assinatura.' },
+        en: { title: 'DRAFT CONTRACT', label: 'Legal Review', desc: 'Please share the draft commercial contract under GV-CPS official mediation for our review before signing.' },
+        consultantBtnPt: 'Enviar Minuta',
+        consultantBtnEn: 'Send Draft',
+        consultantBtnIcon: 'upload_file',
+        consultantBtnAction: 'sendConsultantContractDraft'
+    }
+};
+
+function getQuickActionCardInfo(text, lang) {
+    // Detect actionType from message metadata marker or legacy text
+    const markerMatch = text && text.match(/\[ACTION:(quote|status|contract)\]/);
+    if (markerMatch) {
+        const def = ACTION_CARD_DEFS[markerMatch[1]];
+        if (!def) return null;
+        const t = lang === 'en' ? def.en : def.pt;
+        return { actionType: markerMatch[1], icon: def.icon, color: def.bg, textColor: def.accent, borderColor: def.border, headerBg: def.headerBg, title: t.title, desc: t.desc, actionLabel: t.label };
+    }
+    // Legacy text detection (backward compat)
+    if (text && (text.includes('cotação formal') || text.includes('formal detailed quotation'))) {
+        const def = ACTION_CARD_DEFS.quote; const t = lang === 'en' ? def.en : def.pt;
+        return { actionType: 'quote', icon: def.icon, color: def.bg, textColor: def.accent, borderColor: def.border, headerBg: def.headerBg, title: t.title, desc: t.desc, actionLabel: t.label };
+    }
+    if (text && (text.includes('ponto de situação') || text.includes('status update on the progress'))) {
+        const def = ACTION_CARD_DEFS.status; const t = lang === 'en' ? def.en : def.pt;
+        return { actionType: 'status', icon: def.icon, color: def.bg, textColor: def.accent, borderColor: def.border, headerBg: def.headerBg, title: t.title, desc: t.desc, actionLabel: t.label };
+    }
+    if (text && (text.includes('minuta do contrato') || text.includes('draft commercial contract'))) {
+        const def = ACTION_CARD_DEFS.contract; const t = lang === 'en' ? def.en : def.pt;
+        return { actionType: 'contract', icon: def.icon, color: def.bg, textColor: def.accent, borderColor: def.border, headerBg: def.headerBg, title: t.title, desc: t.desc, actionLabel: t.label };
+    }
+    return null;
+}
+
+// Smart Quick Action: sends once, scrolls+highlights if already sent
+window.sendChatQuickAction = function(matchId, channelType, containerId, actionType) {
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    const def = ACTION_CARD_DEFS[actionType];
+    if (!def) return;
+
+    // Check if this actionType was already sent in this conversation
+    const alreadySent = appState.messages.find(m =>
+        m.matchId === matchId &&
+        m.channel === channelType &&
+        m.actionType === actionType
+    );
+
+    if (alreadySent) {
+        // Scroll to + flash highlight the existing card
+        const messagesArea = document.getElementById(`${containerId}-messages-area`);
+        const existingCard = messagesArea ? messagesArea.querySelector(`[data-action-id="${alreadySent.id}"]`) : null;
+        if (existingCard) {
+            existingCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            existingCard.style.transition = 'box-shadow 0.2s, transform 0.2s';
+            existingCard.style.boxShadow = `0 0 0 3px ${def.accent}55`;
+            existingCard.style.transform = 'scale(1.015)';
+            setTimeout(() => {
+                existingCard.style.boxShadow = '';
+                existingCard.style.transform = '';
+            }, 1600);
+        }
+        // Show toast
+        showActionCardToast(lang === 'en' ? `Already sent — card highlighted above.` : `Pedido já enviado — card destacado acima.`, def.accent);
+        return;
+    }
+
+    // Build message text with marker
+    const t = lang === 'en' ? def.en : def.pt;
+    const msgText = `[ACTION:${actionType}] ${t.desc}`;
+
+    const senderId = appState.currentUser.id;
+    const senderRole = appState.currentUser.role;
+    const newMsgId = `msg_${Date.now()}`;
+
+    const newMsg = {
+        id: newMsgId,
+        matchId,
+        senderId,
+        senderRole,
+        text: msgText,
+        actionType,
+        timestamp: new Date().toISOString(),
+        channel: channelType
+    };
+    appState.messages.push(newMsg);
+    saveState();
+
+    // Re-render
+    if (senderRole === 'buyer') renderBuyerPortal('detail');
+    else if (senderRole === 'supplier') renderSupplierPortal('detail');
+    else if (senderRole === 'consultant') renderConsultantPortal('negotiation', matchId);
+};
+
+function showActionCardToast(msg, color) {
+    const existing = document.getElementById('gv-action-toast');
+    if (existing) existing.remove();
+    const t = document.createElement('div');
+    t.id = 'gv-action-toast';
+    t.style.cssText = `position:fixed;bottom:88px;right:24px;z-index:9999;padding:10px 18px;background:white;border-left:4px solid ${color};border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.15);font-size:12px;font-weight:700;color:#1e293b;max-width:280px;transition:opacity 0.4s;`;
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 400); }, 2800);
+}
+
+// Consultant quick replies
+window.openSendQuoteForm = function(matchId, channelType) {
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    const price = prompt(lang === 'en' ? 'Quote value (e.g. USD 45,000):' : 'Valor da Cotação (ex: USD 45.000):');
+    if (!price) return;
+    const details = prompt(lang === 'en' ? 'Delivery time and conditions:' : 'Prazo e condições de entrega:');
+    const senderId = appState.currentUser.id;
+    appState.messages.push({
+        id: `msg_${Date.now()}`,
+        matchId, senderId,
+        senderRole: appState.currentUser.role,
+        text: `[ACTION:quote_reply]`,
+        actionType: 'quote_reply',
+        proposalData: { price, details: details || '', logisticsIncluded: true, logisticsCost: '', status: 'pendente' },
+        timestamp: new Date().toISOString(),
+        channel: channelType
+    });
+    saveState();
+    renderConsultantPortal('negotiation', matchId);
+};
+
+window.sendConsultantStatusReply = function(matchId, channelType) {
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    const status = prompt(lang === 'en' ? 'Current status to share with buyer:' : 'Estado atual para partilhar com o comprador:');
+    if (!status) return;
+    const senderId = appState.currentUser.id;
+    appState.messages.push({
+        id: `msg_${Date.now()}`,
+        matchId, senderId,
+        senderRole: appState.currentUser.role,
+        text: status,
+        timestamp: new Date().toISOString(),
+        channel: channelType
+    });
+    saveState();
+    renderConsultantPortal('negotiation', matchId);
+};
+
+window.sendConsultantContractDraft = function(matchId, channelType) {
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    const senderId = appState.currentUser.id;
+    const fileName = lang === 'en' ? 'Contract_Draft_GV-CPS.pdf' : 'Minuta_Contrato_GV-CPS.pdf';
+    appState.messages.push({
+        id: `msg_${Date.now()}`,
+        matchId, senderId,
+        senderRole: appState.currentUser.role,
+        text: fileName,
+        attachmentType: 'file',
+        attachmentSize: '320 KB',
+        timestamp: new Date().toISOString(),
+        channel: channelType
+    });
+    saveState();
+    renderConsultantPortal('negotiation', matchId);
+};
+
 function renderPortalChat(containerId, matchId, channelType) {
     const el = document.getElementById(containerId);
     if (!el) return;
     
     const lang = localStorage.getItem('gvcps_lang') || 'pt';
     const match = appState.matches.find(m => m.id === matchId);
+    if (!match) {
+        el.innerHTML = `<div class="text-center py-8 text-xs text-slate-400 font-medium">${lang === 'en' ? 'No active negotiation match found.' : 'Nenhuma intermediação ativa encontrada.'}</div>`;
+        return;
+    }
     const msgs = appState.messages.filter(m => m.matchId === matchId && m.channel === channelType);
     
-    const consultantObj = appState.users[match.consultantId];
+    const consultantObj = match.consultantId ? appState.users[match.consultantId] : null;
     const headerTitle = lang === 'en' ? 'Shielded Intermediation (GV-CPS)' : 'Intermediação Segura (GV-CPS)';
     const consultantLabel = lang === 'en' ? 'Assigned Consultant' : 'Consultor Responsável';
     const statusLabel = match.status === 'fechado' 
@@ -2890,9 +3107,12 @@ function renderPortalChat(containerId, matchId, channelType) {
         : 'Negociação Segura: O contacto direto entre comprador e fornecedor é protegido sob sigilo comercial.';
     const placeholderText = lang === 'en' ? 'Write a secure message...' : 'Escreva uma mensagem segura...';
     
+    const hideHeader = containerId === 'buyer-chat-box';
+    
     el.innerHTML = `
-        <div class="portal-chat-card">
-            <div class="portal-chat-header" style="padding: 16px 20px; border-bottom: 1px solid var(--outline-variant);">
+        <div class="portal-chat-card relative overflow-hidden" style="border: none; box-shadow: none; background: transparent; height: 100%;">
+            ${hideHeader ? '' : `
+            <div class="portal-chat-header" style="padding: 16px 20px; border-bottom: 1px solid var(--outline-variant); display: flex; justify-content: space-between; align-items: center;">
                 <div class="portal-chat-title-info">
                     <span class="material-symbols-outlined" style="color: var(--secondary);">security</span>
                     <div>
@@ -2903,25 +3123,124 @@ function renderPortalChat(containerId, matchId, channelType) {
                         </p>
                     </div>
                 </div>
-                <span class="portal-chat-badge" style="background-color: ${match.status === 'fechado' ? 'rgba(0, 109, 61, 0.1)' : 'rgba(217, 119, 6, 0.1)'}; color: ${match.status === 'fechado' ? '#006d3d' : '#d97706'}; font-weight: bold; font-size: 10px; padding: 4px 8px; border-radius: var(--radius-sm);">${statusLabel}</span>
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="toggleChatDocumentDrawer('${containerId}')" class="inline-flex items-center justify-center w-8 h-8 bg-slate-100 hover:bg-slate-200 text-slate-650 rounded-xl transition cursor-pointer border border-slate-200 shadow-xs" title="${lang === 'en' ? 'Shared Documents' : 'Documentos Partilhados'}">
+                        <span class="material-symbols-outlined text-[16px] font-semibold">folder_open</span>
+                    </button>
+                    <span class="portal-chat-badge" style="background-color: ${match.status === 'fechado' ? 'rgba(0, 109, 61, 0.1)' : 'rgba(217, 119, 6, 0.1)'}; color: ${match.status === 'fechado' ? '#006d3d' : '#d97706'}; font-weight: bold; font-size: 10px; padding: 4px 8px; border-radius: var(--radius-sm);">${statusLabel}</span>
+                </div>
             </div>
             
             <div class="bg-primary/5 text-primary text-xs font-semibold px-4 py-2 border-b border-outline-variant/30 text-center flex items-center justify-center gap-1.5" style="font-size: 10px; background-color: rgba(0, 55, 74, 0.05); color: var(--primary); border-bottom: 1px solid rgba(0, 0, 0, 0.05); font-weight: 600;">
                 <span class="material-symbols-outlined" style="font-size: 13px; color: var(--primary);">lock</span>
                 ${warningText}
             </div>
+            `}
             
-            <div class="portal-chat-messages" id="${containerId}-messages-area" style="padding: 16px;">
+            <div class="portal-chat-messages shadow-inner" id="${containerId}-messages-area" style="padding: 16px; overflow-y: auto; flex: 1;">
                 <!-- Messages will be injected -->
             </div>
             
-            <div class="portal-chat-input-area" style="padding: 12px 16px; border-top: 1px solid var(--outline-variant);">
-                <form class="portal-chat-form" id="${containerId}-form" onsubmit="event.preventDefault(); sendChatMessage('${matchId}', '${channelType}', '${containerId}-input-field')">
-                    <input type="text" class="portal-chat-input" id="${containerId}-input-field" placeholder="${placeholderText}" ${match.status === 'fechado' ? 'disabled' : ''}>
-                    <button type="submit" class="portal-chat-send-btn" ${match.status === 'fechado' ? 'disabled' : ''}>
+            <div class="portal-chat-input-area" style="padding: 12px 16px; border-top: 1px solid var(--outline-variant); background-color: white;">
+                ${channelType === 'buyer' && match.status !== 'fechado' ? `
+                    <div class="quick-chips-container flex gap-2 overflow-x-auto pb-2 mb-2 no-scrollbar text-xs">
+                        <button type="button" onclick="sendChatQuickAction('${match.id}', '${channelType}', '${containerId}', 'quote')" data-chip-action="quote"
+                            class="px-3 py-1.5 bg-teal-50 hover:bg-teal-100 text-teal-700 rounded-full shrink-0 font-bold transition cursor-pointer border border-teal-200 text-[11px] flex items-center gap-1.5 shadow-xs">
+                            <span class="material-symbols-outlined text-[13px]">request_quote</span>
+                            <span>${lang === 'en' ? 'Request Quote' : 'Solicitar Cotação'}</span>
+                        </button>
+                        <button type="button" onclick="sendChatQuickAction('${match.id}', '${channelType}', '${containerId}', 'status')" data-chip-action="status"
+                            class="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-full shrink-0 font-bold transition cursor-pointer border border-amber-200 text-[11px] flex items-center gap-1.5 shadow-xs">
+                            <span class="material-symbols-outlined text-[13px]">query_stats</span>
+                            <span>${lang === 'en' ? 'Status Update' : 'Ponto de Situação'}</span>
+                        </button>
+                        <button type="button" onclick="sendChatQuickAction('${match.id}', '${channelType}', '${containerId}', 'contract')" data-chip-action="contract"
+                            class="px-3 py-1.5 bg-violet-50 hover:bg-violet-100 text-violet-700 rounded-full shrink-0 font-bold transition cursor-pointer border border-violet-200 text-[11px] flex items-center gap-1.5 shadow-xs">
+                            <span class="material-symbols-outlined text-[13px]">description</span>
+                            <span>${lang === 'en' ? 'Draft Contract' : 'Minuta do Contrato'}</span>
+                        </button>
+                    </div>
+                ` : ''}
+                
+                <!-- Whatsapp-style Reply Preview Bar -->
+                <div id="${containerId}-reply-preview" class="hidden bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 mb-2 items-center justify-between text-xs gap-2 border-l-4 border-l-gvTeal animate-fade-in">
+                    <!-- Injected dynamically via startReplyToMessage -->
+                </div>
+                
+                <form class="portal-chat-form flex items-center gap-2 relative" id="${containerId}-form" onsubmit="event.preventDefault(); sendChatMessage('${match.id}', '${channelType}', '${containerId}-input-field')">
+                    
+                    <!-- Hidden file input selector -->
+                    <input type="file" id="${containerId}-file-input" class="hidden" onchange="handleChatFileUpload('${match.id}', '${channelType}', '${containerId}', this)">
+                    
+                    <!-- Plus attachment menu -->
+                    <div class="relative shrink-0 flex items-center">
+                        <button type="button" onclick="toggleAttachmentMenu('${containerId}-attachment-menu')" class="w-8.5 h-8.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-650 flex items-center justify-center border border-slate-200 transition focus:outline-none cursor-pointer" ${match.status === 'fechado' ? 'disabled' : ''}>
+                            <span class="material-symbols-outlined text-lg">add</span>
+                        </button>
+                        <!-- Dropdown Attachment list -->
+                        <div id="${containerId}-attachment-menu" class="hidden absolute bottom-11 left-0 bg-white border border-slate-200 rounded-xl shadow-lg p-1.5 w-40 z-20 flex-col gap-0.5">
+                            <button type="button" onclick="triggerFileInput('${containerId}-file-input', 'file')" class="flex items-center gap-2.5 px-3 py-2 text-slate-700 hover:bg-slate-50 hover:text-slate-900 rounded-lg text-left text-xs transition cursor-pointer border-none bg-none w-full">
+                                <span class="material-symbols-outlined text-base text-slate-500">description</span>
+                                <span data-translate-pt="Ficheiro" data-translate-en="File">Ficheiro</span>
+                            </button>
+                            <button type="button" onclick="triggerFileInput('${containerId}-file-input', 'image')" class="flex items-center gap-2.5 px-3 py-2 text-slate-700 hover:bg-slate-50 hover:text-slate-900 rounded-lg text-left text-xs transition cursor-pointer border-none bg-none w-full">
+                                <span class="material-symbols-outlined text-base text-emerald-500">image</span>
+                                <span data-translate-pt="Imagem" data-translate-en="Image">Imagem</span>
+                            </button>
+                            <button type="button" onclick="triggerFileInput('${containerId}-file-input', 'video')" class="flex items-center gap-2.5 px-3 py-2 text-slate-700 hover:bg-slate-50 hover:text-slate-900 rounded-lg text-left text-xs transition cursor-pointer border-none bg-none w-full">
+                                <span class="material-symbols-outlined text-base text-amber-500">movie</span>
+                                <span data-translate-pt="Vídeo" data-translate-en="Video">Vídeo</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Input field wrapper -->
+                    <div class="flex-1 relative min-w-0" id="${containerId}-input-wrapper">
+                        <input type="text" class="portal-chat-input w-full" id="${containerId}-input-field" placeholder="${placeholderText}" ${match.status === 'fechado' ? 'disabled' : ''} style="padding-right: 12px;">
+                    </div>
+                    
+                    <!-- Microphone Record button -->
+                    <button type="button" id="${containerId}-mic-btn" onclick="startAudioRecording('${match.id}', '${channelType}', '${containerId}')" class="w-8.5 h-8.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-650 flex items-center justify-center border border-slate-200 transition focus:outline-none cursor-pointer shrink-0" ${match.status === 'fechado' ? 'disabled' : ''}>
+                        <span class="material-symbols-outlined text-lg">mic</span>
+                    </button>
+                    
+                    <!-- Submit message button -->
+                    <button type="submit" id="${containerId}-send-btn" class="portal-chat-send-btn shrink-0" ${match.status === 'fechado' ? 'disabled' : ''}>
                         <span class="material-symbols-outlined">send</span>
                     </button>
                 </form>
+            </div>
+            
+            <!-- Sliding Documents Drawer inside Chat -->
+            <div id="${containerId}-docs-drawer" class="absolute top-0 right-0 h-full w-72 bg-white border-l border-slate-200 shadow-2xl z-30 transform translate-x-full transition-transform duration-300 flex flex-col overflow-hidden">
+                <!-- Drawer Header -->
+                <div class="p-3.5 border-b border-slate-200 bg-slate-50 flex items-center justify-between shrink-0">
+                    <div class="flex items-center gap-2 font-bold text-xs text-slate-800">
+                        <span class="material-symbols-outlined text-gvTeal text-base">folder_open</span>
+                        <span data-translate-pt="Ficheiros da Conversa" data-translate-en="Shared Files">Ficheiros da Conversa</span>
+                    </div>
+                    <button type="button" onclick="toggleChatDocumentDrawer('${containerId}')" class="w-6 h-6 rounded-md hover:bg-slate-200 text-slate-500 flex items-center justify-center transition border-none cursor-pointer">
+                        <span class="material-symbols-outlined text-base">close</span>
+                    </button>
+                </div>
+                <!-- Tabs -->
+                <div class="flex border-b border-slate-100 bg-white text-[10px] font-extrabold shrink-0">
+                    <button type="button" onclick="filterDocsDrawer('${containerId}', 'all', this)" class="flex-1 py-2 text-center text-gvTeal border-b-2 border-gvTeal cursor-pointer bg-transparent border-none">Todos</button>
+                    <button type="button" onclick="filterDocsDrawer('${containerId}', 'doc', this)" class="flex-1 py-2 text-center text-slate-500 border-b-2 border-transparent cursor-pointer bg-transparent border-none">Docs</button>
+                    <button type="button" onclick="filterDocsDrawer('${containerId}', 'media', this)" class="flex-1 py-2 text-center text-slate-500 border-b-2 border-transparent cursor-pointer bg-transparent border-none">Média</button>
+                    <button type="button" onclick="filterDocsDrawer('${containerId}', 'quote', this)" class="flex-1 py-2 text-center text-slate-500 border-b-2 border-transparent cursor-pointer bg-transparent border-none">Cotações</button>
+                </div>
+                <!-- Search -->
+                <div class="p-2 border-b border-slate-100 bg-slate-50/50 shrink-0">
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-2.5 top-2 text-slate-400 text-xs">search</span>
+                        <input type="text" id="${containerId}-docs-search" onkeyup="searchDocsDrawer('${containerId}')" placeholder="Pesquisar ficheiro..." data-translate-pt-placeholder="Pesquisar..." data-translate-en-placeholder="Search..." class="w-full pl-7 pr-2 py-1 bg-white border border-slate-200 rounded-lg text-[10px] text-slate-800 focus:outline-none focus:border-gvTeal">
+                    </div>
+                </div>
+                <!-- Content List -->
+                <div class="flex-1 overflow-y-auto p-3 space-y-2 bg-slate-50/30" id="${containerId}-docs-list">
+                    <!-- Injected dynamically via renderDocsDrawerList -->
+                </div>
             </div>
         </div>
     `;
@@ -2938,18 +3257,111 @@ function renderPortalChat(containerId, matchId, channelType) {
     }
     
     if (msgs.length === 0) {
-        area.innerHTML = `<div class="text-center py-6 opacity-60 font-italic">${lang === 'en' ? 'No messages. Write something to start intermediation.' : 'Sem mensagens. Escreva algo para iniciar a intermediação.'}</div>`;
+        area.innerHTML = `<div class="text-center py-6 opacity-60 font-italic text-xs">${lang === 'en' ? 'No messages. Write something to start intermediation.' : 'Sem mensagens. Escreva algo para iniciar a intermediação.'}</div>`;
     } else {
         msgs.forEach(m => {
-            const senderObj = appState.users[m.senderId] || { name: 'Sistema' };
+            const senderObj = appState.users[m.senderId] || { name: 'Sistema', role: 'system' };
             const isMe = appState.currentUser.id === m.senderId;
             
             const bubble = document.createElement('div');
-            bubble.className = `chat-bubble ${isMe ? 'sent' : 'received'}`;
+            bubble.className = `chat-bubble group relative ${isMe ? 'sent' : 'received'}`;
+            bubble.setAttribute('data-msg-id', m.id);
             
-            let messageContentHTML = `<p>${gvSecurity.sanitize(m.text)}</p>`;
+            const cardInfo = getQuickActionCardInfo(m.text, lang);
+            let messageContentHTML = '';
             
-            if (m.proposalData) {
+            if (cardInfo) {
+                const isConsultant = appState.currentUser.role === 'consultant' || appState.currentUser.role === 'admin';
+                const def = ACTION_CARD_DEFS[cardInfo.actionType];
+                const consultantBtn = (isConsultant && def) ? `
+                    <button type="button"
+                        onclick="${def.consultantBtnAction}('${m.matchId}', '${m.channel}')"
+                        class="mt-1 w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-white text-[11px] font-bold transition cursor-pointer border-none shadow-sm"
+                        style="background-color: ${cardInfo.textColor};">
+                        <span class="material-symbols-outlined text-sm">${def.consultantBtnIcon}</span>
+                        <span>${lang === 'en' ? def.consultantBtnEn : def.consultantBtnPt}</span>
+                    </button>
+                ` : `
+                    <div class="flex items-center gap-1.5 text-[10px] font-bold" style="color: #006d3d;">
+                        <span class="w-1.5 h-1.5 rounded-full animate-pulse" style="background:#006d3d"></span>
+                        <span>${lang === 'en' ? 'Safely Mediated by GV-CPS' : 'Mediado com Segurança pela GV-CPS'}</span>
+                    </div>
+                `;
+                // Clean desc (remove marker prefix)
+                const cleanDesc = gvSecurity.sanitize(cardInfo.desc.replace(/^\[ACTION:\w+\]\s*/, ''));
+                messageContentHTML = `
+                    <div data-action-id="${m.id}" class="bg-white border-2 rounded-2xl overflow-hidden shadow-sm my-2 max-w-[300px] transition-all duration-300" style="border-color: ${cardInfo.borderColor};">
+                        <div class="flex items-center gap-2 px-3 py-2.5" style="background-color: ${cardInfo.headerBg || cardInfo.color};">
+                            <span class="material-symbols-outlined text-base shrink-0" style="color: ${cardInfo.textColor};">${cardInfo.icon}</span>
+                            <span class="text-[10px] font-extrabold uppercase tracking-widest flex-1" style="color: ${cardInfo.textColor};">${cardInfo.title}</span>
+                            <span class="px-2 py-0.5 rounded-full text-[9px] font-black text-white" style="background-color: ${cardInfo.textColor}; opacity: 0.9;">${cardInfo.actionLabel}</span>
+                        </div>
+                        <div class="px-3 py-2.5 flex flex-col gap-2.5">
+                            <p class="text-[11px] text-slate-600 leading-relaxed font-medium m-0">${cleanDesc}</p>
+                            ${consultantBtn}
+                        </div>
+                    </div>
+                `;
+            } else if (m.attachmentType === 'image') {
+                messageContentHTML = `
+                    <div class="bg-white border border-slate-200 rounded-xl p-2 shadow-sm max-w-sm flex flex-col gap-2 my-1">
+                        <div class="relative rounded-lg overflow-hidden border border-slate-100 bg-slate-50 flex items-center justify-center" style="width: 200px; height: 120px;">
+                            <span class="material-symbols-outlined text-[40px] text-slate-300">image</span>
+                        </div>
+                        <div class="flex justify-between items-center gap-1 px-1">
+                            <span class="text-[10px] text-slate-700 font-bold truncate max-w-[130px] text-left">${gvSecurity.sanitize(m.text)}</span>
+                            <button onclick="alert('Download da imagem')" class="text-gvTeal shrink-0 p-0 border-none bg-none cursor-pointer flex items-center"><span class="material-symbols-outlined text-base">download</span></button>
+                        </div>
+                    </div>
+                `;
+            } else if (m.attachmentType === 'video') {
+                messageContentHTML = `
+                    <div class="bg-white border border-slate-200 rounded-xl p-2 shadow-sm max-w-sm flex flex-col gap-2 my-1">
+                        <div class="relative rounded-lg overflow-hidden border border-slate-150 bg-slate-900 flex items-center justify-center" style="width: 200px; height: 120px;">
+                            <span class="material-symbols-outlined text-[40px] text-white/60">play_circle</span>
+                        </div>
+                        <div class="flex justify-between items-center gap-1 px-1">
+                            <span class="text-[10px] text-slate-700 font-bold truncate max-w-[130px] text-left">${gvSecurity.sanitize(m.text)}</span>
+                            <button onclick="alert('Download do vídeo')" class="text-gvTeal shrink-0 p-0 border-none bg-none cursor-pointer flex items-center"><span class="material-symbols-outlined text-base">download</span></button>
+                        </div>
+                    </div>
+                `;
+            } else if (m.attachmentType === 'file') {
+                messageContentHTML = `
+                    <div class="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 transition max-w-[260px] my-1.5 shadow-xs">
+                        <div class="flex items-center gap-2 min-w-0">
+                            <span class="material-symbols-outlined text-rose-600 text-lg shrink-0">picture_as_pdf</span>
+                            <div class="truncate text-left">
+                                <span class="font-bold text-slate-800 block truncate text-[10px]">${gvSecurity.sanitize(m.text)}</span>
+                                <span class="text-[8px] text-slate-450 block font-semibold">${m.attachmentSize || '1.5 MB'}</span>
+                            </div>
+                        </div>
+                        <button onclick="alert('Download do ficheiro')" class="text-gvTeal hover:text-gvTeal-light p-1 rounded-lg transition shrink-0 cursor-pointer border-none bg-none flex items-center">
+                            <span class="material-symbols-outlined text-base">download</span>
+                        </button>
+                    </div>
+                `;
+            } else if (m.attachmentType === 'audio') {
+                messageContentHTML = `
+                    <div class="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl p-2.5 max-w-[260px] shadow-sm my-1">
+                        <button type="button" onclick="alert('Reproduzindo áudio simulado')" class="w-8 h-8 rounded-full bg-[#006d3d] hover:bg-[#005a32] text-white flex items-center justify-center transition focus:outline-none shrink-0 border-none cursor-pointer shadow-xs">
+                            <span class="material-symbols-outlined text-lg">play_arrow</span>
+                        </button>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-end gap-[2.5px] h-4 mb-1 opacity-70">
+                                <span class="w-1 h-3 bg-slate-400 rounded-sm"></span>
+                                <span class="w-1 h-4 bg-[#006d3d] rounded-sm"></span>
+                                <span class="w-1 h-2 bg-slate-450 rounded-sm"></span>
+                                <span class="w-1 h-4 bg-slate-400 rounded-sm"></span>
+                                <span class="w-1 h-3 bg-[#006d3d] rounded-sm"></span>
+                                <span class="w-1 h-2 bg-slate-400 rounded-sm"></span>
+                                <span class="w-1 h-4 bg-slate-400 rounded-sm"></span>
+                            </div>
+                            <span class="text-[9px] text-slate-500 font-bold block text-left">0:00 / ${m.audioDuration || '0:05'}</span>
+                        </div>
+                    </div>
+                `;
+            } else if (m.proposalData) {
                 const pd = m.proposalData;
                 const statusBadgeStyle = pd.status === 'aceite' 
                     ? 'bg-emerald-100 text-emerald-800 border-emerald-200' 
@@ -3001,12 +3413,43 @@ function renderPortalChat(containerId, matchId, channelType) {
                         ${actionButtonsHTML}
                     </div>
                 `;
+            } else {
+                messageContentHTML = `<p>${gvSecurity.sanitize(m.text)}</p>`;
             }
             
+            // Reply-To message preview block quote
+            let replyQuoteHTML = '';
+            if (m.replyToId) {
+                const repliedMsg = appState.messages.find(msg => msg.id === m.replyToId);
+                if (repliedMsg) {
+                    const repliedSender = appState.users[repliedMsg.senderId] || { name: 'Sistema' };
+                    let repliedPreviewText = '';
+                    if (repliedMsg.attachmentType === 'image') repliedPreviewText = lang === 'en' ? '📷 Image' : '📷 Imagem';
+                    else if (repliedMsg.attachmentType === 'video') repliedPreviewText = lang === 'en' ? '🎥 Video' : '🎥 Vídeo';
+                    else if (repliedMsg.attachmentType === 'file') repliedPreviewText = lang === 'en' ? '📄 File' : '📄 Ficheiro';
+                    else if (repliedMsg.attachmentType === 'audio') repliedPreviewText = lang === 'en' ? '🎙️ Audio' : '🎙️ Áudio';
+                    else repliedPreviewText = repliedMsg.text.replace(/^\[ACTION:\w+\]\s*/, '');
+                    
+                    if (repliedPreviewText.length > 50) {
+                        repliedPreviewText = repliedPreviewText.substring(0, 47) + '...';
+                    }
+                    replyQuoteHTML = `
+                        <div onclick="scrollToMessage('${m.replyToId}')" class="chat-reply-quote">
+                            <div class="font-bold text-[9px] text-gvTeal">${repliedSender.name}</div>
+                            <div class="text-[9.5px] opacity-80 truncate">${gvSecurity.sanitize(repliedPreviewText)}</div>
+                        </div>
+                    `;
+                }
+            }
+
             bubble.innerHTML = `
                 <span class="chat-bubble-sender">${senderObj.name} (${senderObj.role.toUpperCase()})</span>
+                ${replyQuoteHTML}
                 ${messageContentHTML}
                 <span class="chat-bubble-time">${formatTime(m.timestamp)}</span>
+                <button type="button" onclick="startReplyToMessage('${m.id}', '${containerId}')" class="opacity-0 group-hover:opacity-100 transition absolute top-2 right-2 w-6 h-6 rounded-md bg-white hover:bg-slate-100 text-slate-500 border border-slate-200 shadow-xs flex items-center justify-center cursor-pointer z-10" title="Responder">
+                    <span class="material-symbols-outlined text-[14px]">reply</span>
+                </button>
             `;
             area.appendChild(bubble);
         });
@@ -3027,6 +3470,8 @@ window.sendChatMessage = async function(matchId, channelType, inputFieldId) {
         return;
     }
     
+    const containerId = inputFieldId.replace('-input-field', '');
+    const replyToId = (appState.activeReplies && appState.activeReplies[containerId]) || null;
     const senderId = appState.currentUser.id;
     const senderRole = appState.currentUser.role;
     
@@ -3051,6 +3496,7 @@ window.sendChatMessage = async function(matchId, channelType, inputFieldId) {
             senderId: senderId,
             senderRole: senderRole,
             text: text,
+            replyToId: replyToId, // attach reply message ID
             timestamp: new Date().toISOString(),
             channel: channelType
         });
@@ -3058,6 +3504,11 @@ window.sendChatMessage = async function(matchId, channelType, inputFieldId) {
     }
     
     input.value = '';
+    
+    // Reset reply mode if any
+    if (replyToId && window.cancelReplyToMessage) {
+        window.cancelReplyToMessage(containerId);
+    }
     
     // Re-render (for local users, Supabase users will be updated via Realtime trigger automatically)
     if (!senderId || !senderId.includes('-')) {
@@ -3634,6 +4085,238 @@ function formatStatusPT(status) {
 
 // Launch app on load
 window.addEventListener('DOMContentLoaded', initApp);
+
+// Buyer details modal controls (Centered popup card)
+window.openBuyerRequirementDetailsModal = function() {
+    const modal = document.getElementById('buyer-requirement-details-modal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        
+        // Allow transition animation to run
+        setTimeout(() => {
+            const card = document.getElementById('buyer-requirement-details-drawer');
+            if (card) {
+                card.classList.remove('scale-95', 'opacity-0');
+                card.classList.add('scale-100', 'opacity-100');
+            }
+        }, 15);
+    }
+};
+
+window.closeBuyerRequirementDetailsModal = function() {
+    const modal = document.getElementById('buyer-requirement-details-modal');
+    if (modal) {
+        const card = document.getElementById('buyer-requirement-details-drawer');
+        if (card) {
+            card.classList.remove('scale-100', 'opacity-100');
+            card.classList.add('scale-95', 'opacity-0');
+        }
+        
+        // Hide container after transitions finish
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }, 300);
+    }
+};
+
+// Buyer chat search filter
+window.filterBuyerChatList = function() {
+    const query = (document.getElementById('buyer-chat-search-input')?.value || '').toLowerCase().trim();
+    const items = document.querySelectorAll('#buyer-chat-list-container > div');
+    items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        if (text.includes(query)) {
+            item.style.display = 'flex';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+};
+
+// Fullscreen toggle for chat (Desktop Only)
+window.toggleBuyerChatFullscreen = function() {
+    const listColumn = document.getElementById('buyer-chat-list-column');
+    const contentColumn = document.getElementById('buyer-chat-content-column');
+    const btnIcon = document.getElementById('buyer-chat-fullscreen-icon');
+    const btn = document.getElementById('buyer-chat-fullscreen-btn');
+    
+    if (!listColumn || !contentColumn) return;
+    
+    const isExpanded = listColumn.classList.contains('lg:hidden');
+    
+    if (isExpanded) {
+        listColumn.classList.remove('lg:hidden');
+        contentColumn.classList.remove('lg:col-span-3');
+        contentColumn.classList.add('lg:col-span-2');
+        if (btnIcon) btnIcon.textContent = 'open_in_full';
+        if (btn) btn.title = 'Visão Completa';
+    } else {
+        listColumn.classList.add('lg:hidden');
+        contentColumn.classList.remove('lg:col-span-2');
+        contentColumn.classList.add('lg:col-span-3');
+        if (btnIcon) btnIcon.textContent = 'close_fullscreen';
+        if (btn) btn.title = 'Restaurar Painel';
+    }
+};
+
+// Attachment Dropdown Menus toggles
+window.toggleAttachmentMenu = function(menuId) {
+    const menu = document.getElementById(menuId);
+    if (menu) {
+        menu.classList.toggle('hidden');
+        menu.classList.toggle('flex');
+    }
+};
+
+window.triggerFileInput = function(inputId, type) {
+    const input = document.getElementById(inputId);
+    if (input) {
+        input.dataset.uploadType = type;
+        input.click();
+    }
+    // Auto-hide the dropdown menu
+    const menu = input.closest('form').querySelector('[id$="-attachment-menu"]');
+    if (menu) {
+        menu.classList.add('hidden');
+        menu.classList.remove('flex');
+    }
+};
+
+// File select handler with beautiful simulator progress bar
+window.handleChatFileUpload = function(matchId, channelType, containerId, input) {
+    if (!input.files || input.files.length === 0) return;
+    const file = input.files[0];
+    const type = input.dataset.uploadType || 'file';
+    
+    const inputWrapper = document.getElementById(`${containerId}-input-wrapper`);
+    if (!inputWrapper) return;
+    const originalInputHTML = inputWrapper.innerHTML;
+    
+    inputWrapper.innerHTML = `
+        <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-[10px] font-semibold text-slate-700 w-full">
+            <span class="w-1.5 h-1.5 rounded-full bg-gvTeal animate-ping shrink-0"></span>
+            <span class="truncate">A enviar ${type}: ${file.name} (${Math.round(file.size / 1024)} KB)...</span>
+        </div>
+    `;
+    
+    setTimeout(() => {
+        // Restore input UI
+        inputWrapper.innerHTML = originalInputHTML;
+        
+        // Push attachment message
+        appState.messages.push({
+            id: `msg_${appState.messages.length + 1}`,
+            matchId: matchId,
+            senderId: appState.currentUser.id,
+            senderRole: appState.currentUser.role,
+            text: file.name,
+            timestamp: new Date().toISOString(),
+            channel: channelType,
+            attachmentType: type,
+            attachmentName: file.name,
+            attachmentSize: `${Math.round(file.size / 1024)} KB`,
+            attachmentUrl: '#'
+        });
+        
+        saveState();
+        input.value = ''; // Reset uploader
+        
+        // Re-render Portal UI
+        if (channelType === 'buyer') {
+            renderBuyerPortal('detail', matchId);
+        } else if (channelType === 'supplier') {
+            renderSupplierPortal('detail', matchId);
+        }
+    }, 1200);
+};
+
+// Simulated voice note recording controls
+let recordingInterval = null;
+let recordingSeconds = 0;
+
+window.startAudioRecording = function(matchId, channelType, containerId) {
+    const wrapper = document.getElementById(`${containerId}-input-wrapper`);
+    const micBtn = document.getElementById(`${containerId}-mic-btn`);
+    const sendBtn = document.getElementById(`${containerId}-send-btn`);
+    
+    if (!wrapper || !micBtn || !sendBtn) return;
+    
+    micBtn.style.display = 'none';
+    sendBtn.style.display = 'none';
+    recordingSeconds = 0;
+    
+    wrapper.innerHTML = `
+        <div id="${containerId}-recording-indicator" class="flex items-center justify-between bg-rose-50 border border-rose-200 rounded-xl px-3 py-1.5 text-rose-700 text-xs w-full">
+            <div class="flex items-center gap-2 min-w-0">
+                <span class="w-2 h-2 rounded-full bg-rose-600 animate-ping shrink-0"></span>
+                <span class="font-bold text-[9px] uppercase tracking-wider shrink-0" data-translate-pt="GRAVAR ÁUDIO..." data-translate-en="RECORDING AUDIO...">GRAVAR ÁUDIO...</span>
+                <span id="${containerId}-recording-timer" class="font-semibold font-mono text-[10px]">0:00</span>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+                <button type="button" onclick="cancelAudioRecording('${matchId}', '${channelType}', '${containerId}')" class="text-slate-500 hover:text-slate-700 text-[10px] font-bold px-2 py-1 rounded transition border-none bg-none cursor-pointer">CANCELAR</button>
+                <button type="button" onclick="stopAndSendAudioRecording('${matchId}', '${channelType}', '${containerId}')" class="bg-rose-600 hover:bg-rose-700 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-lg transition border-none cursor-pointer">ENVIAR</button>
+            </div>
+        </div>
+    `;
+    
+    recordingInterval = setInterval(() => {
+        recordingSeconds++;
+        const mins = Math.floor(recordingSeconds / 60);
+        const secs = recordingSeconds % 60;
+        const timerEl = document.getElementById(`${containerId}-recording-timer`);
+        if (timerEl) {
+            timerEl.textContent = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+    }, 1000);
+};
+
+window.cancelAudioRecording = function(matchId, channelType, containerId) {
+    clearInterval(recordingInterval);
+    if (channelType === 'buyer') {
+        renderBuyerPortal('detail', matchId);
+    } else {
+        renderSupplierPortal('detail', matchId);
+    }
+};
+
+window.stopAndSendAudioRecording = function(matchId, channelType, containerId) {
+    clearInterval(recordingInterval);
+    const mins = Math.floor(recordingSeconds / 60);
+    const secs = recordingSeconds % 60;
+    const durationStr = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    
+    appState.messages.push({
+        id: `msg_${appState.messages.length + 1}`,
+        matchId: matchId,
+        senderId: appState.currentUser.id,
+        senderRole: appState.currentUser.role,
+        text: `Audio Note (${durationStr})`,
+        timestamp: new Date().toISOString(),
+        channel: channelType,
+        attachmentType: 'audio',
+        audioDuration: durationStr
+    });
+    
+    saveState();
+    
+    if (channelType === 'buyer') {
+        renderBuyerPortal('detail', matchId);
+    } else {
+        renderSupplierPortal('detail', matchId);
+    }
+};
+
+// Global click listener to close dropdowns
+window.addEventListener('click', (e) => {
+    document.querySelectorAll('[id$="-attachment-menu"]').forEach(menu => {
+        if (!menu.classList.contains('hidden') && !menu.parentNode.contains(e.target)) {
+            menu.classList.add('hidden');
+            menu.classList.remove('flex');
+        }
+    });
+});
 
 // Mobile chat navigation helper
 window.goBackToChatList = function() {
@@ -6002,3 +6685,199 @@ function showVisualSuccessModal(title, text, highlightText) {
     modal.style.display = 'flex';
 }
 window.showVisualSuccessModal = showVisualSuccessModal;
+
+// === WHATSAPP-STYLE REPLY FUNCTIONS ===
+appState.activeReplies = {};
+
+window.startReplyToMessage = function(msgId, containerId) {
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    appState.activeReplies[containerId] = msgId;
+    const m = appState.messages.find(msg => msg.id === msgId);
+    if (!m) return;
+
+    const sender = appState.users[m.senderId] || { name: 'Sistema' };
+    const previewEl = document.getElementById(`${containerId}-reply-preview`);
+    if (previewEl) {
+        let msgPreviewText = '';
+        if (m.attachmentType === 'image') msgPreviewText = lang === 'en' ? '📷 Image' : '📷 Imagem';
+        else if (m.attachmentType === 'video') msgPreviewText = lang === 'en' ? '🎥 Video' : '🎥 Vídeo';
+        else if (m.attachmentType === 'file') msgPreviewText = lang === 'en' ? '📄 File' : '📄 Ficheiro';
+        else if (m.attachmentType === 'audio') msgPreviewText = lang === 'en' ? '🎙️ Audio' : '🎙️ Áudio';
+        else msgPreviewText = m.text.replace(/^\[ACTION:\w+\]\s*/, '');
+
+        if (msgPreviewText.length > 55) msgPreviewText = msgPreviewText.substring(0, 52) + '...';
+
+        previewEl.innerHTML = `
+            <div class="flex-1 min-w-0 text-left">
+                <div class="font-extrabold text-[10px] text-gvTeal uppercase tracking-wider">${sender.name}</div>
+                <div class="text-[10px] text-slate-500 truncate mt-0.5">${gvSecurity.sanitize(msgPreviewText)}</div>
+            </div>
+            <button type="button" onclick="cancelReplyToMessage('${containerId}')" class="w-5 h-5 rounded-md hover:bg-slate-200 text-slate-400 flex items-center justify-center shrink-0 border-none bg-none cursor-pointer">
+                <span class="material-symbols-outlined text-sm">close</span>
+            </button>
+        `;
+        previewEl.classList.remove('hidden');
+        previewEl.classList.add('flex');
+    }
+    const inputField = document.getElementById(`${containerId}-input-field`);
+    if (inputField) inputField.focus();
+};
+
+window.cancelReplyToMessage = function(containerId) {
+    if (appState.activeReplies) delete appState.activeReplies[containerId];
+    const previewEl = document.getElementById(`${containerId}-reply-preview`);
+    if (previewEl) {
+        previewEl.classList.add('hidden');
+        previewEl.classList.remove('flex');
+    }
+};
+
+window.scrollToMessage = function(msgId) {
+    const el = document.querySelector(`[data-msg-id="${msgId}"]`);
+    if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.classList.add('highlight-reply-bubble');
+        setTimeout(() => {
+            el.classList.remove('highlight-reply-bubble');
+        }, 1500);
+    }
+};
+
+// === DOCUMENTS DRAWER FUNCTIONS ===
+window.toggleChatDocumentDrawer = function(containerId) {
+    const drawer = document.getElementById(`${containerId}-docs-drawer`);
+    if (!drawer) return;
+    const isHidden = drawer.classList.contains('translate-x-full');
+    if (isHidden) {
+        drawer.classList.remove('translate-x-full');
+        // Initial render
+        renderDocsDrawerList(containerId, 'all');
+    } else {
+        drawer.classList.add('translate-x-full');
+    }
+};
+
+window.renderDocsDrawerList = function(containerId, filterType = 'all') {
+    const listEl = document.getElementById(`${containerId}-docs-list`);
+    if (!listEl) return;
+    listEl.innerHTML = '';
+
+    // Extract active matchId from the input form or DOM attributes
+    const formEl = document.getElementById(`${containerId}-form`);
+    if (!formEl) return;
+    
+    // Parse matchId from form onsubmit or direct binding
+    const onsubmitStr = formEl.getAttribute('onsubmit') || '';
+    const matchIdMatch = onsubmitStr.match(/sendChatMessage\('([^']+)'/);
+    if (!matchIdMatch) return;
+    const matchId = matchIdMatch[1];
+
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    const channelType = containerId === 'buyer-chat-box' ? 'buyer' : (containerId.includes('supplier') ? 'supplier' : 'buyer');
+
+    const msgs = appState.messages.filter(m => m.matchId === matchId && m.channel === channelType);
+    let attachments = [];
+
+    msgs.forEach(m => {
+        const dateStr = formatDate(m.timestamp);
+        const sender = appState.users[m.senderId] || { name: 'Sistema' };
+        
+        // 1. Files / PDF
+        if (m.attachmentType === 'file' && (filterType === 'all' || filterType === 'doc')) {
+            attachments.push({
+                id: m.id,
+                title: m.text,
+                type: 'doc',
+                icon: 'picture_as_pdf',
+                iconColor: 'text-rose-650',
+                meta: m.attachmentSize || '1.2 MB',
+                date: dateStr,
+                senderName: sender.name
+            });
+        }
+        // 2. Images & Videos
+        else if ((m.attachmentType === 'image' || m.attachmentType === 'video') && (filterType === 'all' || filterType === 'media')) {
+            attachments.push({
+                id: m.id,
+                title: m.text,
+                type: 'media',
+                icon: m.attachmentType === 'image' ? 'image' : 'movie',
+                iconColor: m.attachmentType === 'image' ? 'text-emerald-500' : 'text-amber-500',
+                meta: m.attachmentType === 'image' ? 'IMG' : 'VIDEO',
+                date: dateStr,
+                senderName: sender.name
+            });
+        }
+        // 3. Quotes (proposals)
+        else if (m.proposalData && (filterType === 'all' || filterType === 'quote')) {
+            attachments.push({
+                id: m.id,
+                title: `${lang === 'en' ? 'Quote' : 'Cotação'} - ${m.proposalData.price}`,
+                type: 'quote',
+                icon: 'request_quote',
+                iconColor: 'text-teal-650',
+                meta: m.proposalData.status.toUpperCase(),
+                date: dateStr,
+                senderName: sender.name
+            });
+        }
+    });
+
+    if (attachments.length === 0) {
+        listEl.innerHTML = `
+            <div class="text-center py-10">
+                <span class="material-symbols-outlined text-[36px] text-slate-300 mb-2">folder_zip</span>
+                <p class="text-[10px] text-slate-500 font-bold leading-normal px-4">
+                    ${lang === 'en' ? 'No shared files in this category yet.' : 'Nenhum ficheiro partilhado nesta categoria.'}
+                </p>
+            </div>
+        `;
+        return;
+    }
+
+    attachments.forEach(att => {
+        const div = document.createElement('div');
+        div.className = 'bg-white p-2.5 rounded-xl border border-slate-150 hover:border-gvTeal/30 shadow-xs cursor-pointer transition flex items-center justify-between gap-2.5';
+        div.onclick = () => {
+            scrollToMessage(att.id);
+        };
+        
+        div.innerHTML = `
+            <div class="flex items-center gap-2 min-w-0">
+                <span class="material-symbols-outlined ${att.iconColor} text-base shrink-0">${att.icon}</span>
+                <div class="truncate text-left">
+                    <span class="font-extrabold text-slate-800 text-[10px] block truncate leading-tight">${gvSecurity.sanitize(att.title)}</span>
+                    <span class="text-[8px] text-slate-400 font-semibold block mt-0.5">${att.senderName} • ${att.meta}</span>
+                </div>
+            </div>
+            <span class="text-[8px] text-slate-400 font-bold shrink-0">${att.date}</span>
+        `;
+        listEl.appendChild(div);
+    });
+};
+
+window.filterDocsDrawer = function(containerId, filterType, btn) {
+    // Highlight active tab
+    const tabs = btn.parentNode.querySelectorAll('button');
+    tabs.forEach(t => {
+        t.classList.remove('text-gvTeal', 'border-gvTeal');
+        t.classList.add('text-slate-500', 'border-transparent');
+    });
+    btn.classList.add('text-gvTeal', 'border-gvTeal');
+    btn.classList.remove('text-slate-500', 'border-transparent');
+
+    renderDocsDrawerList(containerId, filterType);
+};
+
+window.searchDocsDrawer = function(containerId) {
+    const query = document.getElementById(`${containerId}-docs-search`).value.toLowerCase().trim();
+    const items = document.getElementById(`${containerId}-docs-list`).children;
+
+    for (let item of items) {
+        const textEl = item.querySelector('.font-extrabold');
+        if (textEl) {
+            const match = textEl.textContent.toLowerCase().includes(query);
+            item.style.display = match ? 'flex' : 'none';
+        }
+    }
+};
