@@ -681,7 +681,14 @@ function setupRouting() {
 
 function navigate(viewPath) {
     // Parse viewPath for potential query parameters (like ?id=req_1)
-    const [viewName, paramString] = viewPath.split('?');
+    let [viewName, paramString] = viewPath.split('?');
+    
+    // Redirect old wall route to services
+    if (viewName === 'wall') {
+        window.location.hash = paramString ? `services?${paramString}` : 'services';
+        return;
+    }
+
     const params = {};
     if (paramString) {
         paramString.split('&').forEach(pair => {
@@ -736,11 +743,11 @@ function navigate(viewPath) {
             renderHomepage();
             break;
         case 'about':
-        case 'services':
         case 'contact':
         case 'trust':
             // Static corporate views, nothing to render dynamically
             break;
+        case 'services':
         case 'wall':
             renderOpportunityWall(params);
             break;
@@ -1112,7 +1119,7 @@ function setLanguage(lang) {
     if (currentView === 'home') {
         renderHomepage();
         renderMarketExplorer();
-    } else if (currentView === 'wall') {
+    } else if (currentView === 'wall' || currentView === 'services') {
         renderOpportunityWall();
     } else if (currentView === 'detail' && id && type) {
         renderDetailView(id, type);
@@ -1433,7 +1440,7 @@ function renderMarketExplorer() {
             const btn = document.createElement('button');
             btn.className = `p-3 bg-white border border-slate-200/70 hover:border-gvTeal/30 hover:bg-gvTeal/5 rounded-xl shadow-sm transition duration-300 flex items-center justify-between text-left cursor-pointer border-none`;
             btn.onclick = () => {
-                window.location.hash = `wall?country=${encodeURIComponent(tc.name)}`;
+                window.location.hash = `services?country=${encodeURIComponent(tc.name)}`;
             };
             btn.innerHTML = `
                 <div class="flex items-center gap-2 min-w-0">
@@ -1475,7 +1482,7 @@ function renderMarketExplorer() {
             
             const catDetails = getCategoryDetails(data.label);
             btn.onclick = () => {
-                window.location.hash = `wall?cat=${encodeURIComponent(data.search)}`;
+                window.location.hash = `services?cat=${encodeURIComponent(data.search)}`;
             };
             
             btn.innerHTML = `
@@ -1858,7 +1865,7 @@ function renderDetailView(id, type) {
     
     if (!item) {
         alert(lang === 'pt' ? 'Oportunidade não encontrada.' : 'Opportunity not found.');
-        window.location.hash = 'wall';
+        window.location.hash = 'services';
         return;
     }
     
@@ -3654,7 +3661,7 @@ function setupFormHandlers() {
             }
             
             alert('Necessidade publicada com sucesso no sistema! A sua proposta foi inserida em fila de análise técnica pelos nossos consultores. Não contêm dados expostos publicamente.');
-            window.location.hash = 'wall';
+            window.location.hash = 'services';
         });
     }
     
@@ -3720,7 +3727,7 @@ function setupFormHandlers() {
             }
             
             alert('Oferta de fornecimento publicada de forma gratuita na plataforma GV-CPS! Entrou na fila de correspondência comercial.');
-            window.location.hash = 'wall';
+            window.location.hash = 'services';
         });
     }
     
@@ -4028,7 +4035,7 @@ function setupEventListeners() {
             const type = typeEl ? typeEl.value : 'all';
             const sort = document.getElementById('sort-by').value;
             
-            window.location.hash = `wall?cat=${encodeURIComponent(cat)}&country=${encodeURIComponent(country)}&type=${encodeURIComponent(type)}&sort=${encodeURIComponent(sort)}`;
+            window.location.hash = `services?cat=${encodeURIComponent(cat)}&country=${encodeURIComponent(country)}&type=${encodeURIComponent(type)}&sort=${encodeURIComponent(sort)}`;
         });
     }
     
@@ -5155,7 +5162,6 @@ const CMS_SECTIONS = [
     { id: 'cms-wrap-opportunities', label: 'Oportunidades em Destaque' },
     { id: 'cms-wrap-market',        label: 'Explorador de Mercado' },
     { id: 'cms-wrap-how',           label: 'Como Funciona' },
-    { id: 'cms-wrap-about',         label: 'Sobre / Consultoria' },
     { id: 'cms-wrap-social',        label: 'Prova Social' }
 ];
 
@@ -6430,7 +6436,7 @@ async function wizardNextStep() {
         renderOpportunityWall(); // Refresh lists
         
         // Redirect to wall to see the card
-        window.location.hash = 'wall';
+        window.location.hash = 'services';
         return;
     }
     
@@ -6552,7 +6558,7 @@ async function syncMuralFromSupabase() {
             
             // Re-render wall if we are on it
             const currentView = window.location.hash ? window.location.hash.substring(1) : 'home';
-            if (currentView.startsWith('wall')) {
+            if (currentView.startsWith('wall') || currentView.startsWith('services')) {
                 renderOpportunityWall();
             }
         }
@@ -6687,7 +6693,9 @@ function showVisualSuccessModal(title, text, highlightText) {
 window.showVisualSuccessModal = showVisualSuccessModal;
 
 // === WHATSAPP-STYLE REPLY FUNCTIONS ===
-appState.activeReplies = {};
+if (typeof appState !== 'undefined' && appState) {
+    appState.activeReplies = appState.activeReplies || {};
+}
 
 window.startReplyToMessage = function(msgId, containerId) {
     const lang = localStorage.getItem('gvcps_lang') || 'pt';
@@ -6879,5 +6887,215 @@ window.searchDocsDrawer = function(containerId) {
             const match = textEl.textContent.toLowerCase().includes(query);
             item.style.display = match ? 'flex' : 'none';
         }
+    }
+};
+
+
+
+
+window.toggleWorkflow = function() {
+    console.log('[GV] toggleWorkflow called');
+    const extra = document.getElementById('workflow-steps-extra');
+    const textEl = document.getElementById('toggle-workflow-text');
+    const btn = document.getElementById('workflow-toggle-btn');
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+
+    console.log('[GV] extra element:', extra);
+    if (!extra) { console.warn('[GV] workflow-steps-extra NOT found!'); return; }
+
+    const isHidden = extra.style.display === 'none';
+    console.log('[GV] isHidden:', isHidden);
+
+    extra.style.display = isHidden ? 'grid' : 'none';
+
+    if (textEl) {
+        const ptText = isHidden ? 'Mostrar menos' : 'Ver todas as etapas';
+        const enText = isHidden ? 'Show less' : 'View all steps';
+        textEl.setAttribute('data-translate-pt', ptText);
+        textEl.setAttribute('data-translate-en', enText);
+        textEl.textContent = lang === 'pt' ? ptText : enText;
+    }
+    if (btn) {
+        const icon = btn.querySelector('.material-symbols-outlined');
+        if (icon) icon.textContent = isHidden ? 'expand_less' : 'expand_more';
+    }
+};
+
+// ============================================================
+// FUNÇÕES DE COMUNICAÇÃO E CONTACTO
+// ============================================================
+
+/**
+ * Processa o formulário de contacto da página de Comunicação (#view-contact).
+ * Valida os campos, envia para o Supabase (se disponível) e exibe o modal de sucesso.
+ */
+window.handleContactPageSubmit = async function(event) {
+    event.preventDefault();
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    const sanitize = window.gvSecurity ? window.gvSecurity.sanitize : (s) => s;
+
+    const name    = sanitize(document.getElementById('contact-form-name')?.value?.trim() || '');
+    const email   = sanitize(document.getElementById('contact-form-email')?.value?.trim() || '');
+    const phone   = sanitize(document.getElementById('contact-form-phone')?.value?.trim() || '');
+    const subject = sanitize(document.getElementById('contact-form-subject')?.value || '');
+    const message = sanitize(document.getElementById('contact-form-message')?.value?.trim() || '');
+    const privacy = document.getElementById('contact-form-privacy')?.checked;
+
+    // Validação básica
+    if (!name || !email || !message) {
+        const msg = lang === 'en'
+            ? 'Please fill in all required fields (Name, Email, Message).'
+            : 'Por favor, preencha todos os campos obrigatórios (Nome, E-mail, Mensagem).';
+        alert(msg);
+        return;
+    }
+    if (!privacy) {
+        const msg = lang === 'en'
+            ? 'You must accept the Privacy Policy to continue.'
+            : 'Deve aceitar a Política de Privacidade para continuar.';
+        alert(msg);
+        return;
+    }
+
+    // Rate limiting
+    const rateCheck = window.gvSecurity ? window.gvSecurity.checkRateLimit('contact_form', 3, 10 * 60 * 1000) : { allowed: true };
+    if (!rateCheck.allowed) {
+        const msg = lang === 'en'
+            ? `Too many submissions. Please wait ${rateCheck.resetInSeconds}s before trying again.`
+            : `Demasiadas submissões. Aguarde ${rateCheck.resetInSeconds}s antes de tentar novamente.`;
+        alert(msg);
+        return;
+    }
+
+    // Tenta enviar para Supabase (tabela contact_requests se existir)
+    if (window.gvApi && window.gvApi.supabase) {
+        try {
+            await window.gvApi.supabase.from('contact_requests').insert([{
+                name, email, phone, subject, message,
+                created_at: new Date().toISOString()
+            }]);
+        } catch (err) {
+            console.warn('[GV] contact_requests insert failed (table may not exist yet):', err.message);
+        }
+    }
+
+    // Reset form
+    document.getElementById('contact-page-form')?.reset();
+
+    // Modal de sucesso
+    showVisualSuccessModal(
+        lang === 'pt' ? 'Mensagem Enviada com Sucesso!' : 'Message Sent Successfully!',
+        lang === 'pt'
+            ? `Obrigado, ${name}! A sua mensagem foi recebida pela equipa GV-CPS. Entraremos em contacto em breve via WhatsApp ou E-mail.`
+            : `Thank you, ${name}! Your message has been received by the GV-CPS team. We will contact you shortly via WhatsApp or Email.`,
+        lang === 'pt'
+            ? 'Tempo de resposta habitual: 24 a 48 horas úteis.'
+            : 'Typical response time: 24 to 48 business hours.'
+    );
+};
+
+/**
+ * Inicia login via Google OAuth usando Supabase Auth.
+ * Redireciona o utilizador para o fluxo de autenticação Google.
+ */
+window.handleGoogleLogin = async function() {
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    if (!window.gvApi || !window.gvApi.loginWithGoogle) {
+        const msg = lang === 'en'
+            ? 'Google login is not available at this time. Please use your email and password.'
+            : 'O login com Google não está disponível neste momento. Por favor, use o seu e-mail e palavra-passe.';
+        alert(msg);
+        return;
+    }
+    try {
+        await window.gvApi.loginWithGoogle();
+    } catch (err) {
+        console.error('[GV] Google login error:', err);
+        const msg = lang === 'en'
+            ? 'An error occurred during Google login. Please try again.'
+            : 'Ocorreu um erro durante o login com Google. Tente novamente.';
+        alert(msg);
+    }
+};
+
+/**
+ * Exibe um modal informativo sobre o serviço de Logística Integrada da GV-CPS.
+ * Ativado ao clicar no badge "Logística Incluída" nos chats do portal.
+ */
+window.showLogisticsInfoModal = function() {
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    const title = lang === 'en' ? 'GV-CPS Integrated Logistics' : 'Logística Integrada GV-CPS';
+    const body = lang === 'en'
+        ? `<p style="margin-bottom:12px;">The GV-CPS manages all logistics end-to-end as part of your business deal:</p>
+           <ul style="padding-left:20px; line-height:2;">
+             <li>✅ Cargo documentation &amp; customs clearance</li>
+             <li>✅ International freight (CIF/FOB terms)</li>
+             <li>✅ Port coordination &amp; shipping schedules</li>
+             <li>✅ Real-time cargo tracking</li>
+             <li>✅ Insurance &amp; risk management</li>
+           </ul>
+           <p style="margin-top:12px; font-size:0.85em; color:#64748b;">Logistics costs are included in the final invoice billed by GV-CPS.</p>`
+        : `<p style="margin-bottom:12px;">A GV-CPS gere toda a logística de ponta a ponta como parte do seu negócio:</p>
+           <ul style="padding-left:20px; line-height:2;">
+             <li>✅ Documentação de carga e desalfandegamento</li>
+             <li>✅ Frete internacional (termos CIF/FOB)</li>
+             <li>✅ Coordenação portuária e calendário de navios</li>
+             <li>✅ Rastreamento de carga em tempo real</li>
+             <li>✅ Seguros e gestão de riscos</li>
+           </ul>
+           <p style="margin-top:12px; font-size:0.85em; color:#64748b;">Os custos logísticos estão incluídos na faturação final emitida pela GV-CPS.</p>`;
+
+    // Inject and show modal
+    let modal = document.getElementById('gv-logistics-info-modal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'gv-logistics-info-modal';
+        modal.style.cssText = 'position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.55);backdrop-filter:blur(4px);';
+        modal.innerHTML = `
+            <div style="background:#fff;border-radius:20px;max-width:520px;width:92%;padding:32px;box-shadow:0 20px 60px rgba(0,0,0,0.25);position:relative;">
+                <button onclick="document.getElementById('gv-logistics-info-modal').remove()" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:#64748b;" title="Fechar">✕</button>
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+                    <span style="background:#dcfce7;border-radius:12px;padding:8px;" class="material-symbols-outlined" style="color:#16a34a;font-size:28px;">local_shipping</span>
+                    <h2 id="gv-logistics-modal-title" style="font-size:1.2rem;font-weight:700;color:#00374a;margin:0;">${title}</h2>
+                </div>
+                <div id="gv-logistics-modal-body" style="color:#374151;font-size:0.95rem;line-height:1.7;">${body}</div>
+                <button onclick="document.getElementById('gv-logistics-info-modal').remove()" style="margin-top:24px;width:100%;padding:12px;background:#006d3d;color:#fff;border:none;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;">
+                    ${lang === 'en' ? 'Got it' : 'Entendido'}
+                </button>
+            </div>`;
+        document.body.appendChild(modal);
+    } else {
+        modal.style.display = 'flex';
+        document.getElementById('gv-logistics-modal-title').textContent = title;
+        document.getElementById('gv-logistics-modal-body').innerHTML = body;
+    }
+
+    // Close on backdrop click
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) modal.remove();
+    });
+};
+
+/**
+ * Partilha a localização da GV-CPS (copiando o endereço para a área de transferência).
+ * Ativado pelo botão "Partilhar" no mapa da página de contactos.
+ */
+window.shareContactLocation = function() {
+    const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    const address = 'Global View C.P.S. — Rua de Kassuende, nº 270, Maputo, Moçambique';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(address).then(() => {
+            const msg = lang === 'en' ? 'Address copied to clipboard!' : 'Endereço copiado para a área de transferência!';
+            // Show a brief toast notification
+            const toast = document.createElement('div');
+            toast.textContent = msg;
+            toast.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#006d3d;color:#fff;padding:10px 22px;border-radius:30px;font-weight:600;z-index:99999;box-shadow:0 4px 16px rgba(0,0,0,0.2);font-size:0.9rem;';
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }).catch(() => {
+            alert(address);
+        });
+    } else {
+        alert(address);
     }
 };
