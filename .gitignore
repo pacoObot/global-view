@@ -11,3 +11,8 @@ dist/
 build/
 Imagens/
 
+
+# Helper scripts
+gen_chunks.js
+sanitize.js
+chunks.json

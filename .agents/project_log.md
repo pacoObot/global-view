@@ -15,6 +15,152 @@ O protótipo da plataforma de intermediação B2B da **Global View (GV-CPS)** en
 
 ## 2. Histórico de Alterações Recentes
 
+### Sessão: 13 de Agosto de 2026 (Reconstrução dos Catálogos por Categoria — Agronegócio Completo)
+* **Customização Dinâmica do Wizard por Categoria (`AGRO`)**:
+  - **Mapeamento de Embalagens Específicas (`CATEGORY_PACKAGING_DICTIONARY`)**: Cada categoria do Agronegócio possui agora as suas próprias opções de embalagem física no Passo 3 do Wizard:
+    1. `fertilizantes`: Big Bags (1.000 kg com liner impermeável), Sacos PP (50 kg), Sacos (25 kg paletizados), A Granel (porão de navio / camião basculante).
+    2. `sementes`: Sacos Herméticos (25 kg com barreira aluminizada), Sacos Tratados (50 kg), Caixas Climatizadas (mudas vivas), Big Bags de Sementes (500 kg).
+    3. `caju`: Sacos de Juta (80 kg para RCN), Caixas a Vácuo (25 lbs com N2 para amêndoas), Big Bags Respiráveis (1.000 kg), Tambores PEAD (200L para LCC).
+    4. `acucar`: Sacos de 50 kg com Liner PE food-grade, Big Bags Alimentos (1.000 kg), Sacos de 25 kg paletizados, A Granel VHP (Navio Granelero).
+    5. `equipamentos`: Contentor Flat Rack / Open Top, Caixas de Madeira Tratada ISPM-15, Skid de Aço / Palete Heavy-Duty.
+  - **Dicionário de Derivados (`PRODUCT_SPEC_DICTIONARY`)**: Expandido para 117 entradas de produtos cobrindo todas as especificações e variabilidades técnicas de Sementes, Caju, Açúcar e Equipamentos Agrícolas em PT e EN.
+* **Validação**: `node --check app.js` — ✅ SEM ERROS DE SINTAXE.
+
+### Sessão: 13 de Agosto de 2026 (Reconstrução dos Catálogos de Maquinários & Electrónica — Produtos Físicos)
+* **Reestruturação Completa dos Setores `oil` (Maquinários & Indústria) e `tech` (Tecnologia & Electrónica)**:
+  - **Foco em Produtos Palpáveis**: Conforme orientação explícita do cliente, eliminadas todas as referências a serviços abstratos nestes setores. A GV-CPS vende produtos físicos e palpáveis.
+  - **Setor Maquinários & Indústria (`oil`)**: Reconstruído com 5 subcategorias físicas:
+    1. `navios`: Navios & Embarcações (Cargueiro Bulk Carrier, Porta-Contentores, Tanker, Dragas Hidráulicas, Pesca Industrial, Rebocadores, Ferry/Balsas, Barcaças Fluviais)
+    2. `tratores`: Tratores & Maquinaria Agrícola (Rodas 25–400HP, Esteiras/Crawler, Mini-tratores/Motocultivadores, Vitivinícolas, Florestais/Skidder, Retroescavadoras, Escavadoras Hidráulicas, Bulldozers)
+    3. `carpintaria`: Equipamentos de Carpintaria & Madeira (Serras de Fita, Serras Circulares de Mesa, Plainas, Routers CNC 3-5 Eixos, Prensas Hidráulicas, Estufas de Madeira, Lixadeiras)
+    4. `elevacao`: Gruas, Empilhadeiras & Elevação (Empilhadeiras Contrapeso 3-7T, Reach Trucks, Empilhadeiras 10-25T+, Gruas Torre, Guindastes Móveis All-Terrain, Pontes Rolantes)
+    5. `industriais`: Maquinaria Industrial Pesada (Compressores de Parafuso, Geradores Trifásicos, Prensas 100-500T, Injetoras de Plástico, Cortadoras Laser CNC, Moinhos Industriais)
+  - **Setor Tecnologia & Electrónica (`tech`)**: Reconstruído com 5 subcategorias de hardware:
+    1. `chips`: Chips & Processadores (Intel/AMD bulk, MCUs ESP32/STM32, Memórias NAND, FPGAs Xilinx/Intel, SoCs Mobile)
+    2. `memoria`: Memória & Armazenamento (DDR4, DDR5, SSD NVMe M.2, SSD SATA 2.5", eMMC, Cartões microSD Industrial, HDD Enterprise 3.5")
+    3. `placas`: Placas-Mãe & Placas de Expansão (Motherboards Intel/AMD/Server, GPUs NVIDIA RTX/Workstation, GPUs AMD, NICs, SBCs)
+    4. `energia_eletro`: Carregadores & Alimentação (PSUs ATX, Carregadores GaN USB-C 45W-240W, Baterias Li-Ion 18650, LiPo, Power Banks Industriais, Painéis Solares Portáteis)
+    5. `perifericos_eletro`: Periféricos & Displays (Monitores LCD/IPS bulk, Painéis OLED, Câmeras IP, Impressoras Térmicas, Scanners Industriais, Teclados/Ratos bulk)
+* **Dicionário de Especificações & Derivados (`PRODUCT_SPEC_DICTIONARY`)**:
+  - Adicionadas 76+ novas entradas cobrindo todos os produtos de Maquinários e Electrónica em Português e Inglês.
+  - O Wizard (Passo 3) exibe automaticamente os chips com derivados/modelos específicos (ex: ao escolher *Trator Agrícola de Rodas*, o cliente seleciona entre *Compacto 25-50HP*, *Médio 60-100HP*, *Grande 120-200HP*, *Articulado 200-400HP*, *4WD com Cabine*).
+* **Limpeza e Ajuste Visual em `index.html`**:
+  - Removido o subtítulo *"Oferecemos consultoria de elite e intermediação segura..."* da secção de Serviços Corporativos.
+  - Atualizadas as descrições dos cards de Maquinários e Tecnologia para listar explicitamente a venda dos produtos físicos e seus derivados.
+* **Validação**: `node --check app.js` — ✅ SEM ERROS DE SINTAXE. Total de 84 entradas de produtos no dicionário de especificações.
+
+
+
+### Sessão: 13 de Agosto de 2026 (Novo Setor "Indústria & Reagentes" + Catálogo na Base de Dados)
+* **Novo Setor `chemicals` — Indústria & Reagentes Químicos**:
+  - **5.º Setor Canónico**: Adicionado o setor `chemicals` (violeta `#7c3aed`, ícone `science`) ao `GV_CATALOG` (PT) e `GV_CATALOG_EN` (EN) em [app.js](file:///home/paco/Projectos/Global%20View/app.js).
+  - **4 Subcategorias**:
+    1. `acidos` — Ácidos & Solventes (5 produtos: Ácido Acético, HCl 32%, HCl 37%, Ácido Fosfórico, Metanol)
+    2. `sais` — Sais & Compostos Inorgânicos (12 produtos: Hidróxido de Sódio, Cloreto de Sódio, Sulfato de Cobre, Cianeto de Potássio, etc.)
+    3. `reagentes` — Reagentes Analíticos (11 produtos: Cloramina T, Ácido Cítrico, D(-) Frutose, BRIJ-35, etc.)
+    4. `consumiveis` — Consumíveis de Laboratório (5 produtos: Extran AP11, Extran MA01, Papéis de Filtro, Carbono Ativado)
+  - **Fonte dos Produtos**: [catalog/Chemical Products Mozamique Leaf Tobacco.docx](file:///home/paco/Projectos/Global%20View/catalog/Chemical%20Products%20Mozamique%20Leaf%20Tobacco.docx) — 36 produtos originais (3 duplicados consolidados = 33 únicos). Marca: **Merck**.
+  - **Card no Wizard Step 1**: Adicionado card visual `#sector-chemicals-card` com ícone `science` e suporte bilíngue completo em [index.html](file:///home/paco/Projectos/Global%20View/index.html).
+  - **Fallback de Tradução**: Adicionado fallback para a categoria `chemicals` na função `getTranslatedField()` em [app.js](file:///home/paco/Projectos/Global%20View/app.js).
+* **Nova Tabela `catalog_products` na Base de Dados**:
+  - **Schema**: Adicionada a tabela `catalog_products` ao [supabase_schema.sql](file:///home/paco/Projectos/Global%20View/supabase_schema.sql) com 14 campos (id, sector, category, name_pt, name_en, pack_unit, quantity, price_usd, price_notes, brand, origin, notes, is_active, created_at).
+  - **RLS**: Leitura pública (`is_active = true`) + Escrita restrita a Admins.
+  - **Script de Seed**: Criado [catalog_seed.sql](file:///home/paco/Projectos/Global%20View/catalog_seed.sql) com 33 `INSERT INTO catalog_products` — os 36 produtos do DOCX com 3 duplicados consolidados, com referências ao número de linha original do documento.
+  - **Documentação**: [DATABASE.md](file:///home/paco/Projectos/Global%20View/DATABASE.md) atualizado com a secção 5 descrevendo a nova tabela, campos, RLS e instruções de seed.
+* **Validação**: `node --check app.js` — ✅ SEM ERROS DE SINTAXE.
+* **Status**: Aguarda execução do `catalog_seed.sql` no Supabase SQL Editor e deploy no GitHub.
+
+### Sessão: 12 de Agosto de 2026 (Ajustes de Responsividade do Header, Card Condicional & Fundo do Hero)
+* **Reestruturação do Layout do Hero & Header (`#view-home > section.hero` e `header.app-header`)**:
+  - **Ocultação Condicional do Card "Área do Cliente"**: Atribuído ID `#hero-client-area-card` e sincronizada a lógica em `updateSwitcherUI()` para desaparecer automaticamente assim que o utilizador efetua login (`role !== 'visitor'`).
+  - **Fix Crítico de Responsividade do Header**:
+    - Adicionada regra `white-space: nowrap` nos links de navegação (`nav.main-nav a`) prevenindo quebra e sobreposição de palavras (*"Sobre Nós"*).
+    - Ajustado o breakpoint de colapso do menu para `1120px` e ocultado o subtítulo do logo em `< 1240px`, alternando suavemente para o menu de 3 barras (`.mobile-menu-toggle`) em laptops e tablets.
+    - Corrigida a cor do ícone do menu de 3 barras (`color: var(--primary)`) garantindo visibilidade nítida sobre o fundo claro da navbar.
+  - **Visibilidade Aumentada das Imagens de Fundo do Hero**:
+    - Aumentada a opacidade do container de imagens de fundo de `opacity-40` para `opacity-70`, tornando as fotos do slider (Carga Portuária, Agrobusiness, Logística) substancialmente mais nítidas e vivas.
+  - **Imagem Oficial no Card de Agronegócio & Commodities**: Substituída a imagem do cartão principal de *"Agronegócio & Commodities"* na secção **Setores de Atuação** da página inicial pela nova foto dos sacos de grãos e leguminosas (`assets/images/agro_commodities.jpg`).
+  - **Grelha de Setores de Atuação em 2 Linhas**: Reorganizada a grelha de cartões da secção **Setores de Atuação** na página inicial para ter exatamente **2 linhas**:
+    - **Linha 1 (2 cartões)**: *Agronegócio & Commodities* (`col-span-8`) + *Oil & Gas & Mineração* (`col-span-4`).
+    - **Linha 2 (3 cartões)**: *Maquinários & Indústria* (`col-span-4`) + *Tecnologia & Electrónica* (`col-span-4`) + *Logística Global & Fretes* (`col-span-4`).
+    - Eliminada a 3ª linha isolada; os 5 setores alinham-se perfeitamente num bento grid de 2 filas.
+* **Status**: Verificado e ativo no servidor local (`http://localhost:3000`). Aguarda confirmação antes do deploy no GitHub.
+
+### Sessão: 11 de Agosto de 2026 (Atualização do Centro de Confiança — Trust Center)
+* **Reestruturação dos Cartões de Comparação no Centro de Confiança (`#view-trust`)**:
+  - **Títulos Simplificados**: Cartão esquerdo renomeado para *"Desvantagens de outros B2B comuns"* e cartão direito para *"Vantagens da GV-CPS"*.
+  - **Revisão dos Pontos de Vantagem da GV-CPS**:
+    1. **Comunicação**: Substituído o título "Intermediação de Chat Blindada" por *"Comunicação:"*.
+    2. **Pagamento mediante termos e condições**: Atualizado o ponto de aprovação financeira para *"Pagamento mediante termos e condições"*.
+    3. **Cadeia de fornecimentos integrados**: Atualizado para *"Cadeia de fornecimentos integrados"*.
+    4. **Auditoria da cadeia de fornecimento**: Atualizado para *"Auditoria da cadeia de fornecimento: Verificação física da mercadoria, verificação dos processos logísticos e transportes"*.
+  - **Remoção de Banner Inferior**: Eliminada a caixa destacada *"🛡️ Como Intermediador Único, a GV-CPS assume a responsabilidade operacional..."* no fundo do cartão direito.
+  - **Bilinguismo Preservado**: Marcação `data-translate-pt` e `data-translate-en` atualizada em todos os novos pontos.
+
+### Sessão: 11 de Agosto de 2026 (Atualização da Página de Comunicação / Contactos)
+* **Reformulação Visual e de Conteúdo da Secção de Comunicação (`#view-contact`)**:
+  - **Remoção do Mapa**: Eliminada a secção inferior do mapa (iframe OpenStreetMap e overlay) de acordo com o pedido do cliente.
+  - **Alteração de Sede para Escritório**: Atualizados os textos de "Sede Central Global View" e "Nossa sede..." para "Escritório Global View" e "Nosso escritório...", mantendo suporte bilíngue completo (PT/EN).
+  - **Novo Botão Google Maps**: Adicionado botão proeminente *"Ver Localização no Google Maps"* posicionado na parte inferior do card do escritório.
+  - **Simplificação do Mini Hero**: Removido o parágrafo de texto descritivo por baixo do título "Fale Connosco", mantendo apenas os botões de ação rápida (Chatbot WhatsApp, Email, Telefone).
+  - **Remoção do Card de Intermediação Blindada**: Eliminado o card escuro com garantia de intermediação da coluna de contactos da página.
+  - **Novos Contactos Alternativos**: Inseridos os números alternativos `+258 84 392 333000 / +258 82 392 333000` na secção de informações de atendimento.
+* **Ajuste no Rodapé (Footer)**:
+  - Removido o texto descritivo por baixo do logótipo no rodapé (`.footer-desc`).
+  - Aumentado o tamanho do logótipo no rodapé (altura de 38px para 52px e textos ajustados) para maior destaque visual.
+
+### Sessão: 11 de Agosto de 2026 (Auditoria Completa de Fluxo do Cliente — Correção de Bugs Críticos)
+* **Auditoria Completa do Sistema de Comunicação**:
+  - Analisadas todas as funções chamadas pelo HTML que deveriam existir em `app.js`.
+  - Identificadas **4 funções críticas em falta** que causavam erros `ReferenceError` silenciosos.
+* **[FIX] `handleContactPageSubmit` adicionada ao `app.js`**:
+  - Formulário de contacto da página `#view-contact` estava completamente não-funcional (sem feedback ao utilizador).
+  - Nova função com validação de campos obrigatórios, rate limiting (3/10min), integração Supabase (`contact_requests`), reset de formulário e modal de sucesso bilíngue.
+* **[FIX] `shareContactLocation` adicionada ao `app.js`**:
+  - Botão "Partilhar" no mapa da página de contactos não tinha ação.
+  - Implementada com Clipboard API e toast visual bilíngue de confirmação.
+* **[FIX] `handleGoogleLogin` adicionada ao `app.js`**:
+  - Botão "Entrar com Google" no modal de login não tinha função associada.
+  - Implementada com chamada a `gvApi.loginWithGoogle()` e fallback gracioso.
+* **[FIX] `showLogisticsInfoModal` adicionada ao `app.js`**:
+  - Badge "Logística Incluída" nos chats do portal era clicável mas não abria nada.
+  - Modal informativo criado com lista de serviços de logística da GV-CPS, bilíngue (PT/EN).
+* **Deploy**: Commit `5fe7ce8` enviado para GitHub → Vercel auto-deploy em [global-view-eight.vercel.app](https://global-view-eight.vercel.app).
+
+
+* **Atualização do Centro de Confiança**:
+  - Atualizado o subtítulo da secção "Por que a Global View é Segura?" em [index.html](file:///home/paco/Projectos/Global%20View/index.html) para: *"Fornecedor global que assegura risco mínimo de fraude em todas as suas operações"*.
+  - Renomeados os títulos dos dois blocos de comparação para "Desvantagens (Diretórios B2B Comuns)" e "Vantagens (Nossa Abordagem: GV-CPS)".
+* **Atualização da Filosofia Corporativa**:
+  - Atualizados os textos dos dois parágrafos principais da Filosofia Corporativa na secção `#view-about` em [index.html](file:///home/paco/Projectos/Global%20View/index.html).
+  - Atualizada a lista de vantagens "Porquê Escolher a GV-CPS?" para: *Cadastro Gratuito*, *Sigilo Operacional*, *Assessoria Completa* e *Comunicação Omnichannel (WhatsApp)*.
+  - Removido o título "A Global View (GV-CPS)" e o parágrafo de introdução do topo da página "Sobre Nós".
+  - Mantido suporte 100% bilíngue (PT/EN) em todos os elementos da secção.
+
+### Sessão: 10 de Agosto de 2026 (Reorganização de Oportunidades e Navegação)
+* **Eliminação de Serviços Antigos**:
+  - Removido por completo o conteúdo e os cards de Áreas de Excelência (Agro, Oil & Gas, Commodities, TI) que existiam na secção `#view-services` em [index.html](file:///home/paco/Projectos/Global%20View/index.html).
+* **Remoção da Secção de Consultoria da Homepage**:
+  - Eliminada por completo a secção `#cms-wrap-about` ("Consultoria de Elite para Mercados Complexos") da homepage em [index.html](file:///home/paco/Projectos/Global%20View/index.html).
+  - Removido o ID correspondente da configuração de secções do CMS (`CMS_SECTIONS`) em [app.js](file:///home/paco/Projectos/Global%20View/app.js).
+* **Atualização do Fluxo de Trabalho (Como Funciona)**:
+  - Expandida a secção "Como a GV-CPS Funciona" em [index.html](file:///home/paco/Projectos/Global%20View/index.html) de 3 para 6 passos estruturados.
+  - Removido por completo o subtítulo antigo ("Simplificamos a complexidade do comércio...") da secção de fluxo na homepage.
+  - Atualizados os textos dos passos 2 e 3 e inseridos os novos cartões 4, 5 e 6 com detalhes sobre Pagamento Inicial, Documentação de Carga e Partida de Navio.
+  - Os novos cartões 4, 5 e 6 são inicialmente ocultados (classe `hidden`) e revelados dinamicamente ao clicar no botão "Saiba mais sobre o processo".
+  - Implementada a função global `toggleWorkflow()` em [app.js](file:///home/paco/Projectos/Global%20View/app.js) para alternar a visibilidade das etapas e atualizar dinamicamente os textos e atributos de tradução do botão ("Mostrar menos" / "Show less").
+  - Assegurado bilinguismo nativo (PT/EN) para todos os novos passos e estados de botões.
+* **Mural na Página de Serviços**:
+  - Transferido todo o conteúdo do Mural de Oportunidades (Mini Hero, barra de filtros e grelha de cards) para a secção de Serviços (`#view-services`).
+  - Removida a secção `#view-wall` do DOM.
+  - Atualizado o botão de voltar na visualização de detalhes para apontar para `#services` e implementado bilinguismo completo (`data-translate-pt` e `data-translate-en`).
+* **Simplificação da Navbar**:
+  - Removida a ligação para o Mural do cabeçalho desktop e menu mobile. A barra possui exatamente: **Início, Sobre Nós, Serviços, Centro de Confiança e Comunicação**.
+  - Atualizado o link do rodapé e todos os botões do Hero/Homepage para apontar para `#services`.
+* **Redirecionamento Automático e Lógica do Router**:
+  - Implementado redirecionamento transparente de `#wall` para `#services` na função `navigate()` em [app.js](file:///home/paco/Projectos/Global%20View/app.js) para preservar links em cache.
+  - Atualizado o router, renderizadores e sincronização Supabase para suportar e renderizar o mural sob a rota `#services`.
+
 ### Sessão: 03 de Agosto de 2026 (Gaveta de Documentos + Respostas estilo WhatsApp)
 * **Gaveta de Documentos Partilhados (Chat File Drawer)**:
   - Adicionado botão de atalho `folder_open` no cabeçalho do chat do Comprador, Consultor e Fornecedor.
