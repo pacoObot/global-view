@@ -340,3 +340,42 @@ CREATE OR REPLACE TRIGGER on_auth_user_created
 -- UPDATE public.profiles SET role = 'supplier' WHERE id = (SELECT id FROM public.profile_contacts WHERE email = 'supplier@gvcps.com');
 -- UPDATE public.profiles SET role = 'consultant' WHERE id = (SELECT id FROM public.profile_contacts WHERE email = 'consultant@gvcps.com');
 -- UPDATE public.profiles SET role = 'admin' WHERE id = (SELECT id FROM public.profile_contacts WHERE email = 'admin@gvcps.com');
+
+-- =====================================================================
+-- TABELA DE CATÁLOGO INTERNO DE PRODUTOS (catalog_products)
+-- Criada em: 13 de Agosto de 2026
+-- Propósito: Armazenar o catálogo curado de produtos intermediados pela
+--            GV-CPS, persistindo os itens do mural de forma estruturada
+--            por setor, categoria, nome bilíngue, embalagem, quantidade,
+--            preço indicativo, marca e origem.
+-- =====================================================================
+DROP TABLE IF EXISTS public.catalog_products CASCADE;
+
+CREATE TABLE public.catalog_products (
+    id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    sector      text NOT NULL,           -- setor canónico: 'chemicals', 'agro', 'oil', 'tech', 'logistics'
+    category    text NOT NULL,           -- subcategoria (ex: 'acidos', 'sais', 'reagentes', 'consumiveis')
+    name_pt     text NOT NULL,           -- nome do produto em Português
+    name_en     text NOT NULL,           -- nome do produto em Inglês
+    pack_unit   text,                    -- embalagem/unidade (ex: '250g', '2.5L', '100 units')
+    quantity    integer DEFAULT 1,       -- quantidade disponível/procurada
+    price_usd   numeric(12,2),          -- preço indicativo em USD (NULL se não definido)
+    price_notes text,                    -- observações sobre preço (ex: 'Sob consulta', 'R$ 8.000,00')
+    brand       text,                    -- marca do produto (ex: 'Merck')
+    origin      text DEFAULT 'Moçambique',-- país de origem ou disponibilidade
+    notes       text,                    -- notas técnicas adicionais
+    is_active   boolean DEFAULT true,    -- controlo de visibilidade no mural
+    created_at  timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- RLS: Leitura pública (catálogo visível a todos os visitantes)
+ALTER TABLE public.catalog_products ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Leitura pública do catálogo de produtos"
+    ON public.catalog_products FOR SELECT
+    USING (is_active = true);
+
+CREATE POLICY "Gestão do catálogo apenas por Admins"
+    ON public.catalog_products FOR ALL
+    USING (public.is_admin());
+

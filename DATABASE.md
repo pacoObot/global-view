@@ -87,3 +87,55 @@ O design SQL e a organização de chaves estrangeiras foram construídos para pe
 * **Banco de Dados**: PostgreSQL padrão. O script `supabase_schema.sql` utiliza funcionalidades compatíveis com qualquer PostgreSQL local ou em VPS (Docker).
 * **Autenticação**: Se a plataforma deixar de usar o Supabase Auth (migrando para Keycloak ou Auth0), basta remover o trigger `on_auth_user_created` e fazer com que o backend de API (ex: NestJS) controle a escrita de novos perfis na base de dados durante o fluxo de registo.
 * **Tempo Real (WebSockets)**: As ligações em tempo real do chat utilizam WebSockets padrão (via Supabase Realtime). Caso se migre, o código do frontend apenas precisará de substituir o listener do Supabase por uma ligação ao socket da sua própria API (ex: Socket.io).
+
+---
+
+## 5. Tabela de Catálogo Interno de Produtos (`catalog_products`)
+
+Adicionada em **13 de Agosto de 2026** para persistir o catálogo curado de produtos intermediados pela GV-CPS.
+
+### Estrutura
+
+| Campo | Tipo | Descrição |
+| :--- | :--- | :--- |
+| `id` | uuid | Chave primária gerada automaticamente |
+| `sector` | text | Setor canónico: `chemicals`, `agro`, `oil`, `tech`, `logistics` |
+| `category` | text | Subcategoria (ex: `acidos`, `sais`, `reagentes`, `consumiveis`) |
+| `name_pt` | text | Nome do produto em Português |
+| `name_en` | text | Nome do produto em Inglês |
+| `pack_unit` | text | Embalagem/unidade (ex: `250g`, `2.5L`, `100 units`) |
+| `quantity` | integer | Quantidade disponível/procurada |
+| `price_usd` | numeric | Preço indicativo em USD (null se não definido) |
+| `price_notes` | text | Notas sobre preço (ex: `Sob consulta`, `R$ 8.000,00`) |
+| `brand` | text | Marca do produto (ex: `Merck`) |
+| `origin` | text | País de origem ou disponibilidade |
+| `notes` | text | Notas técnicas adicionais |
+| `is_active` | boolean | Controlo de visibilidade no mural |
+| `created_at` | timestamptz | Data de criação (UTC) |
+
+### Políticas RLS
+
+* **Leitura pública**: Qualquer visitante pode consultar o catálogo (`is_active = true`).
+* **Escrita restrita**: Apenas Administradores podem inserir, atualizar ou remover produtos.
+
+### Setor `chemicals` — Indústria & Reagentes Químicos
+
+Primeiro setor alimentado via script `catalog_seed.sql`. Contém **33 produtos únicos** (36 da fonte, com 3 duplicados consolidados) da lista da *Mozambique Leaf Tobacco* (Marca: Merck), organizados em 4 subcategorias:
+
+| Subcategoria | Chave | Nº Produtos |
+| :--- | :--- | :---: |
+| Ácidos & Solventes | `acidos` | 5 |
+| Sais & Compostos Inorgânicos | `sais` | 12 |
+| Reagentes Analíticos | `reagentes` | 11 |
+| Consumíveis de Laboratório | `consumiveis` | 5 |
+
+### Como executar o seed
+
+```sql
+-- 1. Aplicar o esquema (se ainda não aplicado):
+--    Copiar conteúdo de supabase_schema.sql → Supabase SQL Editor → Run
+
+-- 2. Popular o catálogo de produtos químicos:
+--    Copiar conteúdo de catalog_seed.sql → Supabase SQL Editor → Run
+```
+
