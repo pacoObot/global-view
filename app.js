@@ -149,64 +149,76 @@ const GV_CATALOG_EN = {
         }
     },
     oil: {
-        label: 'Oil & Gas',
-        icon: 'local_gas_station',
-        color: '#f59e0b',
+        label: 'Machinery & Industry',
+        icon: 'precision_manufacturing',
+        color: '#b45309',
         categories: {
-            equipamentos: { 
-                label: 'Industrial Equipment', 
-                unit: 'Units', 
-                products: ['High-Flow Air Compressors', '500kVA Silent Generators', 'Centrifugal Slurry Pumps', 'Industrial Check Valves'], 
-                quantities: ['1 unit', '2 units', '5 units'] 
+            navios: {
+                label: 'Vessels & Ships',
+                unit: 'Units / Vessel',
+                products: ['Bulk Carrier (Dry Cargo Ship)', 'Container Ship', 'Oil Tanker', 'Hydraulic Dredge', 'Industrial Fishing Vessel', 'Tugboat / Tug', 'Ferry & Passenger Vessel', 'River Barge'],
+                quantities: ['1 vessel', '2 vessels', '3 vessels', 'Fleet (5+)']
             },
-            lubrificantes: { 
-                label: 'Lubricants & Chemicals', 
-                unit: 'Liters', 
-                products: ['Premium Hydraulic Oil ISO 68', 'Industrial Lithium Grease', 'Stationary Engine Additives', 'Drilling Fluids'], 
-                quantities: ['200 Liters (1 Drum)', '1000 Liters', '5000 Liters'] 
+            tratores: {
+                label: 'Tractors & Agricultural Machinery',
+                unit: 'Units',
+                products: ['Agricultural Wheeled Tractor', 'Crawler / Track Tractor', 'Compact Mini-Tractor', 'Orchard / Vineyard Tractor', 'Forestry Tractor', 'Backhoe Loader', 'Hydraulic Excavator', 'Bulldozer / Dozer'],
+                quantities: ['1 unit', '2 units', '5 units', '10 units', '20 units']
             },
-            quimicos: { 
-                label: 'Chemicals & Industrial Acids', 
-                unit: 'ISO Tank / Liters', 
-                products: ['Sulphuric Acid 98% Concentrated', 'Hydrochloric Acid', 'Caustic Soda / Sodium Hydroxide', 'Methanol / Industrial Solvents'], 
-                quantities: ['20,000 Liters (1 ISO Tank)', '40,000 Liters (2 ISO Tanks)', '100,000 Liters', '250,000 Liters'] 
+            carpintaria: {
+                label: 'Carpentry & Woodworking Equipment',
+                unit: 'Units',
+                products: ['Industrial Band Saw', 'Circular Table Saw', 'Surface Planer / Thicknesser', 'CNC Router / Spindle Moulder', 'Hydraulic Wood Press', 'Timber Kiln / Dryer', 'Industrial Belt Sander', 'Combined Multi-Operation Machine'],
+                quantities: ['1 unit', '2 units', '5 units', '10 units']
             },
-            servicos: { 
-                label: 'Technical Services', 
-                unit: 'Project', 
-                products: ['Ultrasonic Weld Inspection (NDT)', 'Environmental Compliance Audit', 'Preventive Maintenance for Turbine Engines', 'Local Content Consulting'], 
-                quantities: ['1 project', 'Quarterly Contract', 'Annual Contract'] 
+            elevacao: {
+                label: 'Cranes, Forklifts & Lifting',
+                unit: 'Units',
+                products: ['Counterbalance Forklift (3–7T)', 'Reach Truck (Electric)', 'Heavy Duty Forklift (10–25T+)', 'Tower Crane', 'All-Terrain Mobile Crane', 'Industrial Overhead Bridge Crane', 'Aerial Work Platform (Manlift)', 'Electric Stacker'],
+                quantities: ['1 unit', '2 units', '5 units', '10 units']
+            },
+            industriais: {
+                label: 'Heavy Industrial Machinery',
+                unit: 'Units',
+                products: ['Industrial Screw Compressor', 'Three-Phase Generator Set', 'Hydraulic Press (100–500T)', 'Plastic Injection Moulding Machine', 'CNC Laser Cutting Machine', 'Industrial Ball Mill', 'Industrial Shredder / Grinder', 'Industrial Extruder'],
+                quantities: ['1 unit', '2 units', '5 units', '10 units']
             }
         }
     },
     tech: {
-        label: 'Technology',
-        icon: 'devices',
+        label: 'Technology & Electronics',
+        icon: 'memory',
         color: '#2563eb',
         categories: {
-            computadores: { 
-                label: 'Computers & IT', 
-                unit: 'Units', 
-                products: ['Corporate i7 Laptops 16GB', 'Office i5 Desktops', '24-inch IPS LED Monitors', 'Thermal Label Printers'], 
-                quantities: ['5 units', '10 units', '25 units', '50 units', '100 units'] 
+            chips: {
+                label: 'Chips & Processors',
+                unit: 'Units (bulk)',
+                products: ['Intel Processors (bulk)', 'AMD Processors (bulk)', 'Microcontrollers & MCUs (ESP32/STM32)', 'NAND Flash Memory Chips', 'FPGAs (Xilinx / Intel Altera)', 'Mobile SoC Processors (Qualcomm / MediaTek)'],
+                quantities: ['10 units', '50 units', '100 units', '500 units', '1000 units']
             },
-            servidores: { 
-                label: 'Servers & Infrastructure', 
-                unit: 'Units', 
-                products: ['2U Dual Xeon Silver Rack Server', '64TB Enterprise NAS Storage', '10kVA Online UPS Unit'], 
-                quantities: ['1 unit', '2 units', '5 units'] 
+            memoria: {
+                label: 'Memory & Storage',
+                unit: 'Units (bulk)',
+                products: ['DDR4 RAM Modules', 'DDR5 RAM Modules', 'NVMe M.2 SSD', 'SATA 2.5" SSD', 'eMMC Flash (embedded)', 'Industrial microSD Cards', 'Enterprise 3.5" HDD'],
+                quantities: ['10 units', '50 units', '100 units', '500 units', '1000 units']
             },
-            redes: { 
-                label: 'Networks & Telecom', 
-                unit: 'Project', 
-                products: ['Structured Cat6 Cabling per Point', 'Cisco Managed Switches 24P', 'Hikvision IP CCTV Camera System'], 
-                quantities: ['1 project', 'Technical Maintenance Contract', 'Complete Installation'] 
+            placas: {
+                label: 'Motherboards & Expansion Cards',
+                unit: 'Units (bulk)',
+                products: ['Intel Desktop Motherboard', 'AMD Desktop Motherboard', 'Server / Workstation Motherboard', 'NVIDIA GPU Card (bulk)', 'AMD GPU Card (bulk)', 'Network Interface Card (NIC)', 'Single-Board Computer (SBC)'],
+                quantities: ['5 units', '10 units', '50 units', '100 units']
             },
-            software: { 
-                label: 'Software & Licenses', 
-                unit: 'Licenses', 
-                products: ['Primavera ERP System Licenses', 'Microsoft 365 Pro Annual Subscription', 'Sophos Endpoint Security Licenses'], 
-                quantities: ['5 licenses', '25 licenses', '50 licenses', '100 licenses'] 
+            energia_eletro: {
+                label: 'Chargers & Power Supply',
+                unit: 'Units (bulk)',
+                products: ['ATX Power Supply Unit (PSU)', 'USB-C GaN Charger', 'Li-Ion 18650 Batteries (bulk)', 'LiPo Batteries (drones/devices)', 'Industrial Power Bank', 'Portable Solar Panels'],
+                quantities: ['10 units', '50 units', '100 units', '500 units', '1000 units']
+            },
+            perifericos_eletro: {
+                label: 'Peripherals & Displays',
+                unit: 'Units (bulk)',
+                products: ['LCD/IPS Monitor (bulk)', 'OLED Mobile Display Panels', 'IP Security Camera', 'Thermal Label Printer', 'Industrial Barcode Scanner', 'Keyboard & Mouse Set (bulk)'],
+                quantities: ['10 units', '50 units', '100 units', '500 units']
             }
         }
     },
@@ -232,6 +244,38 @@ const GV_CATALOG_EN = {
                 unit: 'Process', 
                 products: ['General Import Customs Clearance', 'Export Customs Clearance', 'International Cargo Customs Transit'], 
                 quantities: ['1 process', '5 processes', 'Continuous Clearance'] 
+            }
+        }
+    },
+    /* TODO: React component — <SectorCatalog key="chemicals"> */
+    chemicals: {
+        label: 'Industry & Reagents',
+        icon: 'science',
+        color: '#7c3aed',
+        categories: {
+            acidos: {
+                label: 'Acids & Solvents',
+                unit: 'Units',
+                products: ['Glacial Acetic Acid (2.5L)', 'Hydrochloric Acid 32% (2.5L)', 'Hydrochloric Acid 37% (2.5L)', 'Phosphoric Acid (250ml)', 'Methanol (2.5L)'],
+                quantities: ['1 unit', '2 units', '5 units', '10 units']
+            },
+            sais: {
+                label: 'Salts & Inorganic Compounds',
+                unit: 'Units',
+                products: ['Ammonium Sulfate (100g)', 'Calcium Chloride Hexahydrate (250g)', 'Sodium Chloride (250g)', 'Sodium Hydroxide (500g)', 'Sodium Hypochlorite (2.5L)', 'Sodium Nitrate (250g)', 'Potassium Nitrate (50g)', 'Potassium Cyanide (250g)', 'Di-Sodium Hydrogenophosphate (500g)', 'Sodium hydrogenPhosphate dibasic dihydrate (500g)', 'Copper II sulfate pentahydrate (250g)', 'Sodium Tetraborate Decahydrate (500g)'],
+                quantities: ['1 unit', '2 units', '4 units', '6 units']
+            },
+            reagentes: {
+                label: 'Analytical Reagents',
+                unit: 'Units',
+                products: ['4-Hydroxybenzoic Acid Hydrazine (25g)', 'BRIJ-35 (100ml)', 'Chloramine T Trihydrate (250g)', 'Citric Acid Monohydrate (500g)', 'D(-) Fructose (250g)', 'D(+) Glucose Anhydrous (250g)', 'Sodium Nitroprusside Dihydrate (100g)', 'Sodium Salicylate (500g)', 'Sulfanilic Acid (250g)', 'Hydrazine Sulfate (100g)', 'Sulfanilamide (100g)', 'GLS Control Chemical Sample (100g)', 'N-(1-naphtyl)ethylenediamine dihydrochloride (250g)'],
+                quantities: ['1 unit', '2 units', '4 units', '6 units']
+            },
+            consumiveis: {
+                label: 'Laboratory Consumables',
+                unit: 'Units',
+                products: ['Extran AP 11 — Alkaline Detergent (2Kg)', 'Extran MA 01 — Neutral Detergent (1L)', 'Qualitative Filter Papers No.40 125mm (100 units)', 'Qualitative Filter Papers No.11 80mm (100 units)', 'Activated Carbon (500g)'],
+                quantities: ['1 unit', '2 units', '10 units', '50 units']
             }
         }
     }
@@ -275,6 +319,8 @@ function getTranslatedField(item, field) {
                 return 'IT & Enterprise Software Consulting';
             } else if (cat.includes('logística') || cat.includes('fretes')) {
                 return 'Global Logistics & Freight';
+            } else if (cat.includes('químico') || cat.includes('reagente') || cat.includes('indústria') || cat.includes('laborat')) {
+                return 'Industry & Chemical Reagents';
             }
         }
         if (field === 'country') {
@@ -874,12 +920,16 @@ function updateSwitcherUI() {
         });
         if (btnLogin) btnLogin.style.display = 'none';
         if (userMenu) userMenu.style.display = 'block';
+        const clientAreaCard = document.getElementById('hero-client-area-card');
+        if (clientAreaCard) clientAreaCard.style.display = 'none';
     } else {
         memberNavs.forEach(nav => {
             nav.style.display = 'none';
         });
         if (btnLogin) btnLogin.style.display = 'flex';
         if (userMenu) userMenu.style.display = 'none';
+        const clientAreaCard = document.getElementById('hero-client-area-card');
+        if (clientAreaCard) clientAreaCard.style.display = 'flex';
     }
 }
 
@@ -1699,12 +1749,12 @@ function createOpportunityCard(item) {
     // ---- Hero image per category — aligned with reference ----
     const imgMap = {
         agro: [
-            'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80',
-            'https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&w=800&q=80'
+            'assets/images/agro_commodities.jpg',
+            'assets/images/agro_commodities.jpg'
         ],
         energy: [
-            'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
-            'https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=800&q=80'
+            'assets/images/oil_gas.jpg',
+            'assets/images/oil_gas.jpg'
         ],
         tech: [
             'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
@@ -5348,64 +5398,76 @@ const GV_CATALOG = {
         }
     },
     oil: {
-        label: 'Oil & Gas',
-        icon: 'local_gas_station',
-        color: '#f59e0b',
+        label: 'Maquinários & Indústria',
+        icon: 'precision_manufacturing',
+        color: '#b45309',
         categories: {
-            equipamentos: { 
-                label: 'Equipamentos Industriais', 
-                unit: 'Unidades', 
-                products: ['Compressores de Ar de Alta Vazão', 'Geradores Silenciosos 500kVA', 'Bombas Centrífugas de Lodo', 'Válvulas de Retenção Industriais'], 
-                quantities: ['1 unidade', '2 unidades', '5 unidades'] 
+            navios: {
+                label: 'Navios & Embarcações',
+                unit: 'Unidades / Embarcação',
+                products: ['Navio Cargueiro a Granel (Bulk Carrier)', 'Navio Porta-Contentores', 'Navio Tanque (Tanker)', 'Draga Hidráulica', 'Navio de Pesca Industrial', 'Rebocador / Tugboat', 'Ferry & Balsa de Passageiros', 'Barcaça Fluvial'],
+                quantities: ['1 embarcação', '2 embarcações', '3 embarcações', 'Frota (5+)']
             },
-            lubrificantes: { 
-                label: 'Lubrificantes & Químicos', 
-                unit: 'Litros', 
-                products: ['Óleo Hidráulico ISO 68 Premium', 'Graxa Industrial de Lítio', 'Aditivos para Motores Estacionários', 'Fluidos de Perfuração'], 
-                quantities: ['200 Litros (1 Tambor)', '1000 Litros', '5000 Litros'] 
+            tratores: {
+                label: 'Tratores & Maquinaria Agrícola',
+                unit: 'Unidades',
+                products: ['Trator Agrícola de Rodas', 'Trator de Esteiras (Crawler)', 'Mini-Trator Compacto', 'Trator Vitivinícola / Pomar', 'Trator Florestal', 'Retroescavadora', 'Escavadora Hidráulica', 'Bulldozer / Topadora'],
+                quantities: ['1 unidade', '2 unidades', '5 unidades', '10 unidades', '20 unidades']
             },
-            quimicos: { 
-                label: 'Químicos & Ácidos Industriais', 
-                unit: 'ISO Tank / Litros', 
-                products: ['Ácido Sulfúrico 98% Concentrado', 'Ácido Clorídrico', 'Soda Cáustica / Hidróxido de Sódio', 'Metanol / Solventes Industriais'], 
-                quantities: ['20.000 Litros (1 ISO Tank)', '40.000 Litros (2 ISO Tanks)', '100.000 Litros', '250.000 Litros'] 
+            carpintaria: {
+                label: 'Equipamentos de Carpintaria & Madeira',
+                unit: 'Unidades',
+                products: ['Serra de Fita Industrial', 'Serra Circular de Mesa', 'Plaina de Mesa / Desengrossadeira', 'Router / Tupia CNC', 'Prensa Hidráulica para Madeira', 'Secador / Estufa de Madeira', 'Lixadeira Industrial', 'Máquina Multi-Operações Combinada'],
+                quantities: ['1 unidade', '2 unidades', '5 unidades', '10 unidades']
             },
-            servicos: { 
-                label: 'Serviços Técnicos', 
-                unit: 'Projeto', 
-                products: ['Inspeção de Solda por Ultra-som (NDT)', 'Auditoria de Conformidade Ambiental', 'Manutenção Preventiva de Motores Turbina', 'Consultoria de Conteúdo Local'], 
-                quantities: ['1 projeto', 'Contrato Trimestral', 'Contrato Anual'] 
+            elevacao: {
+                label: 'Gruas, Empilhadeiras & Elevação',
+                unit: 'Unidades',
+                products: ['Empilhadeira Contrapeso (3–7T)', 'Reach Truck (Elétrica)', 'Empilhadeira de Grande Porte (10–25T+)', 'Grua Torre', 'Guindaste Móvel (All-Terrain)', 'Ponte Rolante Industrial', 'Plataforma Aérea (Manlift)', 'Stacker Elétrico'],
+                quantities: ['1 unidade', '2 unidades', '5 unidades', '10 unidades']
+            },
+            industriais: {
+                label: 'Maquinaria Industrial Pesada',
+                unit: 'Unidades',
+                products: ['Compressor Industrial de Parafuso', 'Gerador Trifásico', 'Prensa Hidráulica (100–500T)', 'Injetora de Plástico', 'Cortadora Laser CNC', 'Moinho Industrial', 'Trituradora / Fragmentadora', 'Extrusora Industrial'],
+                quantities: ['1 unidade', '2 unidades', '5 unidades', '10 unidades']
             }
         }
     },
     tech: {
-        label: 'Tecnologia',
-        icon: 'devices',
+        label: 'Tecnologia & Electrónica',
+        icon: 'memory',
         color: '#2563eb',
         categories: {
-            computadores: { 
-                label: 'Computadores & TI', 
-                unit: 'Unidades', 
-                products: ['Laptops Corporativos Core i7 16GB', 'Desktops de Escritório Core i5', 'Monitores Led IPS 24 polegadas', 'Impressoras Térmicas de Etiquetas'], 
-                quantities: ['5 unidades', '10 unidades', '25 unidades', '50 unidades', '100 unidades'] 
+            chips: {
+                label: 'Chips & Processadores',
+                unit: 'Unidades (bulk)',
+                products: ['Processadores Intel (bulk)', 'Processadores AMD (bulk)', 'Microcontroladores & MCUs (ESP32/STM32)', 'Chips de Memória NAND Flash', 'FPGAs (Xilinx / Intel Altera)', 'Processadores Mobile SoC (Qualcomm / MediaTek)'],
+                quantities: ['10 unidades', '50 unidades', '100 unidades', '500 unidades', '1000 unidades']
             },
-            servidores: { 
-                label: 'Servidores & Infraestrutura', 
-                unit: 'Unidades', 
-                products: ['Servidor Rack 2U Dual Xeon Silver', 'Storage NAS 64TB Enterprise', 'Unidade UPS On-line 10kVA'], 
-                quantities: ['1 unidade', '2 unidades', '5 unidades'] 
+            memoria: {
+                label: 'Memória & Armazenamento',
+                unit: 'Unidades (bulk)',
+                products: ['Módulos RAM DDR4', 'Módulos RAM DDR5', 'SSD NVMe M.2', 'SSD SATA 2.5"', 'eMMC Flash (embarcado)', 'Cartões microSD Industrial', 'HDD Enterprise 3.5"'],
+                quantities: ['10 unidades', '50 unidades', '100 unidades', '500 unidades', '1000 unidades']
             },
-            redes: { 
-                label: 'Redes & Telecomunicações', 
-                unit: 'Projeto', 
-                products: ['Cabeamento Estruturado Cat6 por Ponto', 'Switches Cisco Gerenciáveis 24P', 'Sistema de Câmaras CCTV IP Hikvision'], 
-                quantities: ['1 projeto', 'Contrato de Manutenção Técnica', 'Instalação Completa'] 
+            placas: {
+                label: 'Placas-Mãe & Placas de Expansão',
+                unit: 'Unidades (bulk)',
+                products: ['Placa-Mãe Desktop Intel', 'Placa-Mãe Desktop AMD', 'Placa-Mãe Servidor / Workstation', 'Placa Gráfica NVIDIA (GPU, bulk)', 'Placa Gráfica AMD (GPU, bulk)', 'Placa de Rede (NIC)', 'Computador de Placa Única (SBC)'],
+                quantities: ['5 unidades', '10 unidades', '50 unidades', '100 unidades']
             },
-            software: { 
-                label: 'Software & Licenças', 
-                unit: 'Licenças', 
-                products: ['Licenças do Sistema ERP Primavera', 'Subscrição Anual Microsoft 365 Pro', 'Licenças de Segurança Endpoint Sophos'], 
-                quantities: ['5 licenças', '25 licenças', '50 licenças', '100 licenças'] 
+            energia_eletro: {
+                label: 'Carregadores & Alimentação',
+                unit: 'Unidades (bulk)',
+                products: ['Fonte de Alimentação ATX (PSU)', 'Carregador USB-C GaN', 'Baterias Li-Ion 18650 (bulk)', 'Baterias LiPo (drones/dispositivos)', 'Power Bank Industrial', 'Painéis Solares Portáteis'],
+                quantities: ['10 unidades', '50 unidades', '100 unidades', '500 unidades', '1000 unidades']
+            },
+            perifericos_eletro: {
+                label: 'Periféricos & Displays',
+                unit: 'Unidades (bulk)',
+                products: ['Monitor LCD/IPS (bulk)', 'Painéis OLED (dispositivos móveis)', 'Câmera de Segurança IP', 'Impressora Térmica de Etiquetas', 'Scanner Industrial de Código de Barras', 'Teclado & Rato (Bulk Corporativo)'],
+                quantities: ['10 unidades', '50 unidades', '100 unidades', '500 unidades']
             }
         }
     },
@@ -5431,6 +5493,38 @@ const GV_CATALOG = {
                 unit: 'Processo', 
                 products: ['Trâmite Aduaneiro de Importação Geral', 'Trâmite Aduaneiro de Exportação', 'Trânsito Aduaneiro Internacional de Carga'], 
                 quantities: ['1 processo', '5 processos', 'Desembaraço Contínuo'] 
+            }
+        }
+    },
+    /* TODO: React component — <SectorCatalog key="chemicals"> */
+    chemicals: {
+        label: 'Indústria & Reagentes',
+        icon: 'science',
+        color: '#7c3aed',
+        categories: {
+            acidos: {
+                label: 'Ácidos & Solventes',
+                unit: 'Unidades',
+                products: ['Ácido Acético Glacial (2,5L)', 'Ácido Clorídrico 32% (2,5L)', 'Ácido Clorídrico 37% (2,5L)', 'Ácido Fosfórico (250ml)', 'Metanol (2,5L)'],
+                quantities: ['1 unidade', '2 unidades', '5 unidades', '10 unidades']
+            },
+            sais: {
+                label: 'Sais & Compostos Inorgânicos',
+                unit: 'Unidades',
+                products: ['Sulfato de Amónia (100g)', 'Cloreto de Cálcio Hexahidratado (250g)', 'Cloreto de Sódio (250g)', 'Hidróxido de Sódio (500g)', 'Hipoclorito de Sódio (2,5L)', 'Nitrato de Sódio (250g)', 'Nitrato de Potássio (50g)', 'Cianeto de Potássio (250g)', 'Di-Fosfato de Sódio Monohidratado (500g)', 'Fosfato de Sódio Dibásico Dihidratado (500g)', 'Sulfato de Cobre II Pentahidratado (250g)', 'Tetraborato de Sódio Decahidratado (500g)'],
+                quantities: ['1 unidade', '2 unidades', '4 unidades', '6 unidades']
+            },
+            reagentes: {
+                label: 'Reagentes Analíticos',
+                unit: 'Unidades',
+                products: ['4-Hidroxibenzoico Acid Hidrazina (25g)', 'BRIJ-35 (100ml)', 'Cloramina T Tri-hidratada (250g)', 'Ácido Cítrico Monohidratado (500g)', 'D(-) Frutose (250g)', 'D(+) Glucose Anidra (250g)', 'Nitroprussiato de Sódio Dihidratado (100g)', 'Salicilato de Sódio (500g)', 'Ácido Sulfanílico (250g)', 'Sulfato de Hidrazina (100g)', 'Sulfanilamida (100g)', 'Amostra de Controlo Químico GLS (100g)', 'N-(1-naftil)etilenodiamina Dicloridrato (250g)'],
+                quantities: ['1 unidade', '2 unidades', '4 unidades', '6 unidades']
+            },
+            consumiveis: {
+                label: 'Consumíveis de Laboratório',
+                unit: 'Unidades',
+                products: ['Extran AP 11 — Detergente Alcalino (2Kg)', 'Extran MA 01 — Detergente Neutro (1L)', 'Papéis de Filtro Qualitativos No.40 125mm (100 un.)', 'Papéis de Filtro Qualitativos No.11 80mm (100 un.)', 'Carbono Ativado (500g)'],
+                quantities: ['1 unidade', '2 unidades', '10 unidades', '50 unidades']
             }
         }
     }
@@ -5638,12 +5732,12 @@ function openOpportunityDetailModal(id, type) {
     // Image mapping per category
     const imgMap = {
         agro: [
-            'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80',
-            'https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&w=1200&q=80'
+            'assets/images/agro_commodities.jpg',
+            'assets/images/agro_commodities.jpg'
         ],
         energy: [
-            'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
-            'https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1200&q=80'
+            'assets/images/oil_gas.jpg',
+            'assets/images/oil_gas.jpg'
         ],
         tech: [
             'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80',
@@ -5968,6 +6062,13 @@ const GLOBAL_COUNTRIES = {
 };
 
 const PRODUCT_SPEC_DICTIONARY = {
+    'NPK 12-24-12': {
+        state: 'solid',
+        derivatives: {
+            pt: ['NPK 12-24-12 Granulado Standard', 'NPK 15-15-15 (Fórmula Equilibrada)', 'NPK 10-20-10 (Rico em Fósforo)', 'NPK 20-10-10 (Rico em Nitrogénio)', 'NPK Mistura Personalizada (Blend)'],
+            en: ['NPK 12-24-12 Standard Granular', 'NPK 15-15-15 (Balanced Formula)', 'NPK 10-20-10 (High Phosphorus)', 'NPK 20-10-10 (High Nitrogen)', 'NPK Custom Blend']
+        }
+    },
     'Ureia Prilada 46%': {
         state: 'solid',
         derivatives: {
@@ -5980,6 +6081,238 @@ const PRODUCT_SPEC_DICTIONARY = {
         derivatives: {
             pt: ['Ureia Granulada 46% N', 'Ureia Perlada (Prilled 46%)', 'Ureia Grau Técnico (Industrial)', 'Ureia Automotiva ARLA 32 / AdBlue'],
             en: ['Granular Urea 46% N', 'Prilled Urea 46%', 'Technical Grade Urea (Industrial)', 'Automotive Urea ARLA 32 / AdBlue']
+        }
+    },
+    'DAP (Fosfato Diamónico)': {
+        state: 'solid',
+        derivatives: {
+            pt: ['DAP 18-46-0 Granulado', 'MAP 11-52-0 (Fosfato Monoamónico)', 'TSP (Superfosfato Triplo 46%)', 'Fosfato Natural Reactivo 30%'],
+            en: ['Granular DAP 18-46-0', 'MAP 11-52-0 (Monoammonium Phosphate)', 'TSP (Triple Superphosphate 46%)', 'Reactive Rock Phosphate 30%']
+        }
+    },
+    'DAP (Diammonium Phosphate)': {
+        state: 'solid',
+        derivatives: {
+            pt: ['DAP 18-46-0 Granulado', 'MAP 11-52-0 (Fosfato Monoamónico)', 'TSP (Superfosfato Triplo 46%)', 'Fosfato Natural Reactivo 30%'],
+            en: ['Granular DAP 18-46-0', 'MAP 11-52-0 (Monoammonium Phosphate)', 'TSP (Triple Superphosphate 46%)', 'Reactive Rock Phosphate 30%']
+        }
+    },
+    'Adubo Orgânico Compostado': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Húmus de Minhoca Enriquecido', 'Composto Orgânico Vegetal/Bovino', 'Torta de Mamona em Pellets', 'Biofertilizante Líquido Concentrado'],
+            en: ['Enriched Vermicompost / Worm Humus', 'Vegetable/Cattle Organic Compost', 'Castor Cake Pellets', 'Concentrated Liquid Biofertilizer']
+        }
+    },
+    'Composted Organic Fertilizer': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Húmus de Minhoca Enriquecido', 'Composto Orgânico Vegetal/Bovino', 'Torta de Mamona em Pellets', 'Biofertilizante Líquido Concentrado'],
+            en: ['Enriched Vermicompost / Worm Humus', 'Vegetable/Cattle Organic Compost', 'Castor Cake Pellets', 'Concentrated Liquid Biofertilizer']
+        }
+    },
+
+    // 🌾 AGRONEGÓCIO - Sementes & Mudas
+    'Semente de Soja Certificada': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Soja Convencional C1 (Não-GMO)', 'Soja Intacta RR2 PRO / Bt', 'Soja Precoce (Ciclo 105 dias)', 'Soja Tardia (Ciclo 125+ dias)'],
+            en: ['Non-GMO Certified Soy C1', 'Intacta RR2 PRO / Bt Soy', 'Early Cycle Soy (105 days)', 'Late Cycle Soy (125+ days)']
+        }
+    },
+    'Certified Soybean Seed': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Soja Convencional C1 (Não-GMO)', 'Soja Intacta RR2 PRO / Bt', 'Soja Precoce (Ciclo 105 dias)', 'Soja Tardia (Ciclo 125+ dias)'],
+            en: ['Non-GMO Certified Soy C1', 'Intacta RR2 PRO / Bt Soy', 'Early Cycle Soy (105 days)', 'Late Cycle Soy (125+ days)']
+        }
+    },
+    'Semente de Milho Híbrido': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Milho Híbrido Simples (Alto Rendimento)', 'Milho Híbrido Duplo (Resistente à Seca)', 'Milho Branco Pipoca / Especial', 'Milho Amarelo Grão (Ração)'],
+            en: ['Single Cross Hybrid Maize (High Yield)', 'Double Cross Hybrid Maize (Drought Tolerant)', 'Special White Popcorn Maize', 'Yellow Grain Feed Maize']
+        }
+    },
+    'Hybrid Maize Seed': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Milho Híbrido Simples (Alto Rendimento)', 'Milho Híbrido Duplo (Resistente à Seca)', 'Milho Branco Pipoca / Especial', 'Milho Amarelo Grão (Ração)'],
+            en: ['Single Cross Hybrid Maize (High Yield)', 'Double Cross Hybrid Maize (Drought Tolerant)', 'Special White Popcorn Maize', 'Yellow Grain Feed Maize']
+        }
+    },
+    'Semente de Gergelim Selecionada': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Gergelim Branco Selecionado (Grau A)', 'Gergelim Preto Natural', 'Gergelim Castanho / Vermelho', 'Gergelim Despeliculado (Hulled)'],
+            en: ['Selected White Sesame (Grade A)', 'Natural Black Sesame', 'Brown / Red Sesame', 'Hulled Sesame Seeds']
+        }
+    },
+    'Selected Sesame Seed': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Gergelim Branco Selecionado (Grau A)', 'Gergelim Preto Natural', 'Gergelim Castanho / Vermelho', 'Gergelim Despeliculado (Hulled)'],
+            en: ['Selected White Sesame (Grade A)', 'Natural Black Sesame', 'Brown / Red Sesame', 'Hulled Sesame Seeds']
+        }
+    },
+    'Mudas de Cajueiro Enxertado': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Cajueiro Anão Precoce CCP-76', 'Cajueiro Anão Precoce BRS 226', 'Mudas de Cajueiro Gigante Tradicional', 'Mudas em Tubetes Biodegradáveis'],
+            en: ['Precocious Dwarf Cashew CCP-76', 'Precocious Dwarf Cashew BRS 226', 'Traditional Giant Cashew Seedlings', 'Biodegradable Plug Seedlings']
+        }
+    },
+    'Grafted Cashew Seedlings': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Cajueiro Anão Precoce CCP-76', 'Cajueiro Anão Precoce BRS 226', 'Mudas de Cajueiro Gigante Tradicional', 'Mudas em Tubetes Biodegradáveis'],
+            en: ['Precocious Dwarf Cashew CCP-76', 'Precocious Dwarf Cashew BRS 226', 'Traditional Giant Cashew Seedlings', 'Biodegradable Plug Seedlings']
+        }
+    },
+
+    // 🌾 AGRONEGÓCIO - Caju & Castanha
+    'Castanha de Caju Bruta (Raw Cashew)': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Castanha Bruta Moçambique (KOR 48-52 lbs)', 'Castanha Bruta RCN Premium (KOR 53+ lbs)', 'Castanha Bruta Tamanho Médio (Count 180-200/kg)', 'Castanha Bruta Alta Humidade (<10%)'],
+            en: ['Raw Cashew Nut Mozambique (KOR 48-52 lbs)', 'Raw Cashew Nut Premium (KOR 53+ lbs)', 'Medium Raw Cashew (Count 180-200/kg)', 'Low Moisture Raw Cashew (<10%)']
+        }
+    },
+    'Raw Cashew Nut (RCN)': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Castanha Bruta Moçambique (KOR 48-52 lbs)', 'Castanha Bruta RCN Premium (KOR 53+ lbs)', 'Castanha Bruta Tamanho Médio (Count 180-200/kg)', 'Castanha Bruta Alta Humidade (<10%)'],
+            en: ['Raw Cashew Nut Mozambique (KOR 48-52 lbs)', 'Raw Cashew Nut Premium (KOR 53+ lbs)', 'Medium Raw Cashew (Count 180-200/kg)', 'Low Moisture Raw Cashew (<10%)']
+        }
+    },
+    'Amêndoa de Caju Processada W180': {
+        state: 'solid',
+        derivatives: {
+            pt: ['W180 Jumbo Whole (170-180 grãos/lb)', 'W210 King Whole', 'Amêndoa Torrada e Salgada W180', 'Amêndoa Orgânica W180'],
+            en: ['W180 Jumbo Whole (170-180 kernels/lb)', 'W210 King Whole', 'Roasted & Salted W180 Kernel', 'Organic W180 Kernel']
+        }
+    },
+    'Processed Cashew Kernel W180': {
+        state: 'solid',
+        derivatives: {
+            pt: ['W180 Jumbo Whole (170-180 grãos/lb)', 'W210 King Whole', 'Amêndoa Torrada e Salgada W180', 'Amêndoa Orgânica W180'],
+            en: ['W180 Jumbo Whole (170-180 kernels/lb)', 'W210 King Whole', 'Roasted & Salted W180 Kernel', 'Organic W180 Kernel']
+        }
+    },
+    'Amêndoa de Caju W240': {
+        state: 'solid',
+        derivatives: {
+            pt: ['W240 Standard Whole (220-240 grãos/lb)', 'W320 Popular Whole (300-320 grãos/lb)', 'Pedaços / LWP (Large White Pieces)', 'Metades / SWP (Splits)'],
+            en: ['W240 Standard Whole (220-240 kernels/lb)', 'W320 Popular Whole (300-320 kernels/lb)', 'Large White Pieces (LWP)', 'Splits (SWP)']
+        }
+    },
+    'Cashew Kernel W240': {
+        state: 'solid',
+        derivatives: {
+            pt: ['W240 Standard Whole (220-240 grãos/lb)', 'W320 Popular Whole (300-320 grãos/lb)', 'Pedaços / LWP (Large White Pieces)', 'Metades / SWP (Splits)'],
+            en: ['W240 Standard Whole (220-240 kernels/lb)', 'W320 Popular Whole (300-320 kernels/lb)', 'Large White Pieces (LWP)', 'Splits (SWP)']
+        }
+    },
+    'Casca de Caju para LCC': {
+        state: 'liquid',
+        derivatives: {
+            pt: ['LCC Bruto (Cashew Nut Shell Liquid)', 'Casca Seca de Caju para Combustível Biomassa', 'Resíduo de Casca Moído', 'LCC Refinado Industrial'],
+            en: ['Raw CNSL (Cashew Nut Shell Liquid)', 'Dry Cashew Shell for Biomass Fuel', 'Crushed Shell Residue', 'Refined Technical CNSL']
+        }
+    },
+    'Cashew Shell Liquid (CNSL)': {
+        state: 'liquid',
+        derivatives: {
+            pt: ['LCC Bruto (Cashew Nut Shell Liquid)', 'Casca Seca de Caju para Combustível Biomassa', 'Resíduo de Casca Moído', 'LCC Refinado Industrial'],
+            en: ['Raw CNSL (Cashew Nut Shell Liquid)', 'Dry Cashew Shell for Biomass Fuel', 'Crushed Shell Residue', 'Refined Technical CNSL']
+        }
+    },
+
+    // 🌾 AGRONEGÓCIO - Açúcar
+    'Açúcar VHP de Cana': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Açúcar VHP (Very High Polarization - ICUMSA 600-1200)', 'Açúcar VVHP (Very Very High Polarization)', 'Açúcar Bruto para Refino', 'Melaço de Cana Concentrado'],
+            en: ['VHP Sugar (ICUMSA 600-1200)', 'VVHP Sugar (Very Very High Polarization)', 'Raw Sugar for Refining', 'Concentrated Cane Molasses']
+        }
+    },
+    'Raw VHP Cane Sugar': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Açúcar VHP (Very High Polarization - ICUMSA 600-1200)', 'Açúcar VVHP (Very Very High Polarization)', 'Açúcar Bruto para Refino', 'Melaço de Cana Concentrado'],
+            en: ['VHP Sugar (ICUMSA 600-1200)', 'VVHP Sugar (Very Very High Polarization)', 'Raw Sugar for Refining', 'Concentrated Cane Molasses']
+        }
+    },
+    'Açúcar Mascavado Orgânico': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Açúcar Mascavado Orgânico Certificado', 'Açúcar Demerara Natural', 'Açúcar de Coco Orgânico', 'Açúcar de Cana Não Refinado (Rapadura/Panela)'],
+            en: ['Certified Organic Brown Sugar', 'Natural Demerara Sugar', 'Organic Coconut Sugar', 'Unrefined Whole Cane Sugar (Panela)']
+        }
+    },
+    'Organic Brown Sugar': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Açúcar Mascavado Orgânico Certificado', 'Açúcar Demerara Natural', 'Açúcar de Coco Orgânico', 'Açúcar de Cana Não Refinado (Rapadura/Panela)'],
+            en: ['Certified Organic Brown Sugar', 'Natural Demerara Sugar', 'Organic Coconut Sugar', 'Unrefined Whole Cane Sugar (Panela)']
+        }
+    },
+
+    // 🌾 AGRONEGÓCIO - Equipamentos Agrícolas
+    'Trator Agrícola 75HP 4x4': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Trator 75HP 4x4 com Cabine A/C', 'Trator 75HP 4x4 Plataformado (Sem Cabine)', 'Trator 75HP com Carregador Frontal', 'Trator 75HP com Tomada de Força Dupla'],
+            en: ['75HP 4WD Tractor with A/C Cab', '75HP 4WD Open Platform Tractor', '75HP Tractor with Front Loader', '75HP Tractor with Dual PTO']
+        }
+    },
+    'Agricultural Tractor 75HP 4WD': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Trator 75HP 4x4 com Cabine A/C', 'Trator 75HP 4x4 Plataformado (Sem Cabine)', 'Trator 75HP com Carregador Frontal', 'Trator 75HP com Tomada de Força Dupla'],
+            en: ['75HP 4WD Tractor with A/C Cab', '75HP 4WD Open Platform Tractor', '75HP Tractor with Front Loader', '75HP Tractor with Dual PTO']
+        }
+    },
+    'Charrua Aiveca 3 Discos': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Charrua de Discos Reversível 3 Discos', 'Charrua Aiveca Fixa 3 Discos', 'Charrua para Solos Pesados (Discos 28")', 'Grade de Discos 16 Discos'],
+            en: ['Reversible 3-Disc Plough', 'Fixed 3-Bottom Mouldboard Plough', 'Heavy Duty Plough (28" Discs)', '16-Disc Offset Disc Harrow']
+        }
+    },
+    '3-Disc Plough': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Charrua de Discos Reversível 3 Discos', 'Charrua Aiveca Fixa 3 Discos', 'Charrua para Solos Pesados (Discos 28")', 'Grade de Discos 16 Discos'],
+            en: ['Reversible 3-Disc Plough', 'Fixed 3-Bottom Mouldboard Plough', 'Heavy Duty Plough (28" Discs)', '16-Disc Offset Disc Harrow']
+        }
+    },
+    'Semeadora Linha Dupla': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Semeadora Adubadora de Precisão 2 Linhas', 'Semeadora Pneumática 4 Linhas', 'Semeadora de Plantio Direto', 'Semeadora Manual com Distribuidor'],
+            en: ['2-Row Precision Seeder & Fertilizer', '4-Row Pneumatic Seeder', 'No-Till Seed Drill', 'Manual Push Seeder']
+        }
+    },
+    'Double-Row Seeder': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Semeadora Adubadora de Precisão 2 Linhas', 'Semeadora Pneumática 4 Linhas', 'Semeadora de Plantio Direto', 'Semeadora Manual com Distribuidor'],
+            en: ['2-Row Precision Seeder & Fertilizer', '4-Row Pneumatic Seeder', 'No-Till Seed Drill', 'Manual Push Seeder']
+        }
+    },
+    'Sistema de Irrigação por Gotejamento': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Kit Irrigação por Gotejamento 1 Hectare', 'Sistema com Fita Gotejadora Auto-Compensante', 'Sistema Pivot Central 5 Hectares', 'Motobomba a Diesel com Filtros de Disco'],
+            en: ['1 Hectare Drip Irrigation Kit', 'Pressure-Compensating Drip Line System', '5 Hectare Center Pivot System', 'Diesel Pump Set with Disc Filters']
+        }
+    },
+    'Drip Irrigation System': {
+        state: 'solid',
+        derivatives: {
+            pt: ['Kit Irrigação por Gotejamento 1 Hectare', 'Sistema com Fita Gotejadora Auto-Compensante', 'Sistema Pivot Central 5 Hectares', 'Motobomba a Diesel com Filtros de Disco'],
+            en: ['1 Hectare Drip Irrigation Kit', 'Pressure-Compensating Drip Line System', '5 Hectare Center Pivot System', 'Diesel Pump Set with Disc Filters']
         }
     },
     'Ácido Sulfúrico 98% Concentrado': {
@@ -6023,7 +6356,102 @@ const PRODUCT_SPEC_DICTIONARY = {
             pt: ['Óleo Hidráulico ISO VG 68', 'Óleo Hidráulico ISO VG 46', 'Óleo para Engrenagens ISO 220', 'Solvente Mineral/White Spirit'],
             en: ['Hydraulic Oil ISO VG 68', 'Hydraulic Oil ISO VG 46', 'Industrial Gear Oil ISO 220', 'Mineral Solvent/White Spirit']
         }
-    }
+    },
+    // MAQUINÁRIOS & INDÚSTRIA - Navios & Embarcações
+    'Navio Cargueiro a Granel (Bulk Carrier)': { state: 'solid', derivatives: { pt: ['Handysize (15k–35k DWT)', 'Handymax / Supramax (40k–60k DWT)', 'Panamax (65k–80k DWT)', 'Capesize (100k–200k DWT)', 'VLOC (200k+ DWT)'], en: ['Handysize (15k–35k DWT)', 'Handymax / Supramax (40k–60k DWT)', 'Panamax (65k–80k DWT)', 'Capesize (100k–200k DWT)', 'VLOC (200k+ DWT)'] } },
+    'Bulk Carrier (Dry Cargo Ship)': { state: 'solid', derivatives: { pt: ['Handysize (15k–35k DWT)', 'Handymax / Supramax (40k–60k DWT)', 'Panamax (65k–80k DWT)', 'Capesize (100k–200k DWT)', 'VLOC (200k+ DWT)'], en: ['Handysize (15k–35k DWT)', 'Handymax / Supramax (40k–60k DWT)', 'Panamax (65k–80k DWT)', 'Capesize (100k–200k DWT)', 'VLOC (200k+ DWT)'] } },
+    'Navio Porta-Contentores': { state: 'solid', derivatives: { pt: ['Feeder (500–2.000 TEU)', 'Sub-Panamax (3.000–5.000 TEU)', 'Panamax (5.000–8.000 TEU)', 'Post-Panamax (8.000–14.000 TEU)', 'Ultra Large (14.000+ TEU)'], en: ['Feeder (500–2,000 TEU)', 'Sub-Panamax (3,000–5,000 TEU)', 'Panamax (5,000–8,000 TEU)', 'Post-Panamax (8,000–14,000 TEU)', 'Ultra Large (14,000+ TEU)'] } },
+    'Container Ship': { state: 'solid', derivatives: { pt: ['Feeder (500–2.000 TEU)', 'Sub-Panamax (3.000–5.000 TEU)', 'Panamax (5.000–8.000 TEU)', 'Post-Panamax (8.000–14.000 TEU)', 'Ultra Large (14.000+ TEU)'], en: ['Feeder (500–2,000 TEU)', 'Sub-Panamax (3,000–5,000 TEU)', 'Panamax (5,000–8,000 TEU)', 'Post-Panamax (8.000–14.000 TEU)', 'Ultra Large (14,000+ TEU)'] } },
+    'Navio Tanque (Tanker)': { state: 'liquid', derivatives: { pt: ['Petroleiro Bruto VLCC/Suezmax', 'Tanque de Produto Refinado (MR/LR2)', 'Tanque Químico (IMO Tipo II)', 'Transportador de GLP / LPG', 'Transportador de GNL / LNG'], en: ['Crude Oil Tanker VLCC/Suezmax', 'Product Tanker (MR/LR2)', 'Chemical Tanker (IMO Type II)', 'LPG Carrier', 'LNG Carrier'] } },
+    'Oil Tanker': { state: 'liquid', derivatives: { pt: ['Petroleiro Bruto VLCC/Suezmax', 'Tanque de Produto Refinado (MR/LR2)', 'Tanque Químico (IMO Tipo II)', 'Transportador de GLP / LPG', 'Transportador de GNL / LNG'], en: ['Crude Oil Tanker VLCC/Suezmax', 'Product Tanker (MR/LR2)', 'Chemical Tanker (IMO Type II)', 'LPG Carrier', 'LNG Carrier'] } },
+    'Draga Hidráulica': { state: 'solid', derivatives: { pt: ['Draga de Sucção por Arrasto (TSHD)', 'Draga de Corte (Cutter Suction Dredge)', 'Draga de Baldes / Rosário', 'Draga Backhoe (Braço Mecânico)', 'Draga Multipropósito'], en: ['Trailing Suction Hopper Dredger (TSHD)', 'Cutter Suction Dredge (CSD)', 'Bucket Chain Dredger', 'Backhoe Dredge', 'Multipurpose Dredge'] } },
+    'Hydraulic Dredge': { state: 'solid', derivatives: { pt: ['Draga de Sucção por Arrasto (TSHD)', 'Draga de Corte (Cutter Suction Dredge)', 'Draga de Baldes / Rosário', 'Draga Backhoe (Braço Mecânico)', 'Draga Multipropósito'], en: ['Trailing Suction Hopper Dredger (TSHD)', 'Cutter Suction Dredge (CSD)', 'Bucket Chain Dredger', 'Backhoe Dredge', 'Multipurpose Dredge'] } },
+    'Navio de Pesca Industrial': { state: 'solid', derivatives: { pt: ['Traineira Pelágica (Trawler)', 'Atuneiro de Vara e Isca', 'Navio Frigorífico de Pesca', 'Cercador (Purse Seiner)', 'Pesca Longline'], en: ['Pelagic Trawler', 'Pole & Line Tuna Vessel', 'Refrigerated Fish Carrier', 'Purse Seiner', 'Longline Fishing Vessel'] } },
+    'Industrial Fishing Vessel': { state: 'solid', derivatives: { pt: ['Traineira Pelágica (Trawler)', 'Atuneiro de Vara e Isca', 'Navio Frigorífico de Pesca', 'Cercador (Purse Seiner)', 'Pesca Longline'], en: ['Pelagic Trawler', 'Pole & Line Tuna Vessel', 'Refrigerated Fish Carrier', 'Purse Seiner', 'Longline Fishing Vessel'] } },
+    'Rebocador / Tugboat': { state: 'solid', derivatives: { pt: ['Rebocador Portuário (Harbor Tug)', 'Rebocador Costeiro', 'Rebocador de Alto Mar (Ocean-Going)', 'Anchor Handling Tug (AHT)', 'Empurradora Fluvial'], en: ['Harbor Tug', 'Coastal Tug', 'Ocean-Going Tug', 'Anchor Handling Tug (AHT)', 'River Pusher Tug'] } },
+    'Tugboat / Tug': { state: 'solid', derivatives: { pt: ['Rebocador Portuário (Harbor Tug)', 'Rebocador Costeiro', 'Rebocador de Alto Mar (Ocean-Going)', 'Anchor Handling Tug (AHT)', 'Empurradora Fluvial'], en: ['Harbor Tug', 'Coastal Tug', 'Ocean-Going Tug', 'Anchor Handling Tug (AHT)', 'River Pusher Tug'] } },
+    'Ferry & Balsa de Passageiros': { state: 'solid', derivatives: { pt: ['Ferry Rápido (Catamarã Alta Velocidade)', 'Balsa RoRo (Roll-on/Roll-off)', 'Ferry Convencional Misto', 'Embarcação Fluvial de Passageiros', 'Lancha de Transferência Offshore'], en: ['High-Speed Catamaran Ferry', 'RoRo Ferry (Roll-on/Roll-off)', 'Conventional Mixed Ferry', 'River Passenger Vessel', 'Offshore Transfer Vessel'] } },
+    'Ferry & Passenger Vessel': { state: 'solid', derivatives: { pt: ['Ferry Rápido (Catamarã Alta Velocidade)', 'Balsa RoRo (Roll-on/Roll-off)', 'Ferry Convencional Misto', 'Embarcação Fluvial de Passageiros', 'Lancha de Transferência Offshore'], en: ['High-Speed Catamaran Ferry', 'RoRo Ferry (Roll-on/Roll-off)', 'Conventional Mixed Ferry', 'River Passenger Vessel', 'Offshore Transfer Vessel'] } },
+    'Barcaça Fluvial': { state: 'solid', derivatives: { pt: ['Barcaça de Carga Seca (Open Hopper)', 'Barcaça Coberta (Box Barge)', 'Barcaça Tanque (Líquidos)', 'Barcaça de Trabalho / Plataforma', 'Empurradora Fluvial'], en: ['Open Hopper Barge', 'Covered Box Barge', 'Liquid Tank Barge', 'Work / Platform Barge', 'River Pusher Boat'] } },
+    'River Barge': { state: 'solid', derivatives: { pt: ['Barcaça de Carga Seca (Open Hopper)', 'Barcaça Coberta (Box Barge)', 'Barcaça Tanque (Líquidos)', 'Barcaça de Trabalho / Plataforma', 'Empurradora Fluvial'], en: ['Open Hopper Barge', 'Covered Box Barge', 'Liquid Tank Barge', 'Work / Platform Barge', 'River Pusher Boat'] } },
+
+    // Tratores & Maquinaria Agrícola
+    'Trator Agrícola de Rodas': { state: 'solid', derivatives: { pt: ['Compacto 25–50 HP (4x4)', 'Médio 60–100 HP (4x4)', 'Grande 120–200 HP', 'Articulado 200–400 HP', '4WD com Cabine e A/C'], en: ['Compact 25–50 HP (4WD)', 'Mid-range 60–100 HP (4WD)', 'Large 120–200 HP', 'Articulated 200–400 HP', '4WD with Cab & A/C'] } },
+    'Agricultural Wheeled Tractor': { state: 'solid', derivatives: { pt: ['Compacto 25–50 HP (4x4)', 'Médio 60–100 HP (4x4)', 'Grande 120–200 HP', 'Articulado 200–400 HP', '4WD com Cabine e A/C'], en: ['Compact 25–50 HP (4WD)', 'Mid-range 60–100 HP (4WD)', 'Large 120–200 HP', 'Articulated 200–400 HP', '4WD with Cab & A/C'] } },
+    'Trator de Esteiras (Crawler)': { state: 'solid', derivatives: { pt: ['Esteiras de Borracha (Solo Suave)', 'Esteiras de Aço (Terreno Duro)', 'Crawler com Pá Frontal', 'Crawler com Engate de 3 Pontos'], en: ['Rubber Track (Soft Terrain)', 'Steel Track (Hard Terrain)', 'Crawler with Front Loader', 'Crawler with 3-Point Hitch'] } },
+    'Crawler / Track Tractor': { state: 'solid', derivatives: { pt: ['Esteiras de Borracha (Solo Suave)', 'Esteiras de Aço (Terreno Duro)', 'Crawler com Pá Frontal', 'Crawler com Engate de 3 Pontos'], en: ['Rubber Track (Soft Terrain)', 'Steel Track (Hard Terrain)', 'Crawler with Front Loader', 'Crawler with 3-Point Hitch'] } },
+    'Mini-Trator Compacto': { state: 'solid', derivatives: { pt: ['Motocultivador 2 Rodas (8–12 HP)', 'Mini-Trator 4x4 (15–25 HP)', 'Mini-Trator de Jardim / Gramado', 'Mini-Trator com Retroescavadora Traseira'], en: ['2-Wheel Cultivator (8–12 HP)', '4WD Mini-Tractor (15–25 HP)', 'Lawn / Garden Tractor', 'Mini-Tractor with Rear Backhoe'] } },
+    'Compact Mini-Tractor': { state: 'solid', derivatives: { pt: ['Motocultivador 2 Rodas (8–12 HP)', 'Mini-Trator 4x4 (15–25 HP)', 'Mini-Trator de Jardim / Gramado', 'Mini-Trator com Retroescavadora Traseira'], en: ['2-Wheel Cultivator (8–12 HP)', '4WD Mini-Tractor (15–25 HP)', 'Lawn / Garden Tractor', 'Mini-Tractor with Rear Backhoe'] } },
+    'Trator Vitivinícola / Pomar': { state: 'solid', derivatives: { pt: ['Estreito para Pomares (60–80 HP)', 'Cabalgante de Linha de Vinha', 'Compacto de Jardim Profissional', 'Trator Electrónico de Precisão (GPS)'], en: ['Narrow Orchard Tractor (60–80 HP)', 'Straddle Vineyard Tractor', 'Professional Garden Compact', 'GPS Precision Electronic Tractor'] } },
+    'Orchard / Vineyard Tractor': { state: 'solid', derivatives: { pt: ['Estreito para Pomares (60–80 HP)', 'Cabalgante de Linha de Vinha', 'Compacto de Jardim Profissional', 'Trator Electrónico de Precisão (GPS)'], en: ['Narrow Orchard Tractor (60–80 HP)', 'Straddle Vineyard Tractor', 'Professional Garden Compact', 'GPS Precision Electronic Tractor'] } },
+    'Trator Florestal': { state: 'solid', derivatives: { pt: ['Skidder de Arrasto (Cabo ou Pinça)', 'Forwarder (Transporte de Toros)', 'Harvester (Corte e Processamento)', 'Feller Buncher (Corte em Pé)'], en: ['Cable / Grapple Skidder', 'Forwarder (Log Transport)', 'Harvester (Cut & Process)', 'Feller Buncher (Standing Cut)'] } },
+    'Forestry Tractor': { state: 'solid', derivatives: { pt: ['Skidder de Arrasto (Cabo ou Pinça)', 'Forwarder (Transporte de Toros)', 'Harvester (Corte e Processamento)', 'Feller Buncher (Corte em Pé)'], en: ['Cable / Grapple Skidder', 'Forwarder (Log Transport)', 'Harvester (Cut & Process)', 'Feller Buncher (Standing Cut)'] } },
+    'Retroescavadora': { state: 'solid', derivatives: { pt: ['1CX Pequena', '3CX Standard (mais vendida)', '4CX Articulada', 'Mini-Retroescavadora Compacta'], en: ['1CX Small', '3CX Standard (best-seller)', '4CX Articulated', 'Compact Mini Backhoe'] } },
+    'Backhoe Loader': { state: 'solid', derivatives: { pt: ['1CX Pequena', '3CX Standard (mais vendida)', '4CX Articulada', 'Mini-Retroescavadora Compacta'], en: ['1CX Small', '3CX Standard (best-seller)', '4CX Articulated', 'Compact Mini Backhoe'] } },
+    'Escavadora Hidráulica': { state: 'solid', derivatives: { pt: ['Mini (0,8–6T)', 'Média (7–25T)', 'Grande (26–60T)', 'Extrapesada (60T+)', 'Longa Alcance (Long-Reach)'], en: ['Mini (0.8–6T)', 'Mid-size (7–25T)', 'Large (26–60T)', 'Heavy Duty (60T+)', 'Long-Reach Excavator'] } },
+    'Hydraulic Excavator': { state: 'solid', derivatives: { pt: ['Mini (0,8–6T)', 'Média (7–25T)', 'Grande (26–60T)', 'Extrapesada (60T+)', 'Longa Alcance (Long-Reach)'], en: ['Mini (0.8–6T)', 'Mid-size (7–25T)', 'Large (26–60T)', 'Heavy Duty (60T+)', 'Long-Reach Excavator'] } },
+    'Bulldozer / Topadora': { state: 'solid', derivatives: { pt: ['D3–D4 Pequeno (até 80 HP)', 'D5–D6 Médio (80–200 HP)', 'D7–D9 Grande (200–500 HP)', 'D10–D11 Extrapesado (500+ HP)'], en: ['D3–D4 Small (up to 80 HP)', 'D5–D6 Medium (80–200 HP)', 'D7–D9 Large (200–500 HP)', 'D10–D11 Extra Heavy (500+ HP)'] } },
+    'Bulldozer / Dozer': { state: 'solid', derivatives: { pt: ['D3–D4 Pequeno (até 80 HP)', 'D5–D6 Médio (80–200 HP)', 'D7–D9 Grande (200–500 HP)', 'D10–D11 Extrapesado (500+ HP)'], en: ['D3–D4 Small (up to 80 HP)', 'D5–D6 Medium (80–200 HP)', 'D7–D9 Large (200–500 HP)', 'D10–D11 Extra Heavy (500+ HP)'] } },
+
+    // Carpintaria & Madeira
+    'Serra de Fita Industrial': { state: 'solid', derivatives: { pt: ['Horizontal (Corte de Toros)', 'Vertical (Reserrar Tábuas)', '2 Cortes Simultâneos', 'Portátil para Campo / Floresta'], en: ['Horizontal (Log Cutting)', 'Vertical (Resawing Planks)', 'Double-Cut Band Saw', 'Portable Field / Forest Band Saw'] } },
+    'Industrial Band Saw': { state: 'solid', derivatives: { pt: ['Horizontal (Corte de Toros)', 'Vertical (Reserrar Tábuas)', '2 Cortes Simultâneos', 'Portátil para Campo / Floresta'], en: ['Horizontal (Log Cutting)', 'Vertical (Resawing Planks)', 'Double-Cut Band Saw', 'Portable Field / Forest Band Saw'] } },
+    'Serra Circular de Mesa': { state: 'solid', derivatives: { pt: ['Manual (Ajuste por Manivela)', 'Semiautomática (Stop Ajustável)', 'CNC com Controlo Digital', 'Circular de Esquadria (Miter Saw)'], en: ['Manual (Hand-Wheel Adjustment)', 'Semi-Automatic (Adjustable Stop)', 'CNC Digital Control Table Saw', 'Compound Miter Saw'] } },
+    'Circular Table Saw': { state: 'solid', derivatives: { pt: ['Manual (Ajuste por Manivela)', 'Semiautomática (Stop Ajustável)', 'CNC com Controlo Digital', 'Circular de Esquadria (Miter Saw)'], en: ['Manual (Hand-Wheel Adjustment)', 'Semi-Automatic (Adjustable Stop)', 'CNC Digital Control Table Saw', 'Compound Miter Saw'] } },
+    'Router / Tupia CNC': { state: 'solid', derivatives: { pt: ['3 Eixos (Plana Standard)', '4 Eixos (com Rotativo)', '5 Eixos (Multi-direcional)', 'ATC (Troca Automática de Ferramentas)'], en: ['3-Axis (Flat Bed Standard)', '4-Axis (with Rotary)', '5-Axis (Multi-directional)', 'ATC (Auto Tool Change)'] } },
+    'CNC Router / Spindle Moulder': { state: 'solid', derivatives: { pt: ['3 Eixos (Plana Standard)', '4 Eixos (com Rotativo)', '5 Eixos (Multi-direcional)', 'ATC (Troca Automática de Ferramentas)'], en: ['3-Axis (Flat Bed Standard)', '4-Axis (with Rotary)', '5-Axis (Multi-directional)', 'ATC (Auto Tool Change)'] } },
+
+    // Elevação & Empilhadeiras
+    'Empilhadeira Contrapeso (3–7T)': { state: 'solid', derivatives: { pt: ['Diesel 3T', 'GLP 3T', 'Elétrica 3T (bateria)', 'Diesel 5T', 'Diesel 7T'], en: ['Diesel 3T', 'LPG 3T', 'Electric 3T (battery)', 'Diesel 5T', 'Diesel 7T'] } },
+    'Counterbalance Forklift (3–7T)': { state: 'solid', derivatives: { pt: ['Diesel 3T', 'GLP 3T', 'Elétrica 3T (bateria)', 'Diesel 5T', 'Diesel 7T'], en: ['Diesel 3T', 'LPG 3T', 'Electric 3T (battery)', 'Diesel 5T', 'Diesel 7T'] } },
+    'Empilhadeira de Grande Porte (10–25T+)': { state: 'solid', derivatives: { pt: ['Diesel 10T', 'Diesel 15T', 'Diesel 25T', 'Telehandler / Manipulador Telescópico 30T+'], en: ['Diesel 10T', 'Diesel 15T', 'Diesel 25T', 'Telehandler 30T+'] } },
+    'Heavy Duty Forklift (10–25T+)': { state: 'solid', derivatives: { pt: ['Diesel 10T', 'Diesel 15T', 'Diesel 25T', 'Telehandler / Manipulador Telescópico 30T+'], en: ['Diesel 10T', 'Diesel 15T', 'Diesel 25T', 'Telehandler 30T+'] } },
+    'Grua Torre': { state: 'solid', derivatives: { pt: ['Automontante (Self-Erecting)', 'Top-Slewing (Jib Fixo)', 'Luffing Jib (Lança Inclinável)', 'Flat-Top (Sem Cabeça de Gato)'], en: ['Self-Erecting Tower Crane', 'Top-Slewing (Fixed Jib)', 'Luffing Jib Crane', 'Flat-Top Tower Crane'] } },
+    'Tower Crane': { state: 'solid', derivatives: { pt: ['Automontante (Self-Erecting)', 'Top-Slewing (Jib Fixo)', 'Luffing Jib (Lança Inclinável)', 'Flat-Top (Sem Cabeça de Gato)'], en: ['Self-Erecting Tower Crane', 'Top-Slewing (Fixed Jib)', 'Luffing Jib Crane', 'Flat-Top Tower Crane'] } },
+    'Guindaste Móvel (All-Terrain)': { state: 'solid', derivatives: { pt: ['All-Terrain 25T', 'All-Terrain 50T', 'All-Terrain 100T', 'All-Terrain 200T+', 'Guindaste sobre Lagarta (Crawler Crane)'], en: ['All-Terrain 25T', 'All-Terrain 50T', 'All-Terrain 100T', 'All-Terrain 200T+', 'Crawler Crane'] } },
+    'All-Terrain Mobile Crane': { state: 'solid', derivatives: { pt: ['All-Terrain 25T', 'All-Terrain 50T', 'All-Terrain 100T', 'All-Terrain 200T+', 'Guindaste sobre Lagarta (Crawler Crane)'], en: ['All-Terrain 25T', 'All-Terrain 50T', 'All-Terrain 100T', 'All-Terrain 200T+', 'Crawler Crane'] } },
+
+    // Maquinaria Industrial Pesada
+    'Compressor Industrial de Parafuso': { state: 'solid', derivatives: { pt: ['Parafuso 10–30 kW (sem óleo)', 'Parafuso 37–75 kW', 'Parafuso 90–160 kW', 'Parafuso 200 kW+', 'Compressor de Pistão Industrial'], en: ['Screw 10–30 kW (oil-free)', 'Screw 37–75 kW', 'Screw 90–160 kW', 'Screw 200 kW+', 'Industrial Piston Compressor'] } },
+    'Industrial Screw Compressor': { state: 'solid', derivatives: { pt: ['Parafuso 10–30 kW (sem óleo)', 'Parafuso 37–75 kW', 'Parafuso 90–160 kW', 'Parafuso 200 kW+', 'Compressor de Pistão Industrial'], en: ['Screw 10–30 kW (oil-free)', 'Screw 37–75 kW', 'Screw 90–160 kW', 'Screw 200 kW+', 'Industrial Piston Compressor'] } },
+    'Gerador Trifásico': { state: 'solid', derivatives: { pt: ['15–50 kVA Silencioso', '50–200 kVA', '200–500 kVA', '500–1000 kVA', '1000 kVA+ (Centralita)'], en: ['15–50 kVA Silent', '50–200 kVA', '200–500 kVA', '500–1000 kVA', '1000 kVA+ (Power Station)'] } },
+    'Three-Phase Generator Set': { state: 'solid', derivatives: { pt: ['15–50 kVA Silencioso', '50–200 kVA', '200–500 kVA', '500–1000 kVA', '1000 kVA+ (Centralita)'], en: ['15–50 kVA Silent', '50–200 kVA', '200–500 kVA', '500–1000 kVA', '1000 kVA+ (Power Station)'] } },
+    'Prensa Hidráulica (100–500T)': { state: 'solid', derivatives: { pt: ['Prensa Hidráulica 100T', 'Prensa Hidráulica 200T', 'Prensa Hidráulica 315T', 'Prensa Hidráulica 500T', 'Prensa de Forjagem 1000T+'], en: ['Hydraulic Press 100T', 'Hydraulic Press 200T', 'Hydraulic Press 315T', 'Hydraulic Press 500T', 'Forging Press 1000T+'] } },
+    'Hydraulic Press (100–500T)': { state: 'solid', derivatives: { pt: ['Prensa Hidráulica 100T', 'Prensa Hidráulica 200T', 'Prensa Hidráulica 315T', 'Prensa Hidráulica 500T', 'Prensa de Forjagem 1000T+'], en: ['Hydraulic Press 100T', 'Hydraulic Press 200T', 'Hydraulic Press 315T', 'Hydraulic Press 500T', 'Forging Press 1000T+'] } },
+    'Cortadora Laser CNC': { state: 'solid', derivatives: { pt: ['Laser CO₂ 2–4 kW (não metálicos)', 'Laser Fibra 1–3 kW (chapa fina)', 'Laser Fibra 4–8 kW (chapa média)', 'Laser Fibra 10–20 kW (chapa grossa)', 'Laser 3D Tubos & Perfis'], en: ['CO₂ Laser 2–4 kW (non-metals)', 'Fibre Laser 1–3 kW (thin sheet)', 'Fibre Laser 4–8 kW (medium sheet)', 'Fibre Laser 10–20 kW (thick plate)', '3D Laser Tube & Profile Cutting'] } },
+    'CNC Laser Cutting Machine': { state: 'solid', derivatives: { pt: ['Laser CO₂ 2–4 kW (não metálicos)', 'Laser Fibra 1–3 kW (chapa fina)', 'Laser Fibra 4–8 kW (chapa média)', 'Laser Fibra 10–20 kW (chapa grossa)', 'Laser 3D Tubos & Perfis'], en: ['CO₂ Laser 2–4 kW (non-metals)', 'Fibre Laser 1–3 kW (thin sheet)', 'Fibre Laser 4–8 kW (medium sheet)', 'Fibre Laser 10–20 kW (thick plate)', '3D Laser Tube & Profile Cutting'] } },
+    'Injetora de Plástico': { state: 'solid', derivatives: { pt: ['Injetora 50–200T (peças pequenas)', 'Injetora 200–500T (peças médias)', 'Injetora 500T+ (peças grandes)', 'Injetora Elétrica de Alta Precisão', 'Injetora para Borracha / Silicone'], en: ['Injection Moulder 50–200T (small parts)', 'Injection Moulder 200–500T (medium parts)', 'Injection Moulder 500T+ (large parts)', 'Electric High-Precision Injection Moulder', 'Rubber / Silicone Injection Moulder'] } },
+    'Plastic Injection Moulding Machine': { state: 'solid', derivatives: { pt: ['Injetora 50–200T (peças pequenas)', 'Injetora 200–500T (peças médias)', 'Injetora 500T+ (peças grandes)', 'Injetora Elétrica de Alta Precisão', 'Injetora para Borracha / Silicone'], en: ['Injection Moulder 50–200T (small parts)', 'Injection Moulder 200–500T (medium parts)', 'Injection Moulder 500T+ (large parts)', 'Electric High-Precision Injection Moulder', 'Rubber / Silicone Injection Moulder'] } },
+
+    // ELECTRÓNICA & COMPONENTES - Chips
+    'Processadores Intel (bulk)': { state: 'solid', derivatives: { pt: ['Core i3 (14ª/13ª Gen — bulk)', 'Core i5 (14ª/13ª Gen — bulk)', 'Core i7 (14ª/13ª Gen — bulk)', 'Core i9 Topo de Gama (bulk)', 'Xeon Scalable para Servidor'], en: ['Core i3 (14th/13th Gen — bulk)', 'Core i5 (14th/13th Gen — bulk)', 'Core i7 (14th/13th Gen — bulk)', 'Core i9 Flagship (bulk)', 'Xeon Scalable for Server'] } },
+    'Intel Processors (bulk)': { state: 'solid', derivatives: { pt: ['Core i3 (14ª/13ª Gen — bulk)', 'Core i5 (14ª/13ª Gen — bulk)', 'Core i7 (14ª/13ª Gen — bulk)', 'Core i9 Topo de Gama (bulk)', 'Xeon Scalable para Servidor'], en: ['Core i3 (14th/13th Gen — bulk)', 'Core i5 (14th/13th Gen — bulk)', 'Core i7 (14th/13th Gen — bulk)', 'Core i9 Flagship (bulk)', 'Xeon Scalable for Server'] } },
+    'Processadores AMD (bulk)': { state: 'solid', derivatives: { pt: ['Ryzen 5 (série 8000/7000 — bulk)', 'Ryzen 7 (série 8000/7000 — bulk)', 'Ryzen 9 (série 8000/7000 — bulk)', 'Threadripper PRO (Workstation)', 'EPYC para Servidor'], en: ['Ryzen 5 (8000/7000 series — bulk)', 'Ryzen 7 (8000/7000 series — bulk)', 'Ryzen 9 (8000/7000 series — bulk)', 'Threadripper PRO (Workstation)', 'EPYC for Server'] } },
+    'AMD Processors (bulk)': { state: 'solid', derivatives: { pt: ['Ryzen 5 (série 8000/7000 — bulk)', 'Ryzen 7 (série 8000/7000 — bulk)', 'Ryzen 9 (série 8000/7000 — bulk)', 'Threadripper PRO (Workstation)', 'EPYC para Servidor'], en: ['Ryzen 5 (8000/7000 series — bulk)', 'Ryzen 7 (8000/7000 series — bulk)', 'Ryzen 9 (8000/7000 series — bulk)', 'Threadripper PRO (Workstation)', 'EPYC for Server'] } },
+    'Microcontroladores & MCUs (ESP32/STM32)': { state: 'solid', derivatives: { pt: ['ESP32 / ESP32-S3 (Wi-Fi + BLE)', 'STM32 ARM Cortex-M (bulk)', 'Arduino ATmega328/2560 (bulk)', 'Raspberry Pi RP2040 (bulk)', 'PIC Microchip (bulk)', 'RISC-V MCUs (GD32/WCH)'], en: ['ESP32 / ESP32-S3 (Wi-Fi + BLE)', 'STM32 ARM Cortex-M (bulk)', 'Arduino ATmega328/2560 (bulk)', 'Raspberry Pi RP2040 (bulk)', 'PIC Microchip (bulk)', 'RISC-V MCUs (GD32/WCH)'] } },
+    'Microcontrollers & MCUs (ESP32/STM32)': { state: 'solid', derivatives: { pt: ['ESP32 / ESP32-S3 (Wi-Fi + BLE)', 'STM32 ARM Cortex-M (bulk)', 'Arduino ATmega328/2560 (bulk)', 'Raspberry Pi RP2040 (bulk)', 'PIC Microchip (bulk)', 'RISC-V MCUs (GD32/WCH)'], en: ['ESP32 / ESP32-S3 (Wi-Fi + BLE)', 'STM32 ARM Cortex-M (bulk)', 'Arduino ATmega328/2560 (bulk)', 'Raspberry Pi RP2040 (bulk)', 'PIC Microchip (bulk)', 'RISC-V MCUs (GD32/WCH)'] } },
+
+    // Memória & Armazenamento
+    'Módulos RAM DDR4': { state: 'solid', derivatives: { pt: ['DDR4 8 GB (2133–3200 MHz)', 'DDR4 16 GB (2400–3600 MHz)', 'DDR4 32 GB (3200 MHz)', 'DDR4 ECC Registado (Servidor)', 'DDR4 SO-DIMM (Laptop — bulk)'], en: ['DDR4 8 GB (2133–3200 MHz)', 'DDR4 16 GB (2400–3600 MHz)', 'DDR4 32 GB (3200 MHz)', 'DDR4 ECC Registered (Server)', 'DDR4 SO-DIMM (Laptop — bulk)'] } },
+    'DDR4 RAM Modules': { state: 'solid', derivatives: { pt: ['DDR4 8 GB (2133–3200 MHz)', 'DDR4 16 GB (2400–3600 MHz)', 'DDR4 32 GB (3200 MHz)', 'DDR4 ECC Registado (Servidor)', 'DDR4 SO-DIMM (Laptop — bulk)'], en: ['DDR4 8 GB (2133–3200 MHz)', 'DDR4 16 GB (2400–3600 MHz)', 'DDR4 32 GB (3200 MHz)', 'DDR4 ECC Registered (Server)', 'DDR4 SO-DIMM (Laptop — bulk)'] } },
+    'Módulos RAM DDR5': { state: 'solid', derivatives: { pt: ['DDR5 16 GB (4800–6400 MHz)', 'DDR5 32 GB (5200–6800 MHz)', 'DDR5 64 GB (4800 MHz)', 'DDR5 ECC Registado (Servidor)', 'DDR5 SO-DIMM (Laptop — bulk)'], en: ['DDR5 16 GB (4800–6400 MHz)', 'DDR5 32 GB (5200–6800 MHz)', 'DDR5 64 GB (4800 MHz)', 'DDR5 ECC Registered (Server)', 'DDR5 SO-DIMM (Laptop — bulk)'] } },
+    'DDR5 RAM Modules': { state: 'solid', derivatives: { pt: ['DDR5 16 GB (4800–6400 MHz)', 'DDR5 32 GB (5200–6800 MHz)', 'DDR5 64 GB (4800 MHz)', 'DDR5 ECC Registado (Servidor)', 'DDR5 SO-DIMM (Laptop — bulk)'], en: ['DDR5 16 GB (4800–6400 MHz)', 'DDR5 32 GB (5200–6800 MHz)', 'DDR5 64 GB (4800 MHz)', 'DDR5 ECC Registered (Server)', 'DDR5 SO-DIMM (Laptop — bulk)'] } },
+    'SSD NVMe M.2': { state: 'solid', derivatives: { pt: ['256 GB PCIe 4.0 NVMe', '512 GB PCIe 4.0 NVMe', '1 TB PCIe 4.0 NVMe', '2 TB PCIe 4.0 NVMe', '4 TB PCIe 5.0 NVMe'], en: ['256 GB PCIe 4.0 NVMe', '512 GB PCIe 4.0 NVMe', '1 TB PCIe 4.0 NVMe', '2 TB PCIe 4.0 NVMe', '4 TB PCIe 5.0 NVMe'] } },
+    'NVMe M.2 SSD': { state: 'solid', derivatives: { pt: ['256 GB PCIe 4.0 NVMe', '512 GB PCIe 4.0 NVMe', '1 TB PCIe 4.0 NVMe', '2 TB PCIe 4.0 NVMe', '4 TB PCIe 5.0 NVMe'], en: ['256 GB PCIe 4.0 NVMe', '512 GB PCIe 4.0 NVMe', '1 TB PCIe 4.0 NVMe', '2 TB PCIe 4.0 NVMe', '4 TB PCIe 5.0 NVMe'] } },
+
+    // Placas & Expansão
+    'Placa Gráfica NVIDIA (GPU, bulk)': { state: 'solid', derivatives: { pt: ['RTX 4060 / 4060 Ti (bulk)', 'RTX 4070 / 4070 Super (bulk)', 'RTX 4080 Super (bulk)', 'RTX 4090 Flagship (bulk)', 'NVIDIA A2000/A4000 Workstation', 'NVIDIA L40S (Inferência IA)'], en: ['RTX 4060 / 4060 Ti (bulk)', 'RTX 4070 / 4070 Super (bulk)', 'RTX 4080 Super (bulk)', 'RTX 4090 Flagship (bulk)', 'NVIDIA A2000/A4000 Workstation', 'NVIDIA L40S (AI Inference)'] } },
+    'NVIDIA GPU Card (bulk)': { state: 'solid', derivatives: { pt: ['RTX 4060 / 4060 Ti (bulk)', 'RTX 4070 / 4070 Super (bulk)', 'RTX 4080 Super (bulk)', 'RTX 4090 Flagship (bulk)', 'NVIDIA A2000/A4000 Workstation', 'NVIDIA L40S (Inferência IA)'], en: ['RTX 4060 / 4060 Ti (bulk)', 'RTX 4070 / 4070 Super (bulk)', 'RTX 4080 Super (bulk)', 'RTX 4090 Flagship (bulk)', 'NVIDIA A2000/A4000 Workstation', 'NVIDIA L40S (AI Inference)'] } },
+
+    // Carregadores & Alimentação
+    'Carregador USB-C GaN': { state: 'solid', derivatives: { pt: ['GaN 45W (1 porta USB-C)', 'GaN 65W (2 portas)', 'GaN 100W (3 portas)', 'GaN 140W (laptops USB-C)', 'GaN 240W Industrial (4 portas)'], en: ['GaN 45W (1 USB-C port)', 'GaN 65W (2 ports)', 'GaN 100W (3 ports)', 'GaN 140W (USB-C laptops)', 'GaN 240W Industrial (4 ports)'] } },
+    'USB-C GaN Charger': { state: 'solid', derivatives: { pt: ['GaN 45W (1 porta USB-C)', 'GaN 65W (2 portas)', 'GaN 100W (3 portas)', 'GaN 140W (laptops USB-C)', 'GaN 240W Industrial (4 portas)'], en: ['GaN 45W (1 USB-C port)', 'GaN 65W (2 ports)', 'GaN 100W (3 ports)', 'GaN 140W (USB-C laptops)', 'GaN 240W Industrial (4 ports)'] } },
+    'Baterias Li-Ion 18650 (bulk)': { state: 'solid', derivatives: { pt: ['18650 2000 mAh (Samsung / bulk)', '18650 2500 mAh (LG / bulk)', '18650 3000 mAh (Molicel P30A)', '18650 3500 mAh (Panasonic NCR)', '18650 High-Drain 20A+ (drones/ferramentas)'], en: ['18650 2000 mAh (Samsung / bulk)', '18650 2500 mAh (LG / bulk)', '18650 3000 mAh (Molicel P30A)', '18650 3500 mAh (Panasonic NCR)', '18650 High-Drain 20A+ (drones/power tools)'] } },
+    'Li-Ion 18650 Batteries (bulk)': { state: 'solid', derivatives: { pt: ['18650 2000 mAh (Samsung / bulk)', '18650 2500 mAh (LG / bulk)', '18650 3000 mAh (Molicel P30A)', '18650 3500 mAh (Panasonic NCR)', '18650 High-Drain 20A+ (drones/ferramentas)'], en: ['18650 2000 mAh (Samsung / bulk)', '18650 2500 mAh (LG / bulk)', '18650 3000 mAh (Molicel P30A)', '18650 3500 mAh (Panasonic NCR)', '18650 High-Drain 20A+ (drones/power tools)'] } },
+
+    // Periféricos & Displays
+    'Câmera de Segurança IP': { state: 'solid', derivatives: { pt: ['Dome IP 2MP Full HD', 'Dome IP 4MP Ultra HD', 'Bullet IP 8MP 4K', 'PTZ Motorizada 360°', 'Fisheye 360° (interior)', 'Industrial IP67/IP68'], en: ['2MP Full HD IP Dome', '4MP Ultra HD IP Dome', '8MP 4K IP Bullet', 'PTZ Motorized 360°', '360° Fisheye (indoor)', 'Industrial IP67/IP68'] } },
+    'IP Security Camera': { state: 'solid', derivatives: { pt: ['Dome IP 2MP Full HD', 'Dome IP 4MP Ultra HD', 'Bullet IP 8MP 4K', 'PTZ Motorizada 360°', 'Fisheye 360° (interior)', 'Industrial IP67/IP68'], en: ['2MP Full HD IP Dome', '4MP Ultra HD IP Dome', '8MP 4K IP Bullet', 'PTZ Motorized 360°', '360° Fisheye (indoor)', 'Industrial IP67/IP68'] } }
 };
 
 function onWizardCountryChange(code) {
@@ -6043,15 +6471,90 @@ function onWizardCountryChange(code) {
     }
 }
 
+const CATEGORY_PACKAGING_DICTIONARY = {
+    // 🌾 AGRONEGÓCIO
+    'fertilizantes': {
+        pt: [
+            { id: 'big_bags_1tn', icon: 'inventory_2', title: 'Big Bags (1.000 kg)', sub: '1 Tonelada com Liner Impermeável' },
+            { id: 'sacos_50kg', icon: 'backpack', title: 'Sacos PP (50 kg)', sub: 'Polipropileno Tecido com Revestimento' },
+            { id: 'sacos_25kg', icon: 'shopping_bag', title: 'Sacos de 25 kg', sub: 'Embalagem Paletizada e Plastificada' },
+            { id: 'granel_bulk', icon: 'directions_boat', title: 'A Granel (Bulk)', sub: 'Porão de Navio / Camião Basculante' }
+        ],
+        en: [
+            { id: 'big_bags_1tn', icon: 'inventory_2', title: 'Big Bags (1,000 kg)', sub: '1 Ton with Waterproof Liner' },
+            { id: 'sacos_50kg', icon: 'backpack', title: 'PP Bags (50 kg)', sub: 'Woven Polypropylene with Inner Coating' },
+            { id: 'sacos_25kg', icon: 'shopping_bag', title: 'Bags of 25 kg', sub: 'Palletized & Wrapped Packaging' },
+            { id: 'granel_bulk', icon: 'directions_boat', title: 'Bulk Cargo', sub: 'Bulk Vessel Hold / Tipper Truck' }
+        ]
+    },
+    'sementes': {
+        pt: [
+            { id: 'sacos_25kg_hermetico', icon: 'shield', title: 'Sacos Herméticos (25 kg)', sub: 'Proteção Tripla contra Humidade e Pragas' },
+            { id: 'sacos_50kg_tratado', icon: 'backpack', title: 'Sacos Tratados (50 kg)', sub: 'Polipropileno com Sementes Tratadas' },
+            { id: 'caixas_climatizadas', icon: 'ac_unit', title: 'Caixas Climatizadas', sub: 'Ventiladas para Transporte de Mudas' },
+            { id: 'big_bags_500kg', icon: 'inventory_2', title: 'Big Bags de Sementes (500 kg)', sub: 'Descarga Direta em Semeadoras' }
+        ],
+        en: [
+            { id: 'sacos_25kg_hermetico', icon: 'shield', title: 'Hermetic Bags (25 kg)', sub: 'Triple Protection Moisture & Pest Barrier' },
+            { id: 'sacos_50kg_tratado', icon: 'backpack', title: 'Treated Bags (50 kg)', sub: 'Woven PP for Treated Seeds' },
+            { id: 'caixas_climatizadas', icon: 'ac_unit', title: 'Climate-Controlled Crates', sub: 'Ventilated Crates for Live Seedlings' },
+            { id: 'big_bags_500kg', icon: 'inventory_2', title: 'Seed Big Bags (500 kg)', sub: 'Direct Discharge into Planters' }
+        ]
+    },
+    'caju': {
+        pt: [
+            { id: 'sacos_juta_80kg', icon: 'inventory', title: 'Sacos de Juta (80 kg)', sub: 'Embalagem Tradicional Respirável para RCN' },
+            { id: 'caixa_vacuo_25lbs', icon: 'grid_view', title: 'Caixa a Vácuo (25 lbs)', sub: 'Vácuo + Gás Inerte para Amêndoas' },
+            { id: 'big_bags_caju', icon: 'inventory_2', title: 'Big Bags Respiráveis (1.000 kg)', sub: 'Para Castanha de Caju Bruta a Granel' },
+            { id: 'tambor_lcc', icon: 'oil_barrel', title: 'Tambores PEAD (200 L)', sub: 'Para Líquido da Casca de Caju (LCC)' }
+        ],
+        en: [
+            { id: 'sacos_juta_80kg', icon: 'inventory', title: 'Jute Bags (80 kg)', sub: 'Traditional Breathable Bags for RCN' },
+            { id: 'caixa_vacuo_25lbs', icon: 'grid_view', title: 'Vacuum Box (25 lbs)', sub: 'Vacuum + Nitrogen Flush for Kernels' },
+            { id: 'big_bags_caju', icon: 'inventory_2', title: 'Breathable Big Bags (1,000 kg)', sub: 'For Raw Cashew Nuts in Bulk' },
+            { id: 'tambor_lcc', icon: 'oil_barrel', title: 'HDPE Drums (200 L)', sub: 'For Cashew Nut Shell Liquid (CNSL)' }
+        ]
+    },
+    'acucar': {
+        pt: [
+            { id: 'sacos_50kg_liner', icon: 'backpack', title: 'Sacos de 50 kg com Liner', sub: 'Polipropileno com Liner de Polietileno (Food Grade)' },
+            { id: 'big_bags_acucar', icon: 'inventory_2', title: 'Big Bags Alimentos (1.000 kg)', sub: '1 Tonelada de Grau Alimentício' },
+            { id: 'sacos_25kg_acucar', icon: 'shopping_bag', title: 'Sacos de 25 kg Paletizados', sub: 'Embalagem Fracionada para Distribuição' },
+            { id: 'granel_vhp', icon: 'directions_boat', title: 'A Granel VHP (Navio)', sub: 'Carregamento Direto no Porão' }
+        ],
+        en: [
+            { id: 'sacos_50kg_liner', icon: 'backpack', title: '50 kg Bags with PE Liner', sub: 'Woven PP with Food-Grade Polyethylene Liner' },
+            { id: 'big_bags_acucar', icon: 'inventory_2', title: 'Food-Grade Big Bags (1,000 kg)', sub: '1 Ton Food Certified Big Bag' },
+            { id: 'sacos_25kg_acucar', icon: 'shopping_bag', title: '25 kg Palletized Bags', sub: 'Fractional Packaging for Retail Distribution' },
+            { id: 'granel_vhp', icon: 'directions_boat', title: 'Bulk VHP Sugar (Vessel)', sub: 'Direct Bulk Vessel Loading for Refineries' }
+        ]
+    },
+    'equipamentos': {
+        pt: [
+            { id: 'flat_rack_equip', icon: 'grid_view', title: 'Contentor Flat Rack / Open Top', sub: 'Para Alfaia e Equipamento Agrícola Sobredimensionado' },
+            { id: 'caixa_ispm15', icon: 'inventory_2', title: 'Caixas de Madeira Tratada (ISPM-15)', sub: 'Proteção Fitossanitária de Exportação' },
+            { id: 'skid_palete_aco', icon: 'inventory', title: 'Skid de Aço / Palete Heavy-Duty', sub: 'Fixação Reforçada para Transporte Terrestre' }
+        ],
+        en: [
+            { id: 'flat_rack_equip', icon: 'grid_view', title: 'Flat Rack / Open Top Container', sub: 'For Oversized Farm Implements & Machinery' },
+            { id: 'caixa_ispm15', icon: 'inventory_2', title: 'ISPM-15 Wooden Crates', sub: 'Phytosanitary Certified Export Packaging' },
+            { id: 'skid_palete_aco', icon: 'inventory', title: 'Steel Skid / Heavy-Duty Pallet', sub: 'Reinforced Anchor Base for Heavy Loads' }
+        ]
+    }
+};
+
 function renderPackagingCards(stateType = 'solid') {
     const container = document.getElementById('wizard-packaging-cards');
     if (!container) return;
     container.innerHTML = '';
     
     const lang = localStorage.getItem('gvcps_lang') || 'pt';
+    const catKey = wizardState.selectedCategory;
     let options = [];
-    
-    if (stateType === 'liquid') {
+
+    if (catKey && CATEGORY_PACKAGING_DICTIONARY[catKey]) {
+        options = CATEGORY_PACKAGING_DICTIONARY[catKey][lang] || CATEGORY_PACKAGING_DICTIONARY[catKey]['pt'];
+    } else if (stateType === 'liquid') {
         options = [
             {
                 id: 'iso_tank',

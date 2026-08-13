@@ -358,7 +358,6 @@
                 <a href="#home" class="active" data-translate-pt="Início" data-translate-en="Home">Início</a>
                 <a href="#about" data-translate-pt="Sobre Nós" data-translate-en="About Us">Sobre Nós</a>
                 <a href="#services" data-translate-pt="Serviços" data-translate-en="Services">Serviços</a>
-                <a href="#wall" data-translate-pt="Mural" data-translate-en="Opportunity Wall">Mural</a>
                 <a href="#trust" data-translate-pt="Centro de Confiança" data-translate-en="Trust Center">Centro de Confiança</a>
                 <a href="#contact" data-translate-pt="Comunicação" data-translate-en="Communication">Comunicação</a>
                 <a href="#member-portal" class="member-portal-link" style="display: none;">Painel</a>
@@ -424,86 +423,136 @@
         <section id="view-home" class="view-section active">
             <!-- 1. DYNAMIC HERO SECTION WITH INTEGRATED SLIDER (High Quality Images) -->
             <section class="relative min-h-[80vh] flex items-center overflow-hidden bg-slate-900">
-                <!-- Background Image Container -->
-                <div class="absolute inset-0 z-0 opacity-40">
+                <!-- Background Image Container (Enhanced visibility) -->
+                <div class="absolute inset-0 z-0 opacity-70">
                     <img id="hero-bg-0" alt="Carga Portuária de Alta Qualidade" class="hero-slider-bg-img active absolute inset-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1920&q=80">
-                    <img id="hero-bg-1" alt="Agribusiness" class="hero-slider-bg-img inactive absolute inset-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1920&q=80">
+                    <img id="hero-bg-1" alt="Agribusiness" class="hero-slider-bg-img inactive absolute inset-0 w-full h-full object-cover" src="assets/images/agro_commodities.jpg">
                     <img id="hero-bg-2" alt="Logística Global" class="hero-slider-bg-img inactive absolute inset-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1920&q=80">
-                    <div class="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-900/20 to-transparent"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/50 to-slate-950/30"></div>
                 </div>
 
-                <!-- Slides Track (Absolute layered fades) -->
-                <div class="relative z-10 w-full max-w-[1280px] mx-auto px-4 md:px-8 py-16 min-h-[50vh] flex flex-col justify-center">
-                    
-                    <!-- SLIDE 1: General Core Presentation -->
-                    <div id="hero-slide-0" class="slide-fade opacity-100 transform translate-x-0 transition-all duration-700 space-y-6 max-w-3xl">
-                        <h1 class="font-outfit font-bold text-4xl md:text-5xl lg:text-6xl text-white leading-tight" data-cms-key="hero.slide0.title" data-translate-pt="Oportunidades Globais" data-translate-en="Global Opportunities">
-                            Oportunidades Globais
-                        </h1>
-                        <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                            <button onclick="openLoginModal()" class="bg-white text-primary px-6 py-3.5 rounded-xl font-outfit font-bold hover:bg-slate-50 hover:shadow-lg transition-all flex items-center justify-center gap-2 border-none cursor-pointer">
-                                <span class="material-symbols-outlined text-xl">key</span>
-                                <span data-translate-pt="Aceder ao Painel Restrito" data-translate-en="Access Restricted Panel">Aceder ao Painel Restrito</span>
-                            </button>
-                            <a href="#wall" class="bg-secondary text-white px-6 py-3.5 rounded-xl font-outfit font-bold hover:bg-secondary-light hover:shadow-lg transition-all flex items-center justify-center gap-2 border-none cursor-pointer no-underline">
-                                <span class="material-symbols-outlined text-xl">dashboard</span>
-                                <span data-translate-pt="Ver Mural de Oportunidades" data-translate-en="View Opportunities Wall">Ver Mural de Oportunidades</span>
-                            </a>
-                        </div>
-                    </div>
+                <!-- Container Grid: Left (Titles + Fixed 4 Buttons) & Right (Área do Cliente Card) -->
+                <div class="relative z-10 w-full max-w-[1280px] mx-auto px-4 md:px-8 py-12 md:py-16 min-h-[60vh] flex items-center">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center w-full">
+                        
+                        <!-- LEFT COLUMN: Titles (Slide track) + Fixed 4 Stacked Buttons -->
+                        <div class="lg:col-span-7 space-y-6">
+                            <!-- Slides Titles Container -->
+                            <div class="relative min-h-[70px] md:min-h-[90px] flex items-center">
+                                <!-- SLIDE 1: General Core Presentation -->
+                                <div id="hero-slide-0" class="slide-fade opacity-100 transform translate-x-0 transition-all duration-700 max-w-2xl w-full" style="position: relative;">
+                                    <h1 class="font-outfit font-bold text-4xl md:text-5xl lg:text-6xl text-white leading-tight m-0" data-cms-key="hero.slide0.title" data-translate-pt="Oportunidades Globais" data-translate-en="Global Opportunities">
+                                        Oportunidades Globais
+                                    </h1>
+                                </div>
 
-                    <!-- SLIDE 2: Logistics -->
-                    <div id="hero-slide-1" class="slide-fade opacity-0 absolute pointer-events-none transform translate-x-8 transition-all duration-700 space-y-6 max-w-3xl">
-                        <h1 class="font-outfit font-bold text-4xl md:text-5xl lg:text-6xl text-white leading-tight" data-cms-key="hero.slide1.title" data-translate-pt="Suporte Logístico" data-translate-en="Logistics Support">
-                            Suporte Logístico
-                        </h1>
-                        <div class="flex flex-col sm:flex-row gap-4 pt-4 pointer-events-auto">
-                            <button onclick="document.getElementById('services-section').scrollIntoView({ behavior: 'smooth' });" class="bg-white text-primary-dark px-6 py-3.5 rounded-xl font-outfit font-bold hover:bg-slate-50 hover:shadow-lg transition-all flex items-center justify-center gap-2 border-none cursor-pointer">
-                                <span class="material-symbols-outlined text-xl">hub</span>
-                                <span data-translate-pt="Conectar Minha Empresa" data-translate-en="Connect My Business">Conectar Minha Empresa</span>
-                            </button>
-                        </div>
-                    </div>
+                                <!-- SLIDE 2: Logistics -->
+                                <div id="hero-slide-1" class="slide-fade opacity-0 absolute top-0 left-0 pointer-events-none transform translate-x-8 transition-all duration-700 max-w-2xl w-full">
+                                    <h1 class="font-outfit font-bold text-4xl md:text-5xl lg:text-6xl text-white leading-tight m-0" data-cms-key="hero.slide1.title" data-translate-pt="Suporte Logístico" data-translate-en="Logistics Support">
+                                        Suporte Logístico
+                                    </h1>
+                                </div>
 
-                    <!-- SLIDE 3: Looking for Buyers -->
-                    <div id="hero-slide-2" class="slide-fade opacity-0 absolute pointer-events-none transform translate-x-8 transition-all duration-700 space-y-6 max-w-3xl">
-                        <h1 class="font-outfit font-bold text-4xl md:text-5xl lg:text-6xl text-white leading-tight" data-cms-key="hero.slide2.title" data-translate-pt="Compradores Globais" data-translate-en="Global Buyers">
-                            Compradores Globais
-                        </h1>
-                        <div class="flex flex-col sm:flex-row gap-4 pt-4 pointer-events-auto">
-                            <a href="#wall" class="bg-amber-500 text-primary-dark px-6 py-3.5 rounded-xl font-outfit font-bold hover:bg-amber-400 hover:shadow-lg transition-all flex items-center justify-center gap-2 border-none cursor-pointer no-underline">
-                                <span class="material-symbols-outlined text-xl">search</span>
-                                <span data-translate-pt="Explorar Requisitos de Compra" data-translate-en="Explore Purchase Requirements">Explorar Requisitos de Compra</span>
-                            </a>
-                        </div>
-                    </div>
+                                <!-- SLIDE 3: Looking for Buyers -->
+                                <div id="hero-slide-2" class="slide-fade opacity-0 absolute top-0 left-0 pointer-events-none transform translate-x-8 transition-all duration-700 max-w-2xl w-full">
+                                    <h1 class="font-outfit font-bold text-4xl md:text-5xl lg:text-6xl text-white leading-tight m-0" data-cms-key="hero.slide2.title" data-translate-pt="Compradores Globais" data-translate-en="Global Buyers">
+                                        Compradores Globais
+                                    </h1>
+                                </div>
+                            </div>
 
-                    <!-- Slider Controls Overlay -->
-                    <div class="flex items-center gap-6 pt-12">
-                        <div class="flex gap-2">
-                            <button onclick="prevSlide()" class="w-10 h-10 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 text-white flex items-center justify-center cursor-pointer transition-all">
-                                <span class="material-symbols-outlined text-sm">arrow_back</span>
-                            </button>
-                            <button id="play-pause-btn" onclick="togglePlayPause()" class="w-10 h-10 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 text-white flex items-center justify-center cursor-pointer transition-all" title="Pausar slide">
-                                <span class="material-symbols-outlined text-sm">pause</span>
-                            </button>
-                            <button onclick="nextSlide()" class="w-10 h-10 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 text-white flex items-center justify-center cursor-pointer transition-all">
-                                <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                            </button>
+                            <!-- 4 FIXED STACKED BUTTONS (Do not change with slides!) -->
+                            <div class="flex flex-col gap-3 max-w-xs pt-1">
+                                <!-- 1. Conectar Minha Empresa -->
+                                <button onclick="openLoginModal()" class="w-full flex items-center gap-3 px-5 py-3.5 rounded-xl font-outfit font-bold text-sm bg-white text-primary hover:bg-slate-100 hover:shadow-xl transition-all border-none cursor-pointer">
+                                    <span class="material-symbols-outlined text-xl text-emerald-600">hub</span>
+                                    <span data-translate-pt="Conectar Minha Empresa" data-translate-en="Connect My Business">Conectar Minha Empresa</span>
+                                </button>
+
+                                <!-- 2. Requisitar Serviço (Abre o Wizard) -->
+                                <button onclick="openRequestWizard()" class="w-full flex items-center gap-3 px-5 py-3.5 rounded-xl font-outfit font-bold text-sm bg-secondary text-white hover:bg-secondary-light hover:shadow-xl transition-all border-none cursor-pointer">
+                                    <span class="material-symbols-outlined text-xl">assignment_add</span>
+                                    <span data-translate-pt="Requisitar Serviço" data-translate-en="Request Service">Requisitar Serviço</span>
+                                </button>
+
+                                <!-- 3. Explorar Mercado -->
+                                <a href="#services" class="w-full flex items-center gap-3 px-5 py-3.5 rounded-xl font-outfit font-bold text-sm bg-slate-800/90 text-white border border-slate-700/80 hover:bg-slate-700/90 hover:border-slate-600 transition-all cursor-pointer no-underline">
+                                    <span class="material-symbols-outlined text-xl text-amber-400">travel_explore</span>
+                                    <span data-translate-pt="Explorar Mercado" data-translate-en="Explore Market">Explorar Mercado</span>
+                                </a>
+
+                                <!-- 4. Últimas Demandas -->
+                                <button id="btn-ultimas-demandas" onclick="toggleLatestDemands()" class="w-full flex items-center justify-between px-5 py-3.5 rounded-xl font-outfit font-bold text-sm bg-slate-800/90 text-white border border-slate-700/80 hover:bg-slate-700/90 hover:border-slate-600 transition-all cursor-pointer">
+                                    <div class="flex items-center gap-3">
+                                        <span class="material-symbols-outlined text-xl text-emerald-400">trending_up</span>
+                                        <span data-translate-pt="Últimas Demandas" data-translate-en="Latest Demands">Últimas Demandas</span>
+                                    </div>
+                                    <span class="material-symbols-outlined text-sm opacity-70" id="btn-demands-arrow">expand_more</span>
+                                </button>
+                            </div>
+
+                            <!-- Slider Controls Overlay -->
+                            <div class="flex items-center gap-4 pt-1">
+                                <div class="flex gap-2">
+                                    <button onclick="prevSlide()" class="w-8 h-8 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 text-white flex items-center justify-center cursor-pointer transition-all">
+                                        <span class="material-symbols-outlined text-sm">arrow_back</span>
+                                    </button>
+                                    <button id="play-pause-btn" onclick="togglePlayPause()" class="w-8 h-8 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 text-white flex items-center justify-center cursor-pointer transition-all" title="Pausar slide">
+                                        <span class="material-symbols-outlined text-sm">pause</span>
+                                    </button>
+                                    <button onclick="nextSlide()" class="w-8 h-8 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 text-white flex items-center justify-center cursor-pointer transition-all">
+                                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                    </button>
+                                </div>
+                                <div class="flex gap-2" id="slider-bullets">
+                                    <span onclick="setSlide(0)" class="w-2.5 h-2.5 rounded-full bg-white cursor-pointer transition-all duration-300" id="bullet-0"></span>
+                                    <span onclick="setSlide(1)" class="w-2.5 h-2.5 rounded-full bg-white/30 cursor-pointer transition-all duration-300" id="bullet-1"></span>
+                                    <span onclick="setSlide(2)" class="w-2.5 h-2.5 rounded-full bg-white/30 cursor-pointer transition-all duration-300" id="bullet-2"></span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex gap-2" id="slider-bullets">
-                            <span onclick="setSlide(0)" class="w-2.5 h-2.5 rounded-full bg-white cursor-pointer transition-all duration-300" id="bullet-0"></span>
-                            <span onclick="setSlide(1)" class="w-2.5 h-2.5 rounded-full bg-white/30 cursor-pointer transition-all duration-300" id="bullet-1"></span>
-                            <span onclick="setSlide(2)" class="w-2.5 h-2.5 rounded-full bg-white/30 cursor-pointer transition-all duration-300" id="bullet-2"></span>
+
+                        <!-- RIGHT COLUMN: Área do Cliente Card (Conditionally hidden when user logged in) -->
+                        <div id="hero-client-area-card" class="lg:col-span-5 flex justify-center lg:justify-end">
+                            <div class="w-full max-w-md bg-slate-900/85 backdrop-blur-md border border-slate-700/60 p-6 md:p-8 rounded-3xl shadow-2xl space-y-6">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-emerald-400">
+                                            <span class="material-symbols-outlined text-2xl">account_circle</span>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-outfit font-bold text-lg text-white m-0" data-translate-pt="Área do Cliente" data-translate-en="Client Area">Área do Cliente</h3>
+                                            <p class="text-xs text-slate-400 m-0" data-translate-pt="Portal B2B Exclusivo" data-translate-en="Exclusive B2B Portal">Portal B2B Exclusivo</p>
+                                        </div>
+                                    </div>
+                                    <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                        <span data-translate-pt="Online" data-translate-en="Online">Online</span>
+                                    </span>
+                                </div>
+                                
+                                <p class="text-xs md:text-sm text-slate-300 leading-relaxed m-0" data-translate-pt="Acesse sua conta para gerenciar cotações, acompanhar ordens de serviço e visualizar relatórios em tempo real." data-translate-en="Access your account to manage quotes, track service orders and view real-time reports.">
+                                    Acesse sua conta para gerenciar cotações, acompanhar ordens de serviço e visualizar relatórios em tempo real.
+                                </p>
+                                
+                                <button onclick="openLoginModal()" class="w-full bg-secondary hover:bg-secondary-light text-white font-outfit font-bold py-3.5 px-6 rounded-xl transition-all shadow-lg hover:shadow-emerald-900/30 flex items-center justify-center gap-2 border-none cursor-pointer">
+                                    <span data-translate-pt="ENTRAR NO PORTAL" data-translate-en="ENTER PORTAL">ENTRAR NO PORTAL</span>
+                                    <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                                </button>
+                                
+                                <div class="flex items-center justify-between text-xs text-slate-400 pt-3 border-t border-slate-800">
+                                    <button onclick="openLoginModal()" class="hover:text-white transition-colors bg-transparent border-none cursor-pointer flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-sm">key</span>
+                                        <span data-translate-pt="Recuperar acesso" data-translate-en="Recover access">Recuperar acesso</span>
+                                    </button>
+                                    <button onclick="navigate('contact')" class="hover:text-white transition-colors bg-transparent border-none cursor-pointer flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-sm">help_outline</span>
+                                        <span data-translate-pt="Ajuda" data-translate-en="Help">Ajuda</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <!-- Últimas Demandas Toggle Button -->
-                    <div class="pt-6">
-                        <button onclick="toggleLatestDemands()" class="bg-secondary text-white px-6 py-3.5 rounded-xl font-outfit font-bold hover:bg-secondary-light hover:shadow-lg transition-all flex items-center gap-2 border-none cursor-pointer">
-                            <span class="material-symbols-outlined">analytics</span>
-                            <span data-translate-pt="Últimas Demandas" data-translate-en="Latest Demands">Últimas Demandas</span>
-                        </button>
+
                     </div>
                 </div>
             </section>
@@ -526,7 +575,7 @@
                                     Lista de oportunidades de importação e exportação em Moçambique e no mundo.
                                 </p>
                             </div>
-                            <a href="#wall" class="text-xs font-bold text-gvTeal hover:underline no-underline" style="color: var(--primary-light);" data-translate-pt="Ver Todas Oportunidades" data-translate-en="See All Opportunities">Ver Todas Oportunidades</a>
+                            <a href="#services" class="text-xs font-bold text-gvTeal hover:underline no-underline" style="color: var(--primary-light);" data-translate-pt="Ver Todas Oportunidades" data-translate-en="See All Opportunities">Ver Todas Oportunidades</a>
                         </div>
 
                         <!-- B2B Requirements Full-Width Grid Table -->
@@ -647,7 +696,7 @@
                 <div class="text-center mb-16">
                     <span class="text-secondary font-label-md tracking-widest uppercase" data-cms-key="services.eyebrow" data-translate-pt="Setores de Atuação" data-translate-en="Sectors of Operation">Setores de Atuação</span>
                     <h2 class="font-headline-lg text-on-surface mt-2" data-cms-key="services.title" data-translate-pt="Nossos Serviços Corporativos" data-translate-en="Our Corporate Services">Nossos Serviços Corporativos</h2>
-                    <p class="text-on-surface-variant max-w-xl mx-auto mt-2 text-sm" data-cms-key="services.subtitle" data-translate-pt="Oferecemos consultoria de elite e intermediação segura estruturada em quatro pilares fundamentais." data-translate-en="We offer elite consulting and secure intermediation structured across four fundamental pillars.">Oferecemos consultoria de elite e intermediação segura estruturada em quatro pilares fundamentais.</p>
+
                 </div>
                 
                 <!-- Bento/Grid of sectors -->
@@ -656,7 +705,7 @@
                     <!-- Agribusiness (Card Grande Largo) -->
                     <div class="md:col-span-8 group relative rounded-2xl overflow-hidden min-h-[300px] flex flex-col justify-end p-8 text-white transition-all transform hover:-translate-y-1 hover:shadow-xl cursor-pointer" onclick="toggleCardDetail(this.querySelector('button'))">
                         <div class="absolute inset-0">
-                            <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1000&q=80" 
+                            <img src="assets/images/agro_commodities.jpg" 
                                  alt="Agronegócio" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
                         </div>
@@ -683,7 +732,7 @@
                     <!-- Oil & Gas (Card Pequeno) -->
                     <div class="md:col-span-4 group relative rounded-2xl overflow-hidden min-h-[300px] flex flex-col justify-end p-8 text-white transition-all transform hover:-translate-y-1 hover:shadow-xl cursor-pointer" onclick="toggleCardDetail(this.querySelector('button'))">
                         <div class="absolute inset-0">
-                            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80" 
+                            <img src="assets/images/oil_gas.jpg" 
                                  alt="Oil & Gas" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
                         </div>
@@ -707,7 +756,34 @@
                         </div>
                     </div>
 
-                    <!-- Technology (Card Pequeno) -->
+                    <!-- Maquinários & Indústria (Card 3) -->
+                    <div class="md:col-span-4 group relative rounded-2xl overflow-hidden min-h-[300px] flex flex-col justify-end p-8 text-white transition-all transform hover:-translate-y-1 hover:shadow-xl cursor-pointer" onclick="toggleCardDetail(this.querySelector('button'))">
+                        <div class="absolute inset-0">
+                            <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=800&q=80" 
+                                 alt="Maquinários" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
+                        </div>
+                        <div class="relative z-10 text-left">
+                            <span class="inline-flex items-center gap-1 text-white text-xs font-semibold px-2.5 py-1 rounded-md mb-3" style="background-color: #b45309; color: white;">
+                                <span class="material-symbols-outlined" style="font-size: 14px;">precision_manufacturing</span> <span data-translate-pt="Maquinários" data-translate-en="Machinery">Maquinários</span>
+                            </span>
+                            <h3 class="text-2xl font-bold mb-2 text-white" data-cms-key="services.card2.title" data-translate-pt="Maquinários &amp; Indústria" data-translate-en="Machinery &amp; Industry">Maquinários &amp; Indústria</h3>
+                            <p class="text-slate-300 text-sm" data-cms-key="services.card2.desc" data-translate-pt="Venda de tratores, navios, embarcações, equipamentos de carpintaria, elevação e maquinaria industrial pesada." data-translate-en="Sale of tractors, vessels, ships, carpentry equipment, cranes and heavy industrial machinery.">Venda de tratores, navios, embarcações, equipamentos de carpintaria, elevação e maquinaria industrial pesada.</p>
+                            <div class="hidden text-xs text-slate-300 leading-relaxed mt-2 border-t border-white/20 pt-3 transition-all duration-300" data-cms-key="services.card2.detail" data-translate-pt="Tratores agrícolas, dragas hidráulicas, serras industriais, empilhadeiras, compressores e seus derivados." data-translate-en="Agricultural tractors, hydraulic dredges, industrial saws, forklifts, compressors and their derivatives.">
+                                Tratores agrícolas, dragas hidráulicas, serras industriais, empilhadeiras, compressores e seus derivados.
+                            </div>
+                        </div>
+                        <div class="flex gap-4 mt-4" style="display: flex; gap: 12px; margin-top: 16px; position: relative; z-index: 10;">
+                            <button onclick="event.stopPropagation(); toggleCardDetail(this)" class="text-white font-label-md text-sm text-left border-none bg-transparent cursor-pointer flex items-center gap-1">
+                                <span data-translate-pt="Ler Mais" data-translate-en="Read More">Ler Mais</span> <span class="material-symbols-outlined text-xs">keyboard_arrow_down</span>
+                            </button>
+                            <button onclick="event.stopPropagation(); openRequestWizard('oil')" class="bg-secondary text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-secondary-light transition-all border-none cursor-pointer flex items-center gap-1">
+                                <span class="material-symbols-outlined text-xs">arrow_forward</span> <span data-translate-pt="Requisitar" data-translate-en="Request">Requisitar</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tecnologia & Electrónica (Card 4) -->
                     <div class="md:col-span-4 group relative rounded-2xl overflow-hidden min-h-[300px] flex flex-col justify-end p-8 text-white transition-all transform hover:-translate-y-1 hover:shadow-xl cursor-pointer" onclick="toggleCardDetail(this.querySelector('button'))">
                         <div class="absolute inset-0">
                             <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80" 
@@ -715,13 +791,13 @@
                             <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
                         </div>
                         <div class="relative z-10 text-left">
-                            <span class="inline-flex items-center gap-1 bg-blue-600 text-white text-xs font-semibold px-2.5 py-1 rounded-md mb-3" style="background-color: var(--primary-light); color: white;">
+                            <span class="inline-flex items-center gap-1 text-white text-xs font-semibold px-2.5 py-1 rounded-md mb-3" style="background-color: var(--primary-light); color: white;">
                                 <span class="material-symbols-outlined" style="font-size: 14px;">terminal</span> <span data-translate-pt="Tecnologia" data-translate-en="Technology">Tecnologia</span>
                             </span>
-                            <h3 class="text-2xl font-bold mb-2 text-white" data-cms-key="services.card2.title" data-translate-pt="Maquinários &amp; TI" data-translate-en="Machinery &amp; IT">Maquinários &amp; TI</h3>
-                            <p class="text-slate-300 text-sm" data-cms-key="services.card2.desc" data-translate-pt="Processamento industrial, infraestrutura de TI e governança digital." data-translate-en="Industrial processing, IT infrastructure and digital governance.">Processamento industrial, infraestrutura de TI e governança digital.</p>
-                            <div class="hidden text-xs text-slate-300 leading-relaxed mt-2 border-t border-white/20 pt-3 transition-all duration-300" data-cms-key="services.card2.detail" data-translate-pt="Modelagem de sistemas de alta segurança, inteligência de negócios e infraestrutura corporativa crítica." data-translate-en="High-security systems modeling, business intelligence and critical corporate infrastructure.">
-                                Modelagem de sistemas de alta segurança, inteligência de negócios e infraestrutura corporativa crítica.
+                            <h3 class="text-2xl font-bold mb-2 text-white" data-cms-key="services.card2b.title" data-translate-pt="Tecnologia &amp; Electrónica" data-translate-en="Technology &amp; Electronics">Tecnologia &amp; Electrónica</h3>
+                            <p class="text-slate-300 text-sm" data-cms-key="services.card2b.desc" data-translate-pt="Fornecimento em grande escala de chips, processadores, módulos de memória, placas-mãe e carregadores." data-translate-en="Bulk supply of chips, processors, memory modules, motherboards and chargers.">Fornecimento em grande escala de chips, processadores, módulos de memória, placas-mãe e carregadores.</p>
+                            <div class="hidden text-xs text-slate-300 leading-relaxed mt-2 border-t border-white/20 pt-3 transition-all duration-300" data-cms-key="services.card2b.detail" data-translate-pt="Processadores Intel/AMD, RAM DDR4/DDR5, SSDs NVMe, GPUs, carregadores GaN, fontes ATX e periféricos." data-translate-en="Intel/AMD processors, DDR4/DDR5 RAM, NVMe SSDs, GPUs, GaN chargers, ATX PSUs and peripherals.">
+                                Processadores Intel/AMD, RAM DDR4/DDR5, SSDs NVMe, GPUs, carregadores GaN, fontes ATX e periféricos.
                             </div>
                         </div>
                         <div class="flex gap-4 mt-4" style="display: flex; gap: 12px; margin-top: 16px; position: relative; z-index: 10;">
@@ -734,8 +810,8 @@
                         </div>
                     </div>
 
-                    <!-- Global Trading (Card Grande Largo) -->
-                    <div class="md:col-span-8 group relative rounded-2xl overflow-hidden min-h-[300px] flex flex-col justify-end p-8 text-white transition-all transform hover:-translate-y-1 hover:shadow-xl cursor-pointer" onclick="toggleCardDetail(this.querySelector('button'))">
+                    <!-- Logística Global & Fretes (Card 5) -->
+                    <div class="md:col-span-4 group relative rounded-2xl overflow-hidden min-h-[300px] flex flex-col justify-end p-8 text-white transition-all transform hover:-translate-y-1 hover:shadow-xl cursor-pointer" onclick="toggleCardDetail(this.querySelector('button'))">
                         <div class="absolute inset-0">
                             <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1000&q=80" 
                                  alt="Logística" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
@@ -746,7 +822,7 @@
                                 <span class="material-symbols-outlined" style="font-size: 14px;">hub</span> <span data-translate-pt="Logística" data-translate-en="Logistics">Logística</span>
                             </span>
                             <h3 class="text-2xl font-bold mb-2 text-white" data-cms-key="services.card3.title" data-translate-pt="Logística Global &amp; Fretes" data-translate-en="Global Logistics &amp; Freight">Logística Global &amp; Fretes</h3>
-                            <p class="text-slate-300 text-sm max-w-xl" data-cms-key="services.card3.desc" data-translate-pt="Frete marítimo, desembaraço aduaneiro e intermediação nos portos." data-translate-en="Ocean freight, customs clearance and port intermediation.">Frete marítimo, desembaraço aduaneiro e intermediação nos portos.</p>
+                            <p class="text-slate-300 text-sm" data-cms-key="services.card3.desc" data-translate-pt="Frete marítimo, desembaraço aduaneiro e gestão operacional nos portos." data-translate-en="Ocean freight, customs clearance and operational port management.">Frete marítimo, desembaraço aduaneiro e gestão operacional nos portos.</p>
                             <div class="hidden text-xs text-slate-300 leading-relaxed mt-2 border-t border-white/20 pt-3 transition-all duration-300" data-cms-key="services.card3.detail" data-translate-pt="Faturamento integrado pela GV-CPS. Operação segura nos portos de Maputo, Beira e Nacala." data-translate-en="Integrated invoicing by GV-CPS. Secure operation in the ports of Maputo, Beira and Nacala.">
                                 Faturamento integrado pela GV-CPS. Operação segura nos portos de Maputo, Beira e Nacala.
                             </div>
@@ -773,10 +849,10 @@
                     <div>
                         <span class="text-secondary font-label-md tracking-widest uppercase" data-translate-pt="Mercado em Tempo Real" data-translate-en="Real-Time Market">Mercado em Tempo Real</span>
                         <h2 class="font-headline-lg text-on-surface mt-2" data-translate-pt="Oportunidades em Destaque" data-translate-en="Featured Opportunities">Oportunidades em Destaque</h2>
-                        <p class="text-on-surface-variant mt-2 text-sm" data-translate-pt="Demandas e ofertas B2B ativas intermediadas formalmente pela GV-CPS." data-translate-en="Active B2B demands and offers formally intermediated by GV-CPS.">Demandas e ofertas B2B ativas intermediadas formalmente pela GV-CPS.</p>
+
                     </div>
-                    <a href="#wall" class="btn btn-secondary font-label-md flex items-center gap-2" style="padding: 10px 20px; border-radius: var(--radius-xl); text-decoration: none;" data-translate-pt="Ver Mural Completo" data-translate-en="View Full Wall">
-                        Ver Mural Completo <span class="material-symbols-outlined">arrow_forward</span>
+                    <a href="#services" class="btn btn-secondary font-label-md flex items-center gap-2" style="padding: 10px 20px; border-radius: var(--radius-xl); text-decoration: none;" data-translate-pt="Ver Oportunidades B2B" data-translate-en="View B2B Opportunities">
+                        Ver Oportunidades B2B <span class="material-symbols-outlined">arrow_forward</span>
                     </a>
                 </div>
                 
@@ -794,17 +870,11 @@
             <!-- How it Works -->
             <section class="bg-surface-container py-24">
                 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-                    <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-                        <div class="max-w-xl">
-                            <h2 class="font-headline-lg text-on-surface" data-cms-key="how.title" data-translate-pt="Como a GV-CPS Funciona" data-translate-en="How GV-CPS Works">Como a GV-CPS Funciona</h2>
-                            <p class="text-on-surface-variant mt-4" data-cms-key="how.subtitle" data-translate-pt="Simplificamos a complexidade do comércio em Moçambique através de uma jornada guiada e segura." data-translate-en="We simplify the complexity of trade in Mozambique through a guided and secure journey.">Simplificamos a complexidade do comércio em Moçambique através de uma jornada guiada e segura.</p>
-                        </div>
-                        <button onclick="window.location.hash='wall'" class="text-secondary font-label-md flex items-center gap-2 hover:underline bg-transparent border-none cursor-pointer">
-                            <span data-translate-pt="Saiba mais sobre o processo" data-translate-en="Learn more about the process">Saiba mais sobre o processo</span>
-                            <span class="material-symbols-outlined">arrow_forward</span>
-                        </button>
+                    <div class="mb-16">
+                        <h2 class="font-headline-lg text-on-surface" data-cms-key="how.title" data-translate-pt="Como a GV-CPS Funciona" data-translate-en="How GV-CPS Works">Como a GV-CPS Funciona</h2>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <!-- Steps 1–3 always visible -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
                         <!-- Step 1 -->
                         <div class="relative p-8 rounded-2xl bg-white shadow-sm hover:-translate-y-2 transition-all duration-300">
                             <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
@@ -812,7 +882,7 @@
                             </div>
                             <span class="absolute top-8 right-8 text-6xl font-bold text-on-surface/5">01</span>
                             <h3 class="font-headline-md mb-4 text-primary" data-cms-key="how.step1.title" data-translate-pt="Publique a Demanda" data-translate-en="Publish Request">Publique a Demanda</h3>
-                            <p class="text-on-surface-variant text-sm leading-relaxed" data-cms-key="how.step1.desc" data-translate-pt="Cadastre as especificações técnicas da sua demanda de forma privada no mural." data-translate-en="Register the technical specifications of your request privately on the wall.">Cadastre as especificações técnicas da sua demanda de forma privada no mural.</p>
+                            <p class="text-on-surface-variant text-sm leading-relaxed" data-cms-key="how.step1.desc" data-translate-pt="Cadastre as especificações técnicas da sua demanda de forma privada na plataforma." data-translate-en="Register the technical specifications of your request privately on the platform.">Cadastre as especificações técnicas da sua demanda de forma privada na plataforma.</p>
                         </div>
                         <!-- Step 2 -->
                         <div class="relative p-8 rounded-2xl bg-white shadow-sm hover:-translate-y-2 transition-all duration-300">
@@ -820,102 +890,89 @@
                                 <span class="material-symbols-outlined text-secondary text-3xl">handshake</span>
                             </div>
                             <span class="absolute top-8 right-8 text-6xl font-bold text-on-surface/5">02</span>
-                            <h3 class="font-headline-md mb-4 text-primary" data-cms-key="how.step2.title" data-translate-pt="Validação &amp; Match" data-translate-en="Validation &amp; Match">Validação &amp; Match</h3>
-                            <p class="text-on-surface-variant text-sm leading-relaxed" data-cms-key="how.step2.desc" data-translate-pt="Os nossos consultores internos validam os perfis e fazem a correspondência qualificada." data-translate-en="Our internal consultants validate profiles and execute qualified matching.">Os nossos consultores internos validam os perfis e fazem a correspondência qualificada.</p>
+                            <h3 class="font-headline-md mb-4 text-primary" data-cms-key="how.step2.title" data-translate-pt="Validação &amp; Cotação" data-translate-en="Validation &amp; Quote">Validação &amp; Cotação</h3>
+                            <p class="text-on-surface-variant text-sm leading-relaxed" data-cms-key="how.step2.desc" data-translate-pt="Os nossos colaboradores validam as especificidades dos produtos e emitem cotação." data-translate-en="Our staff validates product specifications and issues quotes.">Os nossos colaboradores validam as especificidades dos produtos e emitem cotação.</p>
                         </div>
                         <!-- Step 3 -->
                         <div class="relative p-8 rounded-2xl bg-white shadow-sm hover:-translate-y-2 transition-all duration-300">
                             <div class="w-16 h-16 rounded-full bg-primary-fixed-dim/20 flex items-center justify-center mb-6">
-                                <span class="material-symbols-outlined text-primary text-3xl" style="color: var(--primary-light);">verified_user</span>
+                                <span class="material-symbols-outlined text-primary text-3xl" style="color: var(--primary-light);">description</span>
                             </div>
                             <span class="absolute top-8 right-8 text-6xl font-bold text-on-surface/5">03</span>
-                            <h3 class="font-headline-md mb-4 text-primary" data-cms-key="how.step3.title" data-translate-pt="Contrato &amp; Logística" data-translate-en="Contract &amp; Logistics">Contrato &amp; Logística</h3>
-                            <p class="text-on-surface-variant text-sm leading-relaxed" data-cms-key="how.step3.desc" data-translate-pt="Finalize acordos comerciais faturados diretamente com assessoria aduaneira da GV-CPS." data-translate-en="Finalize commercial agreements invoiced directly with GV-CPS customs advisory.">Finalize acordos comerciais faturados diretamente com assessoria aduaneira da GV-CPS.</p>
+                            <h3 class="font-headline-md mb-4 text-primary" data-cms-key="how.step3.title" data-translate-pt="Contrato &amp; Faturação" data-translate-en="Contract &amp; Invoicing">Contrato &amp; Faturação</h3>
+                            <p class="text-on-surface-variant text-sm leading-relaxed" data-cms-key="how.step3.desc" data-translate-pt="Finaliza contratos comerciais e emite facturas." data-translate-en="Finalizes commercial contracts and issues invoices.">Finaliza contratos comerciais e emite facturas.</p>
+                        </div>
+                    </div>
+
+                    <!-- Toggle Button -->
+                    <div id="workflow-toggle-btn-wrapper" class="flex justify-center mb-12">
+                        <button id="workflow-toggle-btn" onclick="toggleWorkflow()" style="display:flex; align-items:center; gap:10px; padding:14px 36px; background:var(--primary); color:#fff; border:none; border-radius:14px; font-size:15px; font-weight:600; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 16px rgba(0,0,0,0.12);" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
+                            <span class="material-symbols-outlined" style="font-size:20px;">expand_more</span>
+                            <span id="toggle-workflow-text" data-translate-pt="Ver todas as etapas" data-translate-en="View all steps">Ver todas as etapas</span>
+                        </button>
+                    </div>
+
+                    <!-- Steps 4–6 hidden initially -->
+                    <div id="workflow-steps-extra" class="grid grid-cols-1 md:grid-cols-3 gap-12" style="display:none">
+                        <!-- Step 4 -->
+                        <div id="workflow-step-4" class="relative p-8 rounded-2xl bg-white shadow-sm hover:-translate-y-2 transition-all duration-300">
+                            <div class="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center mb-6">
+                                <span class="material-symbols-outlined text-secondary text-3xl">payments</span>
+                            </div>
+                            <span class="absolute top-8 right-8 text-6xl font-bold text-on-surface/5">04</span>
+                            <h3 class="font-headline-md mb-4 text-primary" data-cms-key="how.step4.title" data-translate-pt="Pagamento &amp; Carregamento" data-translate-en="Payment &amp; Loading">Pagamento &amp; Carregamento</h3>
+                            <p class="text-on-surface-variant text-sm leading-relaxed" data-cms-key="how.step4.desc" data-translate-pt="Recebe pagamento inicial e iniciam o processo de carregamento." data-translate-en="Receives initial payment and starts the loading process.">Recebe pagamento inicial e iniciam o processo de carregamento.</p>
+                        </div>
+                        <!-- Step 5 -->
+                        <div id="workflow-step-5" class="relative p-8 rounded-2xl bg-white shadow-sm hover:-translate-y-2 transition-all duration-300">
+                            <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+                                <span class="material-symbols-outlined text-primary text-3xl">directions_boat</span>
+                            </div>
+                            <span class="absolute top-8 right-8 text-6xl font-bold text-on-surface/5">05</span>
+                            <h3 class="font-headline-md mb-4 text-primary" data-cms-key="how.step5.title" data-translate-pt="Documentação &amp; Rastreio" data-translate-en="Documentation &amp; Tracking">Documentação &amp; Rastreio</h3>
+                            <p class="text-on-surface-variant text-sm leading-relaxed" data-cms-key="how.step5.desc" data-translate-pt="Envia documentos da mercadoria ao comprador incluindo identificação do navio." data-translate-en="Sends cargo documents to the buyer including vessel identification.">Envia documentos da mercadoria ao comprador incluindo identificação do navio.</p>
+                        </div>
+                        <!-- Step 6 -->
+                        <div id="workflow-step-6" class="relative p-8 rounded-2xl bg-white shadow-sm hover:-translate-y-2 transition-all duration-300">
+                            <div class="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center mb-6">
+                                <span class="material-symbols-outlined text-secondary text-3xl">sailing</span>
+                            </div>
+                            <span class="absolute top-8 right-8 text-6xl font-bold text-on-surface/5">06</span>
+                            <h3 class="font-headline-md mb-4 text-primary" data-cms-key="how.step6.title" data-translate-pt="Partida &amp; Entrega" data-translate-en="Departure &amp; Delivery">Partida &amp; Entrega</h3>
+                            <p class="text-on-surface-variant text-sm leading-relaxed" data-cms-key="how.step6.desc" data-translate-pt="Partida do navio mediante ao pagamento final." data-translate-en="Vessel departure upon final payment.">Partida do navio mediante ao pagamento final.</p>
                         </div>
                     </div>
                 </div>
             </section>
             </div><!-- /cms-wrap-how -->
 
-            <div id="cms-wrap-about" class="cms-section-wrapper" draggable="false">
-            <span class="cms-section-label">Secção: Sobre / Consultoria</span>
-            <div class="cms-drag-handle" id="handle-about"><span class="material-symbols-outlined" style="font-size:14px;">drag_indicator</span> Arrastar</div>
-            <!-- About / Consultancy Focus -->
-            <section class="py-24 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-                    <div class="relative">
-                        <div class="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl relative z-10" style="height: 500px;">
-                            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGmCopQaPD1rU0hlXkIsPi5MfgJXi1bQgm8KfBieOt_YE1IeDNDlGM-gkVp_QqkXxd49_hm8EdEoMbYB4HQCHzn_CdikGCMPEr-mxrsIGpMiYekcx8GrDAHuQBnd8SmXMnPbNimRiQSxBGV7kM03ASdd1xgpLbOmx34KpHerYzqeP-1ZZZUpVvDcl-WxIrftVPmNpGqTG33Z8G91Aa8fPfbD_Lw_qDmShdEElL0UMts0sKCbGf6yx3DVoivHXQI2f6OcWjB79U74uw" onerror="this.onerror=null; this.src='assets/images/about_hero.png';">
-                        </div>
-                        <div class="absolute -bottom-8 -right-8 w-48 h-48 bg-secondary rounded-full -z-10 blur-3xl opacity-20"></div>
-                        <div class="absolute top-12 -left-12 p-8 glass-card rounded-2xl z-20 hidden md:block">
-                            <p class="text-3xl text-primary font-bold">15+</p>
-                            <p class="text-sm font-label-md" data-translate-pt="Anos de Experiência" data-translate-en="Years of Experience">Anos de Experiência</p>
-                        </div>
-                    </div>
-                    <div>
-                        <h2 class="font-headline-lg text-on-surface mb-8" data-cms-key="about.title" data-translate-pt="Consultoria de Elite para Mercados Complexos" data-translate-en="Elite Consulting for Complex Markets">Consultoria de Elite para Mercados Complexos</h2>
-                        <p class="body-lg text-on-surface-variant mb-12" data-cms-key="about.subtitle" data-translate-pt="A GV-CPS não é apenas uma plataforma de marketplace B2B; somos o seu parceiro estratégico no terreno. Combinamos conhecimento local profundo com padrões internacionais de consultoria corporativa." data-translate-en="GV-CPS is not just a B2B marketplace platform; we are your strategic partner on the ground. We combine deep local knowledge with international corporate consulting standards.">
-                            A GV-CPS não é apenas uma plataforma de marketplace B2B; somos o seu parceiro estratégico no terreno. Combinamos conhecimento local profundo com padrões internacionais de consultoria corporativa.
-                        </p>
-                        <div class="space-y-8">
-                            <div class="flex gap-6">
-                                <span class="material-symbols-outlined text-secondary">check_circle</span>
-                                <div>
-                                    <h4 class="font-label-md text-primary mb-2" data-translate-pt="Especialistas em Oil &amp; Gas" data-translate-en="Oil &amp; Gas Specialists">Especialistas em Oil &amp; Gas</h4>
-                                    <p class="text-sm text-on-surface-variant" data-translate-pt="Navegamos pelas regulamentações de conteúdo local e procuras industriais de energia." data-translate-en="We navigate local content regulations and industrial energy demands.">Navegamos pelas regulamentações de conteúdo local e procuras industriais de energia.</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-6">
-                                <span class="material-symbols-outlined text-secondary">check_circle</span>
-                                <div>
-                                    <h4 class="font-label-md text-primary mb-2" data-translate-pt="Tradução e Interpretação Técnica" data-translate-en="Technical Translation &amp; Interpretation">Tradução e Interpretação Técnica</h4>
-                                    <p class="text-sm text-on-surface-variant" data-translate-pt="Eliminamos barreiras linguísticas comerciais com tradutores especialistas em termos jurídicos." data-translate-en="We eliminate commercial language barriers with translators specialized in legal terms.">Eliminamos barreiras linguísticas comerciais com tradutores especialistas em termos jurídicos.</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-6">
-                                <span class="material-symbols-outlined text-secondary">check_circle</span>
-                                <div>
-                                    <h4 class="font-label-md text-primary mb-2" data-translate-pt="Soluções IT Enterprise" data-translate-en="Enterprise IT Solutions">Soluções IT Enterprise</h4>
-                                    <p class="text-sm text-on-surface-variant" data-translate-pt="Modelagem de infraestrutura tecnológica, segurança de dados e governança digital." data-translate-en="Technological infrastructure modeling, data security and digital governance.">Modelagem de infraestrutura tecnológica, segurança de dados e governança digital.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <button onclick="window.location.hash='wall'" class="mt-12 border-2 border-primary text-primary px-10 py-4 rounded-xl font-label-md hover:bg-primary hover:text-white transition-all bg-transparent cursor-pointer">
-                            <span data-translate-pt="Falar com um Consultor" data-translate-en="Speak with a Consultant">Falar com um Consultor</span>
-                        </button>
-                    </div>
-                </div>
-            </section>
-            </div><!-- /cms-wrap-about -->
+
         </section><!-- /view-home -->
 
         <!-- SOBRE NÓS VIEW -->
         <section id="view-about" class="view-section">
             <div class="pt-24 pb-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
                 <div class="text-center mb-16">
-                    <span class="text-secondary font-label-md tracking-widest uppercase" data-translate-pt="Sobre Nós" data-translate-en="About Us">Sobre Nós</span>
-                    <h1 class="font-headline-lg text-primary mt-2" data-translate-pt="A Global View (GV-CPS)" data-translate-en="Global View (GV-CPS)">A Global View (GV-CPS)</h1>
-                    <p class="text-on-surface-variant max-w-2xl mx-auto mt-4 leading-relaxed" data-translate-pt="Sediada em Maputo, somos uma empresa moçambicana de elite focada na intermediação comercial de commodities, consultoria estratégico-jurídica e assessoria em comércio externo." data-translate-en="Headquartered in Maputo, we are an elite Mozambican company focused on commercial commodities intermediation, strategic-legal consulting, and foreign trade advisory.">Sediada em Maputo, somos uma empresa moçambicana de elite focada na intermediação comercial de commodities, consultoria estratégico-jurídica e assessoria em comércio externo.</p>
+                    <h1 class="font-headline-lg text-primary" data-translate-pt="Sobre Nós" data-translate-en="About Us">Sobre Nós</h1>
                 </div>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-24">
                     <div>
                         <h2 class="headline-md text-primary mb-6" data-translate-pt="Nossa Filosofia Corporativa" data-translate-en="Our Corporate Philosophy">Nossa Filosofia Corporativa</h2>
-                        <p class="body-md text-on-surface-variant mb-6 leading-relaxed" data-translate-pt="Acreditamos que o comércio internacional de commodities e serviços em Moçambique exige segurança jurídica, conformidade regulatória rigorosa e, acima de tudo, sigilo nas negociações iniciais para proteger os interesses das partes envolvidas." data-translate-en="We believe that international trade in commodities and services in Mozambique requires legal security, strict regulatory compliance, and above all, confidentiality in initial negotiations to protect the interests of the involved parties.">
-                            Acreditamos que o comércio internacional de commodities e serviços em Moçambique exige segurança jurídica, conformidade regulatória rigorosa e, acima de tudo, sigilo nas negociações iniciais para proteger os interesses das partes envolvidas.
+                        <p class="body-md text-on-surface-variant mb-6 leading-relaxed" data-translate-pt="A filosofia corporativa da GV-CPS assenta na segurança jurídica, conformidade regulatória, sigilo operacional e relacionamento de longo prazo mutuamente benéfico." data-translate-en="GV-CPS corporate philosophy is based on legal security, regulatory compliance, operational confidentiality and mutually beneficial long-term relationships.">
+                            A filosofia corporativa da GV-CPS assenta na segurança jurídica, conformidade regulatória, sigilo operacional e relacionamento de longo prazo mutuamente benéfico.
                         </p>
-                        <p class="body-md text-on-surface-variant mb-6 leading-relaxed" data-translate-pt="Como intermediários oficiais autorizados, nós garantimos que compradores internacionais e fornecedores qualificados no terreno realizem transações de forma estruturada. Cuidamos do frete, conformidade aduaneira e faturamento, permitindo conexões diretas apenas sob a mediação técnica dedicada da GV-CPS." data-translate-en="As official authorized intermediaries, we guarantee that international buyers and qualified local suppliers carry out transactions in a structured manner. We handle freight, customs compliance, and billing, allowing direct connections only under dedicated technical mediation by GV-CPS.">
-                            Como intermediários oficiais autorizados, nós garantimos que compradores internacionais e fornecedores qualificados no terreno realizem transações de forma estruturada. Cuidamos do frete, conformidade aduaneira e faturamento, permitindo conexões diretas apenas sob a mediação técnica dedicada da GV-CPS.
+                        <p class="body-md text-on-surface-variant mb-6 leading-relaxed" data-translate-pt="Como fornecedor qualificado, garantimos transações estruturadas, previsíveis e seguras em toda a cadeia de fornecimento, desde o produtor até ao comprador, retirando do cliente o peso burocrático da Logística." data-translate-en="As a qualified supplier, we guarantee structured, predictable, and secure transactions throughout the supply chain, from producer to buyer, taking the bureaucratic burden of Logistics off the client.">
+                            Como fornecedor qualificado, garantimos transações estruturadas, previsíveis e seguras em toda a cadeia de fornecimento, desde o produtor até ao comprador, retirando do cliente o peso burocrático da Logística.
                         </p>
                     </div>
                     <div style="background-color: var(--primary); color: white; padding: 40px; border-radius: var(--radius-2xl); border-left: 6px solid var(--secondary);">
                         <h3 class="headline-sm text-white mb-6" data-translate-pt="Porquê Escolher a GV-CPS?" data-translate-en="Why Choose GV-CPS?">Porquê Escolher a GV-CPS?</h3>
                         <ul style="display: flex; flex-direction: column; gap: 16px; font-size: 14px; list-style: none; padding: 0;">
-                            <li style="display: flex; gap: 10px;"><span class="material-symbols-outlined text-[#25D366]">check_circle</span> <span data-translate-pt="Taxas Zero nesta Fase: Cadastro de propostas gratuito para fornecedores." data-translate-en="Zero Fees in this Phase: Free proposal registration for suppliers."><strong>Taxas Zero nesta Fase:</strong> Cadastro de propostas gratuito para fornecedores.</span></li>
-                            <li style="display: flex; gap: 10px;"><span class="material-symbols-outlined text-[#25D366]">check_circle</span> <span data-translate-pt="Sigilo de Contacto Garantido: Sem partilha direta de dados sensíveis." data-translate-en="Guaranteed Contact Confidentiality: No direct sharing of sensitive data."><strong>Sigilo de Contacto Garantido:</strong> Sem partilha direta de dados sensíveis.</span></li>
-                            <li style="display: flex; gap: 10px;"><span class="material-symbols-outlined text-[#25D366]">check_circle</span> <span data-translate-pt="Assessoria Logística Opcional: Frete integrado na proposta final faturado por nós." data-translate-en="Optional Logistics Support: Integrated freight in the final proposal invoiced by us."><strong>Assessoria Logística Opcional:</strong> Frete integrado na proposta final faturado por nós.</span></li>
-                            <li style="display: flex; gap: 10px;"><span class="material-symbols-outlined text-[#25D366]">check_circle</span> <span data-translate-pt="Comunicação Omnichannel: Notificações ativas sincronizadas com WhatsApp." data-translate-en="Omnichannel Communication: Active notifications synchronized with WhatsApp."><strong>Comunicação Omnichannel:</strong> Notificações ativas sincronizadas com WhatsApp.</span></li>
+                            <li style="display: flex; gap: 10px;"><span class="material-symbols-outlined text-[#25D366]">check_circle</span> <span data-translate-pt="Cadastro Gratuito" data-translate-en="Free Registration">Cadastro Gratuito</span></li>
+                            <li style="display: flex; gap: 10px;"><span class="material-symbols-outlined text-[#25D366]">check_circle</span> <span data-translate-pt="Sigilo Operacional" data-translate-en="Operational Confidentiality">Sigilo Operacional</span></li>
+                            <li style="display: flex; gap: 10px;"><span class="material-symbols-outlined text-[#25D366]">check_circle</span> <span data-translate-pt="Assessoria Completa" data-translate-en="Full Advisory Service">Assessoria Completa</span></li>
+                            <li style="display: flex; gap: 10px;"><span class="material-symbols-outlined text-[#25D366]">check_circle</span> <span data-translate-pt="Comunicação Omnichannel (WhatsApp)" data-translate-en="Omnichannel Communication (WhatsApp)">Comunicação Omnichannel (WhatsApp)</span></li>
                         </ul>
                     </div>
                 </div>
@@ -924,61 +981,75 @@
 
         <!-- SERVIÇOS VIEW -->
         <section id="view-services" class="view-section">
-            <div class="pt-24 pb-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-                <div class="text-center mb-16">
-                    <span class="text-secondary font-label-md tracking-widest uppercase" data-translate-pt="Serviços" data-translate-en="Services">Serviços</span>
-                    <h1 class="font-headline-lg text-primary mt-2" data-translate-pt="Nossas Áreas de Excelência" data-translate-en="Our Areas of Excellence">Nossas Áreas de Excelência</h1>
-                    <p class="text-on-surface-variant max-w-xl mx-auto mt-2 text-sm" data-translate-pt="Estrutura corporativa e assessoria integrada para a viabilização de negócios em Moçambique." data-translate-en="Corporate structure and integrated advisory for facilitating business in Mozambique.">Estrutura corporativa e assessoria integrada para a viabilização de negócios em Moçambique.</p>
+            <!-- Mini Hero Header -->
+            <div class="relative bg-slate-900 text-white overflow-hidden py-16 mb-12">
+                <!-- Background Image & Overlay -->
+                <div class="absolute inset-0 z-0 opacity-40">
+                    <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1920&q=80" alt="Mural Hero" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-900/20 to-transparent"></div>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-white p-8 rounded-2xl border border-outline-variant shadow-sm flex gap-6">
-                        <div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary flex-shrink-0">
-                            <span class="material-symbols-outlined text-2xl">agriculture</span>
-                        </div>
-                        <div>
-                            <h3 class="headline-sm text-primary mb-3" data-translate-pt="Agropecuária &amp; Agronegócios" data-translate-en="Agriculture &amp; Agribusiness">Agropecuária &amp; Agronegócios</h3>
-                            <p class="body-sm text-on-surface-variant leading-relaxed" data-translate-pt="Oferecemos suporte completo para exportadores e produtores locais. Facilitamos matches de cargas agrícolas recorrentes, incluindo Soja Refinada, Castanha de Caju e Açúcar ICUMSA, assegurando conformidade de exportação e frete marítimo." data-translate-en="We offer full support for exporters and local producers. We facilitate recurring agricultural cargo matches, including Refined Soybeans, Cashew Nuts, and ICUMSA Sugar, ensuring export compliance and ocean freight.">
-                                Oferecemos suporte completo para exportadores e produtores locais. Facilitamos matches de cargas agrícolas recorrentes, incluindo Soja Refinada, Castanha de Caju e Açúcar ICUMSA, assegurando conformidade de exportação e frete marítimo.
-                            </p>
-                        </div>
+                <div class="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                    <div class="max-w-2xl text-left">
+                        <span class="inline-block bg-secondary/20 text-[#25D366] px-3 py-1 rounded-full text-xs font-bold mb-3 border border-secondary/30" data-translate-pt="Transações em Tempo Real" data-translate-en="Real-Time Transactions">
+                            Transações em Tempo Real
+                        </span>
+                        <h1 class="font-headline-xl text-white mb-4" data-translate-pt="Mural B2B de Oportunidades" data-translate-en="B2B Opportunity Wall">Mural B2B de Oportunidades</h1>
+                        <p class="text-white/80 font-body-lg" data-translate-pt="Explore as necessidades e ofertas globais filtradas pela excelência GV-CPS. Conecte-se a mercados estratégicos com segurança e total sigilo de contactos." data-translate-en="Explore global demands and offers filtered by GV-CPS excellence. Connect with strategic markets securely and with complete contact confidentiality.">Explore as necessidades e ofertas globais filtradas pela excelência GV-CPS. Conecte-se a mercados estratégicos com segurança e total sigilo de contactos.</p>
                     </div>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="javascript:void(0)" onclick="openRequestWizard()" class="flex items-center gap-2 bg-secondary text-on-secondary px-6 py-3.5 rounded-xl font-label-lg font-bold hover:scale-105 transition-transform no-underline">
+                            <span class="material-symbols-outlined">add_box</span> <span data-translate-pt="Publicar Necessidade" data-translate-en="Publish Demand">Publicar Necessidade</span>
+                        </a>
+                        <a href="#publish-offer" class="flex items-center gap-2 bg-white/10 border border-white/20 text-white px-6 py-3.5 rounded-xl font-label-lg font-bold hover:bg-white/20 transition-all no-underline">
+                            <span class="material-symbols-outlined">upload_file</span> <span data-translate-pt="Publicar Oferta" data-translate-en="Publish Offer">Publicar Oferta</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-                    <div class="bg-white p-8 rounded-2xl border border-outline-variant shadow-sm flex gap-6">
-                        <div class="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center text-primary flex-shrink-0" style="color: var(--primary-light)">
-                            <span class="material-symbols-outlined text-2xl">local_gas_station</span>
-                        </div>
-                        <div>
-                            <h3 class="headline-sm text-primary mb-3" data-translate-pt="Petróleo &amp; Gás (Oil &amp; Gas)" data-translate-en="Oil &amp; Gas">Petróleo &amp; Gás (Oil &amp; Gas)</h3>
-                            <p class="body-sm text-on-surface-variant leading-relaxed" data-translate-pt="Consultoria económico-jurídica para contratação e conformidade no setor energético moçambicano. Ajudamos a posicionar PMEs nas cadeias de suprimento e a alinhar propostas de conteúdo local de acordo com as leis do setor." data-translate-en="Economic-legal consulting for contracting and compliance in the Mozambican energy sector. We help position SMEs in supply chains and align local content proposals according to sector laws.">
-                                Consultoria económico-jurídica para contratação e conformidade no setor energético moçambicano. Ajudamos a posicionar PMEs nas cadeias de suprimento e a alinhar propostas de conteúdo local de acordo com as leis do setor.
-                            </p>
-                        </div>
-                    </div>
+            <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop pb-24">
 
-                    <div class="bg-white p-8 rounded-2xl border border-outline-variant shadow-sm flex gap-6">
-                        <div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary flex-shrink-0">
-                            <span class="material-symbols-outlined text-2xl">hub</span>
-                        </div>
-                        <div>
-                            <h3 class="headline-sm text-primary mb-3" data-translate-pt="Commodities Trading" data-translate-en="Commodities Trading">Commodities Trading</h3>
-                            <p class="body-sm text-on-surface-variant leading-relaxed" data-translate-pt="Trading de commodities minerais e de bens de consumo através de intermediação autorizada e faturamento direto pela GV-CPS. Reduzimos riscos de conformidade aduaneira e facilitamos o trânsito aduaneiro." data-translate-en="Mineral commodities and consumer goods trading through authorized intermediation and direct invoicing by GV-CPS. We reduce customs compliance risks and facilitate customs transit.">
-                                Trading de commodities minerais e de bens de consumo através de intermediação autorizada e faturamento direto pela GV-CPS. Reduzimos riscos de conformidade aduaneira e facilitamos o trânsito aduaneiro.
-                            </p>
-                        </div>
+                <!-- Filter Bar -->
+                <div class="glass-panel rounded-2xl p-6 mb-12 shadow-sm flex flex-col md:flex-row gap-gutter items-center">
+                    <div class="w-full md:w-1/3">
+                        <label class="block font-label-lg text-label-lg mb-2" data-translate-pt="Categoria" data-translate-en="Category">Categoria</label>
+                        <select class="w-full bg-white border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:outline-none transition-all text-on-surface" id="filter-category">
+                            <option value="all" data-translate-pt="Todas as Categorias" data-translate-en="All Categories">Todas as Categorias</option>
+                            <option value="agro" data-translate-pt="Agro &amp; Commodities" data-translate-en="Agro &amp; Commodities">Agro &amp; Commodities</option>
+                            <option value="energy" data-translate-pt="Energia &amp; Indústria" data-translate-en="Energy &amp; Industry">Energia &amp; Indústria</option>
+                            <option value="tech" data-translate-pt="Tecnologia &amp; Inovação" data-translate-en="Technology &amp; Innovation">Tecnologia &amp; Inovação</option>
+                            <option value="logistics" data-translate-pt="Logística &amp; Projetos" data-translate-en="Logistics &amp; Projects">Logística &amp; Projetos</option>
+                            <option value="consulting" data-translate-pt="Consultoria &amp; Serviços" data-translate-en="Consulting &amp; Services">Consultoria &amp; Serviços</option>
+                        </select>
                     </div>
+                    <div class="w-full md:w-1/3">
+                        <label class="block font-label-lg text-label-lg mb-2" data-translate-pt="País / Região" data-translate-en="Country / Region">País / Região</label>
+                        <select class="w-full bg-white border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:outline-none transition-all text-on-surface" id="filter-country">
+                            <option value="all" data-translate-pt="Global" data-translate-en="Global">Global</option>
+                            <option value="mz" data-translate-pt="Moçambique" data-translate-en="Mozambique">Moçambique</option>
+                            <option value="pt" data-translate-pt="Portugal" data-translate-en="Portugal">Portugal</option>
+                            <option value="br" data-translate-pt="Brasil" data-translate-en="Brazil">Brasil</option>
+                            <option value="ae" data-translate-pt="Emirados Árabes" data-translate-en="United Arab Emirates">Emirados Árabes</option>
+                        </select>
+                    </div>
+                    <div class="w-full md:w-1/4">
+                        <label class="block font-label-lg text-label-lg mb-2" data-translate-pt="Ordenar por" data-translate-en="Sort by">Ordenar por</label>
+                        <select class="w-full bg-white border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:outline-none transition-all text-on-surface" id="sort-by">
+                            <option value="latest" data-translate-pt="Mais Recentes" data-translate-en="Most Recent">Mais Recentes</option>
+                            <option value="scope" data-translate-pt="Maior Volume" data-translate-en="Largest Volume">Maior Volume</option>
+                        </select>
+                    </div>
+                    <div class="pt-6">
+                        <button id="btn-apply-filters" class="bg-primary text-on-primary p-3 rounded-lg hover:opacity-90 flex items-center justify-center border-none cursor-pointer" title="Aplicar Filtros">
+                            <span class="material-symbols-outlined">search</span>
+                        </button>
+                    </div>
+                </div>
 
-                    <div class="bg-white p-8 rounded-2xl border border-outline-variant shadow-sm flex gap-6">
-                        <div class="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center text-primary flex-shrink-0" style="color: var(--primary-light)">
-                            <span class="material-symbols-outlined text-2xl">terminal</span>
-                        </div>
-                        <div>
-                            <h3 class="headline-sm text-primary mb-3" data-translate-pt="Tecnologia da Informação (IT)" data-translate-en="Information Technology (IT)">Tecnologia da Informação (IT)</h3>
-                            <p class="body-sm text-on-surface-variant leading-relaxed" data-translate-pt="Projetamos arquiteturas de dados empresariais, auditoria de segurança de informação e soluções de digitalização B2B fechadas para canais de alta segurança e conformidade corporativa internacional." data-translate-en="We design enterprise data architectures, information security auditing, and closed B2B digitization solutions for high-security channels and international corporate compliance.">
-                                Projetamos arquiteturas de dados empresariais, auditoria de segurança de informação e soluções de digitalização B2B fechadas para canais de alta segurança e conformidade corporativa internacional.
-                            </p>
-                        </div>
-                    </div>
+                <!-- Grid of Cards -->
+                <div class="opportunities-grid-layout" id="opportunities-grid">
+                    <!-- Cards will be injected by JS -->
                 </div>
             </div>
         </section>
@@ -1014,7 +1085,7 @@
             <div class="py-12 md:py-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
                 <div class="text-center mb-12">
                     <h2 class="font-headline-lg text-primary mt-2" data-translate-pt="Por que a Global View é Segura?" data-translate-en="Why Global View is Safe?">Por que a Global View é Segura?</h2>
-                    <p class="text-on-surface-variant max-w-xl mx-auto mt-2 text-sm leading-relaxed" data-translate-pt="A GV-CPS atua como intermediário único e garantidor de todas as transações, eliminando riscos de fraude e garantindo segurança total." data-translate-en="GV-CPS acts as the sole intermediary and guarantor of all transactions, eliminating fraud risks and ensuring complete safety.">A GV-CPS atua como intermediário único e garantidor de todas as transações, eliminando riscos de fraude e garantindo segurança total.</p>
+                    <p class="text-on-surface-variant max-w-xl mx-auto mt-2 text-sm leading-relaxed" data-translate-pt="Fornecedor global que assegura risco mínimo de fraude em todas as suas operações" data-translate-en="Global supplier that ensures minimum fraud risk in all its operations">Fornecedor global que assegura risco mínimo de fraude em todas as suas operações</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
@@ -1025,7 +1096,7 @@
                                 <span class="w-10 h-10 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center font-bold">
                                     <span class="material-symbols-outlined text-xl">gavel</span>
                                 </span>
-                                <h3 class="headline-sm text-slate-800 m-0 font-bold" data-translate-pt="Diretórios B2B Comuns" data-translate-en="Common B2B Directories">Diretórios B2B Comuns</h3>
+                                <h3 class="headline-sm text-slate-800 m-0 font-bold" data-translate-pt="Desvantagens de outros B2B comuns" data-translate-en="Disadvantages of other common B2B">Desvantagens de outros B2B comuns</h3>
                             </div>
                             <ul class="space-y-4 text-sm text-slate-650 list-none p-0">
                                 <li class="flex items-start gap-3">
@@ -1038,7 +1109,7 @@
                                 </li>
                                 <li class="flex items-start gap-3">
                                     <span class="material-symbols-outlined text-rose-500 shrink-0 text-[18px] mt-0.5">cancel</span>
-                                    <span data-translate-pt="<strong>Abandono de Logística:</strong> O utilizador é deixado sozinho para coordenar despachos e fretes complexos." data-translate-en="<strong>Abandoned Logistics:</strong> User is left alone to coordinate complex freight and customs clearance."><strong>Abandono de Logística:</strong> O utilizador é deixado sozinho para coordenar despachos e fretes complexos.</span>
+                                    <span data-translate-pt="<strong>Abandono de Logística:</strong> O utilizador é deixado sozinho para coordenar despachos e fretes complexos." data-translate-en="<strong>Abandoned Logistics:</strong> User is left alone to coordinate complex freight and customs clearance."><strong>Abandoned Logistics:</strong> O utilizador é deixado sozinho para coordenar despachos e fretes complexos.</span>
                                 </li>
                                 <li class="flex items-start gap-3">
                                     <span class="material-symbols-outlined text-rose-500 shrink-0 text-[18px] mt-0.5">cancel</span>
@@ -1061,29 +1132,26 @@
                                 <span class="w-10 h-10 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 flex items-center justify-center font-bold">
                                     <span class="material-symbols-outlined text-xl">shield</span>
                                 </span>
-                                <h3 class="headline-sm text-white m-0 font-bold" data-translate-pt="Nossa Abordagem: GV-CPS" data-translate-en="Our Approach: GV-CPS">Nossa Abordagem: GV-CPS</h3>
+                                <h3 class="headline-sm text-white m-0 font-bold" data-translate-pt="Vantagens da GV-CPS" data-translate-en="Advantages of GV-CPS">Vantagens da GV-CPS</h3>
                             </div>
                             <ul class="space-y-4 text-sm text-slate-100 list-none p-0">
                                 <li class="flex items-start gap-3">
                                     <span class="material-symbols-outlined text-emerald-400 shrink-0 text-[18px] mt-0.5">check_circle</span>
-                                    <span data-translate-pt="<strong>Intermediação de Chat Blindada:</strong> Filtros anti-contacto automáticos e consultoria humana evitam vazamento de dados." data-translate-en="<strong>Shielded Chat Intermediation:</strong> Automatic anti-contact filters and human consulting prevent data leaks."><strong>Intermediação de Chat Blindada:</strong> Filtros anti-contacto automáticos e consultoria humana evitam vazamento de dados.</span>
+                                    <span data-translate-pt="<strong>Comunicação:</strong> Filtros anti-contacto automáticos e consultoria humana evitam vazamento de dados." data-translate-en="<strong>Communication:</strong> Automatic anti-contact filters and human consulting prevent data leaks."><strong>Comunicação:</strong> Filtros anti-contacto automáticos e consultoria humana evitam vazamento de dados.</span>
                                 </li>
                                 <li class="flex items-start gap-3">
                                     <span class="material-symbols-outlined text-emerald-400 shrink-0 text-[18px] mt-0.5">check_circle</span>
-                                    <span data-translate-pt="<strong>Aprovação Financeira Administrativa:</strong> Os fundos e propostas são controlados pela GV-CPS. O pagamento só é libertado após validação física da carga." data-translate-en="<strong>Administrative Financial Approval:</strong> Funds and proposals are controlled by GV-CPS. Payment is only released after physical cargo validation."><strong>Aprovação Financeira Administrativa:</strong> Os fundos e propostas são controlados pela GV-CPS. O pagamento só é libertado após validação física da carga.</span>
+                                    <span data-translate-pt="<strong>Pagamento mediante termos e condições:</strong> Os fundos e propostas são geridos pela GV-CPS. O pagamento só é libertado mediante o cumprimento das condições contratadas." data-translate-en="<strong>Payment under terms and conditions:</strong> Funds and proposals are managed by GV-CPS. Payment is released upon fulfillment of contracted terms."><strong>Pagamento mediante termos e condições:</strong> Os fundos e propostas são geridos pela GV-CPS. O pagamento só é libertado mediante o cumprimento das condições contratadas.</span>
                                 </li>
                                 <li class="flex items-start gap-3">
                                     <span class="material-symbols-outlined text-emerald-400 shrink-0 text-[18px] mt-0.5">check_circle</span>
-                                    <span data-translate-pt="<strong>Logística &amp; Faturamento Integrados:</strong> Coordenamos o frete e emitimos a faturação final GV-CPS consolidando mercadorias." data-translate-en="<strong>Integrated Logistics &amp; Billing:</strong> We coordinate freight and issue final GV-CPS billing consolidating merchandise."><strong>Integrated Logistics &amp; Billing:</strong> We coordinate freight and issue final GV-CPS billing consolidating merchandise.</span>
+                                    <span data-translate-pt="<strong>Cadeia de fornecimentos integrados:</strong> Coordenamos os processos logísticos, transporte e faturação consolidada." data-translate-en="<strong>Integrated supply chain:</strong> We coordinate logistics processes, transport, and consolidated billing."><strong>Cadeia de fornecimentos integrados:</strong> Coordenamos os processos logísticos, transporte e faturação consolidada.</span>
                                 </li>
                                 <li class="flex items-start gap-3">
                                     <span class="material-symbols-outlined text-emerald-400 shrink-0 text-[18px] mt-0.5">check_circle</span>
-                                    <span data-translate-pt="<strong>Auditoria de Origem Física:</strong> Verificamos a autenticidade das mercadorias, alfândega e registos corporativos locais nos portos." data-translate-en="<strong>Physical Origin Audit:</strong> We check cargo authenticity, customs compliance, and local corporate records at ports."><strong>Auditoria de Origem Física:</strong> Verificamos a autenticidade das mercadorias, alfândega e registos corporativos locais nos portos.</span>
+                                    <span data-translate-pt="<strong>Auditoria da cadeia de fornecimento:</strong> Verificação física da mercadoria, verificação dos processos logísticos e transportes." data-translate-en="<strong>Supply chain audit:</strong> Physical verification of merchandise, verification of logistics processes and transport."><strong>Auditoria da cadeia de fornecimento:</strong> Verificação física da mercadoria, verificação dos processos logísticos e transportes.</span>
                                 </li>
                             </ul>
-                        </div>
-                        <div class="mt-8 bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 text-xs text-emerald-300 leading-relaxed font-semibold">
-                            🛡️ Como Intermediador Único, a GV-CPS assume a responsabilidade operacional e o controle da transação de ponta a ponta.
                         </div>
                     </div>
                 </div>
@@ -1151,14 +1219,9 @@
                         data-translate-pt="Fale Connosco" data-translate-en="Contact Us">
                         Fale Connosco
                     </h1>
-                    <p class="text-slate-200 max-w-2xl mx-auto mt-3 text-base leading-relaxed"
-                       data-translate-pt="A nossa equipa de consultores está pronta para atender às suas solicitações e intermediar os seus negócios B2B em qualquer ponto do mundo."
-                       data-translate-en="Our team of consultants is ready to assist your requests and intermediate your B2B transactions anywhere in the world.">
-                        A nossa equipa de consultores está pronta para atender às suas solicitações e intermediar os seus negócios B2B em qualquer ponto do mundo.
-                    </p>
 
                     <!-- Channel Quick Action Pills Bar -->
-                    <div class="flex flex-wrap items-center justify-center gap-4 mt-8">
+                    <div class="flex flex-wrap items-center justify-center gap-4 mt-6">
                         <button onclick="document.getElementById('chat-fab').click();" class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white px-5 py-2.5 rounded-xl font-medium text-sm transition-all shadow-md hover:scale-105 border-none cursor-pointer">
                             <span class="material-symbols-outlined text-lg">chat</span>
                             <span data-translate-pt="Chatbot WhatsApp" data-translate-en="WhatsApp Chatbot">Chatbot WhatsApp</span>
@@ -1188,9 +1251,9 @@
                                 <span class="material-symbols-outlined text-[#006d3d]">location_on</span> Onde estamos?
                             </h2>
                             <p class="body-sm text-on-surface-variant mb-6"
-                               data-translate-pt="Nossa sede está localizada no centro executivo de Maputo para atendimento institucional e negociações."
-                               data-translate-en="Our headquarters is located in Maputo's executive center for institutional service and negotiations.">
-                                Nossa sede está localizada no centro executivo de Maputo para atendimento institucional e negociações.
+                               data-translate-pt="Nosso escritório está localizado no centro executivo de Maputo para atendimento institucional e negociações."
+                               data-translate-en="Our office is located in Maputo's executive center for institutional service and negotiations.">
+                                Nosso escritório está localizado no centro executivo de Maputo para atendimento institucional e negociações.
                             </p>
 
                             <!-- Address Box -->
@@ -1200,8 +1263,8 @@
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-slate-900 text-base mb-1"
-                                        data-translate-pt="Sede Central Global View" data-translate-en="Global View Headquarters">
-                                        Sede Central Global View
+                                        data-translate-pt="Escritório Global View" data-translate-en="Global View Office">
+                                        Escritório Global View
                                     </h4>
                                     <p class="text-sm text-slate-600 leading-snug">
                                         Rua de Kassuende, nº 270<br>
@@ -1218,6 +1281,15 @@
                                         <span class="block text-xs font-semibold text-slate-500 uppercase tracking-wider"
                                               data-translate-pt="Linhas de Atendimento" data-translate-en="Support Lines">Linhas de Atendimento</span>
                                         <span class="font-medium text-slate-900">+258 84 900 9090 / 82 900 9090 / 87 880 9090</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-3 text-slate-700">
+                                    <span class="material-symbols-outlined text-[#006d3d] text-xl">call</span>
+                                    <div>
+                                        <span class="block text-xs font-semibold text-slate-500 uppercase tracking-wider"
+                                              data-translate-pt="Contactos Alternativos" data-translate-en="Alternative Contacts">Contactos Alternativos</span>
+                                        <span class="font-medium text-slate-900">+258 84 392 333000 / +258 82 392 333000</span>
                                     </div>
                                 </div>
 
@@ -1241,24 +1313,16 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Shielded Mediation Notice Card -->
-                        <div class="bg-gradient-to-br from-[#002533] to-[#00374a] text-white p-7 rounded-3xl border border-white/10 shadow-md relative overflow-hidden">
-                            <div class="absolute -right-4 -bottom-4 font-mono text-8xl text-white/5 select-none pointer-events-none">GV</div>
-                            <h4 class="font-bold text-lg text-white mb-2 flex items-center gap-2">
-                                <span class="material-symbols-outlined text-emerald-400">shield_lock</span>
-                                <span data-translate-pt="Intermediação Blindada" data-translate-en="Shielded Mediation">Intermediação Blindada</span>
-                            </h4>
-                            <p class="text-xs text-slate-200 leading-relaxed mb-4"
-                               data-translate-pt="A Global View (GV-CPS) é a única intermediária autorizada. Toda a comunicação e negociação B2B ocorrem exclusivamente na plataforma sob sigilo comercial e sem exposição de dados diretos entre comprador e fornecedor."
-                               data-translate-en="Global View (GV-CPS) is the sole authorized intermediary. All B2B communication and negotiation occur exclusively on the platform under commercial confidentiality without direct contact exposure between buyer and supplier.">
-                                A Global View (GV-CPS) é a única intermediária autorizada. Toda a comunicação e negociação B2B ocorrem exclusivamente na plataforma sob sigilo comercial e sem exposição de dados diretos entre comprador e fornecedor.
-                            </p>
-                            <span class="inline-flex items-center gap-1.5 text-xs text-emerald-300 font-medium">
-                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                                <span data-translate-pt="Garantia Operacional GV-CPS" data-translate-en="GV-CPS Operational Guarantee">Garantia Operacional GV-CPS</span>
-                            </span>
+                            <!-- Google Maps Redirect Button -->
+                            <div class="pt-4 border-t border-slate-100 mt-6">
+                                <a id="contact-google-maps-btn" href="https://maps.google.com/?q=Rua+de+Kassuende+270+Maputo+Mozambique" target="_blank" rel="noopener noreferrer"
+                                   class="w-full bg-[#00374a] hover:bg-[#002533] text-white font-semibold py-3 px-4 rounded-xl text-sm flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-md no-underline">
+                                    <span class="material-symbols-outlined text-emerald-400 text-lg">location_on</span>
+                                    <span data-translate-pt="Ver Localização no Google Maps" data-translate-en="View Location on Google Maps">Ver Localização no Google Maps</span>
+                                    <span class="material-symbols-outlined text-xs">open_in_new</span>
+                                </a>
+                            </div>
                         </div>
 
                     </div>
@@ -1350,124 +1414,17 @@
 
                 </div>
 
-                <!-- Map & Selected Location Card Section -->
-                <div class="mt-16 relative rounded-3xl overflow-hidden shadow-xl border border-slate-200 bg-slate-900" style="min-height: 440px;">
-                    <!-- Floating Overlay Location Details Card -->
-                    <div id="contact-selected-location-card" class="absolute top-6 left-6 z-20 bg-white/95 backdrop-blur-md p-6 rounded-2xl border border-slate-200 shadow-2xl max-w-sm w-full">
-                        <span class="inline-block text-[10px] font-bold tracking-widest text-[#006d3d] uppercase bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 mb-2"
-                              data-translate-pt="LOCALIZAÇÃO SELECCIONADA" data-translate-en="SELECTED LOCATION">
-                            LOCALIZAÇÃO SELECCIONADA
-                        </span>
-                        <h3 id="contact-selected-unit-title" class="font-bold text-slate-900 text-lg mb-1"
-                            data-translate-pt="Sede Central GV-CPS (Maputo)" data-translate-en="GV-CPS Headquarters (Maputo)">
-                            Sede Central GV-CPS (Maputo)
-                        </h3>
-                        <p id="contact-selected-unit-address" class="text-xs text-slate-600 mb-4 leading-relaxed">
-                            Rua de Kassuende, nº 270, Maputo, Moçambique
-                        </p>
-                        
-                        <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
-                            <button onclick="shareContactLocation();" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold py-2 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-colors border-none cursor-pointer">
-                                <span class="material-symbols-outlined text-sm">share</span>
-                                <span data-translate-pt="Partilhar" data-translate-en="Share">Partilhar</span>
-                            </button>
-                            <a id="contact-google-maps-link" href="https://maps.google.com/?q=Rua+de+Kassuende+270+Maputo+Mozambique" target="_blank" class="flex-1 bg-[#00374a] hover:bg-[#002533] text-white font-semibold py-2 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-colors no-underline">
-                                <span class="material-symbols-outlined text-sm">open_in_new</span>
-                                <span data-translate-pt="Ver no Maps" data-translate-en="View on Maps">Ver no Maps</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Interactive Map Iframe (Maputo Rua de Kassuende) -->
-                    <iframe id="contact-map-iframe" class="w-full h-full absolute inset-0 border-0" style="min-height: 440px; filter: contrast(1.05);"
-                            src="https://www.openstreetmap.org/export/embed.html?bbox=32.5800%2C-25.9750%2C32.5950%2C-25.9620&amp;layer=mapnik&amp;marker=-25.9685%2C32.5875"
-                            allowfullscreen loading="lazy"></iframe>
-                </div>
-
             </div>
         </section>
 
-        <!-- 2. OPPORTUNITY WALL VIEW (PUBLIC) -->
-        <section id="view-wall" class="view-section">
-            <!-- Mini Hero Header -->
-            <div class="relative bg-slate-900 text-white overflow-hidden py-16 mb-12">
-                <!-- Background Image & Overlay -->
-                <div class="absolute inset-0 z-0 opacity-40">
-                    <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1920&q=80" alt="Mural Hero" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-900/20 to-transparent"></div>
-                </div>
-                
-                <div class="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-                    <div class="max-w-2xl text-left">
-                        <span class="inline-block bg-secondary/20 text-[#25D366] px-3 py-1 rounded-full text-xs font-bold mb-3 border border-secondary/30" data-translate-pt="Transações em Tempo Real" data-translate-en="Real-Time Transactions">
-                            Transações em Tempo Real
-                        </span>
-                        <h1 class="font-headline-xl text-white mb-4" data-translate-pt="Mural B2B de Oportunidades" data-translate-en="B2B Opportunity Wall">Mural B2B de Oportunidades</h1>
-                        <p class="text-white/80 font-body-lg" data-translate-pt="Explore as necessidades e ofertas globais filtradas pela excelência GV-CPS. Conecte-se a mercados estratégicos com segurança e total sigilo de contactos." data-translate-en="Explore global demands and offers filtered by GV-CPS excellence. Connect with strategic markets securely and with complete contact confidentiality.">Explore as necessidades e ofertas globais filtradas pela excelência GV-CPS. Conecte-se a mercados estratégicos com segurança e total sigilo de contactos.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-4">
-                        <a href="javascript:void(0)" onclick="openRequestWizard()" class="flex items-center gap-2 bg-secondary text-on-secondary px-6 py-3.5 rounded-xl font-label-lg font-bold hover:scale-105 transition-transform no-underline">
-                            <span class="material-symbols-outlined">add_box</span> <span data-translate-pt="Publicar Necessidade" data-translate-en="Publish Demand">Publicar Necessidade</span>
-                        </a>
-                        <a href="#publish-offer" class="flex items-center gap-2 bg-white/10 border border-white/20 text-white px-6 py-3.5 rounded-xl font-label-lg font-bold hover:bg-white/20 transition-all no-underline">
-                            <span class="material-symbols-outlined">upload_file</span> <span data-translate-pt="Publicar Oferta" data-translate-en="Publish Offer">Publicar Oferta</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
 
-            <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop pb-24">
-
-                <!-- Filter Bar -->
-                <div class="glass-panel rounded-2xl p-6 mb-12 shadow-sm flex flex-col md:flex-row gap-gutter items-center">
-                    <div class="w-full md:w-1/3">
-                        <label class="block font-label-lg text-label-lg mb-2" data-translate-pt="Categoria" data-translate-en="Category">Categoria</label>
-                        <select class="w-full bg-white border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:outline-none transition-all text-on-surface" id="filter-category">
-                            <option value="all" data-translate-pt="Todas as Categorias" data-translate-en="All Categories">Todas as Categorias</option>
-                            <option value="agro" data-translate-pt="Agro &amp; Commodities" data-translate-en="Agro &amp; Commodities">Agro &amp; Commodities</option>
-                            <option value="energy" data-translate-pt="Energia &amp; Indústria" data-translate-en="Energy &amp; Industry">Energia &amp; Indústria</option>
-                            <option value="tech" data-translate-pt="Tecnologia &amp; Inovação" data-translate-en="Technology &amp; Innovation">Tecnologia &amp; Inovação</option>
-                            <option value="logistics" data-translate-pt="Logística &amp; Projetos" data-translate-en="Logistics &amp; Projects">Logística &amp; Projetos</option>
-                            <option value="consulting" data-translate-pt="Consultoria &amp; Serviços" data-translate-en="Consulting &amp; Services">Consultoria &amp; Serviços</option>
-                        </select>
-                    </div>
-                    <div class="w-full md:w-1/3">
-                        <label class="block font-label-lg text-label-lg mb-2" data-translate-pt="País / Região" data-translate-en="Country / Region">País / Região</label>
-                        <select class="w-full bg-white border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:outline-none transition-all text-on-surface" id="filter-country">
-                            <option value="all" data-translate-pt="Global" data-translate-en="Global">Global</option>
-                            <option value="mz" data-translate-pt="Moçambique" data-translate-en="Mozambique">Moçambique</option>
-                            <option value="pt" data-translate-pt="Portugal" data-translate-en="Portugal">Portugal</option>
-                            <option value="br" data-translate-pt="Brasil" data-translate-en="Brazil">Brasil</option>
-                            <option value="ae" data-translate-pt="Emirados Árabes" data-translate-en="United Arab Emirates">Emirados Árabes</option>
-                        </select>
-                    </div>
-                    <div class="w-full md:w-1/4">
-                        <label class="block font-label-lg text-label-lg mb-2" data-translate-pt="Ordenar por" data-translate-en="Sort by">Ordenar por</label>
-                        <select class="w-full bg-white border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:outline-none transition-all text-on-surface" id="sort-by">
-                            <option value="latest" data-translate-pt="Mais Recentes" data-translate-en="Most Recent">Mais Recentes</option>
-                            <option value="scope" data-translate-pt="Maior Volume" data-translate-en="Largest Volume">Maior Volume</option>
-                        </select>
-                    </div>
-                    <div class="pt-6">
-                        <button id="btn-apply-filters" class="bg-primary text-on-primary p-3 rounded-lg hover:opacity-90 flex items-center justify-center border-none cursor-pointer" title="Aplicar Filtros">
-                            <span class="material-symbols-outlined">search</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Grid of Cards -->
-                <div class="opportunities-grid-layout" id="opportunities-grid">
-                    <!-- Cards will be injected by JS -->
-                </div>
-            </div>
-        </section>
 
         <!-- 3. OPPORTUNITY DETAIL VIEW -->
         <section id="view-detail" class="view-section">
             <div class="max-container wall-page-layout">
                 <div style="margin-bottom: 24px;">
-                    <a href="#wall" class="btn btn-ghost btn-sm" style="text-transform: none; padding: 6px 12px; display: inline-flex; align-items: center; gap: 4px;">
-                        <span class="material-symbols-outlined" style="font-size:16px;">arrow_back</span> Voltar ao Mural
+                    <a href="#services" class="btn btn-ghost btn-sm" style="text-transform: none; padding: 6px 12px; display: inline-flex; align-items: center; gap: 4px;">
+                        <span class="material-symbols-outlined" style="font-size:16px;">arrow_back</span> <span data-translate-pt="Voltar aos Serviços" data-translate-en="Back to Services">Voltar aos Serviços</span>
                     </a>
                 </div>
                 
@@ -3256,6 +3213,11 @@
                             <div class="sector-card-icon"><span class="material-symbols-outlined text-2xl">local_shipping</span></div>
                             <span class="text-xs font-bold font-outfit" data-translate-pt="Logística" data-translate-en="Logistics">Logística</span>
                         </div>
+                        <!-- TODO: React component — <SectorCard key="chemicals"> -->
+                        <div class="sector-card" id="sector-chemicals-card" onclick="selectWizardSector('chemicals')">
+                            <div class="sector-card-icon"><span class="material-symbols-outlined text-2xl">science</span></div>
+                            <span class="text-xs font-bold font-outfit" data-translate-pt="Indústria & Reagentes" data-translate-en="Industry & Reagents">Indústria & Reagentes</span>
+                        </div>
                     </div>
                 </div>
 
@@ -3616,19 +3578,18 @@
     <footer class="app-footer">
         <div class="max-container footer-grid">
             <div class="footer-col">
-                <div class="logo-container footer-logo-container" onclick="window.location.hash='home'" style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; cursor: pointer;">
-                    <img src="assets/images/logo_official.png?v=20260721" alt="GV-CPS Logo" class="logo-img" style="height: 38px; width: auto;">
+                <div class="logo-container footer-logo-container" onclick="window.location.hash='home'" style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px; cursor: pointer;">
+                    <img src="assets/images/logo_official.png?v=20260721" alt="GV-CPS Logo" class="logo-img" style="height: 52px; width: auto;">
                     <div class="logo-text-group">
-                        <span class="logo-title" style="color: #ffffff;">GLOBAL VIEW</span>
-                        <span class="logo-subtitle" style="color: rgba(255,255,255,0.8);" data-translate-pt="Consultoria &amp; Prestação de Serviços, Lda" data-translate-en="Consulting &amp; Services, Ltd">Consultoria &amp; Prestação de Serviços, Lda</span>
+                        <span class="logo-title" style="color: #ffffff; font-size: 24px;">GLOBAL VIEW</span>
+                        <span class="logo-subtitle" style="color: rgba(255,255,255,0.85); font-size: 12px;" data-translate-pt="Consultoria &amp; Prestação de Serviços, Lda" data-translate-en="Consulting &amp; Services, Ltd">Consultoria &amp; Prestação de Serviços, Lda</span>
                     </div>
                 </div>
-                <p class="footer-desc" data-translate-pt="Global View — Consultoria & Prestação de Serviços. Ponte comercial e aduaneira segura que conecta Moçambique ao resto do comércio global." data-translate-en="Global View — Consulting & Services. Secure commercial and customs bridge connecting Mozambique to the rest of global trade.">Global View — Consultoria & Prestação de Serviços. Ponte comercial e aduaneira segura que conecta Moçambique ao resto do comércio global.</p>
             </div>
             <div class="footer-col">
                 <h4 data-translate-pt="Marketplace B2B" data-translate-en="B2B Marketplace">Marketplace B2B</h4>
                 <ul class="footer-links">
-                    <li><a href="#wall" data-translate-pt="Mural de Oportunidades" data-translate-en="Opportunity Wall">Mural de Oportunidades</a></li>
+                    <li><a href="#services" data-translate-pt="Serviços B2B" data-translate-en="B2B Services">Serviços B2B</a></li>
                     <li><a href="javascript:void(0)" onclick="openRequestWizard()" data-translate-pt="Fazer Procura (Compra)" data-translate-en="Make Request (Buy)">Fazer Procura (Compra)</a></li>
                     <li><a href="#publish-offer" data-translate-pt="Publicar Oferta (Venda)" data-translate-en="Publish Offer (Sell)">Publicar Oferta (Venda)</a></li>
                 </ul>
@@ -3653,7 +3614,7 @@
             </div>
         </div>
         <div class="max-container footer-bottom">
-            <p data-translate-pt="© 2026 GV-CPS. Todos os direitos reservados. Sede Central: Maputo, Moçambique." data-translate-en="© 2026 GV-CPS. All rights reserved. Headquarters: Maputo, Mozambique.">© 2026 GV-CPS. Todos os direitos reservados. Sede Central: Maputo, Moçambique.</p>
+            <p data-translate-pt="© 2026 GV-CPS. Todos os direitos reservados." data-translate-en="© 2026 GV-CPS. All rights reserved.">© 2026 GV-CPS. Todos os direitos reservados.</p>
             <div class="footer-socials">
                 <a href="#home" title="LinkedIn"><span class="material-symbols-outlined">share</span></a>
                 <a href="#home" title="Global View"><span class="material-symbols-outlined">language</span></a>
@@ -3681,7 +3642,6 @@
                 <a href="#home" onclick="toggleMobileMenu()" class="mobile-nav-link active" data-translate-pt="Início" data-translate-en="Home">Início</a>
                 <a href="#about" onclick="toggleMobileMenu()" class="mobile-nav-link" data-translate-pt="Sobre Nós" data-translate-en="About Us">Sobre Nós</a>
                 <a href="#services" onclick="toggleMobileMenu()" class="mobile-nav-link" data-translate-pt="Serviços" data-translate-en="Services">Serviços</a>
-                <a href="#wall" onclick="toggleMobileMenu()" class="mobile-nav-link" data-translate-pt="Mural" data-translate-en="Opportunity Wall">Mural</a>
                 <a href="#trust" onclick="toggleMobileMenu()" class="mobile-nav-link" data-translate-pt="Centro de Confiança" data-translate-en="Trust Center">Centro de Confiança</a>
                 <a href="#contact" onclick="toggleMobileMenu()" class="mobile-nav-link" data-translate-pt="Comunicação" data-translate-en="Communication">Comunicação</a>
                 <a href="#member-portal" onclick="toggleMobileMenu()" class="mobile-nav-link member-portal-link" style="display: none;">Painel</a>
