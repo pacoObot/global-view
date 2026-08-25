@@ -15,6 +15,136 @@ O protótipo da plataforma de intermediação B2B da **Global View (GV-CPS)** en
 
 ## 2. Histórico de Alterações Recentes
 
+### Sessão: 25 de Agosto de 2026 (Ajustes de Contactos, Mini Hero de Comunicação & Tradução no Header)
+* **Ajuste de Contactos & Mini Hero (`#view-contact`)**:
+  - Removido o badge/pill **"INSTITUTIONAL COMMUNICATION / COMUNICAÇÃO INSTITUCIONAL"** do topo da página de contactos.
+  - Removido o bloco redundante de "Contactos Alternativos", mantendo unicamente as linhas oficiais de atendimento: `+258 84 900 9090 / 82 900 9090 / 87 880 9090`.
+  - Atualizada a barra de acções do Mini Hero na página de contactos para conter exclusivamente o botão **"Fale Connosco" / "Get in Touch"** (que rola suavemente até ao formulário) e o botão de email **`globalviewmoz@gmail.com`**.
+* **Tradução no Header (PT / EN)**:
+  - Alterada a tradução em inglês da aba de navegação do cabeçalho desktop e mobile de `Communication` para **`Contact Us`**.
+* **Remoção de Botões no Hero da Homepage (`#view-home`)**:
+  - Removidos os 2 botões secundários do bloco Hero: **"Explorar Mercado"** (`travel_explore`) e **"Últimas Demandas"** (`trending_up`), mantendo a secção Hero com foco nos 2 botões principais: *"Conectar Minha Empresa"* e *"Requisitar Serviço"*.
+* **Remoção do Mini Hero da Tela de Serviços (`#view-services`)**:
+  - Removido por completo o banner Mini Hero da página de Serviços (`Setores de Atuação & Serviços` / `Sectors & Services`, o badge `Nossos Serviços Corporativos` e os botões `Publicar Necessidade` / `Publicar Oferta`), deixando a vista com foco direto no bento grid dos 5 cartões corporativos.
+* **Botão no Cabeçalho Desktop & Mobile (`index.html`)**:
+  - Adicionada a ligação de navegação **"Últimas Demandas"** (`href="#demands"`) no menu principal (`nav.main-nav`) e no gaveto mobile (`nav.mobile-nav`), com atributos bilíngues `data-translate-pt="Últimas Demandas"` e `data-translate-en="Latest Demands"`.
+  - Adicionada a referência no rodapé sob a coluna *Marketplace B2B*.
+* **Reorganização e Vista Dedicada (`#view-demands`)**:
+  - Movido o bloco de explorador de mercado (`#cms-wrap-market`) para a sua própria vista `<section id="view-demands" class="view-section">`.
+  - Incluído cabeçalho Mini Hero exclusivo com imagem hero, descrição detalhada, botões de atalho (*"Publicar Necessidade"* / *"Publicar Oferta"*), tabela completa de requisitos B2B em largura total, grelha por país e directório por categoria.
+* **Validação**: `node --check app.js` — ✅ SEM ERROS DE SINTAXE. Suporte bilíngue simultâneo (`data-translate-pt` / `data-translate-en`) e Regra de Ouro (comunicação mediada) 100% preservados.
+
+
+### Sessão: 24 de Agosto de 2026 (Reorganização de Conteúdos entre a Hero/Home e a Página de Serviços)
+* **Reorganização de Secções no HTML (`index.html`)**:
+  - **Secção "Setores de Atuação / Nossos Serviços Corporativos" (`#cms-wrap-services`)**: Movida da página inicial (`#view-home`) para a **Página de Serviços** (`#view-services`), onde os 5 cards corporativos (Agronegócio, Oil & Gas, Maquinários, Tecnologia e Logística) agora são exibidos em destaque.
+  - **Secção "Últimas Demandas do Mercado" (`#cms-wrap-market`)**: Ativada na Página Inicial (`#view-home`) diretamente abaixo do rodapé da Hero (`#hero-categories-bar`), exibindo a tabela completa e diretório de oportunidades B2B por país e categoria.
+  - **Secção "Mercado em Tempo Real / Oportunidades em Destaque" (`#cms-wrap-opportunities`)**: Removida da página inicial conforme solicitado pelo cliente.
+* **Bilinguismo & Regra de Ouro**: Mantidos 100% dos atributos `data-translate-pt` e `data-translate-en` e o isolamento total de contactos dos utilizadores intermediados pela GV-CPS.
+
+### Sessão: 24 de Agosto de 2026 (Restauração e Unificação de Conteúdo na Página "Últimas Demandas")
+* **Preservação e Unificação do Catálogo de Demandas (`#view-demands`)**:
+  - Unificados os conteúdos anteriores e novos em `appState.requirements` e `appState.offers` em [app.js](file:///home/paco/Projectos/Global%20View/app.js):
+    1. **UREA 46% (UREA56)**: 50.000 MT — Malawi 🇲🇼
+    2. **Ácido Sulfúrico**: 50.000 MT — Zâmbia ℤ🇲
+    3. **UREA Granulada**: 30.000 MT — Zâmbia 🇿🇲
+    4. **Milho Amarelo**: 300.000 MT (25.000 MT/Mês) — Guiné-Conacri 🇬🇳
+    5. **Importação de Óleo de Soja Refinado**: 500 Toneladas — Moçambique 🇲🇿
+    6. **Peças de Reposição & Filtros para Subestação**: Lote de Reposição — Moçambique 🇲🇿
+    7. **Reagentes Analíticos & Ácido Acético Glacial**: 50 Unidades — Portugal 🇵🇹
+    8. **Minério de Ferro 62%**: 50.000 MT/Mês — Emirados Árabes 🇦🇪
+    9. **Açúcar ICUMSA 45**: 12.500 MT — Brasil 🇧🇷
+    10. **Painéis Fotovoltaicos & Inversores Solares**: Lote Comercial — China 🇨🇳
+    11. **Castanha de Caju Bruta (RCN)**: Fluxo Contínuo — Moçambique 🇲🇿
+  - Atualizado o renderizador `renderMarketExplorer()` para exibir todas as procuras e ofertas ativas sem truncamento acidental.
+  - Atualizada a grelha de países no explorador com filtros completos (Moçambique, Malawi, Zâmbia, Guiné-Conacri, Brasil, Portugal, China, Emirados Árabes).
+* **Validação**: `node --check app.js` — ✅ SEM ERROS DE SINTAXE. Bilinguismo 100% nativo (PT/EN) e Regra de Ouro preservados.
+
+
+### Sessão: 24 de Agosto de 2026 (Aplicação do Modelo Exemplar nos Botões de Categoria)
+* **Botões de Categoria do Hero (`#hero-categories-bar`)**:
+  - Reestruturado o bloco de acesso rápido para 5 **cards flutuantes brancos** (`.hero-cat-card`), seguindo fielmente a imagem exemplar fornecida pelo cliente.
+  - Cada card possui fundo branco (`#ffffff`), cantos arredondados (`20px`), sombra suave (`box-shadow`) e caixa de ícone centralizada no topo com fundo colorido pastel e borda combinando.
+  - Ícones com alta legibilidade e contraste:
+    - **Commodities**: Ícone verde (`#059669`) em fundo `#ecfdf5`.
+    - **Energia & Minerais**: Ícone âmbar (`#d97706`) em fundo `#fffbeb`.
+    - **Produtos Químicos**: Ícone roxo (`#9333ea`) em fundo `#faf5ff`.
+    - **Equipamentos & Máquinas**: Ícone azul (`#2563eb`) em fundo `#eff6ff`.
+    - **Tecnologia**: Ícone teal (`#0d9488`) em fundo `#f0fdfa`.
+  - Título em negrito escuro (`#0f172a`), perfeitamente legível.
+  - Removida a barra escura e linha divisória inferior, mantendo o restante do Hero intacto conforme instrução explícita.
+  - Sincronização bilíngue 100% preservada (`data-translate-pt` / `data-translate-en`).
+* **Validação**: HTML & CSS verificados.
+
+### Sessão: 20 de Agosto de 2026 (Atualização da Página "Últimas Demandas")
+* **Atualização do Conteúdo de Demandas (`#view-demands`)**:
+  - Removidas as demandas antigas e inseridas as 4 demandas oficiais solicitadas pelo cliente em `appState.requirements` em [app.js](file:///home/paco/Projectos/Global%20View/app.js):
+    1. **UREA 46% (UREA56)**: 50.000 MT — Malawi 🇲🇼
+    2. **Ácido Sulfúrico**: 50.000 MT — Zâmbia 🇿🇲
+    3. **UREA Granulada**: 30.000 MT — Zâmbia 🇿🇲
+    4. **Milho Amarelo**: 300.000 MT (25.000 MT/Mês) — Guiné-Conacri 🇬🇳
+  - Atualizada a função `renderMarketExplorer()` para renderizar exclusivamente as demandas ativas na vista `#view-demands`.
+  - Adicionado suporte a mapeamento de bandeiras emoji (🇲🇼 Malawi, 🇿🇲 Zâmbia, 🇬🇳 Guiné-Conacri) nas funções de renderização (`renderMarketExplorer`, `createOpportunityCard`, `viewOpportunityDetail`).
+  - Atualizada a grelha de países da página de demandas com contadores dinâmicos para Malawi, Zâmbia, Guiné-Conacri, Moçambique e Brasil.
+* **Validação**: `node --check app.js` — ✅ SEM ERROS DE SINTAXE. Suporte bilíngue simultâneo (`data-translate-pt` / `data-translate-en`) e Regra de Ouro (sem contactos visíveis no mural público) 100% preservados.
+
+
+### Sessão: 20 de Agosto de 2026 (Restauro do Mini Hero na Tela Serviços & Limpeza da Homepage)
+* **Tela Serviços (`#view-services`)**:
+  - Restaurado o **Mini Hero Banner** no topo da vista `#view-services` em [index.html](file:///home/paco/Projectos/Global%20View/index.html) ("Serviços Corporativos B2B / Nossos Setores & Serviços"), com botões de ação *"Requisitar Serviço"* e *"Falar com Consultor"*.
+  - Posicionada a secção **"SETORES DE ATUAÇÃO / Nossos Serviços Corporativos"** (grelha Bento com os 5 cartões canónicos) diretamente abaixo do Mini Hero.
+* **Homepage (`#view-home`)**:
+  - Removidas da Homepage as secções **Setores de Atuação** (`#cms-wrap-services`) e **Mercado em Tempo Real** (`#cms-wrap-opportunities`), mantendo a página inicial focada no Hero e nos blocos corporativos principais.
+* **Validação**: `node --check app.js` — ✅ SEM ERROS DE SINTAXE. Suporte bilíngue simultâneo (`data-translate-pt` / `data-translate-en`) 100% preservado.
+
+### Sessão: 20 de Agosto de 2026 (Reestruturação Completa para 5 Categorias Principais & Reassociação do Catálogo)
+* **Atualização para 5 Categorias Canónicas**:
+  - **Categorias Principais**:
+    1. **Commodities** (`agro`) — Inclui grãos, soja, caju, açúcar, fertilizantes e sementes.
+    2. **Energia e minerais** (`energy`) — Inclui derivados de energia solar, oil & gas e minerais (minério de ferro 62% Fe, carvão, etc.).
+    3. **Produtos químicos** (`chemicals`) — Inclui ácidos, solventes, sais inorgânicos, reagentes analíticos e consumíveis de laboratório.
+    4. **Equipamentos e Máquinas** (`machinery`) — Inclui peças de reposição (filtros, correias, motores), tratores, navios, embarcações, carpintaria, elevação e maquinaria industrial.
+    5. **Tecnologia** (`tech`) — Inclui chips, processadores Intel/AMD, módulos de memória RAM, SSDs NVMe, placas-mãe e carregadores GaN.
+* **Modificações em `app.js`**:
+  - Catálogos `GV_CATALOG` (PT) e `GV_CATALOG_EN` (EN) atualizados com a estrutura de 5 categorias canónicas e suas subcategorias/produtos.
+  - Função `getCategoryDetails()` reescrita para classificar dinamicamente qualquer termo ou item de busca nas 5 categorias canónicas com cores, ícones e rótulos apropriados.
+  - Dicionário de Embalagens (`CATEGORY_PACKAGING_DICTIONARY`) expandido para `solar`, `oil_gas`, `minerais` e `pecas`.
+  - Dados de estado (`appState.requirements`, `appState.offers`, `appState.categories`) e filtros de `renderOpportunityWall()` remapeados para os 5 códigos/nomes canónicos.
+* **Modificações em `index.html`**:
+  - Grelha de **Setores de Atuação** na Homepage atualizada com 5 cartões com suporte bilíngue 100% nativo.
+  - Grelha de cartões de setor do **Wizard Passo 1** (`.sector-grid`) atualizada para apontar para os 5 setores (`agro`, `energy`, `chemicals`, `machinery`, `tech`).
+  - Dropdowns de filtro (`#filter-category`, `#buyer-portal-filter-category`, `#supplier-portal-filter-category`) atualizados com as 5 opções canónicas.
+* **Modificações em `style.css`**:
+  - Estilos de hover e seleção (`.selected`) ajustados para `#sector-agro-card`, `#sector-energy-card`, `#sector-chemicals-card`, `#sector-machinery-card` e `#sector-tech-card`.
+* **Validação**: `node --check app.js` — ✅ SEM ERROS DE SINTAXE. Suporte bilíngue nativo 100% preservado (PT/EN).
+
+### Sessão: 20 de Agosto de 2026 (Reorganização Visual das Secções Sobre Nós e Centro de Confiança)
+* **Reorganização de Layout na Secção "Sobre Nós" (`#view-about`)**:
+  - Invertidas as posições das colunas na secção `#view-about` em [index.html](file:///home/paco/Projectos/Global%20View/index.html).
+  - O card verde *"Porquê Escolher a GV-CPS?"* passou para o lado esquerdo e a informação *"Nossa Filosofia Corporativa"* passou para o lado direito.
+* **Reorganização de Layout na Secção "Centro de Confiança" (`#view-trust` / `#contact`)**:
+  - Invertidas as posições dos dois cartões de comparação em [index.html](file:///home/paco/Projectos/Global%20View/index.html).
+  - O card escuro *"Vantagens da GV-CPS"* passou para o **lado esquerdo** e o card branco *"Desvantagens de outros B2B comuns"* passou para o **lado direito**.
+  - O conteúdo, formato, atributos de bilinguismo (`data-translate-pt`/`data-translate-en`) e estilos foram 100% mantidos sem qualquer alteração de texto.
+
+### Sessão: 20 de Agosto de 2026 (Criação da Página Dedicada "Últimas Demandas" & Reorganização do Hero)
+* **Página Dedicada de Últimas Demandas (`#view-demands`)**:
+  - Convertida a secção de Últimas Demandas numa página/vista própria (`<section id="view-demands" class="view-section">`), acessível pela rota SPA `#demands`.
+  - Inclui cabeçalho exclusivo com imagem hero, descrição detalhada, tabela de requisitos B2B em largura total, grelha de oportunidades por país e diretório por categoria.
+  - Links do menu do cabeçalho (`nav.main-nav`) e drawer mobile (`nav.mobile-nav`) atualizados para apontar para `href="#demands"`.
+  - Adicionado `case 'demands'` no router SPA em `app.js` e a função `toggleLatestDemands()` atualizada para navegação direta.
+* **Ajuste na Secção Hero (`#view-home > section.hero`)**:
+  - Removidos os botões *"Explorar Mercado"* e *"Últimas Demandas"* do Hero.
+  - A secção Hero agora possui exclusivamente os 2 botões principais: **"Conectar Minha Empresa"** e **"Requisitar Serviço"**.
+* **Validação**: `node --check app.js` — ✅ SEM ERROS DE SINTAXE. Suporte bilíngue nativo 100% preservado (PT/EN).
+
+### Sessão: 14 de Agosto de 2026 (Inicialização do Servidor Local)
+* **Inicialização da Aplicação**:
+  - Servidor HTTP local iniciado em `http://localhost:3000`.
+  - Verificação de conectividade realizada com sucesso (`200 OK`).
+  - Aplicação pronta para navegação e testes no browser.
+
+
 ### Sessão: 13 de Agosto de 2026 (Reconstrução dos Catálogos por Categoria — Agronegócio Completo)
 * **Customização Dinâmica do Wizard por Categoria (`AGRO`)**:
   - **Mapeamento de Embalagens Específicas (`CATEGORY_PACKAGING_DICTIONARY`)**: Cada categoria do Agronegócio possui agora as suas próprias opções de embalagem física no Passo 3 do Wizard:

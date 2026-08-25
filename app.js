@@ -112,7 +112,7 @@ const UI_TRANSLATIONS = {
 // EN TRANSLATION CATALOG FOR THE WIZARD
 const GV_CATALOG_EN = {
     agro: {
-        label: 'Agribusiness',
+        label: 'Commodities',
         icon: 'agriculture',
         color: '#16a34a',
         categories: {
@@ -140,30 +140,92 @@ const GV_CATALOG_EN = {
                 products: ['Refined Cane Sugar ICUMSA 45', 'VHP Cane Sugar', 'Organic Brown Sugar'], 
                 quantities: ['50 Tons', '250 Tons', '500 Tons', '12500 Tons'] 
             },
-            equipamentos: { 
-                label: 'Agricultural Equipment', 
-                unit: 'Units', 
-                products: ['75HP 4x4 Farm Tractor', '3-Disk Moldboard Plow', 'Double-Row Planter', 'Drip Irrigation System'], 
-                quantities: ['1 unit', '2 units', '5 units', '10 units'] 
+            outras_commodities: { 
+                label: 'Other Commodities & Grains', 
+                unit: 'Tons', 
+                products: ['Refined Soybean Oil', 'Pigeon Peas / Beans', 'Yellow / White Corn', 'Raw Cotton Lint'], 
+                quantities: ['50 Tons', '100 Tons', '500 Tons', '1000 Tons'] 
             }
         }
     },
-    oil: {
-        label: 'Machinery & Industry',
-        icon: 'precision_manufacturing',
+    energy: {
+        label: 'Energy & Minerals',
+        icon: 'bolt',
         color: '#b45309',
         categories: {
-            navios: {
-                label: 'Vessels & Ships',
-                unit: 'Units / Vessel',
-                products: ['Bulk Carrier (Dry Cargo Ship)', 'Container Ship', 'Oil Tanker', 'Hydraulic Dredge', 'Industrial Fishing Vessel', 'Tugboat / Tug', 'Ferry & Passenger Vessel', 'River Barge'],
-                quantities: ['1 vessel', '2 vessels', '3 vessels', 'Fleet (5+)']
+            solar: {
+                label: 'Solar Energy Derivatives',
+                unit: 'Units / Batch',
+                products: ['Monocrystalline Solar Panels (550W+)', 'Three-Phase Solar Inverters (10kW–100kW)', 'Industrial LiFePO4 Lithium Batteries', 'Solar Mounting Systems & Trackers', 'MPPT Charge Controllers', 'Solar Photovoltaic Cables (bulk)'],
+                quantities: ['10 units', '50 units', '100 units', 'Commercial Batch', 'Turnkey Solar Project']
+            },
+            oil_gas: {
+                label: 'Oil & Gas',
+                unit: 'Tons / Liters / Barrels',
+                products: ['Diesel Fuel EN590 10ppm', 'Liquefied Natural Gas (LNG)', 'Industrial & Marine Lubricating Oils', 'High-Pressure Offshore Hoses & Pipes', 'Drilling Equipment & API Valves', 'Industrial Gasoline'],
+                quantities: ['50,000 Liters', '100 Tons', '500 Tons', 'Monthly Recurring Contract']
+            },
+            minerais: {
+                label: 'Minerals',
+                unit: 'Metric Tons (MT)',
+                products: ['Iron Ore (62% Fe)', 'Thermal Coal', 'Heavy Mineral Sands (Ilmenite/Rutile/Zircon)', 'Copper Concentrate', 'High Purity Flake Graphite', 'Industrial Gold & Raw Ores'],
+                quantities: ['1,000 MT', '5,000 MT', '10,000 MT', '50,000 MT/Month']
+            }
+        }
+    },
+    chemicals: {
+        label: 'Chemical Products',
+        icon: 'science',
+        color: '#7c3aed',
+        categories: {
+            acidos: {
+                label: 'Acids & Solvents',
+                unit: 'Units',
+                products: ['Glacial Acetic Acid (2.5L)', 'Hydrochloric Acid 32% (2.5L)', 'Hydrochloric Acid 37% (2.5L)', 'Phosphoric Acid (250ml)', 'Methanol (2.5L)'],
+                quantities: ['1 unit', '2 units', '5 units', '10 units']
+            },
+            sais: {
+                label: 'Salts & Inorganic Compounds',
+                unit: 'Units',
+                products: ['Ammonium Sulfate (100g)', 'Calcium Chloride Hexahydrate (250g)', 'Sodium Chloride (250g)', 'Sodium Hydroxide (500g)', 'Sodium Hypochlorite (2.5L)', 'Sodium Nitrate (250g)', 'Potassium Nitrate (50g)', 'Potassium Cyanide (250g)', 'Di-Sodium Hydrogenophosphate (500g)', 'Sodium hydrogenPhosphate dibasic dihydrate (500g)', 'Copper II sulfate pentahydrate (250g)', 'Sodium Tetraborate Decahydrate (500g)'],
+                quantities: ['1 unit', '2 units', '4 units', '6 units']
+            },
+            reagentes: {
+                label: 'Analytical Reagents',
+                unit: 'Units',
+                products: ['4-Hydroxybenzoic Acid Hydrazine (25g)', 'BRIJ-35 (100ml)', 'Chloramine T Trihydrate (250g)', 'Citric Acid Monohydrate (500g)', 'D(-) Fructose (250g)', 'D(+) Glucose Anhydrous (250g)', 'Sodium Nitroprusside Dihydrate (100g)', 'Sodium Salicylate (500g)', 'Sulfanilic Acid (250g)', 'Hydrazine Sulfate (100g)', 'Sulfanilamide (100g)', 'GLS Control Chemical Sample (100g)', 'N-(1-naphtyl)ethylenediamine dihydrochloride (250g)'],
+                quantities: ['1 unit', '2 units', '4 units', '6 units']
+            },
+            consumiveis: {
+                label: 'Laboratory Consumables',
+                unit: 'Units',
+                products: ['Extran AP 11 — Alkaline Detergent (2Kg)', 'Extran MA 01 — Neutral Detergent (1L)', 'Qualitative Filter Papers No.40 125mm (100 units)', 'Qualitative Filter Papers No.11 80mm (100 units)', 'Activated Carbon (500g)'],
+                quantities: ['1 unit', '2 units', '10 units', '50 units']
+            }
+        }
+    },
+    machinery: {
+        label: 'Equipment & Machinery',
+        icon: 'precision_manufacturing',
+        color: '#0d9488',
+        categories: {
+            pecas: {
+                label: 'Spare Parts & Components',
+                unit: 'Units / Kits',
+                products: ['Industrial Oil & Air Filters', 'Transmission Belts & Chains', 'Heavy-Duty Bearings & Bushings', 'Hydraulic Valves & Cylinders', 'Three-Phase Electric Motors', 'Tractor & Crane Spare Parts', 'Preventive Maintenance Kits', 'Brake Pads & Friction Discs'],
+                quantities: ['1 kit / unit', '5 units', '10 units', 'Batch Replacements (50+)']
             },
             tratores: {
                 label: 'Tractors & Agricultural Machinery',
                 unit: 'Units',
                 products: ['Agricultural Wheeled Tractor', 'Crawler / Track Tractor', 'Compact Mini-Tractor', 'Orchard / Vineyard Tractor', 'Forestry Tractor', 'Backhoe Loader', 'Hydraulic Excavator', 'Bulldozer / Dozer'],
                 quantities: ['1 unit', '2 units', '5 units', '10 units', '20 units']
+            },
+            navios: {
+                label: 'Vessels & Ships',
+                unit: 'Units / Vessel',
+                products: ['Bulk Carrier (Dry Cargo Ship)', 'Container Ship', 'Oil Tanker', 'Hydraulic Dredge', 'Industrial Fishing Vessel', 'Tugboat / Tug', 'Ferry & Passenger Vessel', 'River Barge'],
+                quantities: ['1 vessel', '2 vessels', '3 vessels', 'Fleet (5+)']
             },
             carpintaria: {
                 label: 'Carpentry & Woodworking Equipment',
@@ -186,7 +248,7 @@ const GV_CATALOG_EN = {
         }
     },
     tech: {
-        label: 'Technology & Electronics',
+        label: 'Technology',
         icon: 'memory',
         color: '#2563eb',
         categories: {
@@ -219,63 +281,6 @@ const GV_CATALOG_EN = {
                 unit: 'Units (bulk)',
                 products: ['LCD/IPS Monitor (bulk)', 'OLED Mobile Display Panels', 'IP Security Camera', 'Thermal Label Printer', 'Industrial Barcode Scanner', 'Keyboard & Mouse Set (bulk)'],
                 quantities: ['10 units', '50 units', '100 units', '500 units']
-            }
-        }
-    },
-    logistics: {
-        label: 'Logistics',
-        icon: 'local_shipping',
-        color: '#4338ca',
-        categories: {
-            maritimo: { 
-                label: 'Ocean Freight', 
-                unit: 'Container', 
-                products: ['20ft Standard Container Shipping (FCL)', '40ft High Cube Container Shipping (FCL)', 'Less than Container Load Consolidation (LCL)', 'Dry Bulk Shipping'], 
-                quantities: ['1x 20ft Container', '1x 40ft Container', '5x Containers', '10x Containers'] 
-            },
-            terrestre: { 
-                label: 'Road Freight', 
-                unit: 'Trip', 
-                products: ['Closed TIR Box Truck (Mozambique-South Africa)', 'Flatbed Container Carrier', 'Fuel Tanker Truck'], 
-                quantities: ['1 trip', '5 trips', 'Monthly Route Contract'] 
-            },
-            aduaneiro: { 
-                label: 'Customs Clearance', 
-                unit: 'Process', 
-                products: ['General Import Customs Clearance', 'Export Customs Clearance', 'International Cargo Customs Transit'], 
-                quantities: ['1 process', '5 processes', 'Continuous Clearance'] 
-            }
-        }
-    },
-    /* TODO: React component — <SectorCatalog key="chemicals"> */
-    chemicals: {
-        label: 'Industry & Reagents',
-        icon: 'science',
-        color: '#7c3aed',
-        categories: {
-            acidos: {
-                label: 'Acids & Solvents',
-                unit: 'Units',
-                products: ['Glacial Acetic Acid (2.5L)', 'Hydrochloric Acid 32% (2.5L)', 'Hydrochloric Acid 37% (2.5L)', 'Phosphoric Acid (250ml)', 'Methanol (2.5L)'],
-                quantities: ['1 unit', '2 units', '5 units', '10 units']
-            },
-            sais: {
-                label: 'Salts & Inorganic Compounds',
-                unit: 'Units',
-                products: ['Ammonium Sulfate (100g)', 'Calcium Chloride Hexahydrate (250g)', 'Sodium Chloride (250g)', 'Sodium Hydroxide (500g)', 'Sodium Hypochlorite (2.5L)', 'Sodium Nitrate (250g)', 'Potassium Nitrate (50g)', 'Potassium Cyanide (250g)', 'Di-Sodium Hydrogenophosphate (500g)', 'Sodium hydrogenPhosphate dibasic dihydrate (500g)', 'Copper II sulfate pentahydrate (250g)', 'Sodium Tetraborate Decahydrate (500g)'],
-                quantities: ['1 unit', '2 units', '4 units', '6 units']
-            },
-            reagentes: {
-                label: 'Analytical Reagents',
-                unit: 'Units',
-                products: ['4-Hydroxybenzoic Acid Hydrazine (25g)', 'BRIJ-35 (100ml)', 'Chloramine T Trihydrate (250g)', 'Citric Acid Monohydrate (500g)', 'D(-) Fructose (250g)', 'D(+) Glucose Anhydrous (250g)', 'Sodium Nitroprusside Dihydrate (100g)', 'Sodium Salicylate (500g)', 'Sulfanilic Acid (250g)', 'Hydrazine Sulfate (100g)', 'Sulfanilamide (100g)', 'GLS Control Chemical Sample (100g)', 'N-(1-naphtyl)ethylenediamine dihydrochloride (250g)'],
-                quantities: ['1 unit', '2 units', '4 units', '6 units']
-            },
-            consumiveis: {
-                label: 'Laboratory Consumables',
-                unit: 'Units',
-                products: ['Extran AP 11 — Alkaline Detergent (2Kg)', 'Extran MA 01 — Neutral Detergent (1L)', 'Qualitative Filter Papers No.40 125mm (100 units)', 'Qualitative Filter Papers No.11 80mm (100 units)', 'Activated Carbon (500g)'],
-                quantities: ['1 unit', '2 units', '10 units', '50 units']
             }
         }
     }
@@ -371,30 +376,110 @@ const INITIAL_STATE = {
     requirements: [
         {
             id: 'req_1',
+            title: 'UREA 46% (UREA56)',
+            titleEn: 'UREA 46% (UREA56)',
+            category: 'Commodities',
+            description: 'Demanda B2B para importação de 50.000 MT de UREA 46% (UREA56) destinada ao mercado do Malawi com suporte logístico e intermediação segura da GV-CPS.',
+            descriptionEn: 'B2B requirement for importation of 50,000 MT of UREA 46% (UREA56) destined for Malawi with GV-CPS logistics support and secure intermediation.',
+            quantity: '50.000 MT',
+            quantityEn: '50,000 MT',
+            country: 'Malawi',
+            countryEn: 'Malawi',
+            logistics: 'Sim',
+            date: '2026-08-20',
+            status: 'atendimento',
+            owner: 'buyer_1',
+            assignedConsultant: 'consultant_1',
+            contactWhatsapp: '+265 99 123 4567',
+            contactEmail: 'demands.mw@gvcps-b2b.com'
+        },
+        {
+            id: 'req_2',
+            title: 'Ácido Sulfúrico',
+            titleEn: 'Sulfuric Acid',
+            category: 'Produtos químicos',
+            description: 'Demanda de grande porte para fornecimento de 50.000 MT de Ácido Sulfúrico com destino à Zâmbia.',
+            descriptionEn: 'Large-scale requirement for the supply of 50,000 MT of Sulfuric Acid to Zambia.',
+            quantity: '50.000 MT',
+            quantityEn: '50,000 MT',
+            country: 'Zâmbia',
+            countryEn: 'Zambia',
+            logistics: 'Sim',
+            date: '2026-08-19',
+            status: 'analise',
+            owner: 'buyer_1',
+            assignedConsultant: 'consultant_1',
+            contactWhatsapp: '+260 97 123 4567',
+            contactEmail: 'demands.zm@gvcps-b2b.com'
+        },
+        {
+            id: 'req_3',
+            title: 'UREA Granulada',
+            titleEn: 'Granulated UREA',
+            category: 'Commodities',
+            description: 'Necessidade de compra e fornecimento de 30.000 MT de UREA Granulada para o setor agrícola na Zâmbia.',
+            descriptionEn: 'Purchase requirement and supply of 30,000 MT of Granulated UREA for the agricultural sector in Zambia.',
+            quantity: '30.000 MT',
+            quantityEn: '30,000 MT',
+            country: 'Zâmbia',
+            countryEn: 'Zambia',
+            logistics: 'Sim',
+            date: '2026-08-18',
+            status: 'pendente',
+            owner: 'buyer_1',
+            assignedConsultant: null,
+            contactWhatsapp: '+260 96 987 6543',
+            contactEmail: 'agri.zm@gvcps-b2b.com'
+        },
+        {
+            id: 'req_4',
+            title: 'Milho Amarelo',
+            titleEn: 'Yellow Corn',
+            category: 'Commodities',
+            description: 'Suprimento recorrente de 300.000 MT de Milho Amarelo no total (remessas mensais de 25.000 MT/Mês) para a Guiné-Conacri.',
+            descriptionEn: 'Recurring supply of 300,000 MT of Yellow Corn total (monthly shipments of 25,000 MT/Month) for Guinea-Conakry.',
+            quantity: '300.000 MT (25.000 MT/Mês)',
+            quantityEn: '300,000 MT (25,000 MT/Month)',
+            country: 'Guiné-Conacri',
+            countryEn: 'Guinea-Conakry',
+            logistics: 'Sim',
+            date: '2026-08-17',
+            status: 'atendimento',
+            owner: 'buyer_1',
+            assignedConsultant: 'consultant_1',
+            contactWhatsapp: '+224 62 123 4567',
+            contactEmail: 'grain.gn@gvcps-b2b.com'
+        },
+        {
+            id: 'req_5',
             title: 'Importação de Óleo de Soja Refinado',
             titleEn: 'Refined Soybean Oil Importation',
-            category: 'Consultoria para Agropecuária e Agronegócios',
+            category: 'Commodities',
             description: 'Buscamos fornecedor qualificado para suprir demanda recorrente de óleo de soja refinado de qualidade premium em Moçambique.',
             descriptionEn: 'We are looking for a qualified supplier to meet the recurring demand for premium quality refined soybean oil in Mozambique.',
             quantity: '500 Toneladas',
+            quantityEn: '500 Tons',
             country: 'Moçambique',
-            logistics: 'Sim', // Yes - GV-CPS handles logistics
+            countryEn: 'Mozambique',
+            logistics: 'Sim',
             date: '2026-06-17',
-            status: 'atendimento', // pendente, analise, atendimento, concluida
+            status: 'atendimento',
             owner: 'buyer_1',
             assignedConsultant: 'consultant_1',
             contactWhatsapp: '+258 84 999 1111',
             contactEmail: 'compras@sojaco.mz'
         },
         {
-            id: 'req_2',
-            title: 'Manutenção Preventiva de Subestação Elétrica',
-            titleEn: 'Preventive Maintenance of Electrical Substation',
-            category: 'Avaliação, Elaboração e Monitoria de Projectos',
-            description: 'Serviços técnicos especializados de engenharia para manutenção preventiva e corretiva de equipamentos elétricos de média tensão.',
-            descriptionEn: 'Specialized technical engineering services for preventive and corrective maintenance of medium voltage electrical equipment.',
-            quantity: 'Nível Industrial',
+            id: 'req_6',
+            title: 'Aquisição de Peças de Reposição & Filtros para Subestação',
+            titleEn: 'Acquisition of Spare Parts & Filters for Electrical Substation',
+            category: 'Equipamentos e Máquinas',
+            description: 'Componentes técnicos e peças de reposição para manutenção preventiva de equipamentos elétricos e motores industriais.',
+            descriptionEn: 'Technical components and spare parts for preventive maintenance of electrical equipment and industrial motors.',
+            quantity: 'Lote de Reposição',
+            quantityEn: 'Replacement Lot',
             country: 'Moçambique',
+            countryEn: 'Mozambique',
             logistics: 'Não',
             date: '2026-06-16',
             status: 'analise',
@@ -404,31 +489,35 @@ const INITIAL_STATE = {
             contactEmail: 'infra@engenharia.co.mz'
         },
         {
-            id: 'req_3',
-            title: 'Tradução Juramentada de Contratos Comerciais (EN-PT)',
-            titleEn: 'Sworn Translation of Commercial Contracts (EN-PT)',
-            category: 'Tradução de Documentos (Português, Inglês, Francês, línguas nacionais)',
-            description: 'Tradução juramentada de contratos internacionais de exploração e trading de gás natural.',
-            descriptionEn: 'Sworn translation of international contracts for the exploration and trading of natural gas.',
-            quantity: '45 Contratos',
+            id: 'req_7',
+            title: 'Fornecimento de Reagentes Analíticos & Ácido Acético Glacial',
+            titleEn: 'Supply of Analytical Reagents & Glacial Acetic Acid',
+            category: 'Produtos químicos',
+            description: 'Aquisição em grande escala de reagentes analíticos e solventes químicos de alta pureza para laboratório industrial.',
+            descriptionEn: 'Bulk acquisition of analytical reagents and high-purity chemical solvents for industrial laboratory.',
+            quantity: '50 Unidades',
+            quantityEn: '50 Units',
             country: 'Portugal',
-            logistics: 'Não',
+            countryEn: 'Portugal',
+            logistics: 'Sim',
             date: '2026-06-14',
             status: 'pendente',
             owner: 'buyer_1',
             assignedConsultant: null,
             contactWhatsapp: '+351 912 345 678',
-            contactEmail: 'legal@gascorp.pt'
+            contactEmail: 'lab@gascorp.pt'
         },
         {
-            id: 'req_4',
+            id: 'req_8',
             title: 'Aquisição de Minério de Ferro 62%',
             titleEn: 'Acquisition of Iron Ore 62%',
-            category: 'Consultoria para Commodities Trading',
+            category: 'Energia e minerais',
             description: 'Procuramos fornecedor confiável para entrega regular de minério de ferro de teor mínimo 62% Fe.',
             descriptionEn: 'We are looking for a reliable supplier for regular delivery of iron ore with a minimum grade of 62% Fe.',
             quantity: '50,000 MT/Mês',
+            quantityEn: '50,000 MT/Month',
             country: 'Emirados Árabes',
+            countryEn: 'United Arab Emirates',
             logistics: 'Sim',
             date: '2026-05-12',
             status: 'concluida',
@@ -443,7 +532,7 @@ const INITIAL_STATE = {
             id: 'off_1',
             title: 'Fornecimento de Açúcar ICUMSA 45',
             titleEn: 'Supply of ICUMSA 45 Sugar',
-            category: 'Consultoria para Commodities Trading',
+            category: 'Commodities',
             description: 'Dispomos de cotas anuais para fornecimento e exportação de açúcar ICUMSA 45 refinado de alta qualidade.',
             descriptionEn: 'We have annual quotas for the supply and export of high-quality refined ICUMSA 45 sugar.',
             quantity: '12,500 MT',
@@ -456,12 +545,12 @@ const INITIAL_STATE = {
         },
         {
             id: 'off_2',
-            title: 'Instalação de Painéis Fotovoltaicos Monocristalinos',
-            titleEn: 'Installation of Monocrystalline Photovoltaic Panels',
-            category: 'Consultoria para Tecnologias de Informação',
-            description: 'Fornecimento e montagem de painéis solares industriais de alto rendimento para plantas comerciais.',
-            descriptionEn: 'Supply and assembly of high-yield industrial solar panels for commercial plants.',
-            quantity: 'Lote Industrial',
+            title: 'Painéis Fotovoltaicos Monocristalinos & Inversores Solares',
+            titleEn: 'Monocrystalline Solar Panels & Solar Inverters',
+            category: 'Energia e minerais',
+            description: 'Fornecimento em larga escala de derivados de energia solar, painéis solares monocristalinos 550W+ e inversores trifásicos.',
+            descriptionEn: 'Large-scale supply of solar energy derivatives, 550W+ monocrystalline solar panels, and three-phase inverters.',
+            quantity: 'Lote Comercial',
             country: 'China',
             logistics: 'Sim',
             date: '2026-06-10',
@@ -471,9 +560,9 @@ const INITIAL_STATE = {
         },
         {
             id: 'off_3',
-            title: 'Logística de Casca de Castanha de Caju Bruta',
-            titleEn: 'Logistics of Raw Cashew Nut Shell',
-            category: 'Consultoria para Agropecuária e Agronegócios',
+            title: 'Castanha de Caju Bruta (Raw Cashew Nuts)',
+            titleEn: 'Raw Cashew Nuts (RCN)',
+            category: 'Commodities',
             description: 'Castanha bruta de caju de ótima qualidade proveniente de cooperativas do norte de Moçambique.',
             descriptionEn: 'High-quality raw cashew nuts from cooperatives in northern Mozambique.',
             quantity: 'Fluxo Contínuo',
@@ -493,7 +582,7 @@ const INITIAL_STATE = {
             date: '2026-06-17',
             status: 'negociacao', // negociacao, fechado, cancelado
             consultantId: 'consultant_1',
-            internalNotes: 'Comprador precisa de Soja refinada, mas Fornecedor oferece Açúcar. Iniciando contacto alternativo de agrocommodities para ver aceitação de outras mercadorias.'
+            internalNotes: 'Comprador precisa de Soja refinada, mas Fornecedor oferece Açúcar. Iniciando contacto alternativo de commodities para ver aceitação de outras mercadorias.'
         }
     ],
     messages: [
@@ -537,14 +626,14 @@ const INITIAL_STATE = {
     notifications: [
         { id: 'not_1', userId: 'buyer_1', text: 'Sua solicitação de Óleo de Soja foi vinculada a uma negociação intermediada.', date: '2026-06-17', read: false },
         { id: 'not_2', userId: 'supplier_1', text: 'Sua oferta de Açúcar ICUMSA 45 foi associada a um comprador em potencial.', date: '2026-06-17', read: false },
-        { id: 'not_3', userId: 'consultant_1', text: 'Nova proposta de Tradução de Documentos cadastrada sem consultor atribuído.', date: '2026-06-14', read: true }
+        { id: 'not_3', userId: 'consultant_1', text: 'Nova proposta de Produtos Químicos cadastrada sem consultor atribuído.', date: '2026-06-14', read: true }
     ],
     categories: [
-        'Agro & Commodities',
-        'Energia & Industria',
-        'Tecnologia & Inovacao',
-        'Logistica & Projetos',
-        'Consultoria & Servicos'
+        'Commodities',
+        'Energia e minerais',
+        'Produtos químicos',
+        'Equipamentos e Maquinas',
+        'Tecnologia'
     ]
 };
 
@@ -788,12 +877,12 @@ function navigate(viewPath) {
         case 'home':
             renderHomepage();
             break;
-        case 'about':
-        case 'contact':
-        case 'trust':
-            // Static corporate views, nothing to render dynamically
+        case 'demands':
+            renderMarketExplorer();
             break;
         case 'services':
+            // Services view now displays the 5 corporate sector cards section
+            break;
         case 'wall':
             renderOpportunityWall(params);
             break;
@@ -1416,15 +1505,18 @@ function renderMarketExplorer() {
     // Sort by date desc
     items.sort((a, b) => new Date(b.date) - new Date(a.date));
     
-    // Display 6 latest requirements/offers in list
+    // Display all market requirements and offers in list
     const lang = localStorage.getItem('gvcps_lang') || 'pt';
-    const latestItems = items.slice(0, 6);
+    const latestItems = items;
     latestItems.forEach(item => {
         const { code: catCode, label: catLabel, icon: catIcon } = getCategoryDetails(item.category);
         let flag = '🌎';
         const translatedCountry = getTranslatedField(item, 'country');
         const c = translatedCountry.toLowerCase();
         if (c.includes('moçambique') || c.includes('mozambique')) flag = '🇲🇿';
+        else if (c.includes('malawi') || c.includes('maláui')) flag = '🇲🇼';
+        else if (c.includes('zâmbia') || c.includes('zambia')) flag = '🇿🇲';
+        else if (c.includes('guiné') || c.includes('guinea') || c.includes('huine') || c.includes('conacry') || c.includes('conakry')) flag = '🇬🇳';
         else if (c.includes('brasil') || c.includes('brazil')) flag = '🇧🇷';
         else if (c.includes('portugal')) flag = '🇵🇹';
         else if (c.includes('china')) flag = '🇨🇳';
@@ -1479,6 +1571,9 @@ function renderMarketExplorer() {
         countriesGrid.innerHTML = '';
         const targetCountries = [
             { name: 'Moçambique', flag: '🇲🇿' },
+            { name: 'Malawi', flag: '🇲🇼' },
+            { name: 'Zâmbia', flag: '🇿🇲' },
+            { name: 'Guiné-Conacri', flag: '🇬🇳' },
             { name: 'Brasil', flag: '🇧🇷' },
             { name: 'Portugal', flag: '🇵🇹' },
             { name: 'China', flag: '🇨🇳' },
@@ -1563,14 +1658,14 @@ function renderOpportunityWall(params = {}) {
     const lowerCat = filterCat.toLowerCase();
     if (lowerCat === 'agro' || lowerCat.includes('agro') || lowerCat.includes('commodities') || lowerCat.includes('trading')) {
         filterCat = 'agro';
-    } else if (lowerCat === 'energy' || lowerCat.includes('energia') || lowerCat.includes('petróleo') || lowerCat.includes('gás') || lowerCat.includes('industry') || lowerCat.includes('indústria') || lowerCat.includes('solar')) {
+    } else if (lowerCat === 'energy' || lowerCat.includes('energia') || lowerCat.includes('petróleo') || lowerCat.includes('gás') || lowerCat.includes('minerais') || lowerCat.includes('solar')) {
         filterCat = 'energy';
-    } else if (lowerCat === 'tech' || lowerCat.includes('tecnologia') || lowerCat.includes('tech') || lowerCat.includes('informática') || lowerCat.includes('inovação')) {
+    } else if (lowerCat === 'chemicals' || lowerCat.includes('químic') || lowerCat.includes('reagente') || lowerCat.includes('ácido') || lowerCat.includes('solvente')) {
+        filterCat = 'chemicals';
+    } else if (lowerCat === 'machinery' || lowerCat.includes('máquin') || lowerCat.includes('maquin') || lowerCat.includes('equipamento') || lowerCat.includes('peça') || lowerCat.includes('trator') || lowerCat.includes('navio')) {
+        filterCat = 'machinery';
+    } else if (lowerCat === 'tech' || lowerCat.includes('tecnologia') || lowerCat.includes('tech') || lowerCat.includes('informática') || lowerCat.includes('chip') || lowerCat.includes('hardware')) {
         filterCat = 'tech';
-    } else if (lowerCat === 'logistics' || lowerCat.includes('logística') || lowerCat.includes('logistics') || lowerCat.includes('supply') || lowerCat.includes('projetos') || lowerCat.includes('avaliação')) {
-        filterCat = 'logistics';
-    } else if (lowerCat === 'consulting' || lowerCat.includes('consultoria') || lowerCat.includes('consulting') || lowerCat.includes('serviços') || lowerCat.includes('tradução') || lowerCat.includes('formação') || lowerCat.includes('jurídica')) {
-        filterCat = 'consulting';
     }
 
     // Map verbose/old countries to shorthand ones
@@ -1612,15 +1707,15 @@ function renderOpportunityWall(params = {}) {
         list = list.filter(item => {
             const cat = (item.category || '').toLowerCase();
             if (filterCat === 'agro') {
-                return cat.includes('agro') || cat.includes('commodities') || cat.includes('açúcar') || cat.includes('caju') || cat.includes('soja') || cat.includes('minério') || cat.includes('trading') || cat.includes('agroneg');
+                return cat.includes('agro') || cat.includes('commodities') || cat.includes('açúcar') || cat.includes('caju') || cat.includes('soja') || cat.includes('sementes') || cat.includes('fertiliz');
             } else if (filterCat === 'energy') {
-                return cat.includes('energia') || cat.includes('energy') || cat.includes('solar') || cat.includes('petróleo') || cat.includes('gás') || cat.includes('elétrica') || cat.includes('indústria') || cat.includes('industrial');
+                return cat.includes('energia') || cat.includes('energy') || cat.includes('solar') || cat.includes('petróleo') || cat.includes('gás') || cat.includes('gas') || cat.includes('oil') || cat.includes('minerais') || cat.includes('minério');
+            } else if (filterCat === 'chemicals') {
+                return cat.includes('químic') || cat.includes('chemic') || cat.includes('reagente') || cat.includes('ácido') || cat.includes('solvente') || cat.includes('laborat');
+            } else if (filterCat === 'machinery') {
+                return cat.includes('máquin') || cat.includes('maquin') || cat.includes('equipamento') || cat.includes('peça') || cat.includes('peca') || cat.includes('trator') || cat.includes('navio') || cat.includes('carpintaria');
             } else if (filterCat === 'tech') {
-                return cat.includes('tecnologia') || cat.includes('tech') || cat.includes('informática') || cat.includes('inovação') || cat.includes('data center') || cat.includes('redes') || cat.includes('desenvolvimento') || cat.includes('ti');
-            } else if (filterCat === 'logistics') {
-                return cat.includes('logística') || cat.includes('logistics') || cat.includes('supply') || cat.includes('frete') || cat.includes('projetos') || cat.includes('avaliação') || cat.includes('monitoria') || cat.includes('aduaneiro');
-            } else if (filterCat === 'consulting') {
-                return cat.includes('consultoria') || cat.includes('consulting') || cat.includes('tradução') || cat.includes('documentos') || cat.includes('jurídica') || cat.includes('formação') || cat.includes('serviços') || cat.includes('finanças') || cat.includes('pmes');
+                return cat.includes('tecnologia') || cat.includes('tech') || cat.includes('informática') || cat.includes('chip') || cat.includes('memória') || cat.includes('hardware');
             }
             return cat.includes(filterCat.toLowerCase());
         });
@@ -1670,57 +1765,56 @@ function renderOpportunityWall(params = {}) {
     });
 }
 
-// Central category details — 5 canonical categories derived from GV-CPS green palette
+// Central category details — 5 canonical categories
 function getCategoryDetails(category) {
     const lang = localStorage.getItem('gvcps_lang') || 'pt';
     const cat = (category || '').toLowerCase();
     
-    // Default: Consultoria & Servicos
-    let code     = 'consulting';
-    let label    = lang === 'en' ? 'Consulting & Services' : 'Consultoria & Serviços';
-    let icon     = 'business_center';
-    let sublabel = lang === 'en' ? 'PROFESSIONAL SERVICES' : 'SERVIÇOS PROFISSIONAIS';
+    // Default: Commodities
+    let code     = 'agro';
+    let label    = lang === 'en' ? 'Commodities' : 'Commodities';
+    let icon     = 'agriculture';
+    let sublabel = lang === 'en' ? 'AGRICULTURAL MARKET' : 'MERCADO AGRÍCOLA';
 
     if (
-        cat.includes('agro') || cat.includes('caju') || cat.includes('soja') ||
-        cat.includes('açúcar') || cat.includes('minério') || cat.includes('commodities') ||
-        cat.includes('trading') || cat.includes('agroneg') || cat.includes('sementes') ||
-        cat.includes('fertiliz') || cat.includes('castanha') || cat.includes('mercado agr')
+        cat.includes('químic') || cat.includes('chemic') || cat.includes('reagente') ||
+        cat.includes('ácido') || cat.includes('solvente') || cat.includes('laborat') ||
+        cat.includes('indústria & reagentes') || cat.includes('produtos químicos')
     ) {
-        code     = 'agro';
-        label    = lang === 'en' ? 'Agro & Commodities' : 'Agro & Commodities';
-        icon     = 'agriculture';
-        sublabel = lang === 'en' ? 'AGRICULTURAL MARKET' : 'MERCADO AGRÍCOLA';
+        code     = 'chemicals';
+        label    = lang === 'en' ? 'Chemical Products' : 'Produtos químicos';
+        icon     = 'science';
+        sublabel = lang === 'en' ? 'CHEMICAL INDUSTRY' : 'INDÚSTRIA QUÍMICA';
+    } else if (
+        cat.includes('maquin') || cat.includes('máquin') || cat.includes('equipamento') ||
+        cat.includes('peça') || cat.includes('peca') || cat.includes('trator') ||
+        cat.includes('navio') || cat.includes('embarcaç') || cat.includes('carpintaria') ||
+        cat.includes('elevação') || cat.includes('grua') || cat.includes('empilhadeira')
+    ) {
+        code     = 'machinery';
+        label    = lang === 'en' ? 'Equipment & Machinery' : 'Equipamentos e Máquinas';
+        icon     = 'precision_manufacturing';
+        sublabel = lang === 'en' ? 'MACHINERY & PARTS' : 'MAQUINARIA & PEÇAS';
     } else if (
         cat.includes('energia') || cat.includes('energy') || cat.includes('solar') ||
-        cat.includes('petróleo') || cat.includes('gás') || cat.includes('elétrica') ||
-        cat.includes('industrial') || cat.includes('indústria') || cat.includes('subestação') ||
-        cat.includes('renovável') || cat.includes('fotovolt') || cat.includes('infraestrutura industrial')
+        cat.includes('petróleo') || cat.includes('gás') || cat.includes('gas') ||
+        cat.includes('oil') || cat.includes('minera') || cat.includes('minério') ||
+        cat.includes('carvão') || cat.includes('subestação') || cat.includes('fotovolt')
     ) {
         code     = 'energy';
-        label    = lang === 'en' ? 'Energy & Industry' : 'Energia & Indústria';
+        label    = lang === 'en' ? 'Energy & Minerals' : 'Energia e minerais';
         icon     = 'bolt';
-        sublabel = lang === 'en' ? 'INDUSTRIAL INFRASTRUCTURE' : 'INFRAESTRUTURA INDUSTRIAL';
+        sublabel = lang === 'en' ? 'ENERGY & MINING' : 'ENERGIA & MINERAÇÃO';
     } else if (
         cat.includes('tecnologia') || cat.includes('tech') || cat.includes('informática') ||
-        cat.includes('inovação') || cat.includes('data center') || cat.includes('redes') ||
-        cat.includes('desenvolvimento') || cat.includes('software') || cat.includes('ti') ||
-        cat.includes('iot') || cat.includes('conectividade') || cat.includes('servidores')
+        cat.includes('inovação') || cat.includes('chip') || cat.includes('processador') ||
+        cat.includes('memória') || cat.includes('placa') || cat.includes('carregador') ||
+        cat.includes('software') || cat.includes('ti') || cat.includes('redes')
     ) {
         code     = 'tech';
-        label    = lang === 'en' ? 'Technology & Innovation' : 'Tecnologia & Inovação';
-        icon     = 'devices';
-        sublabel = lang === 'en' ? 'ENTERPRISE SOFTWARE' : 'SOFTWARE CORPORATIVO';
-    } else if (
-        cat.includes('logística') || cat.includes('logistics') || cat.includes('supply') ||
-        cat.includes('frete') || cat.includes('avaliação') || cat.includes('monitoria') ||
-        cat.includes('projectos') || cat.includes('projetos') || cat.includes('aduaneiro') ||
-        cat.includes('marítimo') || cat.includes('terrestre') || cat.includes('infraestrutura')
-    ) {
-        code     = 'logistics';
-        label    = lang === 'en' ? 'Logistics & Projects' : 'Logística & Projetos';
-        icon     = 'local_shipping';
-        sublabel = lang === 'en' ? 'PROJECT MANAGEMENT' : 'GESTÃO DE PROJETOS';
+        label    = lang === 'en' ? 'Technology' : 'Tecnologia';
+        icon     = 'memory';
+        sublabel = lang === 'en' ? 'HARDWARE & TECH' : 'TECNOLOGIA & HARDWARE';
     }
 
     return { code, label, icon, sublabel };
@@ -1776,6 +1870,9 @@ function createOpportunityCard(item) {
     let flag = '';
     const c = countryText.toLowerCase();
     if (c.includes('moçambique') || c.includes('mozambique')) flag = '🇲🇿';
+    else if (c.includes('malawi') || c.includes('maláui')) flag = '🇲🇼';
+    else if (c.includes('zâmbia') || c.includes('zambia')) flag = '🇿🇲';
+    else if (c.includes('guiné') || c.includes('guinea') || c.includes('huine') || c.includes('conacry') || c.includes('conakry')) flag = '🇬🇳';
     else if (c.includes('brasil') || c.includes('brazil')) flag = '🇧🇷';
     else if (c.includes('portugal')) flag = '🇵🇹';
     else if (c.includes('china')) flag = '🇨🇳';
@@ -5361,7 +5458,7 @@ function showCmsToast(msg, type='success') {
 // ==========================================
 const GV_CATALOG = {
     agro: {
-        label: 'Agronegócio',
+        label: 'Commodities',
         icon: 'agriculture',
         color: '#16a34a',
         categories: {
@@ -5389,30 +5486,92 @@ const GV_CATALOG = {
                 products: ['Açúcar Refinado ICUMSA 45', 'Açúcar VHP de Cana', 'Açúcar Mascavado Orgânico'], 
                 quantities: ['50 Toneladas', '250 Toneladas', '500 Toneladas', '12500 Toneladas'] 
             },
-            equipamentos: { 
-                label: 'Equipamentos Agrícolas', 
-                unit: 'Unidades', 
-                products: ['Trator Agrícola 75HP 4x4', 'Charrua Aiveca 3 Discos', 'Semeadora Linha Dupla', 'Sistema de Irrigação por Gotejamento'], 
-                quantities: ['1 unidade', '2 unidades', '5 unidades', '10 unidades'] 
+            outras_commodities: { 
+                label: 'Outras Commodities & Grãos', 
+                unit: 'Toneladas', 
+                products: ['Óleo de Soja Refinado', 'Feijão Boer / Nhemba', 'Milho Amarelo / Branco', 'Algodão em Pluma'], 
+                quantities: ['50 Toneladas', '100 Toneladas', '500 Toneladas', '1000 Toneladas'] 
             }
         }
     },
-    oil: {
-        label: 'Maquinários & Indústria',
-        icon: 'precision_manufacturing',
+    energy: {
+        label: 'Energia e minerais',
+        icon: 'bolt',
         color: '#b45309',
         categories: {
-            navios: {
-                label: 'Navios & Embarcações',
-                unit: 'Unidades / Embarcação',
-                products: ['Navio Cargueiro a Granel (Bulk Carrier)', 'Navio Porta-Contentores', 'Navio Tanque (Tanker)', 'Draga Hidráulica', 'Navio de Pesca Industrial', 'Rebocador / Tugboat', 'Ferry & Balsa de Passageiros', 'Barcaça Fluvial'],
-                quantities: ['1 embarcação', '2 embarcações', '3 embarcações', 'Frota (5+)']
+            solar: {
+                label: 'Derivados de Energia Solar',
+                unit: 'Unidades / Lote',
+                products: ['Painéis Fotovoltaicos Monocristalinos (550W+)', 'Inversores Solares Trifásicos (10kW–100kW)', 'Baterias de Lítio LiFePO4 Industriais', 'Estruturas de Fixação & Seguidores Solares (Trackers)', 'Reguladores de Carga MPPT', 'Cabos Solares Fotovoltaicos (bulk)'],
+                quantities: ['10 unidades', '50 unidades', '100 unidades', 'Lote Comercial', 'Projeto Solar Turnkey']
+            },
+            oil_gas: {
+                label: 'Oil & Gas',
+                unit: 'Toneladas / Litros / Barris',
+                products: ['Combustível Diesel EN590 10ppm', 'Gás Natural Liquefeito (GNL / LNG)', 'Óleos Lubrificantes Industriais & Marítimos', 'Tubos & Mangueiras Offshore de Alta Pressão', 'Equipamentos de Perfuração & Válvulas API', 'Gasolina Industrial'],
+                quantities: ['50,000 Litros', '100 Toneladas', '500 Toneladas', 'Contrato Mensal Recorrente']
+            },
+            minerais: {
+                label: 'Minerais',
+                unit: 'Toneladas Métricas (MT)',
+                products: ['Minério de Ferro (62% Fe)', 'Carvão Mineral Energético', 'Areias Pesadas (Ilmenite/Rutilo/Zircão)', 'Concentrado de Cobre', 'Grafite Flutuada de Alta Pureza', 'Ouro Industrial & Minérios Brutos'],
+                quantities: ['1,000 MT', '5,000 MT', '10,000 MT', '50,000 MT/Mês']
+            }
+        }
+    },
+    chemicals: {
+        label: 'Produtos químicos',
+        icon: 'science',
+        color: '#7c3aed',
+        categories: {
+            acidos: {
+                label: 'Ácidos & Solventes',
+                unit: 'Unidades',
+                products: ['Ácido Acético Glacial (2,5L)', 'Ácido Clorídrico 32% (2,5L)', 'Ácido Clorídrico 37% (2,5L)', 'Ácido Fosfórico (250ml)', 'Metanol (2,5L)'],
+                quantities: ['1 unidade', '2 unidades', '5 unidades', '10 unidades']
+            },
+            sais: {
+                label: 'Sais & Compostos Inorgânicos',
+                unit: 'Unidades',
+                products: ['Sulfato de Amónia (100g)', 'Cloreto de Cálcio Hexahidratado (250g)', 'Cloreto de Sódio (250g)', 'Hidróxido de Sódio (500g)', 'Hipoclorito de Sódio (2,5L)', 'Nitrato de Sódio (250g)', 'Nitrato de Potássio (50g)', 'Cianeto de Potássio (250g)', 'Di-Fosfato de Sódio Monohidratado (500g)', 'Fosfato de Sódio Dibásico Dihidratado (500g)', 'Sulfato de Cobre II Pentahidratado (250g)', 'Tetraborato de Sódio Decahidratado (500g)'],
+                quantities: ['1 unidade', '2 unidades', '4 unidades', '6 unidades']
+            },
+            reagentes: {
+                label: 'Reagentes Analíticos',
+                unit: 'Unidades',
+                products: ['4-Hidroxibenzoico Acid Hidrazina (25g)', 'BRIJ-35 (100ml)', 'Cloramina T Tri-hidratada (250g)', 'Ácido Cítrico Monohidratado (500g)', 'D(-) Frutose (250g)', 'D(+) Glucose Anidra (250g)', 'Nitroprussiato de Sódio Dihidratado (100g)', 'Salicilato de Sódio (500g)', 'Ácido Sulfanílico (250g)', 'Sulfato de Hidrazina (100g)', 'Sulfanilamida (100g)', 'Amostra de Controlo Químico GLS (100g)', 'N-(1-naftil)etilenodiamina Dicloridrato (250g)'],
+                quantities: ['1 unidade', '2 unidades', '4 unidades', '6 unidades']
+            },
+            consumiveis: {
+                label: 'Consumíveis de Laboratório',
+                unit: 'Unidades',
+                products: ['Extran AP 11 — Detergente Alcalino (2Kg)', 'Extran MA 01 — Detergente Neutro (1L)', 'Papéis de Filtro Qualitativos No.40 125mm (100 un.)', 'Papéis de Filtro Qualitativos No.11 80mm (100 un.)', 'Carbono Ativado (500g)'],
+                quantities: ['1 unidade', '2 unidades', '10 unidades', '50 unidades']
+            }
+        }
+    },
+    machinery: {
+        label: 'Equipamentos e Maquinas',
+        icon: 'precision_manufacturing',
+        color: '#0d9488',
+        categories: {
+            pecas: {
+                label: 'Peças de Reposição & Componentes',
+                unit: 'Unidades / Kits',
+                products: ['Filtros Industriais de Óleo & Ar', 'Correias & Correntes de Transmissão', 'Rolamentos Heavy-Duty & Buchas', 'Válvulas & Cilindros Hidráulicos', 'Motores Elétricos Trifásicos', 'Peças de Reposição para Tratores & Gruas', 'Kits de Manutenção Preventiva', 'Discos de Tração e Pastilhas de Travão'],
+                quantities: ['1 kit / unidade', '5 unidades', '10 unidades', 'Lote de Reposição (50+)']
             },
             tratores: {
                 label: 'Tratores & Maquinaria Agrícola',
                 unit: 'Unidades',
                 products: ['Trator Agrícola de Rodas', 'Trator de Esteiras (Crawler)', 'Mini-Trator Compacto', 'Trator Vitivinícola / Pomar', 'Trator Florestal', 'Retroescavadora', 'Escavadora Hidráulica', 'Bulldozer / Topadora'],
                 quantities: ['1 unidade', '2 unidades', '5 unidades', '10 unidades', '20 unidades']
+            },
+            navios: {
+                label: 'Navios & Embarcações',
+                unit: 'Unidades / Embarcação',
+                products: ['Navio Cargueiro a Granel (Bulk Carrier)', 'Navio Porta-Contentores', 'Navio Tanque (Tanker)', 'Draga Hidráulica', 'Navio de Pesca Industrial', 'Rebocador / Tugboat', 'Ferry & Balsa de Passageiros', 'Barcaça Fluvial'],
+                quantities: ['1 embarcação', '2 embarcações', '3 embarcações', 'Frota (5+)']
             },
             carpintaria: {
                 label: 'Equipamentos de Carpintaria & Madeira',
@@ -5435,7 +5594,7 @@ const GV_CATALOG = {
         }
     },
     tech: {
-        label: 'Tecnologia & Electrónica',
+        label: 'Tecnologia',
         icon: 'memory',
         color: '#2563eb',
         categories: {
@@ -5468,63 +5627,6 @@ const GV_CATALOG = {
                 unit: 'Unidades (bulk)',
                 products: ['Monitor LCD/IPS (bulk)', 'Painéis OLED (dispositivos móveis)', 'Câmera de Segurança IP', 'Impressora Térmica de Etiquetas', 'Scanner Industrial de Código de Barras', 'Teclado & Rato (Bulk Corporativo)'],
                 quantities: ['10 unidades', '50 unidades', '100 unidades', '500 unidades']
-            }
-        }
-    },
-    logistics: {
-        label: 'Logística',
-        icon: 'local_shipping',
-        color: '#4338ca',
-        categories: {
-            maritimo: { 
-                label: 'Frete Marítimo', 
-                unit: 'Contêiner', 
-                products: ['Envio de Contêiner 20ft Standard (FCL)', 'Envio de Contêiner 40ft High Cube (FCL)', 'Consolidação de Carga Marítima (LCL)', 'Carga a Granel Marítima (Dry Bulk)'], 
-                quantities: ['1x Contêiner 20ft', '1x Contêiner 40ft', '5x Contêineres', '10x Contêineres'] 
-            },
-            terrestre: { 
-                label: 'Frete Terrestre', 
-                unit: 'Viagem', 
-                products: ['Camião Fechado Baú TIR (Moçambique-África do Sul)', 'Plataforma Porta-Contentor Flatbed', 'Camião Cisterna de Combustível'], 
-                quantities: ['1 viagem', '5 viagens', 'Contrato Mensal de Rota'] 
-            },
-            aduaneiro: { 
-                label: 'Desembaraço Aduaneiro', 
-                unit: 'Processo', 
-                products: ['Trâmite Aduaneiro de Importação Geral', 'Trâmite Aduaneiro de Exportação', 'Trânsito Aduaneiro Internacional de Carga'], 
-                quantities: ['1 processo', '5 processos', 'Desembaraço Contínuo'] 
-            }
-        }
-    },
-    /* TODO: React component — <SectorCatalog key="chemicals"> */
-    chemicals: {
-        label: 'Indústria & Reagentes',
-        icon: 'science',
-        color: '#7c3aed',
-        categories: {
-            acidos: {
-                label: 'Ácidos & Solventes',
-                unit: 'Unidades',
-                products: ['Ácido Acético Glacial (2,5L)', 'Ácido Clorídrico 32% (2,5L)', 'Ácido Clorídrico 37% (2,5L)', 'Ácido Fosfórico (250ml)', 'Metanol (2,5L)'],
-                quantities: ['1 unidade', '2 unidades', '5 unidades', '10 unidades']
-            },
-            sais: {
-                label: 'Sais & Compostos Inorgânicos',
-                unit: 'Unidades',
-                products: ['Sulfato de Amónia (100g)', 'Cloreto de Cálcio Hexahidratado (250g)', 'Cloreto de Sódio (250g)', 'Hidróxido de Sódio (500g)', 'Hipoclorito de Sódio (2,5L)', 'Nitrato de Sódio (250g)', 'Nitrato de Potássio (50g)', 'Cianeto de Potássio (250g)', 'Di-Fosfato de Sódio Monohidratado (500g)', 'Fosfato de Sódio Dibásico Dihidratado (500g)', 'Sulfato de Cobre II Pentahidratado (250g)', 'Tetraborato de Sódio Decahidratado (500g)'],
-                quantities: ['1 unidade', '2 unidades', '4 unidades', '6 unidades']
-            },
-            reagentes: {
-                label: 'Reagentes Analíticos',
-                unit: 'Unidades',
-                products: ['4-Hidroxibenzoico Acid Hidrazina (25g)', 'BRIJ-35 (100ml)', 'Cloramina T Tri-hidratada (250g)', 'Ácido Cítrico Monohidratado (500g)', 'D(-) Frutose (250g)', 'D(+) Glucose Anidra (250g)', 'Nitroprussiato de Sódio Dihidratado (100g)', 'Salicilato de Sódio (500g)', 'Ácido Sulfanílico (250g)', 'Sulfato de Hidrazina (100g)', 'Sulfanilamida (100g)', 'Amostra de Controlo Químico GLS (100g)', 'N-(1-naftil)etilenodiamina Dicloridrato (250g)'],
-                quantities: ['1 unidade', '2 unidades', '4 unidades', '6 unidades']
-            },
-            consumiveis: {
-                label: 'Consumíveis de Laboratório',
-                unit: 'Unidades',
-                products: ['Extran AP 11 — Detergente Alcalino (2Kg)', 'Extran MA 01 — Detergente Neutro (1L)', 'Papéis de Filtro Qualitativos No.40 125mm (100 un.)', 'Papéis de Filtro Qualitativos No.11 80mm (100 un.)', 'Carbono Ativado (500g)'],
-                quantities: ['1 unidade', '2 unidades', '10 unidades', '50 unidades']
             }
         }
     }
@@ -5759,6 +5861,9 @@ function openOpportunityDetailModal(id, type) {
     let flag = '🌐';
     const c = countryText.toLowerCase();
     if (c.includes('moçambique') || c.includes('mozambique')) flag = '🇲🇿';
+    else if (c.includes('malawi') || c.includes('maláui')) flag = '🇲🇼';
+    else if (c.includes('zâmbia') || c.includes('zambia')) flag = '🇿🇲';
+    else if (c.includes('guiné') || c.includes('guinea') || c.includes('huine') || c.includes('conacry') || c.includes('conakry')) flag = '🇬🇳';
     else if (c.includes('brasil') || c.includes('brazil')) flag = '🇧🇷';
     else if (c.includes('portugal')) flag = '🇵🇹';
     else if (c.includes('china')) flag = '🇨🇳';
@@ -6529,16 +6634,46 @@ const CATEGORY_PACKAGING_DICTIONARY = {
             { id: 'granel_vhp', icon: 'directions_boat', title: 'Bulk VHP Sugar (Vessel)', sub: 'Direct Bulk Vessel Loading for Refineries' }
         ]
     },
-    'equipamentos': {
+    'solar': {
         pt: [
-            { id: 'flat_rack_equip', icon: 'grid_view', title: 'Contentor Flat Rack / Open Top', sub: 'Para Alfaia e Equipamento Agrícola Sobredimensionado' },
-            { id: 'caixa_ispm15', icon: 'inventory_2', title: 'Caixas de Madeira Tratada (ISPM-15)', sub: 'Proteção Fitossanitária de Exportação' },
-            { id: 'skid_palete_aco', icon: 'inventory', title: 'Skid de Aço / Palete Heavy-Duty', sub: 'Fixação Reforçada para Transporte Terrestre' }
+            { id: 'caixa_revestida', icon: 'inventory_2', title: 'Caixas Revestidas Anti-Choque', sub: 'Embalagem Reforçada com Espuma e Proteção de Cantos' },
+            { id: 'palete_solar', icon: 'grid_view', title: 'Paletes Protegidas para Exportação', sub: 'Paletização Vertical com Filme Termo-Retrátil' }
         ],
         en: [
-            { id: 'flat_rack_equip', icon: 'grid_view', title: 'Flat Rack / Open Top Container', sub: 'For Oversized Farm Implements & Machinery' },
-            { id: 'caixa_ispm15', icon: 'inventory_2', title: 'ISPM-15 Wooden Crates', sub: 'Phytosanitary Certified Export Packaging' },
-            { id: 'skid_palete_aco', icon: 'inventory', title: 'Steel Skid / Heavy-Duty Pallet', sub: 'Reinforced Anchor Base for Heavy Loads' }
+            { id: 'caixa_revestida', icon: 'inventory_2', title: 'Shockproof Padded Crates', sub: 'Reinforced Packaging with Foam & Corner Guards' },
+            { id: 'palete_solar', icon: 'grid_view', title: 'Protected Export Pallets', sub: 'Vertical Palletization with Shrink Wrap' }
+        ]
+    },
+    'oil_gas': {
+        pt: [
+            { id: 'isotank_24k', icon: 'oil_barrel', title: 'ISO-Tank (24.000 L)', sub: 'Contentor Tanque Certificado IMO/ADR' },
+            { id: 'tambor_200l', icon: 'inventory_2', title: 'Tambores Metálicos (200 L)', sub: 'Para Óleos Lubrificantes e Combustíveis' },
+            { id: 'flexitank', icon: 'water_drop', title: 'Flexitank (24.000 L)', sub: 'Bolsa Flexível em Contentor de 20 pés' }
+        ],
+        en: [
+            { id: 'isotank_24k', icon: 'oil_barrel', title: 'ISO-Tank Container (24,000 L)', sub: 'IMO/ADR Certified Tank Container' },
+            { id: 'tambor_200l', icon: 'inventory_2', title: 'Steel Drums (200 L)', sub: 'For Lubricating Oils & Fuels' },
+            { id: 'flexitank', icon: 'water_drop', title: 'Flexitank (24,000 L)', sub: 'Flexible Bladder in 20ft Container' }
+        ]
+    },
+    'minerais': {
+        pt: [
+            { id: 'granel_navio', icon: 'directions_boat', title: 'A Granel em Navio (Bulk Carrier)', sub: 'Carregamento no Porão para Grandes Tonelagens' },
+            { id: 'big_bags_minerio', icon: 'inventory_2', title: 'Big Bags de Minério (1.500 kg)', sub: 'Sacos Revestidos Heavy-Duty anti-rasgo' }
+        ],
+        en: [
+            { id: 'granel_navio', icon: 'directions_boat', title: 'Bulk Vessel Shipment', sub: 'Hold Loading for Large Tonnages' },
+            { id: 'big_bags_minerio', icon: 'inventory_2', title: 'Ore Big Bags (1,500 kg)', sub: 'Heavy-Duty Anti-Tear Lined Bags' }
+        ]
+    },
+    'pecas': {
+        pt: [
+            { id: 'caixa_vci', icon: 'shield', title: 'Embalagem VCI Anti-Corrosão', sub: 'Caixa Selada com Filme Inibidor de Corrosão' },
+            { id: 'skid_pecas', icon: 'inventory', title: 'Paletes / Skids de Aço Heavy-Duty', sub: 'Para Componentes Mecânicos e Motores Pesados' }
+        ],
+        en: [
+            { id: 'caixa_vci', icon: 'shield', title: 'VCI Anti-Corrosion Packaging', sub: 'Sealed Crate with Corrosion Inhibitor Film' },
+            { id: 'skid_pecas', icon: 'inventory', title: 'Steel Skids / Heavy-Duty Pallets', sub: 'For Mechanical Components & Heavy Motors' }
         ]
     }
 };
@@ -7005,18 +7140,7 @@ window.wizardNextStep = wizardNextStep;
 window.wizardPrevStep = wizardPrevStep;
 
 function toggleLatestDemands() {
-    const marketSection = document.getElementById('cms-wrap-market');
-    if (!marketSection) return;
-    
-    const isHidden = marketSection.style.display === 'none';
-    if (isHidden) {
-        marketSection.style.display = 'block';
-        setTimeout(() => {
-            marketSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
-    } else {
-        marketSection.style.display = 'none';
-    }
+    window.location.hash = 'demands';
 }
 window.toggleLatestDemands = toggleLatestDemands;
 
