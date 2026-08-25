@@ -15,7 +15,14 @@ O protótipo da plataforma de intermediação B2B da **Global View (GV-CPS)** en
 
 ## 2. Histórico de Alterações Recentes
 
-### Sessão: 25 de Agosto de 2026 (Ajustes de Contactos, Mini Hero de Comunicação & Tradução no Header)
+### Sessão: 25 de Agosto de 2026 (Limpeza da Página "Últimas Demandas", Mapeamento de Categorias & Códigos REQ_)
+* **Simplificação da Página "Últimas Demandas" (`#view-demands`)**:
+  - Removido o banner Mini Hero superior, os cabeçalhos descritivos redundantes (`Explorador B2B Global`, `Directório de Oportunidades`) e as grelhas inferiores (`Oportunidades por País` e `Navegar por Categoria`).
+  - Mantido exclusivamente o título limpo **"Últimas Demandas"** (`Latest Demands`) e a tabela B2B de largura total.
+* **Mapeamento de Códigos & Categorias**:
+  - Formatação dos códigos de requisitos para o padrão numérico limpo **`REQ_010`**, **`REQ_020`**, **`REQ_030`**, ..., **`REQ_110`**.
+  - Corrigido o bug na função `getCategoryDetails()` que classificava incorretamente itens de *Commodities* (como *Açúcar ICUMSA 45*) como *Tecnologia* devido à correspondência parcial da palavra `commodities` com o padrão `ti`.
+  - Removidas referências a países fora do escopo principal (*Portugal* e *Brasil* alterados para *Moçambique*).
 * **Ajuste de Contactos & Mini Hero (`#view-contact`)**:
   - Removido o badge/pill **"INSTITUTIONAL COMMUNICATION / COMUNICAÇÃO INSTITUCIONAL"** do topo da página de contactos.
   - Removido o bloco redundante de "Contactos Alternativos", mantendo unicamente as linhas oficiais de atendimento: `+258 84 900 9090 / 82 900 9090 / 87 880 9090`.

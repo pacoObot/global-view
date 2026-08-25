@@ -752,55 +752,19 @@
 
         <!-- ÚLTIMAS DEMANDAS VIEW -->
         <section id="view-demands" class="view-section">
-            <!-- Mini Hero Header -->
-            <div class="relative bg-slate-900 text-white overflow-hidden py-16 mb-8">
-                <div class="absolute inset-0 z-0 opacity-30">
-                    <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1920&q=80" alt="Mural Hero" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/40 to-slate-900/90"></div>
-                </div>
-                
-                <div class="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-                    <div class="max-w-2xl text-left">
-                        <span class="inline-block bg-secondary/20 text-[#25D366] px-3 py-1 rounded-full text-xs font-bold mb-3 border border-secondary/30" data-translate-pt="Catálogo B2B Global &amp; Oportunidades" data-translate-en="Global B2B Catalog &amp; Opportunities">
-                            Catálogo B2B Global &amp; Oportunidades
-                        </span>
-                        <h1 class="font-headline-xl text-white mb-4" data-translate-pt="Últimas Demandas do Mercado" data-translate-en="Latest Market Demands">Últimas Demandas do Mercado</h1>
-                        <p class="text-white/80 font-body-lg" data-translate-pt="Explore todas as procuras e ofertas ativas de importação e exportação em Moçambique e no mercado internacional, intermediadas com total segurança pela GV-CPS." data-translate-en="Explore all active import and export buyer requirements and supplier offers in Mozambique and worldwide, securely mediated by GV-CPS.">Explore todas as procuras e ofertas ativas de importação e exportação em Moçambique e no mercado internacional, intermediadas com total segurança pela GV-CPS.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-4">
-                        <a href="javascript:void(0)" onclick="openRequestWizard()" class="flex items-center gap-2 bg-secondary text-on-secondary px-6 py-3.5 rounded-xl font-label-lg font-bold hover:scale-105 transition-transform no-underline">
-                            <span class="material-symbols-outlined">add_box</span> <span data-translate-pt="Publicar Necessidade" data-translate-en="Publish Demand">Publicar Necessidade</span>
-                        </a>
-                        <a href="#publish-offer" class="flex items-center gap-2 bg-white/10 border border-white/20 text-white px-6 py-3.5 rounded-xl font-label-lg font-bold hover:bg-white/20 transition-all no-underline">
-                            <span class="material-symbols-outlined">upload_file</span> <span data-translate-pt="Publicar Oferta" data-translate-en="Publish Offer">Publicar Oferta</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Últimas Demandas B2B Section Content -->
             <div id="cms-wrap-market" class="cms-section-wrapper" draggable="false">
                 <span class="cms-section-label">Secção: Explorador de Mercado</span>
                 <div class="cms-drag-handle" id="handle-market"><span class="material-symbols-outlined" style="font-size:14px;">drag_indicator</span> Arrastar</div>
                 <!-- Explorador de Mercado (Full Width Directory Table) -->
-                <section class="py-8 w-full px-4 md:px-12 bg-surface-container/20">
+                <section class="pt-16 pb-12 w-full px-4 md:px-12">
                     <div class="w-full mx-auto">
-                        <!-- Title & Headers -->
-                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-outline-variant/30 pb-6 mb-8">
-                            <div>
-                                <span class="text-secondary font-label-md tracking-widest uppercase" data-translate-pt="Explorador B2B Global" data-translate-en="Global B2B Explorer">Explorador B2B Global</span>
-                                <h3 class="font-headline-lg text-primary mt-1 m-0" style="font-size: 24px; font-weight: bold;" data-translate-pt="Directório de Oportunidades" data-translate-en="Opportunities Directory">
-                                    Directório de Oportunidades
-                                </h3>
-                                <p class="text-xs text-on-surface-variant mt-1" data-translate-pt="Lista de oportunidades de importação e exportação em Moçambique e no mundo." data-translate-en="List of import and export opportunities in Mozambique and worldwide.">
-                                    Lista de oportunidades de importação e exportação em Moçambique e no mundo.
-                                </p>
-                            </div>
-                            <a href="#services" class="text-xs font-bold text-gvTeal hover:underline no-underline" style="color: var(--primary-light);" data-translate-pt="Ver Serviços Corporativos" data-translate-en="See Corporate Services">Ver Serviços Corporativos</a>
-                        </div>
+                        <!-- Simple Clean Title -->
+                        <h1 class="font-headline-lg text-primary font-bold text-2xl md:text-3xl mb-8" data-translate-pt="Últimas Demandas" data-translate-en="Latest Demands">
+                            Últimas Demandas
+                        </h1>
 
                         <!-- B2B Requirements Full-Width Grid Table -->
-                        <div class="overflow-x-auto bg-white border border-slate-200/80 rounded-2xl shadow-sm mb-12">
+                        <div class="overflow-x-auto bg-white border border-slate-200/80 rounded-2xl shadow-sm mb-6">
                             <table class="w-full min-w-[900px] border-collapse text-left text-xs md:text-sm">
                                 <thead>
                                     <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase tracking-wider">
@@ -815,31 +779,6 @@
                                     <!-- Injected dynamically by app.js as full-width table rows! -->
                                 </tbody>
                             </table>
-                        </div>
-
-                        <!-- Bottom: Countries and Categories Directory -->
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-                            <!-- Left: Countries Grid -->
-                            <div class="bg-white border border-slate-200/65 p-6 rounded-2xl shadow-sm">
-                                <h4 class="font-headline-sm text-primary mb-4 flex items-center gap-2 m-0" style="font-size: 16px; font-weight: bold;">
-                                    <span class="material-symbols-outlined text-secondary">public</span>
-                                    <span data-translate-pt="Oportunidades por País" data-translate-en="Opportunities by Country">Oportunidades por País</span>
-                                </h4>
-                                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3" id="home-countries-grid">
-                                    <!-- Injected dynamically by app.js -->
-                                </div>
-                            </div>
-                            
-                            <!-- Right: Categories Grid -->
-                            <div class="bg-white border border-slate-200/65 p-6 rounded-2xl shadow-sm">
-                                <h4 class="font-headline-sm text-primary mb-4 flex items-center gap-2 m-0" style="font-size: 16px; font-weight: bold;">
-                                    <span class="material-symbols-outlined text-secondary">category</span>
-                                    <span data-translate-pt="Navegar por Categoria" data-translate-en="Browse by Category">Navegar por Categoria</span>
-                                </h4>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="home-categories-grid">
-                                    <!-- Injected dynamically by app.js -->
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </section>

@@ -497,15 +497,15 @@ const INITIAL_STATE = {
             descriptionEn: 'Bulk acquisition of analytical reagents and high-purity chemical solvents for industrial laboratory.',
             quantity: '50 Unidades',
             quantityEn: '50 Units',
-            country: 'Portugal',
-            countryEn: 'Portugal',
+            country: 'Moçambique',
+            countryEn: 'Mozambique',
             logistics: 'Sim',
             date: '2026-06-14',
             status: 'pendente',
             owner: 'buyer_1',
             assignedConsultant: null,
-            contactWhatsapp: '+351 912 345 678',
-            contactEmail: 'lab@gascorp.pt'
+            contactWhatsapp: '+258 84 123 4567',
+            contactEmail: 'lab@gascorp.co.mz'
         },
         {
             id: 'req_8',
@@ -536,7 +536,7 @@ const INITIAL_STATE = {
             description: 'Dispomos de cotas anuais para fornecimento e exportação de açúcar ICUMSA 45 refinado de alta qualidade.',
             descriptionEn: 'We have annual quotas for the supply and export of high-quality refined ICUMSA 45 sugar.',
             quantity: '12,500 MT',
-            country: 'Brasil',
+            country: 'Moçambique',
             logistics: 'Sim',
             date: '2026-06-15',
             status: 'atendimento',
@@ -1508,7 +1508,7 @@ function renderMarketExplorer() {
     // Display all market requirements and offers in list
     const lang = localStorage.getItem('gvcps_lang') || 'pt';
     const latestItems = items;
-    latestItems.forEach(item => {
+    latestItems.forEach((item, idx) => {
         const { code: catCode, label: catLabel, icon: catIcon } = getCategoryDetails(item.category);
         let flag = '🌎';
         const translatedCountry = getTranslatedField(item, 'country');
@@ -1517,10 +1517,11 @@ function renderMarketExplorer() {
         else if (c.includes('malawi') || c.includes('maláui')) flag = '🇲🇼';
         else if (c.includes('zâmbia') || c.includes('zambia')) flag = '🇿🇲';
         else if (c.includes('guiné') || c.includes('guinea') || c.includes('huine') || c.includes('conacry') || c.includes('conakry')) flag = '🇬🇳';
-        else if (c.includes('brasil') || c.includes('brazil')) flag = '🇧🇷';
-        else if (c.includes('portugal')) flag = '🇵🇹';
         else if (c.includes('china')) flag = '🇨🇳';
         else if (c.includes('emirados') || c.includes('árabes') || c.includes('united arab')) flag = '🇦🇪';
+        
+        // Formatted REQ code: REQ_010, REQ_020, REQ_030, etc.
+        const reqDisplayId = `REQ_${String((idx + 1) * 10).padStart(3, '0')}`;
         
         const tr = document.createElement('tr');
         tr.className = `border-b border-slate-100 hover:bg-slate-50/80 transition cursor-pointer`;
@@ -1540,7 +1541,7 @@ function renderMarketExplorer() {
                     </span>
                     <div class="min-w-0">
                         <span class="block truncate font-bold text-sm text-slate-800" title="${gvSecurity.sanitize(titleText)}">${gvSecurity.sanitize(titleText)}</span>
-                        <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mt-0.5">${item.id}</span>
+                        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mt-0.5">${reqDisplayId}</span>
                     </div>
                 </div>
             </td>
@@ -1809,7 +1810,7 @@ function getCategoryDetails(category) {
         cat.includes('tecnologia') || cat.includes('tech') || cat.includes('informática') ||
         cat.includes('inovação') || cat.includes('chip') || cat.includes('processador') ||
         cat.includes('memória') || cat.includes('placa') || cat.includes('carregador') ||
-        cat.includes('software') || cat.includes('ti') || cat.includes('redes')
+        cat.includes('software') || cat.includes('hardware') || cat === 'ti'
     ) {
         code     = 'tech';
         label    = lang === 'en' ? 'Technology' : 'Tecnologia';
